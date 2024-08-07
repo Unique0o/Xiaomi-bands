@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">logifitAppp</string>
+    <string name="app_name">Logifit</string>
+    <string name="button_get_into">Get into</string>
+    <string name="message_recover_password">Don`t remember your password?</string>
+    <string name="link_hide">Hide</string>
+    <string name="link_recover_password">Get it back here</string>
+    <string name="link_show">Show</string>
+    <string name="placeholder_password">Password</string>
+    <string name="placeholder_user">User</string>
+    <string name="subtitle_login">Type your credentials to continue</string>
 </resources>

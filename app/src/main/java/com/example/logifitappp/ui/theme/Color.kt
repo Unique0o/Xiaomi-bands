@@ -2,10 +2,19 @@ package com.example.logifitappp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Amber60 = Color(0xfffff3c8)
+val Blue130 = Color(0xffd2e7fa)
+val Blue690 = Color(0xff1c85e8)
+val Green298 = Color(0xff83cc5e)
+val Lime30 = Color(0xfff7f9fc)
+val Lime70 = Color(0xffe6f5df)
+val Orange170 = Color(0xffffe0e5)
+val Orange390 = Color(0xffffc258)
+val Rose120 = Color(0xffff647c)
+val Slate105 = Color(0xfff2f2f2)
+val Slate705 = Color(0xff333333)
+val Stone240 = Color(0xffebeff5)
+val Stone470 = Color(0xff7f92a4)
+val White = Color(0xffffffff)
+val Zinc680 = Color(0xff526475)
+val Zinc940 = Color(0xff092c4c)
