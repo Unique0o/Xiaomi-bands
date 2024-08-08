@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">logifitAppp</string>
+
+    <string name="warning_title">Cuidado!!: No te encuentras apto para conducir con las condiciones actuales.</string>
+    <string name="face_status">FATIGA</string>
+    <string name="face_dream">SUEÑO</string>
+    <string name="battery_status">Batería al 80%</string>
+    <string name="title_smart_band">Mi Smart Band 4</string>
+    <string name="share">Compartir</string>
+    <string name="title_tests">Mis tests de somnolencia</string>
+    <string name="description_tests">Realiza un test de somnolencia para verificar si estás apto o no para realizar tus labores.</string>
+    <string name="title_test_fatiga">TEST DE AUTOEVALUACIÓN DE FATIGA</string>
+    <string name="status_person">APTO</string>
+    <string name="result_date">Resultado de 24/10/2023</string>
+    <string name="plan">PREMIUM</string>
+
+    // Card Item
+    <string name="schedule">Mi horario</string>
+    <string name="status">DIURNO</string>
+    <string name="PGT">PGT</string>
+    <string name="my_location">Mi localización</string>
+    <string name="my_device">Mi dispositivo</string>
+    <string name="card_description">Recuerda activar tu Bluetooth y mantener tu Smartband cerca a tu celular para facilitar la conexión.</string>
+    <string name="title_my_test">Mis tests de somnolencia</string>
+    <string name="card_description_message">Realiza un test de somnolencia para verificar si estás apto/a para realizar tus labores.</string>
+
+
+    <string name="add_content_description">Añadir</string>
+    <string name="profile_pic">Foto de perfil</string>
+    <string name="notificacions_content_description">Notificaciones</string>
 </resources>

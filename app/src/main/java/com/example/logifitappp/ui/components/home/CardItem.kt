@@ -26,13 +26,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.logifitappp.R
+
 val DarkBlue = Color(0xFF2E5B9A)
 
 @Composable
-fun CardItem(title: String, status: String, iconRes: Int, statusColor: Color, modifier: Modifier) {
+fun CardItem(
+    title: String,
+    status: String, iconRes: Int,
+    statusColor: Color,
+    modifier: Modifier
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -95,7 +103,13 @@ fun CardItem(title: String, status: String, iconRes: Int, statusColor: Color, mo
 }
 
 @Composable
-fun CardItemWithDescription(title: String, description: String, iconRes: Int, modifier: Modifier) {
+fun CardItemWithDescription(
+    title: String,
+    description: String,
+    iconRes: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -120,14 +134,14 @@ fun CardItemWithDescription(title: String, description: String, iconRes: Int, mo
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(
-                    onClick = { /* Acción del botón + */ },
+                    onClick = onClick,
                     modifier = modifier
                         .background(DarkBlue, CircleShape)
                         .size(24.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = "Añadir",
+                        contentDescription = stringResource(id = R.string.add_content_description),
                         tint = Color.White
                     )
                 }

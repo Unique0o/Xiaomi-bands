@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,8 @@ import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.components.home.CardItemWithDescription
 import com.example.logifitappp.ui.components.home.HeaderHome
 import com.example.logifitappp.ui.screens.home.SmartBandScreen
+import com.example.logifitappp.ui.screens.home.TestFatigaItem
+import com.example.logifitappp.ui.screens.home.TestsSection
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 val LightBlue = Color(0xFFE8F1FF)
@@ -56,12 +59,13 @@ fun MainScreen() {
             HeaderHome(
                 title = "Bienvenido de vuelta",
                 nameUser = "MARIA MERCEDEZ",
-                plan = "PREMIUM"
+                plan = stringResource(id = R.string.plan)
             )
             OptionsList()
-            Spacer(modifier = Modifier.height(32.dp))
 //            OptionCard()
             SmartBandScreen()
+            TestsSection()
+            TestFatigaItem()
         }
     }
 
@@ -81,27 +85,15 @@ fun BackgroundCurve(modifier: Modifier = Modifier) {
                     size.height * 0.3f - cornerRadius * 2,
                     size.width,
                     size.height * 0.3f
-                ),
-                startAngleDegrees = 0f,
-                sweepAngleDegrees = 90f,
-                forceMoveTo = false
+                ), startAngleDegrees = 0f, sweepAngleDegrees = 90f, forceMoveTo = false
             )
             quadraticBezierTo(
-                size.width / 2f,
-                size.height * 0.3f + 40f,
-                cornerRadius,
-                size.height * 0.3f
+                size.width / 2f, size.height * 0.3f + 40f, cornerRadius, size.height * 0.3f
             )
             arcTo(
                 rect = androidx.compose.ui.geometry.Rect(
-                    0f,
-                    size.height * 0.3f - cornerRadius * 2,
-                    cornerRadius * 2,
-                    size.height * 0.3f
-                ),
-                startAngleDegrees = 90f,
-                sweepAngleDegrees = 90f,
-                forceMoveTo = false
+                    0f, size.height * 0.3f - cornerRadius * 2, cornerRadius * 2, size.height * 0.3f
+                ), startAngleDegrees = 90f, sweepAngleDegrees = 90f, forceMoveTo = false
             )
             close()
         }
@@ -116,8 +108,8 @@ fun OptionsList() {
     ) {
         item {
             CardItem(
-                "Mi horario",
-                "DIURNO",
+                title = stringResource(id = R.string.schedule),
+                status = stringResource(id = R.string.status),
                 R.drawable.ic_clock,
                 Green,
                 modifier = Modifier.padding()
@@ -125,8 +117,8 @@ fun OptionsList() {
         }
         item {
             CardItem(
-                "Mi localización",
-                "PGT",
+                title = stringResource(id = R.string.my_location),
+                status = stringResource(id = R.string.PGT),
                 R.drawable.ic_location,
                 Green,
                 modifier = Modifier.padding()
@@ -143,19 +135,19 @@ fun OptionCard(modifier: Modifier = Modifier) {
     ) {
         item {
             CardItemWithDescription(
-                "Mi dispositivo",
-                "Recuerda activar tu Bluetooth y mantener tu Smartband cerca a tu celular para facilitar la conexión.",
-                R.drawable.ic_watch,
-                modifier = modifier.padding()
-            )
+                title = stringResource(id = R.string.my_device),
+                description = stringResource(id = R.string.card_description),
+                iconRes = R.drawable.ic_watch,
+                modifier = modifier.padding(),
+                onClick = { /*TODO*/ })
         }
         item {
             CardItemWithDescription(
-                "Mis tests de somnolencia",
-                "Realiza un test de somnolencia para verificar si estás apto/a para realizar tus labores.",
-                R.drawable.ic_menu_test,
-                modifier = modifier.padding()
-            )
+                title = stringResource(id = R.string.title_my_test),
+                description = stringResource(id = R.string.card_description_message),
+                iconRes = R.drawable.ic_menu_test,
+                modifier = modifier.padding(),
+                onClick = { /*TODO*/ })
         }
 
     }

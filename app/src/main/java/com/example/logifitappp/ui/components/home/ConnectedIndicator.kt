@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Alignment
 
 @Composable
-fun ConnectedIndicator(texto: String, color: Color) {
+fun ConnectedIndicator(text: String, color: Color) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -32,7 +32,7 @@ fun ConnectedIndicator(texto: String, color: Color) {
                 .background(Color(0xFF4CAF50), CircleShape)
         )
         Text(
-            text = texto,
+            text = text,
             color = color,
             fontSize = 12.sp,
             fontWeight = FontWeight.Medium

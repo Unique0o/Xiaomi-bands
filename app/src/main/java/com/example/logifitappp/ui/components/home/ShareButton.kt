@@ -16,33 +16,41 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 
 @Composable
-fun ShareButton() {
+fun ShareButton(
+    title: String,
+    color: Color,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Button(
-        onClick = { /* TODO: Implementar funcionalidad de compartir */ },
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3)),
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.height(36.dp)
+        shape = RoundedCornerShape(30.dp),
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Share,
-                contentDescription = "Compartir",
+                contentDescription = stringResource(R.string.share),
                 tint = Color.White,
-                modifier = Modifier.size(18.dp)
+                modifier = Modifier.size(16.dp)
             )
             Text(
-                "Compartir",
-                color = Color.White,
-                fontSize = 14.sp,
+                text = title,
+                color = color,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Medium
             )
         }
