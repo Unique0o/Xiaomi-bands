@@ -26,6 +26,12 @@ val Typography = Typography(
         lineHeight = 12.sp,
     ),
 
+    displayLarge = TextStyle(
+        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+        fontSize = 18.sp,
+        lineHeight = 28.sp,
+    ),
+
     headlineMedium = TextStyle(
         fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
         fontSize = 12.sp,

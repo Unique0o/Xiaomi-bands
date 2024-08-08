@@ -1,12 +1,12 @@
 package com.example.logifitappp.ui.components.forms
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.OutlinedTextField as MaterialOutlinedTextField
 import androidx.compose.runtime.Composable
@@ -17,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -26,7 +25,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.PasswordVisibilityToggleText
-import com.example.logifitappp.ui.components.Text
 
 @Composable
 fun OutlinedTextField(
@@ -73,8 +71,10 @@ fun OutlinedTextField(
         ) else keyboardOption,
         label = {
             Text(
-                text = placeholder,
-                typography = MaterialTheme.typography.bodyMedium
+                fontFamily = MaterialTheme.typography.bodyMedium.fontFamily,
+                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                lineHeight = MaterialTheme.typography.bodyMedium.lineHeight,
+                text = placeholder
             )
         },
         leadingIcon = if (leadingIcon != null) ({
@@ -92,10 +92,12 @@ fun OutlinedTextField(
         supportingText = {
             if (hasError) {
                 Text(
+                    fontFamily = MaterialTheme.typography.labelSmall.fontFamily,
+                    fontSize = MaterialTheme.typography.labelSmall.fontSize,
+                    lineHeight = MaterialTheme.typography.labelSmall.lineHeight,
                     modifier = Modifier.fillMaxWidth(),
                     text = error!!,
-                    textAlign = TextAlign.Right,
-                    typography = MaterialTheme.typography.labelSmall
+                    textAlign = TextAlign.Right
                 )
             }
         },
