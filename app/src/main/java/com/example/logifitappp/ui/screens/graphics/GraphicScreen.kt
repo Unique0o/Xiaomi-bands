@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.AlarmClockCard
+import com.example.logifitappp.ui.components.graphics.SleepInfoCard
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
@@ -36,7 +37,8 @@ fun MainScreen1() {
 //        Spacer(modifier = Modifier.height(16.dp))
 //        StepsMetricsCard()
 //        Spacer(modifier = Modifier.height(16.dp))
-       AlarmClockCard(modifier = Modifier.padding(16.dp))
+//       AlarmClockCard(modifier = Modifier.padding(16.dp))
+            SleepInfoCard(modifier = Modifier)
         }
     }
 }

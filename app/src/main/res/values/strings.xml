@@ -34,4 +34,8 @@
 
     <string name="wake_up">Despertar</string>
     <string name="content_description_alarm">Alarma</string>
+    <string name="information_sleep">Información del sueño</string>
+    <string name="light_sleep">Sueño ligero</string>
+    <string name="deep_sleep">Sueño profundo</string>
+    <string name="rem_sleep">Sueño REM</string>
 </resources>
