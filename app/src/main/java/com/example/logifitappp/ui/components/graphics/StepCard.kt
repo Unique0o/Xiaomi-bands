@@ -37,32 +37,7 @@ fun StepChart(
             .height(200.dp)
             .padding(top = 16.dp, bottom = 24.dp, end = 16.dp)
     ) {
-
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val yStep = size.height / 3
-            val xStep = size.width / 5
-
-            // Vertical lines
-            for (i in 0..5) {
-                drawLine(
-                    color = Color.LightGray.copy(alpha = 0.3f),
-                    start = Offset(i * xStep, 0f),
-                    end = Offset(i * xStep, size.height),
-                    strokeWidth = 0.5f
-                )
-            }
-
-            // Horizontal lines
-            for (i in 0..3) {
-                drawLine(
-                    color = Color.LightGray.copy(alpha = 0.3f),
-                    start = Offset(0f, i * yStep),
-                    end = Offset(size.width, i * yStep),
-                    strokeWidth = 0.5f
-                )
-            }
-        }
-
+        ChartGrids()
         Column(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
@@ -124,7 +99,33 @@ fun StepChart(
         }
     }
 }
+@Composable
+fun ChartGrids() {
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val yStep = size.height / 3
+        val xStep = size.width / 5
 
+        // Vertical lines
+        for (i in 0..5) {
+            drawLine(
+                color = Color.LightGray.copy(alpha = 0.3f),
+                start = Offset(i * xStep, 0f),
+                end = Offset(i * xStep, size.height),
+                strokeWidth = 0.5f
+            )
+        }
+
+        // Horizontal lines
+        for (i in 0..3) {
+            drawLine(
+                color = Color.LightGray.copy(alpha = 0.3f),
+                start = Offset(0f, i * yStep),
+                end = Offset(size.width, i * yStep),
+                strokeWidth = 0.5f
+            )
+        }
+    }
+}
 
 @Composable
 fun StepTrackingCard(modifier: Modifier = Modifier) {
@@ -189,5 +190,13 @@ fun StepTrackingCard(modifier: Modifier = Modifier) {
             }
 
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GraphicsPreview1() {
+    LogifitApppTheme {
+        StepTrackingCard()
     }
 }

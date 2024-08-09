@@ -60,9 +60,7 @@ fun MainScreen1() {
             )
 
             SleepSessionCard(modifier = Modifier)
-            StepTrackingCard(
-                modifier = Modifier
-            )
+            StepTrackingCard()
 
         }
     }
