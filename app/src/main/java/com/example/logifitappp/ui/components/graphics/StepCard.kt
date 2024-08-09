@@ -8,7 +8,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,6 +38,13 @@ fun StepChart(
             .fillMaxWidth()
             .height(200.dp)
             .padding(top = 16.dp, bottom = 24.dp, end = 16.dp)
+            .drawBehind {
+            drawRect(
+                color = Color.LightGray,
+                size = Size(1.dp.toPx(), size.height),
+                topLeft = Offset(size.width - 1.dp.toPx(), 0f)
+            )
+        }
     ) {
         ChartGrids()
         Column(

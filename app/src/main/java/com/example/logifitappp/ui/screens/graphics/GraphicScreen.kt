@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.graphics.HeartRateCard
+import com.example.logifitappp.ui.components.graphics.HeartRateData
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
 import com.example.logifitappp.ui.components.graphics.StepTrackingCard
 import com.example.logifitappp.ui.components.home.CardItem
@@ -32,7 +34,6 @@ fun MainScreen1() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
         ) {
 //        UserHeader()
 //        Spacer(modifier = Modifier.height(16.dp))
@@ -59,8 +60,15 @@ fun MainScreen1() {
                 modifier = Modifier
             )
 
-            SleepSessionCard(modifier = Modifier)
-            StepTrackingCard()
+//            SleepSessionCard(modifier = Modifier)
+            val sampleData = HeartRateData(
+                date = "Noviembre 20, 2023",
+                minRate = 70,
+                maxRate = 101,
+                timeRange = "02:00 - 02:30",
+                rates = listOf(30, 45, 20, 35, 25, 40)
+            )
+            HeartRateCard(heartRateData = sampleData, modifier = Modifier)
 
         }
     }
