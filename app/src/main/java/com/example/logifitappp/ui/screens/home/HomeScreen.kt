@@ -90,7 +90,8 @@ fun OptionsList() {
                 title = stringResource(id = R.string.schedule),
                 status = stringResource(id = R.string.status),
                 R.drawable.ic_clock,
-                Green,
+                statusColor = Green,
+                backgroundColor = Color(0x1A4CAF50),
                 modifier = Modifier.padding()
             )
         }
@@ -99,7 +100,8 @@ fun OptionsList() {
                 title = stringResource(id = R.string.my_location),
                 status = stringResource(id = R.string.PGT),
                 R.drawable.ic_location,
-                Green,
+                statusColor = Green,
+                backgroundColor = Color(0x1A4CAF50),
                 modifier = Modifier.padding()
             )
         }

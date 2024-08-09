@@ -23,12 +23,12 @@
     <string name="card_description">Recuerda activar tu Bluetooth y mantener tu Smartband cerca a tu celular para facilitar la conexión.</string>
     <string name="title_my_test">Mis tests de somnolencia</string>
     <string name="card_description_message">Realiza un test de somnolencia para verificar si estás apto/a para realizar tus labores.</string>
-
-
+    <string name="title_condition_sleep">Condiciones del sueño</string>
+    <string name="status_no_apto">NO APTO</string>
     <string name="add_content_description">Añadir</string>
     <string name="profile_pic">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
-
+    <string name="title_fatige">Fatiga</string>
 
     // Graphics
 
@@ -38,4 +38,8 @@
     <string name="light_sleep">Sueño ligero</string>
     <string name="deep_sleep">Sueño profundo</string>
     <string name="rem_sleep">Sueño REM</string>
+
+    // CardSleepSession
+    <string name="content_description_sleep">Sleep</string>
+
 </resources>

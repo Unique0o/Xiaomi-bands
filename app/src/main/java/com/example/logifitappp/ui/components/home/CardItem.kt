@@ -39,6 +39,7 @@ fun CardItem(
     title: String,
     status: String, iconRes: Int,
     statusColor: Color,
+    backgroundColor: Color,
     modifier: Modifier
 ) {
     Card(
@@ -60,14 +61,14 @@ fun CardItem(
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = null,
-                tint = DarkBlue
+                tint = Color(0xFF4285F4)
             )
             Text(
                 text = title,
                 modifier = modifier
                     .weight(1f)
                     .padding(start = 16.dp),
-                color = DarkBlue,
+                color = Color(0xFF4285F4),
                 fontWeight = FontWeight.Bold
             )
 
@@ -76,7 +77,7 @@ fun CardItem(
             Box(
                 modifier = modifier
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color(0x1A4CAF50))
+                    .background(backgroundColor)
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Row(
@@ -85,7 +86,7 @@ fun CardItem(
                     Box(
                         modifier = modifier
                             .size(8.dp)
-                            .background(Color(0xFF4CAF50), CircleShape)
+                            .background(statusColor, CircleShape)
                     )
 
                     Spacer(modifier = modifier.width(4.dp))
@@ -94,7 +95,7 @@ fun CardItem(
                         text = status,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
-                        color = Color(0xFF4CAF50)
+                        color = statusColor
                     )
                 }
             }

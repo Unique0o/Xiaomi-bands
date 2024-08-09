@@ -1,4 +1,5 @@
 package com.example.logifitappp.ui.screens.graphics
+import SleepSessionCard
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,12 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.graphics.AlarmClockCard
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
+import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
@@ -39,6 +41,25 @@ fun MainScreen1() {
 //        Spacer(modifier = Modifier.height(16.dp))
 //       AlarmClockCard(modifier = Modifier.padding(16.dp))
             SleepInfoCard(modifier = Modifier)
+            CardItem(
+                title = stringResource(id = R.string.title_condition_sleep),
+                status = stringResource(id = R.string.status_person),
+                iconRes = R.drawable.ic_nights_stay ,
+                statusColor = Color(0xFF4CAF50),
+                backgroundColor = Color(0x1A4CAF50),
+                modifier = Modifier
+            )
+            CardItem(
+                title = stringResource(id = R.string.title_fatige),
+                status = stringResource(id = R.string.status_no_apto),
+                iconRes = R.drawable.ic_nights_stay ,
+                statusColor = Color(0xFFFF647C),
+                backgroundColor = Color(0xFFFFE0E5),
+                modifier = Modifier
+            )
+
+            SleepSessionCard(modifier = Modifier)
+
         }
     }
 }
