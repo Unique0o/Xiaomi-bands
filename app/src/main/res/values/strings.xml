@@ -28,4 +28,10 @@
     <string name="add_content_description">Añadir</string>
     <string name="profile_pic">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
+
+
+    // Graphics
+
+    <string name="wake_up">Despertar</string>
+    <string name="content_description_alarm">Alarma</string>
 </resources>
