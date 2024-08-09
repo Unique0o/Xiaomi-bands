@@ -133,7 +133,11 @@ fun BatteryStatus(
             Spacer(modifier = Modifier.width(8.dp))
             Text(title, color = color)
         }
-        ConnectedIndicator("CONECTADO", Color(0xFF4CAF50))
+        ConnectedIndicator(
+            text = stringResource(id = R.string.connected),
+            Color(0xFF4CAF50),
+            backgroundColor = Color(0xFF4CAF50)
+        )
     }
 }
 
@@ -420,7 +424,8 @@ fun TestFatigaItem() {
                 Spacer(modifier = Modifier.weight(1f))
                 ConnectedIndicator(
                     text = stringResource(id = R.string.status_person),
-                    color = Color(0xFF4CAF50)
+                    color = Color(0xFF4CAF50),
+                    backgroundColor = Color(0xFF4CAF50)
                 )
 
             }

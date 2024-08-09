@@ -58,7 +58,11 @@ fun SessionHeader() {
                 color = Color(0xFF4285F4)
             )
         }
-        ConnectedIndicator(text = "55min", color = Color(0xFF4CAF50))
+        ConnectedIndicator(
+            text = "55min",
+            color = Color(0xFF4CAF50),
+            backgroundColor = Color(0xFFE8F5E9)
+        )
     }
 }
 

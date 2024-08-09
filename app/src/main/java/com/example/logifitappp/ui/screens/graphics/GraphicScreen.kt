@@ -1,5 +1,4 @@
 package com.example.logifitappp.ui.screens.graphics
-import SleepSessionCard
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,7 +19,6 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.HeartRateCard
 import com.example.logifitappp.ui.components.graphics.HeartRateData
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
-import com.example.logifitappp.ui.components.graphics.StepTrackingCard
 import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 

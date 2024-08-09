@@ -41,5 +41,10 @@
 
     // CardSleepSession
     <string name="content_description_sleep">Sleep</string>
+    <string name="heart_rate_card_title">Ritmo cardiaco</string>
+
+    // Card Step
+    <string name="without_data">SIN DATOS</string>
+    <string name="connected">CONECTADO</string>
 
 </resources>

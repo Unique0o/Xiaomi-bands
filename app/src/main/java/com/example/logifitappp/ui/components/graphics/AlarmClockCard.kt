@@ -48,7 +48,10 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
                         color = Color.Blue
                     )
                 }
-                ConnectedIndicator(text = "20 min", Color(0xFF4CAF50))
+                ConnectedIndicator(
+                    text = "20 min", Color(0xFF4CAF50),
+                    backgroundColor = Color(0xFFE8F5E9)
+                )
             }
 
             AlarmRow(duration = "5min", startTime = "02:14", endTime = "02:19")
@@ -74,7 +77,7 @@ fun AlarmRow(
                 text = duration,
                 style = MaterialTheme.typography.bodySmall,
 
-            )
+                )
         }
         ProgressBar(color = Color(0xFFFFB300))
         Row(
