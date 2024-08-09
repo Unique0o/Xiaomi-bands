@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
+import com.example.logifitappp.ui.components.graphics.StepTrackingCard
 import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -59,6 +60,9 @@ fun MainScreen1() {
             )
 
             SleepSessionCard(modifier = Modifier)
+            StepTrackingCard(
+                modifier = Modifier
+            )
 
         }
     }
