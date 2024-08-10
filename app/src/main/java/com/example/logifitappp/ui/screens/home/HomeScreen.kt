@@ -16,11 +16,9 @@ import com.example.logifitappp.ui.components.home.HeaderHome
 import com.example.logifitappp.ui.screens.home.SmartBandScreen
 import com.example.logifitappp.ui.screens.home.TestFatigaItem
 import com.example.logifitappp.ui.screens.home.TestsSection
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
-
-val LightBlue = Color(0xFFE8F1FF)
-val DarkBlue = Color(0xFF2E5B9A)
-val Green = Color(0xFF4CAF50)
 
 @Composable
 fun MainScreen() {
@@ -33,7 +31,7 @@ fun MainScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(10.dp)
         ) {
             HeaderHome(
                 title = "Bienvenido de vuelta",
@@ -41,10 +39,11 @@ fun MainScreen() {
                 plan = stringResource(id = R.string.plan)
             )
             OptionsList()
-//            OptionCard()
-            SmartBandScreen()
-            TestsSection()
+//           OptionCard()
+           SmartBandScreen()
+           TestsSection()
             TestFatigaItem()
+
         }
     }
 
@@ -66,7 +65,7 @@ fun BackgroundCurve(modifier: Modifier = Modifier) {
                     size.height * 0.3f
                 ), startAngleDegrees = 0f, sweepAngleDegrees = 90f, forceMoveTo = false
             )
-            quadraticBezierTo(
+            quadraticTo(
                 size.width / 2f, size.height * 0.3f + 40f, cornerRadius, size.height * 0.3f
             )
             arcTo(
@@ -90,8 +89,8 @@ fun OptionsList() {
                 title = stringResource(id = R.string.schedule),
                 status = stringResource(id = R.string.status),
                 R.drawable.ic_clock,
-                statusColor = Green,
-                backgroundColor = Color(0x1A4CAF50),
+                statusColor = Green298,
+                backgroundColor = Lime70,
                 modifier = Modifier.padding()
             )
         }
@@ -100,8 +99,8 @@ fun OptionsList() {
                 title = stringResource(id = R.string.my_location),
                 status = stringResource(id = R.string.PGT),
                 R.drawable.ic_location,
-                statusColor = Green,
-                backgroundColor = Color(0x1A4CAF50),
+                statusColor = Green298,
+                backgroundColor = Lime70,
                 modifier = Modifier.padding()
             )
         }

@@ -13,6 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime70
 
 
 @Composable
@@ -60,9 +63,9 @@ fun SessionHeader() {
         }
         ConnectedIndicator(
             text = "55min",
-            color = Color(0xFF4CAF50),
-            backgroundColor = Color(0xFFE8F5E9),
-            pointColor = Color(0xFF4CAF50)
+            color = Green298,
+            backgroundColor = Lime70,
+            pointColor = Green298
         )
     }
 }
@@ -79,7 +82,7 @@ fun ProgressBar() {
             modifier = Modifier
                 .fillMaxWidth(0.76f)
                 .height(8.dp)
-                .background(Color(0xFF4285F4), RoundedCornerShape(4.dp))
+                .background(Blue690, RoundedCornerShape(4.dp))
         )
         Box(
             modifier = Modifier
@@ -104,7 +107,7 @@ fun SleepTypeDetails() {
                 duration = "23min"
             )
             SleepTypeInfo(
-                color = Color(0xFF4285F4),
+                color = Blue690,
                 type = stringResource(id = R.string.deep_sleep),
                 percentage = "13%",
                 duration = "13min"

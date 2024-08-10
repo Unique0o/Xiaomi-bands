@@ -12,6 +12,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime30
+import com.example.logifitappp.ui.theme.Lime70
+import com.example.logifitappp.ui.theme.Orange390
+import com.example.logifitappp.ui.theme.Stone240
 
 
 @Composable
@@ -22,7 +28,7 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F4F8)),
+        colors = CardDefaults.cardColors(containerColor = Stone240),
     ) {
         Column(
             modifier = Modifier
@@ -39,20 +45,20 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_alarm),
                         contentDescription = stringResource(id = R.string.content_description_alarm),
-                        tint = Color.Blue
+                        tint = Blue690
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = stringResource(id = R.string.wake_up),
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color.Blue
+                        color = Blue690
                     )
                 }
                 ConnectedIndicator(
                     text = "20 min",
-                    color = Color(0xFF4CAF50),
-                    backgroundColor = Color(0xFFE8F5E9),
-                    pointColor = Color(0xFF4CAF50)
+                    color = Green298,
+                    backgroundColor = Lime70,
+                    pointColor = Green298
                 )
             }
 
@@ -81,7 +87,7 @@ fun AlarmRow(
 
                 )
         }
-        ProgressBar(color = Color(0xFFFFB300))
+        ProgressBar(color = Orange390)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,

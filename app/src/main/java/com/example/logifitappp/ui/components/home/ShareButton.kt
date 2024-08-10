@@ -22,6 +22,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.theme.Blue130
+import com.example.logifitappp.ui.theme.Blue690
 
 @Composable
 fun ShareButton(
@@ -32,7 +34,7 @@ fun ShareButton(
 ) {
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3)),
+        colors = ButtonDefaults.buttonColors(containerColor = Blue690),
         shape = RoundedCornerShape(30.dp),
         modifier = modifier
     ) {
@@ -49,7 +51,7 @@ fun ShareButton(
             Text(
                 text = title,
                 color = color,
-                fontSize = 12.sp,
+                fontSize = 10.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Medium
             )

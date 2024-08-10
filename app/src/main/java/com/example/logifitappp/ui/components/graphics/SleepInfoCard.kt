@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.theme.Blue690
 
 @Composable
 fun SleepInfoCard(modifier: Modifier = Modifier) {
@@ -57,7 +58,7 @@ fun SleepInfoCard(modifier: Modifier = Modifier) {
                     isColumn = true
                 )
                 SleepTypeInfo(
-                    color = Color(0xFF4285F4),
+                    color = Blue690,
                     type = stringResource(id = R.string.deep_sleep),
                     percentage = "4%",
                     duration = "50min",

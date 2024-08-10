@@ -31,8 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.theme.Blue690
 
-val DarkBlue = Color(0xFF2E5B9A)
 
 @Composable
 fun CardItem(
@@ -45,7 +45,7 @@ fun CardItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(8.dp)
             .height(56.dp),
 
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -115,29 +115,30 @@ fun CardItemWithDescription(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-//        elevation = 4.dp,
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp),
-//        backgroundColor = Color.White
+      colors = CardDefaults.cardColors(containerColor = Color.White),
     ) {
         Column(modifier = modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = iconRes),
                     contentDescription = null,
-                    tint = DarkBlue
+                    tint = Blue690
                 )
                 Text(
                     text = title,
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 16.dp),
-                    color = DarkBlue,
+                    color = Blue690,
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(
                     onClick = onClick,
                     modifier = modifier
-                        .background(DarkBlue, CircleShape)
+                        .background(Blue690, CircleShape)
                         .size(24.dp)
                 ) {
                     Icon(

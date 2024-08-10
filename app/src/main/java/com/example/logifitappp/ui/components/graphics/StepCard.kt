@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.screens.graphics.MainScreen1
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.ui.theme.Stone240
+import com.example.logifitappp.ui.theme.Stone470
+import com.example.logifitappp.ui.theme.White
 
 
 @Composable
@@ -40,7 +43,7 @@ fun StepChart(
             .padding(top = 16.dp, bottom = 24.dp, end = 16.dp)
             .drawBehind {
             drawRect(
-                color = Color.LightGray,
+                color = Stone470,
                 size = Size(1.dp.toPx(), size.height),
                 topLeft = Offset(size.width - 1.dp.toPx(), 0f)
             )
@@ -53,9 +56,9 @@ fun StepChart(
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "50", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
-            Text(text = "25", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
-            Text(text = "0", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+            Text(text = "50", style = MaterialTheme.typography.labelSmall, color = Stone470)
+            Text(text = "25", style = MaterialTheme.typography.labelSmall, color = Stone470)
+            Text(text = "0", style = MaterialTheme.typography.labelSmall, color = Stone470)
         }
 
         // Bars
@@ -86,7 +89,7 @@ fun StepChart(
                 .fillMaxWidth()
                 .padding(end = 2.dp),
             thickness = 0.5.dp,
-            color = Color.LightGray
+            color = Stone470
         )
         Row(
             modifier = Modifier
@@ -99,7 +102,7 @@ fun StepChart(
                 Text(
                     text = time,
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray,
+                    color = Stone470,
                     modifier = Modifier.width(40.dp),
                     textAlign = TextAlign.Center,
                 )
@@ -145,7 +148,7 @@ fun StepTrackingCard(modifier: Modifier = Modifier) {
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = White
         )
     ) {
         Column(

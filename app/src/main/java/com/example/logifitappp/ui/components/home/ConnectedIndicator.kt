@@ -40,7 +40,7 @@ fun ConnectedIndicator(
         Text(
             text = text,
             color = color,
-            fontSize = 12.sp,
+            fontSize = 10.sp,
             fontWeight = FontWeight.Medium
         )
     }
