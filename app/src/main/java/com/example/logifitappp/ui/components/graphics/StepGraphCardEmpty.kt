@@ -21,6 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime30
+import com.example.logifitappp.ui.theme.Lime70
+import com.example.logifitappp.ui.theme.Stone470
+import com.example.logifitappp.ui.theme.White
 
 @Composable
 fun StepGraphCard(
@@ -37,7 +42,7 @@ fun StepGraphCard(
         elevation = CardDefaults.cardElevation(8.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = White
         )
     ) {
         Column(
@@ -83,9 +88,9 @@ private fun Header(
             Spacer(modifier = Modifier.width(8.dp))
             ConnectedIndicator(
                 text = stringResource(id = R.string.without_data),
-                color = Color.LightGray,
+                color = Stone470,
                 backgroundColor = backgroundColorConnect,
-                pointColor = Color.LightGray
+                pointColor = Stone470
             )
         }
     }
@@ -145,8 +150,8 @@ private fun TimeLabels() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = "00:00", fontSize = 12.sp, color = Color.Gray)
-        Text(text = "24:00", fontSize = 12.sp, color = Color.Gray)
+        Text(text = "00:00", fontSize = 12.sp, color = Stone470)
+        Text(text = "24:00", fontSize = 12.sp, color = Stone470)
     }
 }
 
@@ -158,9 +163,9 @@ fun MyScreen() {
         data = stepData,
         modifier = Modifier.padding(16.dp),
         iconResId = R.drawable.ic_fire,
-        backgroundColorConnect = Color(0xFFE8F5E9),
-        barColor = Color(0xFFE8F5E9),
-        accentColor = Color(0xFF4CAF50)
+        backgroundColorConnect = Lime30,
+        barColor =Lime70,
+        accentColor = Green298
     )
 }
 

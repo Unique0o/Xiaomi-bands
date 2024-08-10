@@ -16,13 +16,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.graphics.AlarmClockCard
 import com.example.logifitappp.ui.components.graphics.HeartRateCard
 import com.example.logifitappp.ui.components.graphics.HeartRateData
 import com.example.logifitappp.ui.components.graphics.MyScreen
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
 import com.example.logifitappp.ui.components.graphics.StepGraphCard
 import com.example.logifitappp.ui.components.home.CardItem
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime30
+import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.ui.theme.Orange170
+import com.example.logifitappp.ui.theme.Rose120
 
 @Composable
 fun MainScreen1() {
@@ -41,24 +47,24 @@ fun MainScreen1() {
 //        Spacer(modifier = Modifier.height(16.dp))
 //        StepsMetricsCard()
 //        Spacer(modifier = Modifier.height(16.dp))
-//       AlarmClockCard(modifier = Modifier.padding(16.dp))
-            SleepInfoCard(modifier = Modifier)
-            CardItem(
-                title = stringResource(id = R.string.title_condition_sleep),
-                status = stringResource(id = R.string.status_person),
-                iconRes = R.drawable.ic_nights_stay ,
-                statusColor = Color(0xFF4CAF50),
-                backgroundColor = Color(0x1A4CAF50),
-                modifier = Modifier
-            )
-            CardItem(
-                title = stringResource(id = R.string.title_fatige),
-                status = stringResource(id = R.string.status_no_apto),
-                iconRes = R.drawable.ic_nights_stay ,
-                statusColor = Color(0xFFFF647C),
-                backgroundColor = Color(0xFFFFE0E5),
-                modifier = Modifier
-            )
+       AlarmClockCard(modifier = Modifier.padding(16.dp))
+//            SleepInfoCard(modifier = Modifier)
+//            CardItem(
+//                title = stringResource(id = R.string.title_condition_sleep),
+//                status = stringResource(id = R.string.status_person),
+//                iconRes = R.drawable.ic_nights_stay ,
+//                statusColor = Color(0xFF4CAF50),
+//                backgroundColor = Color(0x1A4CAF50),
+//                modifier = Modifier
+//            )
+//            CardItem(
+//                title = stringResource(id = R.string.title_fatige),
+//                status = stringResource(id = R.string.status_no_apto),
+//                iconRes = R.drawable.ic_nights_stay ,
+//                statusColor = Color(0xFFFF647C),
+//                backgroundColor = Color(0xFFFFE0E5),
+//                modifier = Modifier
+//            )
 
 //            SleepSessionCard(modifier = Modifier)
 //            val sampleData = HeartRateData(
@@ -75,18 +81,18 @@ fun MainScreen1() {
                 data = stepData,
                 modifier = Modifier.padding(16.dp),
                 iconResId = R.drawable.ic_fire,
-                backgroundColorConnect = Color.Gray,
-                barColor = Color(0xFFE8F5E9),
-                accentColor = Color(0xFF4CAF50)
+                backgroundColorConnect = Lime30,
+                barColor = Lime70,
+                accentColor = Green298
             )
             StepGraphCard(
                 title = stringResource(id = R.string.graph_card_heart_rate),
                 data = stepData,
                 modifier = Modifier.padding(16.dp),
                 iconResId = R.drawable.ic_heart_rate,
-                barColor = Color(0xFFFFE0E5),
-                backgroundColorConnect = Color.Gray,
-                accentColor = Color(0xFFFF647C)
+                barColor = Orange170,
+                backgroundColorConnect = Lime30,
+                accentColor = Rose120
             )
 
         }

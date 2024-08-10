@@ -21,13 +21,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Lime30
+import com.example.logifitappp.ui.theme.Stone240
+import com.example.logifitappp.ui.theme.Stone470
+import com.example.logifitappp.ui.theme.Zinc680
 
 @Composable
 fun EmptyInfoGraph(
     title: String,
     timeRange: String,
-    backgroundColor: Color = Color(0xFFF5F5F5),
-    textColor: Color = Color(0xFF757575),
+    backgroundColor: Color = Stone240,
+    textColor:  Color = Blue690,
     accentColor: Color = Color(0xFF2196F3),
     modifier: Modifier = Modifier
 ) {
@@ -77,9 +82,9 @@ private fun Header(
             )
         }
         ConnectedIndicator(text = stringResource(id = R.string.without_data),
-            color = Color.Gray,
-            backgroundColor = Color(0x1A000000),
-            pointColor = Color.Gray,
+            color = Zinc680,
+            backgroundColor = Lime30,
+            pointColor = Zinc680,
         )
     }
 }
@@ -98,7 +103,7 @@ private fun EmptyBars() {
                     .weight(1f)
                     .fillMaxHeight()
                     .padding(horizontal = 2.dp)
-                    .background(Color(0xFFE0E0E0))
+                    .background(Stone470)
             )
         }
     }

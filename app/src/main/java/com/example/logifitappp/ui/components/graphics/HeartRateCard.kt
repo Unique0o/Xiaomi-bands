@@ -21,6 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Orange170
+import com.example.logifitappp.ui.theme.Rose120
+import com.example.logifitappp.ui.theme.Stone470
+import com.example.logifitappp.ui.theme.White
 
 data class HeartRateData(
     val date: String,
@@ -37,7 +42,7 @@ fun HeartRateCard(heartRateData: HeartRateData, modifier: Modifier) {
             .fillMaxWidth()
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-       colors = CardDefaults.cardColors(containerColor = Color.White),
+       colors = CardDefaults.cardColors(containerColor = White),
     ) {
         Column(
             modifier = modifier
@@ -84,12 +89,12 @@ fun HeartRateSummary(data: HeartRateData) {
         Text(
             text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
             style = MaterialTheme.typography.labelSmall,
-            color = Color.Blue
+            color = Blue690
         )
         Text(
             text = data.timeRange,
             style = MaterialTheme.typography.labelSmall,
-            color = Color.Gray
+            color = Stone470
         )
     }
 }
@@ -145,9 +150,9 @@ fun HeartRateChart(rates: List<Int>) {
 
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("50", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
-            Text("25", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
-            Text("0", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+            Text("50", style = MaterialTheme.typography.bodySmall, color = Stone470)
+            Text("25", style = MaterialTheme.typography.bodySmall, color = Stone470)
+            Text("0", style = MaterialTheme.typography.bodySmall, color = Stone470)
         }
 
         // Bars
@@ -170,12 +175,12 @@ fun HeartRateChart(rates: List<Int>) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Red)
+                            .background(Rose120)
                     )
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Red.copy(alpha = 0.3f))
+                            .background(Orange170.copy(alpha = 0.3f))
                     )
                 }
             }

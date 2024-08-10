@@ -30,7 +30,7 @@ fun ConnectedIndicator(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
             .background(backgroundColor, RoundedCornerShape(12.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
     ) {
         Box(
             modifier = modifier
@@ -40,7 +40,7 @@ fun ConnectedIndicator(
         Text(
             text = text,
             color = color,
-            fontSize = 12.sp,
+            fontSize = 10.sp,
             fontWeight = FontWeight.Medium
         )
     }
