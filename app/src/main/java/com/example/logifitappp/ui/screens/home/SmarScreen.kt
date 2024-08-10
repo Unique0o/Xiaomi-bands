@@ -133,7 +133,12 @@ fun BatteryStatus(
             Spacer(modifier = Modifier.width(8.dp))
             Text(title, color = color)
         }
-        ConnectedIndicator("CONECTADO", Color(0xFF4CAF50))
+        ConnectedIndicator(
+            text = stringResource(id = R.string.connected),
+            color = Color(0xFF4CAF50),
+            backgroundColor = Color(0xFFE8F5E9),
+            pointColor = Color(0xFF4CAF50)
+        )
     }
 }
 
@@ -155,7 +160,7 @@ fun WarningMessage(
             color = color
         )
         Icon(
-            painter = painterResource(id = R.drawable.ic_arrow_upward),
+            painter = painterResource(id = R.drawable.ic_cloud_upload),
             contentDescription = null,
             tint = Color.White,
             modifier = modifier
@@ -202,10 +207,10 @@ fun WarningMessage(
 //    }
 //}
 fun StatusCard(title: String, isApt: Boolean) {
-    val backgroundColor = if (isApt) Color(0xFFE8F5E9) else Color(0xFFFFEBEE)
+    val backgroundColor = if (isApt) Color(0xFFE8F5E9) else Color(0xFFFFE0E5)
     val iconColor = if (isApt) Color(0xFF4CAF50) else Color(0xFFF44336)
     val statusText = if (isApt) "APTO" else "NO APTO"
-    val statusColor = if (isApt) Color(0xFF4CAF50) else Color(0xFFF44336)
+    val statusColor = if (isApt) Color(0xFF4CAF50) else Color(0xFFFF647C)
 
     Card(
         modifier = Modifier
@@ -420,7 +425,9 @@ fun TestFatigaItem() {
                 Spacer(modifier = Modifier.weight(1f))
                 ConnectedIndicator(
                     text = stringResource(id = R.string.status_person),
-                    color = Color(0xFF4CAF50)
+                    color = Color(0xFF4CAF50),
+                    backgroundColor = Color(0xFFE8F5E9),
+                    pointColor = Color(0xFF4CAF50)
                 )
 
             }

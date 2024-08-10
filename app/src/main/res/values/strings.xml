@@ -23,11 +23,32 @@
     <string name="card_description">Recuerda activar tu Bluetooth y mantener tu Smartband cerca a tu celular para facilitar la conexión.</string>
     <string name="title_my_test">Mis tests de somnolencia</string>
     <string name="card_description_message">Realiza un test de somnolencia para verificar si estás apto/a para realizar tus labores.</string>
-
-
+    <string name="title_condition_sleep">Condiciones del sueño</string>
+    <string name="status_no_apto">NO APTO</string>
     <string name="add_content_description">Añadir</string>
     <string name="profile_pic">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
+  
+    <string name="title_fatige">Fatiga</string>
+
+    // Graphics
+
+    <string name="wake_up">Despertar</string>
+    <string name="content_description_alarm">Alarma</string>
+    <string name="information_sleep">Información del sueño</string>
+    <string name="light_sleep">Sueño ligero</string>
+    <string name="deep_sleep">Sueño profundo</string>
+    <string name="rem_sleep">Sueño REM</string>
+
+    // CardSleepSession
+    <string name="content_description_sleep">Sleep</string>
+    <string name="heart_rate_card_title">Ritmo cardiaco</string>
+
+    // Card Step
+    <string name="without_data">SIN DATOS</string>
+    <string name="connected">CONECTADO</string>
+    <string name="kcal">0 kcal</string>
+    <string name="graph_card_heart_rate">Ultima medicion registrada</string>
   
     <string name="app_name">Logifit</string>
     <string name="button_get_into">Get into</string>
@@ -42,4 +63,5 @@
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+
 </resources>
