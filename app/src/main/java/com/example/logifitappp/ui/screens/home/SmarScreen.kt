@@ -213,18 +213,13 @@ fun StatusCard(title: String, isApt: Boolean) {
                 tint = iconColor,
                 modifier = Modifier.size(62.dp)
             )
-            Box(
-                modifier = Modifier
-                    .background(backgroundColor, RoundedCornerShape(16.dp))
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
-            ) {
-                Text(
-                    statusText,
-                    color = statusColor,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
+
+            ConnectedIndicator(
+                text = statusText,
+                color = statusColor,
+                backgroundColor = backgroundColor,
+                pointColor = statusColor
+            )
         }
     }
 }
