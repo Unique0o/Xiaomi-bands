@@ -49,8 +49,10 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
                     )
                 }
                 ConnectedIndicator(
-                    text = "20 min", Color(0xFF4CAF50),
-                    backgroundColor = Color(0xFFE8F5E9)
+                    text = "20 min",
+                    color = Color(0xFF4CAF50),
+                    backgroundColor = Color(0xFFE8F5E9),
+                    pointColor = Color(0xFF4CAF50)
                 )
             }
 

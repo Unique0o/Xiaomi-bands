@@ -135,8 +135,9 @@ fun BatteryStatus(
         }
         ConnectedIndicator(
             text = stringResource(id = R.string.connected),
-            Color(0xFF4CAF50),
-            backgroundColor = Color(0xFF4CAF50)
+            color = Color(0xFF4CAF50),
+            backgroundColor = Color(0xFFE8F5E9),
+            pointColor = Color(0xFF4CAF50)
         )
     }
 }
@@ -425,7 +426,8 @@ fun TestFatigaItem() {
                 ConnectedIndicator(
                     text = stringResource(id = R.string.status_person),
                     color = Color(0xFF4CAF50),
-                    backgroundColor = Color(0xFF4CAF50)
+                    backgroundColor = Color(0xFFE8F5E9),
+                    pointColor = Color(0xFF4CAF50)
                 )
 
             }

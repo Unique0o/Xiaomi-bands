@@ -46,5 +46,7 @@
     // Card Step
     <string name="without_data">SIN DATOS</string>
     <string name="connected">CONECTADO</string>
+    <string name="kcal">0 kcal</string>
+    <string name="graph_card_heart_rate">Ultima medicion registrada</string>
 
 </resources>

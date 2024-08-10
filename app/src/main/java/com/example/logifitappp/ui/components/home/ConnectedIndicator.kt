@@ -18,18 +18,24 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Alignment
 
 @Composable
-fun ConnectedIndicator(text: String, color: Color, backgroundColor: Color, modifier: Modifier = Modifier) {
+fun ConnectedIndicator(
+    text: String,
+    color: Color,
+    backgroundColor:
+    Color, pointColor: Color,
+    modifier: Modifier = Modifier
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
-            .background(Color(0xFFE8F5E9), RoundedCornerShape(12.dp))
+            .background(backgroundColor, RoundedCornerShape(12.dp))
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         Box(
             modifier = modifier
                 .size(8.dp)
-                .background(backgroundColor, CircleShape)
+                .background(pointColor, CircleShape)
         )
         Text(
             text = text,

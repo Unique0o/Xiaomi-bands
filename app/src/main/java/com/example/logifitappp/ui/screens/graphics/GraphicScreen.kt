@@ -18,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.HeartRateCard
 import com.example.logifitappp.ui.components.graphics.HeartRateData
+import com.example.logifitappp.ui.components.graphics.MyScreen
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
+import com.example.logifitappp.ui.components.graphics.StepGraphCard
 import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -59,14 +61,33 @@ fun MainScreen1() {
             )
 
 //            SleepSessionCard(modifier = Modifier)
-            val sampleData = HeartRateData(
-                date = "Noviembre 20, 2023",
-                minRate = 70,
-                maxRate = 101,
-                timeRange = "02:00 - 02:30",
-                rates = listOf(30, 45, 20, 35, 25, 40)
+//            val sampleData = HeartRateData(
+//                date = "Noviembre 20, 2023",
+//                minRate = 70,
+//                maxRate = 101,
+//                timeRange = "02:00 - 02:30",
+//                rates = listOf(30, 45, 20, 35, 25, 40)
+//            )
+//            HeartRateCard(heartRateData = sampleData, modifier = Modifier)
+            val stepData = List(24) { kotlin.random.Random.nextFloat() }
+            StepGraphCard(
+                title = stringResource(id = R.string.kcal),
+                data = stepData,
+                modifier = Modifier.padding(16.dp),
+                iconResId = R.drawable.ic_fire,
+                backgroundColorConnect = Color.Gray,
+                barColor = Color(0xFFE8F5E9),
+                accentColor = Color(0xFF4CAF50)
             )
-            HeartRateCard(heartRateData = sampleData, modifier = Modifier)
+            StepGraphCard(
+                title = stringResource(id = R.string.graph_card_heart_rate),
+                data = stepData,
+                modifier = Modifier.padding(16.dp),
+                iconResId = R.drawable.ic_heart_rate,
+                barColor = Color(0xFFFFE0E5),
+                backgroundColorConnect = Color.Gray,
+                accentColor = Color(0xFFFF647C)
+            )
 
         }
     }
