@@ -1,36 +1,53 @@
 package com.example.logifitappp.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    error = Rose120,
+    errorContainer = Orange170,
+    onErrorContainer = Rose120,
+    onPrimary = White,
+    onPrimaryContainer = Blue690,
+    onSecondaryContainer = Green298,
+    onSurface = White,
+    onSurfaceVariant = Slate105,
+    onTertiaryContainer = Orange390,
+    outline = White,
+    outlineVariant = Blue690,
+    primary = Blue690,
+    primaryContainer = Blue130,
+    secondaryContainer = Lime70,
+    surface = Zinc940,
+    surfaceContainer = Slate705,
+    surfaceContainerLowest = Lime30,
+    surfaceTint = Stone470,
+    tertiaryContainer = Amber60,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    error = Rose120,
+    errorContainer = Orange170,
+    onErrorContainer = Rose120,
+    onPrimary = White,
+    onPrimaryContainer = Blue690,
+    onSecondaryContainer = Green298,
+    onSurface = Zinc940,
+    onSurfaceVariant = Zinc680,
+    onTertiaryContainer = Orange390,
+    outline = Stone240,
+    outlineVariant = Blue690,
+    primary = Blue690,
+    primaryContainer = Blue130,
+    secondaryContainer = Lime70,
+    surface = Lime30,
+    surfaceContainer = White,
+    surfaceContainerLowest = Lime30,
+    surfaceTint = Stone470,
+    tertiaryContainer = Amber60,
 )
 
 @Composable
@@ -41,11 +58,6 @@ fun LogifitApppTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
