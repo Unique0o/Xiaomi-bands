@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.theme.Blue690
 
 data class RankingUser(
     val id: Int,
@@ -33,28 +36,41 @@ fun RankingScreen(
     title: String,
     subtitle: String,
     topUsers: List<RankingUser>,
-    otherUsers: List<RankingUser>,
-    modifier: Modifier = Modifier
+    otherUsers: List<RankingUser>
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        RankingHeader(title, subtitle)
-        TopRankedUsers(topUsers)
-        OtherRankedUsers(otherUsers)
+    Scaffold(
+        topBar = { RankingTopAppBar(title) }
+    ) { paddingValues ->
+        Column(modifier = Modifier.padding(paddingValues)) {
+            RankingHeader(title, subtitle)
+            TopRankedUsers(topUsers)
+            OtherRankedUsers(otherUsers)
+        }
     }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RankingTopAppBar(title: String) {
+    TopAppBar(
+        title = { Text(title, color = Blue690,  textAlign = TextAlign.Center) },
+        actions = {
+            IconButton(onClick = { /* TODO */ }) {
+                Icon(
+                    Icons.Default.Person,
+                    contentDescription = "User",
+                    tint = Blue690
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White
+        ),
+    )
 }
 
 @Composable
 fun RankingHeader(title: String, subtitle: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
 
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(text = title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.Blue)
-    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -79,7 +95,7 @@ fun TopRankedUsers(users: List<RankingUser>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp, bottom = 16.dp),
+            .padding(top = 32.dp, bottom = 20.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.Bottom
     ) {
@@ -102,7 +118,7 @@ fun TopUserItem(user: RankingUser, rank: Int) {
                 modifier = Modifier
                     .size(if (rank == 1) 100.dp else 80.dp)
                     .clip(CircleShape)
-                    .border(2.dp, Color.Blue, CircleShape),
+                    .border(2.dp,Blue690, CircleShape),
                 contentScale = ContentScale.Crop
             )
             Image(
@@ -124,7 +140,7 @@ fun TopUserItem(user: RankingUser, rank: Int) {
         )
         Text(
             text = user.score.toString(),
-            color = Color.Blue,
+            color = Blue690,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp
         )
@@ -147,7 +163,7 @@ fun OtherUserItem(user: RankingUser) {
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = if (user.id % 2 == 0) Color.White else Color.Blue.copy(alpha = 0.1f)),
+        colors = CardDefaults.cardColors(containerColor = if (user.id % 2 == 0) Color.White else Blue690.copy(alpha = 0.1f)),
     ) {
         Row(
             modifier = Modifier
@@ -176,7 +192,7 @@ fun OtherUserItem(user: RankingUser) {
             )
             Text(
                 text = user.score.toString(),
-                color = Color.Blue,
+                color = Blue690,
                 fontWeight = FontWeight.Bold
             )
         }

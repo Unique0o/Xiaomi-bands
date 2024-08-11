@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.navigation.compose)
     implementation(libs.material.icons)
+    implementation(libs.coil.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
