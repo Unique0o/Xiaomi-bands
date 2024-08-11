@@ -12,6 +12,7 @@ composeNav = "2.8.0-beta04"
 kotlinxSerializationJson = "1.6.3"
 serializationKotlin = "1.9.0"
 materialIcons = "1.6.8"
+coil = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ material-icons = { group = "androidx.compose.material", name = "material-icons-e
 
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNav" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
