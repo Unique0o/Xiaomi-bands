@@ -91,7 +91,7 @@ fun HeaderHome(
         Icon(
             imageVector = Icons.Default.Notifications,
             contentDescription = stringResource(id = R.string.notificacions_content_description),
-            tint = MaterialTheme.colorScheme.primary
+            tint = Blue690
         )
     }
 }

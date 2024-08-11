@@ -39,14 +39,14 @@ fun StepGraphCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(8.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = White
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(10.dp)
         ) {
             Header(title, accentColor, backgroundColorConnect, iconResId)
             Spacer(modifier = Modifier.height(16.dp))
@@ -105,7 +105,7 @@ private fun StepGraph(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp),
+            .height(90.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {

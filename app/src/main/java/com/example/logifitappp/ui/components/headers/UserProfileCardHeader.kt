@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,11 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.White
 
 @Composable
 fun UserProfileCard(
     userName: String,
     userType: String,
+    plan: String,
+    modifier: Modifier = Modifier,
     @DrawableRes profileImageRes: Int,
     onNotificationClick: () -> Unit
 ) {
@@ -33,7 +37,8 @@ fun UserProfileCard(
             .fillMaxWidth()
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = White)
     ) {
         Row(
             modifier = Modifier
@@ -62,11 +67,21 @@ fun UserProfileCard(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                Text(
-                    text = userType,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Blue690
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        tint = Blue690,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Text(
+                        text = plan,
+                        color = Blue690,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = modifier.padding(start = 4.dp)
+                    )
+                }
             }
 
             IconButton(onClick = onNotificationClick) {
@@ -78,6 +93,7 @@ fun UserProfileCard(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun UserProfileCardPreview() {
@@ -85,6 +101,7 @@ fun UserProfileCardPreview() {
         userName = "MARIA MERCEDES",
         userType = "PREMIUM",
         profileImageRes = R.drawable.user1,
-        onNotificationClick = { }
+        onNotificationClick = { },
+        plan = "PREMIUM"
     )
 }
