@@ -36,78 +36,86 @@ fun StepChart(
     val barWidth = 6.dp
     val barSpacing = 16.dp
 
-    Box(
+    Row(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(top = 16.dp, bottom = 24.dp, end = 16.dp)
-            .drawBehind {
-            drawRect(
-                color = Stone470,
-                size = Size(1.dp.toPx(), size.height),
-                topLeft = Offset(size.width - 1.dp.toPx(), 0f)
+            .padding(top = 16.dp, bottom = 8.dp)
+    ) {
+        // Chart area
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .height(200.dp)
+                .drawBehind {
+                    drawRect(
+                        color = Stone470,
+                        size = Size(1.dp.toPx(), size.height),
+                        topLeft = Offset(size.width - 1.dp.toPx(), 0f)
+                    )
+                }
+        ) {
+            ChartGrids()
+            // Bars
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(end = 24.dp, bottom = 1.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                steps.forEach { step ->
+                    Box(
+                        modifier = Modifier
+                            .width(barWidth)
+                            .fillMaxHeight(step.toFloat() / maxValue)
+                            .background(
+                                Color(0xFF8BC34A),
+                                RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
+                            )
+                    )
+                    Spacer(modifier = Modifier.width(barSpacing))
+                }
+            }
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .padding(end = 2.dp),
+                thickness = 0.5.dp,
+                color = Stone470
             )
         }
-    ) {
-        ChartGrids()
+
         Column(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceBetween
+                .width(40.dp)
+                .fillMaxHeight()
+                .padding(end = 8.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "50", style = MaterialTheme.typography.labelSmall, color = Stone470)
             Text(text = "25", style = MaterialTheme.typography.labelSmall, color = Stone470)
             Text(text = "0", style = MaterialTheme.typography.labelSmall, color = Stone470)
         }
+    }
 
-        // Bars
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(end = 24.dp, bottom = 1.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            steps.forEach { step ->
-                Box(
-                    modifier = Modifier
-                        .width(barWidth)
-                        .fillMaxHeight(step.toFloat() / maxValue)
-                        .background(
-                            Color(0xFF8BC34A),
-                            RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
-                        )
-                )
-                Spacer(modifier = Modifier.width(barSpacing))
-            }
-        }
-
-        HorizontalDivider(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .fillMaxWidth()
-                .padding(end = 2.dp),
-            thickness = 0.5.dp,
-            color = Stone470
-        )
-        Row(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .fillMaxWidth()
-                .padding(end = 24.dp, top = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
-                Text(
-                    text = time,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Stone470,
-                    modifier = Modifier.width(40.dp),
-                    textAlign = TextAlign.Center,
-                )
-
-            }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end = 40.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
+            Text(
+                text = time,
+                style = MaterialTheme.typography.labelSmall,
+                color = Stone470,
+                modifier = Modifier.width(40.dp),
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }

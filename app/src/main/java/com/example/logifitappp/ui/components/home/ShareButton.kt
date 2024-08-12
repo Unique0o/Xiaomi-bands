@@ -2,7 +2,6 @@ package com.example.logifitappp.ui.components.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -46,14 +45,14 @@ fun ShareButton(
                 imageVector = Icons.Default.Share,
                 contentDescription = stringResource(R.string.share),
                 tint = Color.White,
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(14.dp)
             )
             Text(
                 text = title,
                 color = color,
-                fontSize = 10.sp,
+                fontSize = 16.sp,
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
             )
         }
     }
