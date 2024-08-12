@@ -12,6 +12,7 @@ composeNav = "2.8.0-beta04"
 kotlinxSerializationJson = "1.6.3"
 serializationKotlin = "1.9.0"
 materialIcons = "1.6.8"
+coreSplashscreen = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIcons" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNav" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

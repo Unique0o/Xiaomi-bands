@@ -21,10 +21,11 @@ fun ColumnStackHeader(
     navigation: NavHostController,
     title: String
 ) {
-    Column(modifier = Modifier.padding(vertical = 16.dp)) {
+    Column(modifier = Modifier.padding(16.dp)) {
         IconButton(
             backgroundColor = Color.Transparent,
             elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
+            horizontalPadding = 0.dp,
             icon = Icons.AutoMirrored.Rounded.KeyboardBackspace,
             onClick = { navigation.popBackStack() },
             text = stringResource(id = R.string.go_back),
@@ -32,7 +33,6 @@ fun ColumnStackHeader(
         )
 
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
             text = title,
             typography = MaterialTheme.typography.displayLarge
         )

@@ -65,13 +65,12 @@ fun LoginForm(
             value = loginViewModel.password
         )
 
-        Row {
+        Row(modifier = Modifier.padding(top = 8.dp)) {
             Spacer(modifier = Modifier.weight(1f))
             
             IconButton(
                 icon = Icons.AutoMirrored.Rounded.Login,
                 onClick = onSubmit,
-                modifier = Modifier.padding(top = 8.dp),
                 text = stringResource(id = R.string.button_get_into)
             )
         }
