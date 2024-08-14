@@ -13,6 +13,8 @@ kotlinxSerializationJson = "1.6.3"
 serializationKotlin = "1.9.0"
 materialIcons = "1.6.8"
 coil = "2.7.0"
+hiltAndroid = "2.51.1"
+retrofit = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,8 +37,14 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
+convert-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit"}
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid"}
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 serialization-kotlin = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serializationKotlin" }
-
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
