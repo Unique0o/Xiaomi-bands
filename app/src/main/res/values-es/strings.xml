@@ -68,4 +68,7 @@
     <string name="searching_for_devices">Buscando dispositivos</string>
     <string name="make_your_device_detectable">Haz tu dispositivo detectable</string>
     <string name="device_detection_info">Los dispositivos conectados no son detectables en Android 6 o superior, por lo que se necesita activar la localización (GPS). Desactiva Privacy Guard para Logfit. Si tu dispositivo no aparece en dos minutos, inténtalo nuevamente después de reiniciar tu teléfono.</string>
+
+    <string name="add_device">Vincula una Smart Band</string>
+    <string name="text_no_device">No tienes ninguna banda conectada</string>
 </resources>
