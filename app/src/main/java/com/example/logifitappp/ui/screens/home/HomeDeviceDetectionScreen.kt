@@ -1,10 +1,13 @@
 package com.example.logifitappp.ui.screens.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.home.Device.DeviceCard
 import com.example.logifitappp.ui.components.home.Device.InfoMessage
 import com.example.logifitappp.ui.components.home.Device.LoadingSpinner
 import com.example.logifitappp.ui.components.pages.SimplePage
@@ -38,28 +42,45 @@ fun DeviceDetectionScreen(
 ) {
     SimplePage(
         content = {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 180.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier.fillMaxSize()
             ) {
-                LoadingSpinner(
-                    text = stringResource(R.string.searching_for_devices),
+                Column(
                     modifier = Modifier
-                        .padding(top = 130.dp)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                InfoMessage(
-                    icon = Icons.Filled.Info,
-                    title = stringResource(R.string.make_your_device_detectable),
-                    message = stringResource(R.string.device_detection_info),
-                    modifier = Modifier
-                        .padding(bottom = 36.dp)
-                )
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                    ) {
+                        items(8) {
+                            DeviceCard(
+                                deviceName = "Mi Smart Band 4",
+                                deviceId = "DF:29:4A:30:2A:1C"
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+//                LoadingSpinner(
+//                    text = stringResource(R.string.searching_for_devices),
+//                    modifier = Modifier
+//                        .padding(top = 130.dp)
+//                )
+//                    Spacer(modifier = Modifier.weight(1f))
+                    InfoMessage(
+                        icon = Icons.Filled.Info,
+                        title = stringResource(R.string.make_your_device_detectable),
+                        message = stringResource(R.string.device_detection_info),
+                        modifier = Modifier
+                            .padding(bottom = 36.dp)
+                    )
+                }
+
+
             }
-
-
         },
         topBar = {
             TopAppBar(
@@ -95,6 +116,7 @@ fun DeviceDetectionScreenPreview() {
         DeviceDetectionScreen(rememberNavController())
     }
 }
+
 @Preview
 @Composable
 fun DeviceDetectionDarkScreenPreview() {

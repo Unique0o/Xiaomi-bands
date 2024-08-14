@@ -1,6 +1,8 @@
 package com.example.logifitappp.ui.components.home.Device
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Watch
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -70,6 +72,35 @@ fun InfoMessage(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
+        }
+    }
+}
+
+@Composable
+fun DeviceCard(deviceName: String, deviceId: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.Watch,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Text(text = deviceName, style = MaterialTheme.typography.bodyLarge)
+                Text(text = deviceId, style = MaterialTheme.typography.bodyMedium)
+            }
         }
     }
 }
