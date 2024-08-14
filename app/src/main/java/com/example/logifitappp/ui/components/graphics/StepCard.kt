@@ -105,7 +105,7 @@ fun StepChart(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(end = 40.dp),
+            .padding(end = 40.dp, top= 1.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
