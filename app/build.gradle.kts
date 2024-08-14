@@ -74,7 +74,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
+    implementation("ch.qos.logback:logback-classic:1.4.7")
     implementation(libs.retrofit)
     implementation(libs.convert.gson)
 

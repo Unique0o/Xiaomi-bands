@@ -63,4 +63,8 @@
     <string name="title_card_message_raking">You`re on top</string>
     <string name="message_card_message_ranking">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
 
+    <string name="searching_for_devices">Searching for devices</string>
+    <string name="make_your_device_detectable">Make your device detectable</string>
+    <string name="device_detection_info">Connected devices are not detectable on Android 6 or higher, so you need to enable location (GPS). Disable Privacy Guard for Logfit. If your device does not show up within two minutes, try again after restarting your phone.</string>
+    <string name="detecting_devices">Detecting devices</string>
 </resources>
