@@ -67,4 +67,6 @@
     <string name="make_your_device_detectable">Make your device detectable</string>
     <string name="device_detection_info">Connected devices are not detectable on Android 6 or higher, so you need to enable location (GPS). Disable Privacy Guard for Logfit. If your device does not show up within two minutes, try again after restarting your phone.</string>
     <string name="detecting_devices">Detecting devices</string>
+    <string name="add_device">Pair a Smart Band</string>
+    <string name="text_no_device">You have no band connected</string>
 </resources>
