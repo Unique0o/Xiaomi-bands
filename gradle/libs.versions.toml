@@ -12,7 +12,6 @@ composeNav = "2.8.0-beta04"
 kotlinxSerializationJson = "1.6.3"
 serializationKotlin = "1.9.0"
 materialIcons = "1.6.8"
-login-register-onboarding
 coreSplashscreen = "1.0.1"
 coil = "2.7.0"
 hiltAndroid = "2.51.1"
