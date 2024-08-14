@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.serialization.kotlin)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -64,6 +66,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.material.icons)
+    implementation(libs.coil.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,4 +74,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.retrofit)
+    implementation(libs.convert.gson)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }

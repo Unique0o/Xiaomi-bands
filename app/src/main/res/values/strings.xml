@@ -12,4 +12,55 @@
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+
+    <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>
+    <string name="face_status">FATIGUE</string>
+    <string name="face_dream">DROWSINESS</string>
+    <string name="battery_status">Battery at 80%</string>
+    <string name="title_smart_band">My Smart Band 4</string>
+    <string name="share">Share</string>
+    <string name="title_tests">My Drowsiness Tests</string>
+    <string name="description_tests">Take a drowsiness test to check if you are fit to perform your tasks.</string>
+    <string name="title_test_fatiga">FATIGUE SELF-ASSESSMENT TEST</string>
+    <string name="status_person">FIT</string>
+    <string name="result_date">Result from 24/10/2023</string>
+    <string name="plan">PREMIUM</string>
+
+    <!-- Card Item -->
+    <string name="schedule">My Schedule</string>
+    <string name="status">DAYTIME</string>
+    <string name="PGT">PGT</string>
+    <string name="my_location">My Location</string>
+    <string name="my_device">My Device</string>
+    <string name="card_description">Remember to activate your Bluetooth and keep your Smartband close to your phone to facilitate the connection.</string>
+    <string name="title_my_test">My Drowsiness Tests</string>
+    <string name="card_description_message">Take a drowsiness test to check if you are fit to perform your tasks.</string>
+    <string name="title_condition_sleep">Sleep Conditions</string>
+    <string name="status_no_apto">NOT FIT</string>
+    <string name="add_content_description">Add</string>
+    <string name="profile_pic">Profile Picture</string>
+    <string name="notificacions_content_description">Notifications</string>
+
+    <string name="title_fatige">Fatigue</string>
+
+    <!-- Graphics -->
+    <string name="wake_up">Wake Up</string>
+    <string name="content_description_alarm">Alarm</string>
+    <string name="information_sleep">Sleep Information</string>
+    <string name="light_sleep">Light Sleep</string>
+    <string name="deep_sleep">Deep Sleep</string>
+    <string name="rem_sleep">REM Sleep</string>
+
+    <!-- CardSleepSession -->
+    <string name="content_description_sleep">Sleep</string>
+    <string name="heart_rate_card_title">Heart Rate</string>
+
+    <!-- Card Step -->
+    <string name="without_data">NO DATA</string>
+    <string name="connected">CONNECTED</string>
+    <string name="kcal">0 kcal</string>
+    <string name="graph_card_heart_rate">Last Recorded Measurement</string>
+    <string name="title_card_message_raking">You`re on top</string>
+    <string name="message_card_message_ranking">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
+
 </resources>
