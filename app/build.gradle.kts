@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.navigation.compose)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.material.icons)
     implementation(libs.coil.compose)
     testImplementation(libs.junit)

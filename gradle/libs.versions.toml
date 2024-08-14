@@ -12,9 +12,12 @@ composeNav = "2.8.0-beta04"
 kotlinxSerializationJson = "1.6.3"
 serializationKotlin = "1.9.0"
 materialIcons = "1.6.8"
+login-register-onboarding
+coreSplashscreen = "1.0.1"
 coil = "2.7.0"
 hiltAndroid = "2.51.1"
 retrofit = "2.11.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,12 +38,15 @@ material-icons = { group = "androidx.compose.material", name = "material-icons-e
 
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNav" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
 convert-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit"}
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid"}
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
