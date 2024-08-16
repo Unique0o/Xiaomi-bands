@@ -33,7 +33,6 @@ import com.example.logifitappp.ui.components.modals.AuthenticationModal
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeviceDetectionScreen(
     navigation: NavHostController
@@ -47,54 +46,56 @@ fun DeviceDetectionScreen(
             navigation = navigation,
             title = stringResource(R.string.detecting_devices)
         )
-    
-     SimplePage(
-        content = {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+
+        SimplePage(
+            content = {
+                Box(
+                    modifier = Modifier.fillMaxSize()
                 ) {
-                    LazyColumn(
+                    Column(
                         modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        items(8) {  index ->
-                            DeviceCard(
-                                deviceName = "Mi Smart Band 4",
-                                deviceId = "DF:29:4A:30:2A:1C",
-                                onClick = {
-                                    selectedDevice = "Dispositivo $index"
-                                    showAuthModal = true
-                                }
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
+                        LazyColumn(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                        ) {
+                            items(8) { index ->
+                                DeviceCard(
+                                    deviceName = "Mi Smart Band 4",
+                                    deviceId = "DF:29:4A:30:2A:1C",
+                                    onClick = {
+                                        selectedDevice = "Dispositivo $index"
+                                        showAuthModal = true
+                                    }
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
                         }
-                    }
 //                LoadingSpinner(
 //                    text = stringResource(R.string.searching_for_devices),
 //                    modifier = Modifier
 //                        .padding(top = 130.dp)
 //                )
 //                    Spacer(modifier = Modifier.weight(1f))
-                    InfoMessage(
-                        icon = Icons.Filled.Info,
-                        title = stringResource(R.string.make_your_device_detectable),
-                        message = stringResource(R.string.device_detection_info),
-                        modifier = Modifier
-                            .padding(bottom = 36.dp)
-                    )
+                        InfoMessage(
+                            icon = Icons.Filled.Info,
+                            title = stringResource(R.string.make_your_device_detectable),
+                            message = stringResource(R.string.device_detection_info),
+                            modifier = Modifier
+                                .padding(bottom = 36.dp)
+                        )
+                    }
+
+
                 }
+            },
+        )
 
-
-            }
-        },
-    )
+    }
     AuthenticationModal(
         isVisible = showAuthModal,
         onDismiss = { showAuthModal = false },
