@@ -69,4 +69,9 @@
     <string name="detecting_devices">Detecting devices</string>
     <string name="add_device">Pair a Smart Band</string>
     <string name="text_no_device">You have no band connected</string>
+    <string name="authentication_title">Authenticate your band</string>
+    <string name="device_card_description">Select device</string>
+    <string name="close">Close</string>
+    <string name="authentication_description">Write down or copy the authorization key you were given to perform the authentication.</string>
+    <string name="enter_key">Enter the key</string>
 </resources>
