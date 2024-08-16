@@ -26,6 +26,11 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 @Composable
 fun HomeAdminScreen() {
     SimplePage(
+        topBar = {
+            CustomTopBar(
+                title = stringResource(id = R.string.app_name),
+            )
+        },
         content = {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -60,7 +65,7 @@ fun HomeAdminScreen() {
         }
 
     )
-    CustomTopBar(title = stringResource(id = R.string.app_name))
+
 
 }
 
