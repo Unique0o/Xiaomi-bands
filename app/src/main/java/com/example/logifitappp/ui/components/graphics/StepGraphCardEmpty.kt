@@ -28,7 +28,7 @@ import com.example.logifitappp.ui.theme.Stone470
 import com.example.logifitappp.ui.theme.White
 
 @Composable
-fun StepGraphCard(
+fun StepEmptyGraphCard(
     title: String,
     data: List<Float>,
     barColor: Color,
@@ -158,7 +158,7 @@ private fun TimeLabels() {
 @Composable
 fun MyScreen() {
     val stepData = List(24) { kotlin.random.Random.nextFloat() }
-    StepGraphCard(
+    StepEmptyGraphCard(
         title = "Mis pasos",
         data = stepData,
         modifier = Modifier.padding(16.dp),

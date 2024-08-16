@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,11 +25,10 @@ import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.*
 
 @Composable
-fun DynamicBarGraph(
+fun InfoBarColorGraph(
     title: String,
     timeRange: String,
     data: List<Int>,
-    backgroundColor: Color = Stone240,
     textColor: Color = Blue690,
     accentColor: Color = Color(0xFF2196F3),
     modifier: Modifier = Modifier
@@ -45,12 +45,12 @@ fun DynamicBarGraph(
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(backgroundColor)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Header(title, timeRange, textColor, accentColor)
@@ -136,7 +136,7 @@ private fun BarChart(
 @Composable
 fun DynamicBarGraphPreview() {
     val data = List(17) { (1..100).random() }
-    DynamicBarGraph(
+    InfoBarColorGraph(
         title = stringResource(id = R.string.information_between),
         timeRange = "19:00 - 07:00",
         data = data,

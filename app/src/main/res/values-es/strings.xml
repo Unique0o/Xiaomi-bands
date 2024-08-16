@@ -44,7 +44,6 @@
     <string name="title_fatige">Fatiga</string>
 
     // Graphics
-
     <string name="wake_up" >Despertar</string>
     <string name="content_description_alarm">Alarma</string>
     <string name="information_sleep">Información del sueño</string>
@@ -57,12 +56,16 @@
     <string name="information_between">Información entre:</string>
     <string name="my_steps">Mis pasos"</string>
     <string name="steps_taken">Pasos realizados</string>
+    <string name="summary">Resumen</string>
+    <string name="average_heart_rate">Ritmo cardiaco promedio</string>
 
     // CardSleepSession
     <string name="content_description_sleep">Sleep</string>
     <string name="heart_rate_card_title">Ritmo cardiaco</string>
 
     // Card Step
+    <string name="distance_traveled">Distancia recorrida</string>
+    <string name="calories_burned">Calorías quemadas</string>
     <string name="without_data">SIN DATOS</string>
     <string name="connected">CONECTADO</string>
     <string name="kcal" >0 kcal</string>

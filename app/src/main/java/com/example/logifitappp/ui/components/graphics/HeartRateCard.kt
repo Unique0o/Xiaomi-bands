@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.components.graphics
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,7 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,13 +32,14 @@ data class HeartRateData(
 )
 
 @Composable
-fun HeartRateCard(heartRateData: HeartRateData, modifier: Modifier = Modifier) {
+fun HeartRateCard(heartRateData: HeartRateData) {
+
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
     ) {
         Column(
             modifier = Modifier
@@ -90,8 +89,7 @@ fun HeartRateSummary(data: HeartRateData) {
         )
         Text(
             text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
-            style = MaterialTheme.typography.labelSmall,
-            color = Blue690
+            style = MaterialTheme.typography.labelSmall
         )
         Text(
             text = data.timeRange,
@@ -197,7 +195,7 @@ fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) 
 @Composable
 @Preview(showBackground = true)
 fun HeartRateCardPreview1() {
-    val sampleData1 = HeartRateData(
+    val heartdata = HeartRateData(
         date = "Noviembre 20, 2023",
         minRate = 70,
         maxRate = 101,
@@ -210,5 +208,5 @@ fun HeartRateCardPreview1() {
             10 to 40,
         )
     )
-    HeartRateCard(sampleData1, modifier = Modifier.fillMaxWidth())
+    HeartRateCard(heartdata)
 }

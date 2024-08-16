@@ -56,12 +56,16 @@
     <string name="information_between">Information between:</string>
     <string name="my_steps">My steps</string>
     <string name="steps_taken">Steps taken</string>
+    <string name="summary">Summary</string>
+    <string name="average_heart_rate">Average heart rate</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>
     <string name="heart_rate_card_title">Heart Rate</string>
 
     <!-- Card Step -->
+    <string name="distance_traveled">Distance traveled</string>
+    <string name="calories_burned">Calories burned</string>
     <string name="without_data">NO DATA</string>
     <string name="connected">CONNECTED</string>
     <string name="kcal">0 kcal</string>
