@@ -19,6 +19,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,6 +35,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.Device.DeviceCard
 import com.example.logifitappp.ui.components.home.Device.InfoMessage
 import com.example.logifitappp.ui.components.home.Device.LoadingSpinner
+import com.example.logifitappp.ui.components.modals.AuthenticationModal
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.LogifitApppTheme
@@ -40,6 +45,9 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 fun DeviceDetectionScreen(
     navigation: NavHostController
 ) {
+    var showAuthModal by remember { mutableStateOf(false) }
+    var selectedDevice by remember { mutableStateOf<String?>(null) }
+
     SimplePage(
         content = {
             Box(
@@ -56,10 +64,14 @@ fun DeviceDetectionScreen(
                             .fillMaxWidth()
                             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                     ) {
-                        items(8) {
+                        items(8) {  index ->
                             DeviceCard(
                                 deviceName = "Mi Smart Band 4",
-                                deviceId = "DF:29:4A:30:2A:1C"
+                                deviceId = "DF:29:4A:30:2A:1C",
+                                onClick = {
+                                    selectedDevice = "Dispositivo $index"
+                                    showAuthModal = true
+                                }
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                         }
@@ -104,8 +116,18 @@ fun DeviceDetectionScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             )
-        }
+        },
 
+
+    )
+    AuthenticationModal(
+        isVisible = showAuthModal,
+        onDismiss = { showAuthModal = false },
+        onAuthenticate = { key ->
+            println("Autenticando dispositivo: $selectedDevice con clave: $key")
+            showAuthModal = true
+            selectedDevice = null
+        }
     )
 }
 

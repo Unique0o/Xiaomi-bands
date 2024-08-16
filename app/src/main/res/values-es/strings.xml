@@ -71,4 +71,9 @@
 
     <string name="add_device">Vincula una Smart Band</string>
     <string name="text_no_device">No tienes ninguna banda conectada</string>
+    <string name="authentication_title">Autentica tu banda</string>
+    <string name="device_card_description">Seleccionar dispositivo</string>
+    <string name="close">Cerrar</string>
+    <string name="authentication_description">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
+    <string name="enter_key">Escribe la clave</string>
 </resources>
