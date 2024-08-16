@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 
 
@@ -37,7 +35,7 @@ fun AuthenticationModal(
     onDismiss: () -> Unit,
     onAuthenticate: (String) -> Unit
 ) {
-    var authKey by remember { mutableStateOf("0x") }
+    var authKey by remember { mutableStateOf("") }
 
     if (isVisible) {
         Box(
@@ -85,36 +83,30 @@ fun AuthenticationModal(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-//                    OutlinedTextField(
-//                        value = authKey,
-//                        onValueChange = { authKey = it },
-//                        label = { Text(stringResource(id = R.string.enter_key)) },
-//                        leadingIcon = { Text("0x") },
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
-                    OutlinedTextField(
-                        value = TextFieldValue(authKey),
-                        onValueChange = {
-                            if (it.text.startsWith("0x")) {
-                                authKey = it.text
-                            }
-                        },
-                        placeholder = stringResource(id = R.string.enter_key),
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .background(Color.LightGray, RoundedCornerShape(4.dp))
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        ) {
+                            Text("0x", color = Color.Gray)
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        OutlinedTextField(
+                            value = TextFieldValue(authKey),
+                            onValueChange = { authKey = it.text },
+                            placeholder = stringResource(id = R.string.enter_key),
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(16.dp))
-
                     Button(
                         onClick = { onAuthenticate(authKey) },
+                        text = stringResource(id = R.string.authentication_title),
                         modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (authKey.length > 2) MaterialTheme.colorScheme.primary else Color.Gray
-                        ),
-                        enabled = authKey.length > 2
-                    ) {
-                        Text(stringResource(id = R.string.authentication_title))
-                    }
+                        containerColors = if (authKey.length > 2) MaterialTheme.colorScheme.primary else Color.Gray
+                    )
                 }
             }
         }
