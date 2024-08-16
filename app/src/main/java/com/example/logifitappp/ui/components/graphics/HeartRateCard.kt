@@ -18,34 +18,32 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.theme.Blue690
-import com.example.logifitappp.ui.theme.Orange170
-import com.example.logifitappp.ui.theme.Rose120
-import com.example.logifitappp.ui.theme.Stone470
-import com.example.logifitappp.ui.theme.White
+import com.example.logifitappp.ui.theme.*
 
 data class HeartRateData(
     val date: String,
     val minRate: Int,
     val maxRate: Int,
     val timeRange: String,
-    val rates: List<Int>
+    val ranges: List<Pair<Int, Int>>
 )
 
 @Composable
-fun HeartRateCard(heartRateData: HeartRateData, modifier: Modifier) {
+fun HeartRateCard(heartRateData: HeartRateData, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-       colors = CardDefaults.cardColors(containerColor = White),
+        colors = CardDefaults.cardColors(containerColor = White),
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
@@ -53,7 +51,7 @@ fun HeartRateCard(heartRateData: HeartRateData, modifier: Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
             HeartRateSummary(heartRateData)
             Spacer(modifier = Modifier.height(24.dp))
-            HeartRateChart(heartRateData.rates)
+            HeartRateChart(heartRateData.ranges)
         }
     }
 }
@@ -68,7 +66,11 @@ fun DateSelector(date: String) {
         IconButton(onClick = { /* TODO */ }) {
             Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Previous day")
         }
-        Text(text = date, style = MaterialTheme.typography.labelMedium)
+        Text(
+            text = date,
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center
+        )
         IconButton(onClick = { /* TODO */ }) {
             Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Next day")
         }
@@ -100,121 +102,113 @@ fun HeartRateSummary(data: HeartRateData) {
 }
 
 @Composable
-fun HeartRateChart(rates: List<Int>) {
-    val maxRate = rates.maxOrNull() ?: 0
-    Box(
-        modifier = Modifier
+fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) {
+    val maxRate = ranges.maxOfOrNull { it.second } ?: 0
+    Row(
+        modifier = modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .padding(top = 16.dp, bottom = 24.dp, end = 16.dp)
-            .drawBehind {
-                drawRect(
-                    color = Color.LightGray,
-                    size = Size(1.dp.toPx(), size.height),
-                    topLeft = Offset(size.width - 1.dp.toPx(), 0f)
-                )
-            }
+            .height(100.dp)
+            .padding(top = 16.dp, bottom = 8.dp)
     ) {
-
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val yStep = size.height / 3
-            for (i in 0..2) {
-                drawLine(
-                    color = Color.LightGray.copy(alpha = 0.3f),
-                    start = Offset(0f, i * yStep),
-                    end = Offset(size.width, i * yStep),
-                    strokeWidth = 0.5f
-                )
-            }
-
-            drawLine(
-                color = Color.LightGray,
-                start = Offset(0f, 0f),
-                end = Offset(0f, size.height),
-                strokeWidth = 1f
-            )
-
-            drawLine(
-                color = Color.LightGray,
-                start = Offset(0f, size.height),
-                end = Offset(size.width, size.height),
-                strokeWidth = 1f
-            )
-        }
-
-        // Y-axis labels
-        Column(
+        // Chart area
+        Box(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .fillMaxHeight(),
+                .weight(1f)
+                .height(100.dp)
 
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("50", style = MaterialTheme.typography.bodySmall, color = Stone470)
-            Text("25", style = MaterialTheme.typography.bodySmall, color = Stone470)
-            Text("0", style = MaterialTheme.typography.bodySmall, color = Stone470)
-        }
-
-        // Bars
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            rates.forEach { rate ->
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(rate.toFloat() / maxRate)
-                        .padding(horizontal = 20.dp)
-                        .width(4.dp)
-                        .clip(RoundedCornerShape(topStart = 2.dp, topEnd = 2.dp))
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Rose120)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Orange170.copy(alpha = 0.3f))
+                .drawBehind {
+                    drawRect(
+                        color = Stone470,
+                        size = Size(1.dp.toPx(), size.height),
+                        topLeft = Offset(size.width - 1.dp.toPx(), 0f)
                     )
                 }
+        ) {
+            ChartGrids()
+            Row(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                ranges.forEach { range ->
+                    val heightFraction = (range.second - range.first).toFloat() / maxRate
+                    val startFraction = range.first.toFloat() / maxRate
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(heightFraction)
+                            .padding(horizontal = 6.dp)
+                            .width(5.dp)
+                            .offset(y = -(startFraction * 80.dp))
+                            .clip(RoundedCornerShape(2.dp))
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Rose120)
+                        )
+                    }
+                }
             }
+            HorizontalDivider(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .padding(end = 2.dp),
+                thickness = 0.5.dp,
+                color = Stone470
+            )
         }
 
-        // X-axis labels
-        Row(
+        Column(
             modifier = Modifier
-                .align(Alignment.BottomStart)
-                .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp, top = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .width(40.dp)
+                .fillMaxHeight()
+                .padding(end = 8.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            listOf("00:00", "04:00", "08:00", "12:00", "16:00", "20:00").forEach { time ->
-                Text(
-                    text = time,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray
-                )
-            }
+            Text(text = "50", style = MaterialTheme.typography.labelSmall, color = Stone470)
+            Text(text = "25", style = MaterialTheme.typography.labelSmall, color = Stone470)
+            Text(text = "0", style = MaterialTheme.typography.labelSmall, color = Stone470)
+        }
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end = 40.dp, top = 1.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
+            Text(
+                text = time,
+                style = MaterialTheme.typography.labelSmall,
+                color = Stone470,
+                modifier = Modifier.width(40.dp),
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }
 
 
+
 @Composable
 @Preview(showBackground = true)
-fun HeartRateCardPreview() {
-    val sampleData = HeartRateData(
+fun HeartRateCardPreview1() {
+    val sampleData1 = HeartRateData(
         date = "Noviembre 20, 2023",
         minRate = 70,
         maxRate = 101,
         timeRange = "02:00 - 02:30",
-        rates = listOf(30, 45, 20, 35, 25, 40)
+        ranges = listOf(
+            10 to 35,
+            25 to 45,
+            15 to 40,
+            20 to 40,
+            10 to 40,
+        )
     )
-    HeartRateCard(sampleData, modifier = Modifier.fillMaxWidth())
+    HeartRateCard(sampleData1, modifier = Modifier.fillMaxWidth())
 }

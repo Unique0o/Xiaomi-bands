@@ -51,6 +51,12 @@
     <string name="light_sleep">Sueño ligero</string>
     <string name="deep_sleep">Sueño profundo</string>
     <string name="rem_sleep">Sueño REM</string>
+    <string name="my_heart_rate">Mi ritmo cardíaco</string>
+    <string name="my_sleep">Mi sueño</string>
+    <string name="sleep_time">Tiempo de sueño</string>
+    <string name="information_between">Información entre:</string>
+    <string name="my_steps">Mis pasos"</string>
+    <string name="steps_taken">Pasos realizados</string>
 
     // CardSleepSession
     <string name="content_description_sleep">Sleep</string>

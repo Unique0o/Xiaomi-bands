@@ -15,13 +15,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.theme.*
+import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
 fun ChartEmptyHour(
     steps: List<Int>,
     maxValue: Int,
     barColor: Color,
-    accentColor: Color,
+    accentColor:Color,
     modifier: Modifier = Modifier
 ) {
     val chartHeight = 130.dp
@@ -162,11 +163,15 @@ fun EmptyCardHour(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(14.dp)
+            .height(250.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = White)
-    ) {
+        colors =CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+
+    ){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
