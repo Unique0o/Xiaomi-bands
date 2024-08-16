@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.screens.graphics.MainScreen1
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Stone240
 import com.example.logifitappp.ui.theme.Stone470
@@ -30,12 +29,11 @@ import com.example.logifitappp.ui.theme.White
 @Composable
 fun StepChart(
     steps: List<Int>,
-    maxValue: Int,
     modifier: Modifier = Modifier
 ) {
     val barWidth = 6.dp
     val barSpacing = 16.dp
-
+    val maxValue = 50
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -157,7 +155,7 @@ fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = White
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
@@ -193,20 +191,19 @@ fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Pasos realizados",
+                    text = stringResource(id = R.string.steps_taken),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Normal,
                 )
                 Text(
                     text = "1200 pasos",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color(0xFF3F51B5),
+                    color = MaterialTheme.colorScheme.inverseSurface,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 StepChart(
                     steps = listOf(10, 20, 15, 30, 25, 35, 40),
-                    maxValue = 50
                 )
             }
 
