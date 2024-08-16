@@ -18,4 +18,6 @@ val Stone470 = Color(0xff7f92a4)
 val White = Color(0xffffffff)
 val Zinc680 = Color(0xff526475)
 val Zinc940 = Color(0xff092c4c)
+val Violet = Color(0xff8B5CF6)
+val LightBlue = Color(0xff78B6F1)
 

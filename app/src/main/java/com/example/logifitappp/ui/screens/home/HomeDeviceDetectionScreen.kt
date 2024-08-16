@@ -6,18 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,18 +20,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.headers.BackHeader
 import com.example.logifitappp.ui.components.home.Device.DeviceCard
 import com.example.logifitappp.ui.components.home.Device.InfoMessage
 import com.example.logifitappp.ui.components.home.Device.LoadingSpinner
 import com.example.logifitappp.ui.components.modals.AuthenticationModal
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +40,15 @@ fun DeviceDetectionScreen(
 ) {
     var showAuthModal by remember { mutableStateOf(false) }
     var selectedDevice by remember { mutableStateOf<String?>(null) }
-
-    SimplePage(
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        BackHeader(
+            navigation = navigation,
+            title = stringResource(R.string.detecting_devices)
+        )
+    
+     SimplePage(
         content = {
             Box(
                 modifier = Modifier.fillMaxSize()
@@ -94,31 +94,6 @@ fun DeviceDetectionScreen(
 
             }
         },
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        stringResource(R.string.detecting_devices),
-                        textAlign = TextAlign.Center,
-                        color = Blue690,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { /* TODO */ }) {
-                        Icon(
-                            Icons.Filled.ArrowBack, contentDescription = "Back",
-                            tint = Blue690
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-            )
-        },
-
-
     )
     AuthenticationModal(
         isVisible = showAuthModal,

@@ -50,6 +50,12 @@
     <string name="light_sleep">Light Sleep</string>
     <string name="deep_sleep">Deep Sleep</string>
     <string name="rem_sleep">REM Sleep</string>
+    <string name="my_heart_rate">My heart rate</string>
+    <string name="my_sleep">My sleep</string>
+    <string name="sleep_time">Sleep Time</string>
+    <string name="information_between">Information between:</string>
+    <string name="my_steps">My steps</string>
+    <string name="steps_taken">Steps taken</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>

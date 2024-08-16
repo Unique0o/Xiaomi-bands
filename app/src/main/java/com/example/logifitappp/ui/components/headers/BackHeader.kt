@@ -2,70 +2,67 @@ package com.example.logifitappp.ui.components.headers
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.logifitappp.R
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
 fun BackHeader(
-    onBackClick: () -> Unit,
-    subtitle: String,
-    modifier: Modifier = Modifier
+    navigation: NavHostController,
+    title: String
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(Color.White)
-    ) {
 
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceContainer)
+            .padding(16.dp)
+    ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = { navigation.popBackStack() }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
-                    contentDescription = "Back",
-                    tint = Color.Blue
+                    Icons.Filled.ArrowBack, contentDescription = "Back",
+                    tint = Blue690
                 )
             }
             Text(
-                text = "Regresar",
-                style = MaterialTheme.typography.headlineSmall.copy(color = Color.Blue, fontSize = 17.sp),
+                text = title,
+                textAlign = TextAlign.Center,
+                color = Blue690,
                 modifier = Modifier
-                    .padding(end = 245.dp)
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(end = 34.dp),
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp)
             )
         }
-
-        // Subtitle
-        Text(
-            text = subtitle,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleLarge.copy(color = Color.Black, fontSize = 25.sp,),
-            modifier = Modifier
-            .padding(start = 15.dp)
-        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HeaderPreview() {
-    BackHeader(
-        onBackClick = { /* Acción al hacer clic en la flecha */ },
-        subtitle = "Mi sueño",
-        modifier = Modifier.background(Color.White)
-    )
+fun BackHeaderPreview() {
+    LogifitApppTheme {
+        BackHeader(
+            navigation = rememberNavController(),
+            title = "Sample Title"
+        )
+    }
 }
+

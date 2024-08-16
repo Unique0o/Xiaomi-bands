@@ -1,36 +1,34 @@
 package com.example.logifitappp.ui.screens.graphics
 
-import androidx.compose.foundation.background
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.EmptyCardHour
-import com.example.logifitappp.ui.components.headers.BackHeader
+import com.example.logifitappp.ui.components.headers.ColumnStackHeader
+import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
+import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun StepsDetailEmpty() {
+fun StepsDetailEmpty(navigation: NavHostController) {
     val stepData = List(24) { (1..50).random() }
 
-    Scaffold(
+    SimplePage(
         topBar = {
-            BackHeader(
-                onBackClick = {  },
-                subtitle = "Mis pasos",
-                modifier = Modifier.background(Color.White)
+            ColumnStackHeader(
+                navigation = navigation,
+                title = stringResource(id = R.string.my_steps)
             )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-        ) {
+        },
+        content = {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -41,17 +39,23 @@ fun StepsDetailEmpty() {
                     steps = stepData,
                     maxValue = 50,
                     barColor = Lime70,
-                    accentColor = Green298,
-                    title = "Pasos realizados",
+                    accentColor =Green298,
+                    title = stringResource(id = R.string.steps_taken),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+
         }
-    }
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun StepsDetailEmptyPreview() {
-    StepsDetailEmpty()
+    LogifitApppTheme(){StepsDetailEmpty(rememberNavController())}
+}
+@Preview
+@Composable
+fun StepsDetailEmptyDarkModePreview() {
+    LogifitApppTheme(darkTheme = true){StepsDetailEmpty(rememberNavController())}
 }

@@ -1,45 +1,48 @@
 package com.example.logifitappp.ui.screens.graphics
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.EmptyInfoGraphDetail
-import com.example.logifitappp.ui.components.headers.BackHeader
+import com.example.logifitappp.ui.components.headers.ColumnStackHeader
+import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 
 @Composable
-fun SleepDetailEmpty() {
-    val stepData = List(24) { (1..50).random() }
-
-    Scaffold(
+fun SleepDetailEmpty(navigation: NavHostController) {
+    SimplePage(
         topBar = {
-            BackHeader(
-                onBackClick = {  },
-                subtitle = "Mi sueño",
-                modifier = Modifier.background(Color.White)
+            ColumnStackHeader(
+                navigation = navigation,
+                title = stringResource(id = R.string.my_sleep)
             )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-        ) {
+        },
+        content = {
             EmptyInfoGraphDetail(
-                title = "Tiempo de sueño",
-                titleGraph = "Información entre",
+                title = stringResource(id = R.string.sleep_time),
+                titleGraph = stringResource(id = R.string.information_between),
                 timeRange = "19:00 - 07:00"
             )
         }
-    }
+    )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun SleepDetailEmptyPreview() {
-    SleepDetailEmpty()
+    LogifitApppTheme {
+        SleepDetailEmpty(rememberNavController())
+    }
+}
+@Preview
+@Composable
+fun SleepDetailEmptyDarkModePreview() {
+    LogifitApppTheme(darkTheme = true) {
+        SleepDetailEmpty(rememberNavController())
+    }
 }

@@ -148,11 +148,12 @@ fun ChartGrids() {
 }
 
 @Composable
-fun StepTrackingCard(modifier: Modifier = Modifier) {
+fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .height(350.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
@@ -216,7 +217,8 @@ fun StepTrackingCard(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GraphicsPreview1() {
+    val steps = listOf(10, 20, 15, 30, 25, 35, 40)
     LogifitApppTheme {
-        StepTrackingCard()
+        StepCard(steps = steps)
     }
 }
