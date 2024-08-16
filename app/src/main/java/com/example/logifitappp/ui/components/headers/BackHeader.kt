@@ -3,12 +3,11 @@ package com.example.logifitappp.ui.components.headers
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.KeyboardBackspace
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +36,7 @@ fun BackHeader(
         ) {
             IconButton(onClick = { navigation.popBackStack() }) {
                 Icon(
-                    Icons.Filled.ArrowBack, contentDescription = "Back",
+                    Icons.AutoMirrored.Rounded.KeyboardBackspace, contentDescription = "Back",
                     tint = Blue690
                 )
             }

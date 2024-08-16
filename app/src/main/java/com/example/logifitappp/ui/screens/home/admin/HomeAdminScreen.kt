@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.forms.IconButton
-import com.example.logifitappp.ui.components.headers.TopBar
+import com.example.logifitappp.ui.components.headers.CustomTopBar
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -60,7 +60,7 @@ fun HomeAdminScreen() {
         }
 
     )
-    TopBar(title = stringResource(id = R.string.app_name))
+    CustomTopBar(title = stringResource(id = R.string.app_name))
 
 }
 
