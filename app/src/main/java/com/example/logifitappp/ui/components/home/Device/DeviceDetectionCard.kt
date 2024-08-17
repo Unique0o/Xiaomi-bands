@@ -1,16 +1,26 @@
 package com.example.logifitappp.ui.components.home.Device
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Watch
+import androidx.compose.material.icons.materialIcon
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,13 +32,29 @@ import com.example.logifitappp.ui.theme.Orange390
 
 @Composable
 fun LoadingSpinner(text: String, modifier: Modifier = Modifier) {
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val angle by infiniteTransition.animateFloat(
+        initialValue = 0F,
+        targetValue = 360F,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ), label = ""
+    )
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
     ) {
-        CircularProgressIndicator(
-            modifier = modifier.size(48.dp),
-            color = Blue690
+        Icon(
+            painter = painterResource(id = R.drawable.circle_progress_indicator),
+            contentDescription = "Loading",
+            modifier = Modifier
+                .size(48.dp)
+                .rotate(angle),
+            tint = Blue690
         )
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
