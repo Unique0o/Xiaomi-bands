@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +32,7 @@ import com.example.logifitappp.ui.components.home.Device.LoadingSpinner
 import com.example.logifitappp.ui.components.modals.AuthenticationModal
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import kotlinx.coroutines.delay
 
 @Composable
 fun DeviceDetectionScreen(
@@ -39,6 +40,8 @@ fun DeviceDetectionScreen(
 ) {
     var showAuthModal by remember { mutableStateOf(false) }
     var selectedDevice by remember { mutableStateOf<String?>(null) }
+    var isSearching by remember { mutableStateOf(true) }
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -57,30 +60,33 @@ fun DeviceDetectionScreen(
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                        ) {
-                            items(8) { index ->
-                                DeviceCard(
-                                    deviceName = "Mi Smart Band 4",
-                                    deviceId = "DF:29:4A:30:2A:1C",
-                                    onClick = {
-                                        selectedDevice = "Dispositivo $index"
-                                        showAuthModal = true
-                                    }
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
+                        if (isSearching) {
+                            LoadingSpinner(
+                                text = stringResource(R.string.searching_for_devices),
+                                modifier = Modifier
+                                    .padding(top = 180.dp)
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                        } else {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                            ) {
+                                items(8) { index ->
+                                    DeviceCard(
+                                        deviceName = "Mi Smart Band 4",
+                                        deviceId = "DF:29:4A:30:2A:1C",
+                                        onClick = {
+                                            selectedDevice = "Dispositivo $index"
+                                            showAuthModal = true
+                                        }
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                }
                             }
                         }
-//                LoadingSpinner(
-//                    text = stringResource(R.string.searching_for_devices),
-//                    modifier = Modifier
-//                        .padding(top = 130.dp)
-//                )
-//                    Spacer(modifier = Modifier.weight(1f))
                         InfoMessage(
                             icon = Icons.Filled.Info,
                             title = stringResource(R.string.make_your_device_detectable),
@@ -89,8 +95,6 @@ fun DeviceDetectionScreen(
                                 .padding(bottom = 36.dp)
                         )
                     }
-
-
                 }
             },
         )
@@ -105,6 +109,11 @@ fun DeviceDetectionScreen(
             selectedDevice = null
         }
     )
+    // ejemplo para simular un tiempo de busqueda
+    LaunchedEffect(key1 = Unit) {
+        delay(10000)
+        isSearching = false
+    }
 }
 
 @Preview

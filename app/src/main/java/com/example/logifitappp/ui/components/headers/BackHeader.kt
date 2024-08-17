@@ -38,7 +38,7 @@ fun BackHeader(
         ) {
             IconButton(
                 elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
-                horizontalPadding = 0.dp,
+                horizontalPadding = 20.dp,
                 backgroundColor = Color.Transparent,
                 icon = Icons.AutoMirrored.Rounded.KeyboardBackspace,
                 onClick = { navigation.popBackStack() },
