@@ -52,7 +52,7 @@ fun BackHeader(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(end = 34.dp),
+                    .padding(end = 45.dp),
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp)
             )
         }

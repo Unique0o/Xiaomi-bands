@@ -30,6 +30,7 @@ fun HeartRateDetailEmptyScreen(navigation: NavHostController) {
         content = {
                 Column(
                     modifier = Modifier
+
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally

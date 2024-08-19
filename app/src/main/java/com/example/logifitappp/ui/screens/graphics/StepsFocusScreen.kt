@@ -21,7 +21,7 @@ import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun StepsDetailScreen(navigation: NavHostController) {
+fun StepsFocusScreen(navigation: NavHostController) {
     val steps = listOf(10, 20, 15, 30, 25, 35, 40)
 
     SimplePage(
@@ -32,7 +32,10 @@ fun StepsDetailScreen(navigation: NavHostController) {
             )
         },
         content = {
-            StepCard(steps= steps)
+            StepCard(
+                steps = steps,
+                highlightIndex = 1
+            )
             IconTitle(
                 icon = ImageVector.vectorResource(id = R.drawable.ic_chart_box_outline),
                 text = stringResource(id = R.string.summary)
@@ -60,16 +63,16 @@ fun StepsDetailScreen(navigation: NavHostController) {
 
 @Preview
 @Composable
-fun StepsDetailPreview(){
+fun StepsFocusPreview(){
     LogifitApppTheme {
-        StepsDetailScreen(rememberNavController())
+        StepsFocusScreen(rememberNavController())
     }
 }
 
 @Preview
 @Composable
-fun StepsDetailDarkModePreview(){
+fun StepsFocusDarkModePreview(){
     LogifitApppTheme(darkTheme = true) {
-        StepsDetailScreen(rememberNavController())
+        StepsFocusScreen(rememberNavController())
     }
 }

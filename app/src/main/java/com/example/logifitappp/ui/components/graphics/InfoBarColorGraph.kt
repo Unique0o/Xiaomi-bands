@@ -46,12 +46,16 @@ fun InfoBarColorGraph(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.outline
+        )
+
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
+
         ) {
             Header(title, timeRange, textColor, accentColor)
             Spacer(modifier = Modifier.height(16.dp))
@@ -78,13 +82,13 @@ private fun Header(
                 imageVector = Icons.Default.Refresh,
                 contentDescription = "Refresh icon",
                 tint = accentColor,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(14.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(3.dp))
             Text(
                 text = "$title $timeRange",
                 color = textColor,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Medium
             )
         }
@@ -113,39 +117,23 @@ private fun BarChart(
     colors: List<Color>
 ) {
     val maxValue = data.maxOrNull() ?: 1
-    val maxBarWidth = 40.dp
+    val maxBarWidth = 1f
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp),
-        horizontalArrangement = Arrangement.Start
+            .height(40.dp),
     ) {
         data.forEachIndexed { index, value ->
-            val barWidth = (value.toFloat() / maxValue) * maxBarWidth
+            val barWidthFraction = maxBarWidth * (value.toFloat() / maxValue)
             Box(
                 modifier = Modifier
-                    .width(barWidth)
                     .fillMaxHeight()
+                    .weight(barWidthFraction)
                     .background(colors.getOrElse(index) { LightBlue })
             )
         }
     }
 }
 
-@Composable
-fun DynamicBarGraphPreview() {
-    val data = List(17) { (1..100).random() }
-    InfoBarColorGraph(
-        title = stringResource(id = R.string.information_between),
-        timeRange = "19:00 - 07:00",
-        data = data,
-        modifier = Modifier.padding(16.dp)
-    )
-}
 
-@Composable
-@Preview(showBackground = true)
-fun DynamicBarGraphPreview1() {
-    DynamicBarGraphPreview()
-}

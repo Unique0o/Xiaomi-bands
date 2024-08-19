@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.graphics.HeartRateCard
-import com.example.logifitappp.ui.components.graphics.HeartRateData
+import com.example.logifitappp.ui.components.graphics.HeartRateFocusCard
+import com.example.logifitappp.ui.components.graphics.HeartRateFocusData
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.home.CardItem
@@ -24,7 +24,7 @@ import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun HeartRateDetailScreen(navigation: NavHostController) {
+fun HeartRateFocusScreen(navigation: NavHostController) {
     SimplePage(
         topBar = {
             ColumnStackHeader(
@@ -38,7 +38,7 @@ fun HeartRateDetailScreen(navigation: NavHostController) {
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Top
             ) {
-                val heartdata = HeartRateData(
+                val heartRateFocusData = HeartRateFocusData(
                     date = "Noviembre 20, 2023",
                     minRate = 70,
                     maxRate = 101,
@@ -51,7 +51,10 @@ fun HeartRateDetailScreen(navigation: NavHostController) {
                         10 to 40,
                     )
                 )
-                HeartRateCard(heartdata)
+                HeartRateFocusCard(
+                    heartRateData = heartRateFocusData,
+                    highlightIndex = 1
+                )
                 IconTitle(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_chart_box_outline),
                     text = stringResource(id = R.string.summary)
@@ -80,16 +83,16 @@ fun HeartRateDetailScreen(navigation: NavHostController) {
 
 @Preview
 @Composable
-fun HeartRateDetailPreview(){
+fun HeartRateFocusPreview(){
     LogifitApppTheme {
-        HeartRateDetailScreen(rememberNavController())
+        HeartRateFocusScreen(rememberNavController())
     }
 }
 
 @Preview
 @Composable
-fun HeartRateDarkModeDetailPreview(){
+fun HeartRateDarkModeFocuslPreview(){
     LogifitApppTheme(darkTheme = true) {
-        HeartRateDetailScreen(rememberNavController())
+        HeartRateFocusScreen(rememberNavController())
     }
 }
