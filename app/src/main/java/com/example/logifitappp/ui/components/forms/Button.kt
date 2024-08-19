@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Button as MaterialButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.Text
 
@@ -13,11 +14,12 @@ import com.example.logifitappp.ui.components.Text
 fun Button(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    text: String
+    text: String,
+    containerColors: Color = MaterialTheme.colorScheme.primary,
 ) {
     MaterialButton(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+        colors = ButtonDefaults.buttonColors(containerColor = containerColors),
         modifier = modifier,
         shape = RoundedCornerShape(size = 24.dp)
     ) {

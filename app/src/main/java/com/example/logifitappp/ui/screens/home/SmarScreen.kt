@@ -116,7 +116,7 @@ fun SmartBandHeader() {
             title = stringResource(id = R.string.share),
             color = White,
             modifier = Modifier
-                .height(30.dp)
+                .height(40.dp)
                 .width(122.dp),
             onClick = { /*TODO*/ })
     }
@@ -413,7 +413,7 @@ fun TestFatigaItem() {
                 title = stringResource(id = R.string.share),
                 color = White,
                 modifier = Modifier
-                    .height(30.dp)
+                    .height(40.dp)
                     .width(122.dp),
                 onClick = { /*TODO*/ })
         }

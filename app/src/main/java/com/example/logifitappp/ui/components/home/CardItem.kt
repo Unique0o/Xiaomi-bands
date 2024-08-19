@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,7 +51,8 @@ fun CardItem(
 
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background),
     ) {
         Row(
             modifier = modifier
@@ -65,6 +67,7 @@ fun CardItem(
             )
             Text(
                 text = title,
+                fontSize = 14.sp,
                 modifier = modifier
                     .weight(1f)
                     .padding(start = 16.dp),
@@ -93,7 +96,7 @@ fun CardItem(
 
                     Text(
                         text = status,
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
                         color = statusColor
                     )

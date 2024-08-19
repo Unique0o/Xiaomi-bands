@@ -57,23 +57,45 @@
     <string name="title_fatige">Fatiga</string>
 
     // Graphics
-
     <string name="wake_up" >Despertar</string>
     <string name="content_description_alarm">Alarma</string>
     <string name="information_sleep">Información del sueño</string>
     <string name="light_sleep">Sueño ligero</string>
     <string name="deep_sleep">Sueño profundo</string>
     <string name="rem_sleep">Sueño REM</string>
+    <string name="my_heart_rate">Mi ritmo cardíaco</string>
+    <string name="my_sleep">Mi sueño</string>
+    <string name="sleep_time">Tiempo de sueño</string>
+    <string name="information_between">Información entre:</string>
+    <string name="my_steps">Mis pasos"</string>
+    <string name="steps_taken">Pasos realizados</string>
+    <string name="summary">Resumen</string>
+    <string name="average_heart_rate">Ritmo cardiaco promedio</string>
 
     // CardSleepSession
     <string name="content_description_sleep">Sleep</string>
     <string name="heart_rate_card_title">Ritmo cardiaco</string>
 
     // Card Step
+    <string name="distance_traveled">Distancia recorrida</string>
+    <string name="calories_burned">Calorías quemadas</string>
     <string name="without_data">SIN DATOS</string>
     <string name="connected">CONECTADO</string>
     <string name="kcal" >0 kcal</string>
     <string name="graph_card_heart_rate">Ultima medicion registrada</string>
     <string name="title_card_message_raking">Estas en la cima!!!</string>
     <string name="message_card_message_ranking">La disciplina y consistencia te acompañan en este proceso. sigo alcanzando los triunfos por los que te vienes esmerando.</string>
+
+    <string name="detecting_devices">Detectando dispositivos</string>
+    <string name="searching_for_devices">Buscando dispositivos</string>
+    <string name="make_your_device_detectable">Haz tu dispositivo detectable</string>
+    <string name="device_detection_info">Los dispositivos conectados no son detectables en Android 6 o superior, por lo que se necesita activar la localización (GPS). Desactiva Privacy Guard para Logfit. Si tu dispositivo no aparece en dos minutos, inténtalo nuevamente después de reiniciar tu teléfono.</string>
+
+    <string name="add_device">Vincula una Smart Band</string>
+    <string name="text_no_device">No tienes ninguna banda conectada</string>
+    <string name="authentication_title">Autentica tu banda</string>
+    <string name="device_card_description">Seleccionar dispositivo</string>
+    <string name="close">Cerrar</string>
+    <string name="authentication_description">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
+    <string name="enter_key">Escribe la clave</string>
 </resources>

@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.screens.graphics.MainScreen1
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Stone240
 import com.example.logifitappp.ui.theme.Stone470
@@ -30,84 +29,91 @@ import com.example.logifitappp.ui.theme.White
 @Composable
 fun StepChart(
     steps: List<Int>,
-    maxValue: Int,
     modifier: Modifier = Modifier
 ) {
     val barWidth = 6.dp
     val barSpacing = 16.dp
-
-    Box(
+    val maxValue = 50
+    Row(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(top = 16.dp, bottom = 24.dp, end = 16.dp)
-            .drawBehind {
-            drawRect(
-                color = Stone470,
-                size = Size(1.dp.toPx(), size.height),
-                topLeft = Offset(size.width - 1.dp.toPx(), 0f)
+            .padding(top = 16.dp, bottom = 8.dp)
+    ) {
+        // Chart area
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .height(200.dp)
+                .drawBehind {
+                    drawRect(
+                        color = Stone470,
+                        size = Size(1.dp.toPx(), size.height),
+                        topLeft = Offset(size.width - 1.dp.toPx(), 0f)
+                    )
+                }
+        ) {
+            ChartGrids()
+            // Bars
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(end = 24.dp, bottom = 1.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                steps.forEach { step ->
+                    Box(
+                        modifier = Modifier
+                            .width(barWidth)
+                            .fillMaxHeight(step.toFloat() / maxValue)
+                            .background(
+                                Color(0xFF8BC34A),
+                                RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
+                            )
+                    )
+                    Spacer(modifier = Modifier.width(barSpacing))
+                }
+            }
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .padding(end = 2.dp),
+                thickness = 0.5.dp,
+                color = Stone470
             )
         }
-    ) {
-        ChartGrids()
+
         Column(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceBetween
+                .width(40.dp)
+                .fillMaxHeight()
+                .padding(end = 8.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "50", style = MaterialTheme.typography.labelSmall, color = Stone470)
             Text(text = "25", style = MaterialTheme.typography.labelSmall, color = Stone470)
             Text(text = "0", style = MaterialTheme.typography.labelSmall, color = Stone470)
         }
+    }
 
-        // Bars
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(end = 24.dp, bottom = 1.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            steps.forEach { step ->
-                Box(
-                    modifier = Modifier
-                        .width(barWidth)
-                        .fillMaxHeight(step.toFloat() / maxValue)
-                        .background(
-                            Color(0xFF8BC34A),
-                            RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
-                        )
-                )
-                Spacer(modifier = Modifier.width(barSpacing))
-            }
-        }
-
-        HorizontalDivider(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .fillMaxWidth()
-                .padding(end = 2.dp),
-            thickness = 0.5.dp,
-            color = Stone470
-        )
-        Row(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .fillMaxWidth()
-                .padding(end = 24.dp, top = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
-                Text(
-                    text = time,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Stone470,
-                    modifier = Modifier.width(40.dp),
-                    textAlign = TextAlign.Center,
-                )
-
-            }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end = 40.dp, top= 1.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
+            Text(
+                text = time,
+                style = MaterialTheme.typography.labelSmall,
+                color = Stone470,
+                modifier = Modifier.width(40.dp),
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }
@@ -140,15 +146,16 @@ fun ChartGrids() {
 }
 
 @Composable
-fun StepTrackingCard(modifier: Modifier = Modifier) {
+fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .height(350.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = White
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
@@ -184,20 +191,19 @@ fun StepTrackingCard(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Pasos realizados",
+                    text = stringResource(id = R.string.steps_taken),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Normal,
                 )
                 Text(
                     text = "1200 pasos",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color(0xFF3F51B5),
+                    color = MaterialTheme.colorScheme.inverseSurface,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 StepChart(
                     steps = listOf(10, 20, 15, 30, 25, 35, 40),
-                    maxValue = 50
                 )
             }
 
@@ -208,7 +214,8 @@ fun StepTrackingCard(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GraphicsPreview1() {
+    val steps = listOf(10, 20, 15, 30, 25, 35, 40)
     LogifitApppTheme {
-        StepTrackingCard()
+        StepCard(steps = steps)
     }
 }
