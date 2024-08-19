@@ -18,7 +18,7 @@ import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun StepsDetailEmpty(navigation: NavHostController) {
+fun StepsDetailEmptyScreen(navigation: NavHostController) {
     val stepData = List(24) { (1..50).random() }
 
     SimplePage(
@@ -52,10 +52,10 @@ fun StepsDetailEmpty(navigation: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun StepsDetailEmptyPreview() {
-    LogifitApppTheme(){StepsDetailEmpty(rememberNavController())}
+    LogifitApppTheme(){ StepsDetailEmptyScreen(rememberNavController()) }
 }
 @Preview
 @Composable
 fun StepsDetailEmptyDarkModePreview() {
-    LogifitApppTheme(darkTheme = true){StepsDetailEmpty(rememberNavController())}
+    LogifitApppTheme(darkTheme = true){ StepsDetailEmptyScreen(rememberNavController()) }
 }

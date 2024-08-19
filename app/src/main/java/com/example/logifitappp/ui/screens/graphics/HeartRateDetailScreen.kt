@@ -22,11 +22,9 @@ import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
-import com.example.logifitappp.ui.theme.Orange170
-import com.example.logifitappp.ui.theme.Rose120
 
 @Composable
-fun HeartRateDetail(navigation: NavHostController) {
+fun HeartRateDetailScreen(navigation: NavHostController) {
     SimplePage(
         topBar = {
             ColumnStackHeader(
@@ -84,6 +82,6 @@ fun HeartRateDetail(navigation: NavHostController) {
 @Composable
 fun HeartRateDetailPreview(){
     LogifitApppTheme(darkTheme = true) {
-        HeartRateDetail(rememberNavController())
+        HeartRateDetailScreen(rememberNavController())
     }
 }

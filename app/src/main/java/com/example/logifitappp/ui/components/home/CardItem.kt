@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Stone470
+import com.example.logifitappp.ui.theme.White
 
 
 @Composable
@@ -52,7 +54,7 @@ fun CardItem(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background),
+            containerColor = MaterialTheme.colorScheme.surfaceContainer),
     ) {
         Row(
             modifier = modifier
@@ -63,7 +65,7 @@ fun CardItem(
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = null,
-                tint = Color(0xFF4285F4)
+                tint = Blue690
             )
             Text(
                 text = title,
@@ -71,7 +73,7 @@ fun CardItem(
                 modifier = modifier
                     .weight(1f)
                     .padding(start = 16.dp),
-                color = Color(0xFF4285F4),
+                color = Blue690,
                 fontWeight = FontWeight.Bold
             )
 
@@ -121,7 +123,7 @@ fun CardItemWithDescription(
 
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp),
-      colors = CardDefaults.cardColors(containerColor = Color.White),
+      colors = CardDefaults.cardColors(containerColor = White),
     ) {
         Column(modifier = modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -153,7 +155,7 @@ fun CardItemWithDescription(
             }
             Text(
                 text = description,
-                color = Color.Gray,
+                color = Stone470,
                 fontSize = 12.sp,
                 modifier = modifier.padding(top = 8.dp, start = 40.dp)
             )
