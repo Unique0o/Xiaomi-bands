@@ -9,4 +9,7 @@ sealed class MainRoutes {
 
     @Serializable
     data object PasswordRecovery: MainRoutes()
+
+    @Serializable
+    data object WearableDetection: MainRoutes()
 }

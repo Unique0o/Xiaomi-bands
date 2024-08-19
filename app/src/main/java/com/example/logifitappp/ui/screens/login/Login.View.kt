@@ -49,7 +49,7 @@ fun LoginView(
             LoginForm(
                 loginViewModel = loginViewModel,
                 modifier = Modifier.padding(top = 24.dp),
-                onSubmit = {}
+                onSubmit = { navigation.navigate(MainRoutes.WearableDetection) }
             )
 
             Spacer(modifier = Modifier.weight(1f))

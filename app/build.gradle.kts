@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.material.icons)
     implementation(libs.coil.compose)
+    implementation(libs.play.services.wearable)
+    implementation(libs.permissions)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

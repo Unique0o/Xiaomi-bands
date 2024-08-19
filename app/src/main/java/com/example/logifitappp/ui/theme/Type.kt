@@ -38,6 +38,12 @@ val Typography = Typography(
         lineHeight = 16.sp,
     ),
 
+    titleLarge = TextStyle(
+        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+    ),
+
     titleMedium = TextStyle(
         fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
         fontSize = 12.sp,
