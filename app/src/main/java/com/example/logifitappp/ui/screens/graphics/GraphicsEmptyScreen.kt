@@ -1,10 +1,8 @@
 package com.example.logifitappp.ui.screens.graphics
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -14,6 +12,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.EmptyInfoGraph
 import com.example.logifitappp.ui.components.graphics.StepEmptyGraphCard
 import com.example.logifitappp.ui.components.headers.UserProfileCard
+import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime30
 import com.example.logifitappp.ui.theme.Lime70
@@ -23,24 +22,18 @@ import com.example.logifitappp.ui.theme.Orange170
 import com.example.logifitappp.ui.theme.Rose120
 
 @Composable
-fun GraphicsEmpty() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+fun GraphicsEmptyScreen() {
+    SimplePage(
+        content = {
+
             UserProfileCard(
                 userName = "MARIA MERCEDES",
                 userType = "PREMIUM",
                 profileImageRes = R.drawable.user1,
                 plan = "PREMIUM",
                 onNotificationClick = { },
-
-                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             IconTitle(
                 icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
                 text = stringResource(id = R.string.my_sleep)
@@ -48,22 +41,25 @@ fun GraphicsEmpty() {
             EmptyInfoGraph(
                 title = "Información entre",
                 timeRange = "19:00 - 07:00",
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(8.dp)
             )
+            Spacer(modifier = Modifier.height(16.dp))
             IconTitle(
                 icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
                 text = stringResource(id = R.string.my_steps)
             )
+
             val stepData = List(24) { kotlin.random.Random.nextFloat() }
             StepEmptyGraphCard(
                 title = stringResource(id = R.string.kcal),
                 data = stepData,
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(8.dp),
                 iconResId = R.drawable.ic_fire,
                 backgroundColorConnect = Lime30,
                 barColor = Lime70,
                 accentColor = Green298
             )
+            Spacer(modifier = Modifier.height(16.dp))
 
             IconTitle(
                 icon = ImageVector.vectorResource(id = R.drawable.ic_heart_pulse),
@@ -72,14 +68,15 @@ fun GraphicsEmpty() {
             StepEmptyGraphCard(
                 title = stringResource(id = R.string.graph_card_heart_rate),
                 data = stepData,
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(8.dp),
                 iconResId = R.drawable.ic_heart_cog,
                 barColor = Orange170,
                 backgroundColorConnect = Lime30,
                 accentColor = Rose120
             )
         }
-    }
+    )
+
 }
 
 
@@ -87,8 +84,17 @@ fun GraphicsEmpty() {
 @Composable
 fun GraphicsEmptyPreview() {
     LogifitApppTheme {
-        GraphicsEmpty()
+        GraphicsEmptyScreen()
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun GraphicsEmptyDarkPreview() {
+    LogifitApppTheme(darkTheme = true) {
+        GraphicsEmptyScreen()
+    }
+}
+
 
 

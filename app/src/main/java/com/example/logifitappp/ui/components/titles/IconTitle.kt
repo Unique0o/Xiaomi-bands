@@ -25,7 +25,7 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
 fun IconTitle(
-    horizontalPadding: Dp = 24.dp,
+    horizontalPadding: Dp = 10.dp,
     icon: ImageVector,
     text: String,
     textColor: Color = MaterialTheme.colorScheme.inverseSurface
