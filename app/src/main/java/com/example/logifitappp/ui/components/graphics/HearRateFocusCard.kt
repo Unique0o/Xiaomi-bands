@@ -23,32 +23,16 @@ import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 
-data class HeartRateData(
+
+data class HeartRateFocusData(
     val date: String,
     val minRate: Int,
     val maxRate: Int,
     val timeRange: String,
     val ranges: List<Pair<Int, Int>>
 )
-
 @Composable
-fun HeartRateCard(heartRateData: HeartRateData) {
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-    ) {
-        DateSelector(heartRateData.date)
-        Spacer(modifier = Modifier.height(16.dp))
-        HeartRateSummary(heartRateData)
-        Spacer(modifier = Modifier.height(24.dp))
-        HeartRateChart(heartRateData.ranges)
-    }
-
-}
-
-@Composable
-fun DateSelector(date: String) {
+fun DateSelectorFocus(date: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -69,7 +53,25 @@ fun DateSelector(date: String) {
 }
 
 @Composable
-fun HeartRateSummary(data: HeartRateData) {
+fun HeartRateFocusCard(
+    heartRateData: HeartRateFocusData,
+    highlightIndex: Int
+) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
+        DateSelectorFocus(heartRateData.date)
+        Spacer(modifier = Modifier.height(16.dp))
+        HeartRateFocusSummary(heartRateData)
+        Spacer(modifier = Modifier.height(24.dp))
+        HeartRateFocusChart(heartRateData.ranges, highlightIndex)
+    }
+}
+
+@Composable
+fun HeartRateFocusSummary(data: HeartRateFocusData) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -92,7 +94,11 @@ fun HeartRateSummary(data: HeartRateData) {
 }
 
 @Composable
-fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) {
+fun HeartRateFocusChart(
+    ranges: List<Pair<Int, Int>>,
+    highlightIndex: Int,
+    modifier: Modifier = Modifier
+) {
     val maxRate = ranges.maxOfOrNull { it.second } ?: 0
     Row(
         modifier = modifier
@@ -105,7 +111,6 @@ fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) 
             modifier = Modifier
                 .weight(1f)
                 .height(100.dp)
-
                 .drawBehind {
                     drawRect(
                         color = Stone470,
@@ -114,15 +119,15 @@ fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) 
                     )
                 }
         ) {
-            ChartGrids()
             Row(
                 modifier = Modifier
                     .fillMaxSize(),
                 verticalAlignment = Alignment.Bottom
             ) {
-                ranges.forEach { range ->
+                ranges.forEachIndexed { index, range ->
                     val heightFraction = (range.second - range.first).toFloat() / maxRate
                     val startFraction = range.first.toFloat() / maxRate
+                    val barColor = if (index == highlightIndex) Rose120 else Orange170
 
                     Box(
                         modifier = Modifier
@@ -131,13 +136,8 @@ fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) 
                             .width(5.dp)
                             .offset(y = -(startFraction * 80.dp))
                             .clip(RoundedCornerShape(2.dp))
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Rose120)
-                        )
-                    }
+                            .background(barColor)
+                    )
                 }
             }
             HorizontalDivider(
@@ -182,12 +182,10 @@ fun HeartRateChart(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) 
     }
 }
 
-
-
-@Composable
 @Preview(showBackground = true)
-fun HeartRateCardPreview1() {
-    val heartdata = HeartRateData(
+@Composable
+fun HeartRateFocusCardPreview() {
+    val heartRateFocusData = HeartRateFocusData(
         date = "Noviembre 20, 2023",
         minRate = 70,
         maxRate = 101,
@@ -200,5 +198,8 @@ fun HeartRateCardPreview1() {
             10 to 40,
         )
     )
-    HeartRateCard(heartdata)
+    HeartRateFocusCard(
+        heartRateData = heartRateFocusData,
+        highlightIndex = 1
+    )
 }

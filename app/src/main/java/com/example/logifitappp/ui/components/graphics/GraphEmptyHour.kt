@@ -160,18 +160,6 @@ fun EmptyCardHour(
     title: String,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(14.dp)
-            .height(250.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors =CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-
-    ){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -199,7 +187,7 @@ fun EmptyCardHour(
             }
         }
     }
-}
+
 
 
 @Composable

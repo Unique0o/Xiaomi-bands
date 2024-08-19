@@ -29,22 +29,14 @@ fun StepsDetailEmptyScreen(navigation: NavHostController) {
             )
         },
         content = {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                EmptyCardHour(
-                    steps = stepData,
-                    maxValue = 50,
-                    barColor = Lime70,
-                    accentColor =Green298,
-                    title = stringResource(id = R.string.steps_taken),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
+            EmptyCardHour(
+                steps = stepData,
+                maxValue = 50,
+                barColor = Lime70,
+                accentColor =Green298,
+                title = stringResource(id = R.string.steps_taken),
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     )
 }
