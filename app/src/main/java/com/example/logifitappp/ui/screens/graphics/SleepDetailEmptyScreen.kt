@@ -14,7 +14,7 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 
 @Composable
-fun SleepDetailEmpty(navigation: NavHostController) {
+fun SleepDetailEmptyScreen(navigation: NavHostController) {
     SimplePage(
         topBar = {
             ColumnStackHeader(
@@ -36,13 +36,13 @@ fun SleepDetailEmpty(navigation: NavHostController) {
 @Composable
 fun SleepDetailEmptyPreview() {
     LogifitApppTheme {
-        SleepDetailEmpty(rememberNavController())
+        SleepDetailEmptyScreen(rememberNavController())
     }
 }
 @Preview
 @Composable
 fun SleepDetailEmptyDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        SleepDetailEmpty(rememberNavController())
+        SleepDetailEmptyScreen(rememberNavController())
     }
 }
