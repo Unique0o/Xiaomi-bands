@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,9 +46,10 @@ fun GraphicsEmptyScreen(
                 text = stringResource(id = R.string.my_sleep)
             )
             EmptyInfoGraph(
-                title = "Información entre",
+                title = stringResource(id = R.string.information_between),
                 timeRange = "19:00 - 07:00",
-                modifier = Modifier.padding(8.dp)
+                indicatorInformation = stringResource(id = R.string.without_data),
+                icon = painterResource(id = R.drawable.ic_refresh)
             )
             Spacer(modifier = Modifier.height(16.dp))
             IconTitle(
@@ -57,13 +59,11 @@ fun GraphicsEmptyScreen(
 
             val stepData = List(24) { kotlin.random.Random.nextFloat() }
              StepEmptyGraphCard(
-                title = stringResource(id = R.string.kcal),
-                data = stepData,
-                modifier = Modifier.padding(4.dp),
-                iconResId = R.drawable.ic_fire,
-                backgroundColorConnect = Lime30,
-                barColor = Lime70,
-                accentColor = Green298
+                 data = stepData,
+                 title = stringResource(id = R.string.kcal),
+                indicatorInformation= stringResource(id = R.string.without_data),
+                icon = painterResource(id = R.drawable.ic_fire),
+                barColor = Lime70
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -74,11 +74,9 @@ fun GraphicsEmptyScreen(
             StepEmptyGraphCard(
                 title = stringResource(id = R.string.graph_card_heart_rate),
                 data = stepData,
-                modifier = Modifier.padding(4.dp),
-                iconResId = R.drawable.ic_heart_cog,
+                icon = painterResource(id = R.drawable.ic_heart_cog),
                 barColor = Orange170,
-                backgroundColorConnect = Lime30,
-                accentColor = Rose120
+                indicatorInformation= stringResource(id = R.string.without_data),
             )
         },
         bottomBar = {

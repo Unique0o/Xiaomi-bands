@@ -22,14 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
-
-data class HeartRateData(
-    val date: String,
-    val minRate: Int,
-    val maxRate: Int,
-    val timeRange: String,
-    val ranges: List<Pair<Int, Int>>
-)
+import com.example.logifitappp.data.models.HeartRateData
 
 @Composable
 fun HeartRateCard(heartRateData: HeartRateData) {
@@ -81,7 +74,9 @@ fun HeartRateSummary(data: HeartRateData) {
         )
         Text(
             text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            fontWeight = FontWeight.Bold
         )
         Text(
             text = data.timeRange,
