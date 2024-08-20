@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.screens.graphics.GraphicsEmptyScreen
+import com.example.logifitappp.ui.screens.home.admin.HomeAdminScreen
 import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 
@@ -16,5 +18,12 @@ fun MainNavigation(navigation: NavHostController) {
     ) {
         composable<MainRoutes.Login> { LoginView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+
+        composable<MainRoutes.Home> {
+            HomeAdminScreen(navigation)
+        }
+        composable<MainRoutes.Graphics> {
+            GraphicsEmptyScreen(navigation)
+        }
     }
 }

@@ -4,11 +4,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.components.BottomNavigationBar
 import com.example.logifitappp.ui.components.graphics.EmptyInfoGraph
 import com.example.logifitappp.ui.components.graphics.StepEmptyGraphCard
 import com.example.logifitappp.ui.components.headers.UserProfileCard
@@ -22,7 +26,9 @@ import com.example.logifitappp.ui.theme.Orange170
 import com.example.logifitappp.ui.theme.Rose120
 
 @Composable
-fun GraphicsEmptyScreen() {
+fun GraphicsEmptyScreen(
+    navigation: NavHostController
+) {
     SimplePage(
         content = {
 
@@ -53,7 +59,7 @@ fun GraphicsEmptyScreen() {
              StepEmptyGraphCard(
                 title = stringResource(id = R.string.kcal),
                 data = stepData,
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(4.dp),
                 iconResId = R.drawable.ic_fire,
                 backgroundColorConnect = Lime30,
                 barColor = Lime70,
@@ -68,13 +74,20 @@ fun GraphicsEmptyScreen() {
             StepEmptyGraphCard(
                 title = stringResource(id = R.string.graph_card_heart_rate),
                 data = stepData,
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(4.dp),
                 iconResId = R.drawable.ic_heart_cog,
                 barColor = Orange170,
                 backgroundColorConnect = Lime30,
                 accentColor = Rose120
             )
+        },
+        bottomBar = {
+            BottomNavigationBar(
+                selectedRoute = MainRoutes.Graphics,
+                onRouteSelected = { navigation.navigate(it) }
+            )
         }
+
     )
 
 }
@@ -84,7 +97,7 @@ fun GraphicsEmptyScreen() {
 @Composable
 fun GraphicsEmptyPreview() {
     LogifitApppTheme {
-        GraphicsEmptyScreen()
+        GraphicsEmptyScreen(navigation = NavHostController(LocalContext.current))
     }
 }
 
@@ -92,7 +105,7 @@ fun GraphicsEmptyPreview() {
 @Composable
 fun GraphicsEmptyDarkPreview() {
     LogifitApppTheme(darkTheme = true) {
-        GraphicsEmptyScreen()
+        GraphicsEmptyScreen(navigation = NavHostController(LocalContext.current))
     }
 }
 

@@ -13,10 +13,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.headers.CustomTopBar
@@ -24,7 +26,9 @@ import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun HomeAdminScreen() {
+fun HomeAdminScreen(
+    navigation: NavHostController
+) {
     SimplePage(
         topBar = {
             CustomTopBar(
@@ -73,7 +77,7 @@ fun HomeAdminScreen() {
 @Preview(showBackground = true)
 fun HomeAdminScreenPreview() {
     LogifitApppTheme {
-        HomeAdminScreen()
+        HomeAdminScreen(navigation = NavHostController(LocalContext.current))
     }
 }
 
@@ -81,6 +85,6 @@ fun HomeAdminScreenPreview() {
 @Preview(showBackground = true)
 fun HomeAdminScreenDarkPreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeAdminScreen()
+        HomeAdminScreen(navigation = NavHostController(LocalContext.current))
     }
 }

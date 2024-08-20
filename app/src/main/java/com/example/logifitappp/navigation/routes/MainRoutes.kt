@@ -12,4 +12,13 @@ sealed class MainRoutes {
 
     @Serializable
     data object PasswordRecovery: MainRoutes()
+
+    @Serializable
+    data object Home : MainRoutes()
+
+    @Serializable
+    data object Graphics : MainRoutes()
+
+    @Serializable
+    data object Profile : MainRoutes()
 }
