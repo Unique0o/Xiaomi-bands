@@ -15,8 +15,9 @@ import androidx.compose.ui.unit.dp
 fun SimplePage(
     content: @Composable ColumnScope.() -> Unit,
     topBar: @Composable () -> Unit = {},
+    bottomBar: @Composable () -> Unit = {}
 ) {
-    Scaffold(topBar = topBar) { innerPadding ->
+    Scaffold(topBar = topBar, bottomBar = bottomBar) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
