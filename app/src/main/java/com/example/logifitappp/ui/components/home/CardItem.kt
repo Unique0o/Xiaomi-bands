@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Stone470
+import com.example.logifitappp.ui.theme.White
 
 
 @Composable
@@ -50,7 +53,8 @@ fun CardItem(
 
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.outline),
     ) {
         Row(
             modifier = modifier
@@ -61,14 +65,15 @@ fun CardItem(
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = null,
-                tint = Color(0xFF4285F4)
+                tint = Blue690
             )
             Text(
                 text = title,
+                fontSize = 14.sp,
                 modifier = modifier
                     .weight(1f)
                     .padding(start = 16.dp),
-                color = Color(0xFF4285F4),
+                color = Blue690,
                 fontWeight = FontWeight.Bold
             )
 
@@ -93,7 +98,7 @@ fun CardItem(
 
                     Text(
                         text = status,
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
                         color = statusColor
                     )
@@ -118,7 +123,7 @@ fun CardItemWithDescription(
 
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp),
-      colors = CardDefaults.cardColors(containerColor = Color.White),
+      colors = CardDefaults.cardColors(containerColor = White),
     ) {
         Column(modifier = modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -150,7 +155,7 @@ fun CardItemWithDescription(
             }
             Text(
                 text = description,
-                color = Color.Gray,
+                color = Stone470,
                 fontSize = 12.sp,
                 modifier = modifier.padding(top = 8.dp, start = 40.dp)
             )

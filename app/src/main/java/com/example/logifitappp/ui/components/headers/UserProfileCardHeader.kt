@@ -38,7 +38,7 @@ fun UserProfileCard(
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = White)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier

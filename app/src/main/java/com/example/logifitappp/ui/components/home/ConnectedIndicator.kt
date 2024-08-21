@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 
 @Composable
@@ -29,7 +30,7 @@ fun ConnectedIndicator(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
-            .background(backgroundColor, RoundedCornerShape(12.dp))
+            .background( backgroundColor, RoundedCornerShape(12.dp))
             .padding(horizontal = 6.dp, vertical = 2.dp)
     ) {
         Box(

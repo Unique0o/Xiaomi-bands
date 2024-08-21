@@ -8,11 +8,11 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +23,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Lime30
+import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Stone240
 import com.example.logifitappp.ui.theme.Stone470
 import com.example.logifitappp.ui.theme.Zinc680
@@ -33,18 +34,20 @@ fun EmptyInfoGraph(
     timeRange: String,
     backgroundColor: Color = Stone240,
     textColor:  Color = Blue690,
-    accentColor: Color = Color(0xFF2196F3),
+    accentColor: Color = Blue690,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.outline
+        )
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(backgroundColor)
                 .padding(16.dp)
         ) {
             Header(title, timeRange, textColor, accentColor)
@@ -109,22 +112,28 @@ private fun EmptyBars() {
     }
 }
 
-// Uso del componente
-@Composable
-fun EmptyInfoGraph1() {
-    EmptyInfoGraph(
-        title = "Información entre",
-        timeRange = "19:00 - 07:00",
-        modifier = Modifier.padding(16.dp)
-    )
-}
 
 @Composable
 @Preview(showBackground = true)
 fun EmptyInfoGraphPreview() {
-    EmptyInfoGraph(
-        title = "Información entre",
-        timeRange = "19:00 - 07:00",
-        modifier = Modifier.padding(16.dp)
-    )
+    LogifitApppTheme {
+        EmptyInfoGraph(
+            title = "Información entre",
+            timeRange = "19:00 - 07:00",
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+
+}
+@Composable
+@Preview()
+fun EmptyInfoGraphDarkPreview() {
+    LogifitApppTheme(darkTheme = true) {
+        EmptyInfoGraph(
+            title = "Información entre",
+            timeRange = "19:00 - 07:00",
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+
 }

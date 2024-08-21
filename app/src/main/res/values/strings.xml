@@ -63,12 +63,22 @@
     <string name="light_sleep">Light Sleep</string>
     <string name="deep_sleep">Deep Sleep</string>
     <string name="rem_sleep">REM Sleep</string>
+    <string name="my_heart_rate">My heart rate</string>
+    <string name="my_sleep">My sleep</string>
+    <string name="sleep_time">Sleep Time</string>
+    <string name="information_between">Information between:</string>
+    <string name="my_steps">My steps</string>
+    <string name="steps_taken">Steps taken</string>
+    <string name="summary">Summary</string>
+    <string name="average_heart_rate">Average heart rate</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>
     <string name="heart_rate_card_title">Heart Rate</string>
 
     <!-- Card Step -->
+    <string name="distance_traveled">Distance traveled</string>
+    <string name="calories_burned">Calories burned</string>
     <string name="without_data">NO DATA</string>
     <string name="connected">CONNECTED</string>
     <string name="kcal">0 kcal</string>
@@ -76,4 +86,15 @@
     <string name="title_card_message_raking">You`re on top</string>
     <string name="message_card_message_ranking">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
 
+    <string name="searching_for_devices">Searching for devices</string>
+    <string name="make_your_device_detectable">Make your device detectable</string>
+    <string name="device_detection_info">Connected devices are not detectable on Android 6 or higher, so you need to enable location (GPS). Disable Privacy Guard for Logfit. If your device does not show up within two minutes, try again after restarting your phone.</string>
+    <string name="detecting_devices">Detecting devices</string>
+    <string name="add_device">Pair a Smart Band</string>
+    <string name="text_no_device">You have no band connected</string>
+    <string name="authentication_title">Authenticate your band</string>
+    <string name="device_card_description">Select device</string>
+    <string name="close">Close</string>
+    <string name="authentication_description">Write down or copy the authorization key you were given to perform the authentication.</string>
+    <string name="enter_key">Enter the key</string>
 </resources>
