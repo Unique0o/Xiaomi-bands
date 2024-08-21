@@ -37,7 +37,7 @@ fun Graphics() {
                 timeRange = "19:00 - 07:00",
                 data = data,
                 indicatorInformation = "7h 36min",
-                icon = painterResource(id = R.drawable.ic_refresh)
+                icon = painterResource(id = R.drawable.ic_update)
             )
             IconTitle(
                 icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
