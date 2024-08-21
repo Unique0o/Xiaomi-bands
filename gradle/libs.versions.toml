@@ -51,7 +51,6 @@ convert-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref =
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid"}
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid"}
 
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

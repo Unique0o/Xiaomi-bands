@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.components.BottomNavigationBar
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.headers.CustomTopBar
 import com.example.logifitappp.ui.components.pages.SimplePage
@@ -66,11 +68,17 @@ fun HomeAdminScreen(
 
                 Spacer(modifier = Modifier.weight(1f))
             }
+        },
+        bottomBar = {
+            BottomNavigationBar(
+                selectedRoute = MainRoutes.Home,
+                onRouteSelected = { route ->
+                    navigation.navigate(route.toString())
+                }
+            )
         }
 
     )
-
-
 }
 
 @Composable

@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Orange390
 import com.example.logifitappp.ui.theme.White
 
 @Composable
@@ -71,12 +72,12 @@ fun UserProfileCard(
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = null,
-                        tint = Blue690,
+                        tint = Orange390,
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
                         text = plan,
-                        color = Blue690,
+                        color = Orange390,
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = modifier.padding(start = 4.dp)

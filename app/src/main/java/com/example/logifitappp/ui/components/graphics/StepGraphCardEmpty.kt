@@ -1,13 +1,9 @@
 package com.example.logifitappp.ui.components.graphics
 
-import android.graphics.drawable.Icon
-import androidx.annotation.DrawableRes
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
+
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,20 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Lime30
-import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.Stone470
-import com.example.logifitappp.ui.theme.White
 
 @Composable
 fun StepEmptyGraphCard(
@@ -43,39 +32,38 @@ fun StepEmptyGraphCard(
     modifier: Modifier = Modifier,
     indicatorInformation: String
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.outline
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            HeaderIndicator(
-                title = title,
-                subtitle = "",
-                titleAccentColor = titleAccentColor,
-                indicatorAccentColor = indicatorAccentColor,
-                indicatorBackgroundColor = indicatorBackgroundColor,
-                textIndicator = indicatorInformation,
-                icon = icon
+    CardLayout(
+        modifier = modifier,
+        icon = icon,
+        label = title,
+        labelStyle = MaterialTheme.typography.titleMedium.copy(color = titleAccentColor),
+        suffixComponent = {
+            ConnectedIndicator(
+                text = indicatorInformation,
+                color = indicatorAccentColor,
+                pointColor = indicatorAccentColor,
+                backgroundColor = indicatorBackgroundColor
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            StepGraph(data, barColor, accentColor)
-            Spacer(modifier = Modifier.height(8.dp))
-            TimeLabels()
+        },
+        bodyComponent = {
+            Column {
+                StepGraph(data, barColor, accentColor)
+                CardTimeLabels(
+                    hourStart = "00:00",
+                    hourFinal = "24:00",
+                    fontSize = 12.sp,
+                    textColor = Stone470
+                )
+            }
         }
-    }
+    )
 }
-
 
 @Composable
 private fun StepGraph(
     data: List<Float>,
-    barColor: Color, accentColor: Color,
+    barColor: Color,
+    accentColor: Color
 ) {
     val maxValue = data.maxOrNull() ?: 1f
     Row(
@@ -103,30 +91,10 @@ private fun Bar(height: Float, barColor: Color, accentColor: Color, modifier: Mo
             .fillMaxHeight()
             .padding(horizontal = 1.dp)
     ) {
-        // Barra de fondo (vacía)
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(barColor)
         )
-//        // Barra de progreso
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .fillMaxHeight(height)
-//                .align(Alignment.BottomCenter)
-//                .background(accentColor)
-//        )
-    }
-}
-
-@Composable
-private fun TimeLabels() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = "00:00", fontSize = 12.sp, color = Stone470)
-        Text(text = "24:00", fontSize = 12.sp, color = Stone470)
     }
 }
