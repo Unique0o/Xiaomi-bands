@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime30
 import com.example.logifitappp.ui.theme.Lime70
@@ -32,11 +34,14 @@ import com.example.logifitappp.ui.theme.White
 fun StepEmptyGraphCard(
     title: String,
     data: List<Float>,
+    icon: Painter,
+    titleAccentColor: Color = Blue690,
+    indicatorAccentColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    indicatorBackgroundColor: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
     barColor: Color,
-    accentColor: Color,
-    backgroundColorConnect: Color,
+    accentColor: Color = Green298,
     modifier: Modifier = Modifier,
-    @DrawableRes iconResId: Int
+    indicatorInformation: String
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -49,7 +54,15 @@ fun StepEmptyGraphCard(
         Column(
             modifier = Modifier.padding(10.dp)
         ) {
-            Header(title, accentColor, backgroundColorConnect, iconResId)
+            HeaderIndicator(
+                title = title,
+                subtitle = "",
+                titleAccentColor = titleAccentColor,
+                indicatorAccentColor = indicatorAccentColor,
+                indicatorBackgroundColor = indicatorBackgroundColor,
+                textIndicator = indicatorInformation,
+                icon = icon
+            )
             Spacer(modifier = Modifier.height(16.dp))
             StepGraph(data, barColor, accentColor)
             Spacer(modifier = Modifier.height(8.dp))
@@ -58,44 +71,6 @@ fun StepEmptyGraphCard(
     }
 }
 
-@Composable
-private fun Header(
-    title: String,
-    accentColor: Color,
-    backgroundColorConnect: Color,
-    @DrawableRes iconResId: Int
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = iconResId),
-                contentDescription = "Calories icon",
-                tint = accentColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = title,
-                color = accentColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            Spacer(modifier = Modifier.width(8.dp))
-            ConnectedIndicator(
-                text = stringResource(id = R.string.without_data),
-                color = Stone470,
-                backgroundColor = backgroundColorConnect,
-                pointColor = Stone470
-            )
-        }
-    }
-}
 
 @Composable
 private fun StepGraph(

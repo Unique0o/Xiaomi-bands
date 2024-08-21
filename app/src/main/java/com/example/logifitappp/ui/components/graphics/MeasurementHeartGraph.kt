@@ -1,6 +1,6 @@
 package com.example.logifitappp.ui.components.graphics
 
-import androidx.annotation.DrawableRes
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,63 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.*
+import com.example.logifitappp.data.models.HeartRateData
 
-data class MeasurementHeartData(
-    val date: String,
-    val minRate: Int,
-    val maxRate: Int,
-    val timeRange: String,
-    val ranges: List<Pair<Int, Int>>
-)
-@Composable
-private fun Header(
-    title: String,
-    accentColor: Color,
-    backgroundColorConnect: Color,
-    @DrawableRes iconResId: Int
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = iconResId),
-                contentDescription = "Calories icon",
-                tint = accentColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(7.dp))
-            Text(
-                text = title,
-                color = accentColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
 
-            Spacer(modifier = Modifier.width(8.dp))
-            ConnectedIndicator(
-                text = "90 LPM",
-                color =  Green298,
-                backgroundColor =  Lime70,
-                pointColor =  Green298
-            )
-        }
-    }
-}
 @Composable
 private fun TimeLabels() {
     Row(
@@ -79,10 +32,18 @@ private fun TimeLabels() {
 }
 
 @Composable
-fun MeasurementHeartCard(heartRateData1: MeasurementHeartData,  modifier: Modifier = Modifier,) {
+fun MeasurementHeartCard(
+    heartRateData: HeartRateData,
+    modifier: Modifier = Modifier,
+    titleAccentColor: Color = Blue690,
+    indicatorAccentColor: Color = Green298,
+    indicatorBackgroundColor: Color = Lime70,
+    indicatorInformation: String,
+    icon : Painter
+) {
 
     Card(
-        modifier = modifier.fillMaxWidth() .padding(15.dp),
+        modifier = modifier.fillMaxWidth() .padding(2.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -93,13 +54,16 @@ fun MeasurementHeartCard(heartRateData1: MeasurementHeartData,  modifier: Modifi
         Column(
             modifier = Modifier.padding(10.dp)
         ) {
-            Header(
+            HeaderIndicator(
                 title = stringResource(id = R.string.graph_card_heart_rate),
-                accentColor = Blue690 ,
-                backgroundColorConnect = Orange170,
-                iconResId = R.drawable.ic_heart_cog,
+                subtitle = "",
+                titleAccentColor = titleAccentColor,
+                indicatorAccentColor = indicatorAccentColor,
+                indicatorBackgroundColor = indicatorBackgroundColor,
+                textIndicator = indicatorInformation,
+                icon = icon
             )
-            HeartRateChart1(heartRateData1.ranges)
+            HeartRateChart1(heartRateData.ranges)
             TimeLabels()
         }
     }

@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.HeartRateFocusCard
-import com.example.logifitappp.ui.components.graphics.HeartRateFocusData
+import com.example.logifitappp.data.models.HeartRateData
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.home.CardItem
@@ -38,7 +38,7 @@ fun HeartRateFocusScreen(navigation: NavHostController) {
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Top
             ) {
-                val heartRateFocusData = HeartRateFocusData(
+                val heartRateFocusData = HeartRateData(
                     date = "Noviembre 20, 2023",
                     minRate = 70,
                     maxRate = 101,

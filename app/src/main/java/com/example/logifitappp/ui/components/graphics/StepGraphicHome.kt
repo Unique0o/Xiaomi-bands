@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.components.graphics
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,61 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.*
 
-data class StepGraphicHomeData(
-    val date: String,
-    val minRate: Int,
-    val maxRate: Int,
-    val timeRange: String,
-    val steps: List<Int>
-)
-@Composable
-private fun Header(
-    title: String,
-    accentColor: Color,
-    backgroundColorConnect: Color,
-    @DrawableRes iconResId: Int
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = iconResId),
-                contentDescription = "Calories icon",
-                tint = accentColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(7.dp))
-            Text(
-                text = title,
-                color = accentColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            Spacer(modifier = Modifier.width(8.dp))
-            ConnectedIndicator(
-                text = "1200 pasos",
-                color =  Green298,
-                backgroundColor =  Lime70,
-                pointColor =  Green298
-            )
-        }
-    }
-}
 @Composable
 private fun TimeLabels() {
     Row(
@@ -76,10 +28,18 @@ private fun TimeLabels() {
 }
 
 @Composable
-fun StepHomeCard( steps: List<Int>,  modifier: Modifier = Modifier,) {
+fun StepHomeCard(
+    steps: List<Int>,
+    title: String,
+    titleAccentColor: Color = Blue690,
+    indicatorAccentColor: Color = Green298,
+    indicatorBackgroundColor: Color = Lime70,
+    indicatorInformation: String,
+    icon : Painter
+) {
 
     Card(
-        modifier = modifier.fillMaxWidth() .padding(15.dp),
+        modifier = Modifier.fillMaxWidth() .padding(2.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -90,11 +50,14 @@ fun StepHomeCard( steps: List<Int>,  modifier: Modifier = Modifier,) {
         Column(
             modifier = Modifier.padding(10.dp)
         ) {
-            Header(
-                title = "200kcal",
-                accentColor = Blue690 ,
-                backgroundColorConnect = Orange170,
-                iconResId = R.drawable.ic_fire,
+            HeaderIndicator(
+                title = title,
+                subtitle = "kcal",
+                titleAccentColor = titleAccentColor,
+                indicatorAccentColor = indicatorAccentColor,
+                indicatorBackgroundColor = indicatorBackgroundColor,
+                textIndicator = indicatorInformation,
+                icon = icon
             )
             StepHomeChart(steps)
             TimeLabels()
@@ -137,11 +100,3 @@ fun StepHomeChart( steps: List<Int>, modifier: Modifier = Modifier) {
         }
     }
 
-@Preview
-@Composable
-fun StepHomeCardPreview() {
-    val steps = listOf(10, 20, 15, 30, 25, 35, 40)
-    LogifitApppTheme(darkTheme = true) {
-        StepHomeCard(steps)
-    }
-}
