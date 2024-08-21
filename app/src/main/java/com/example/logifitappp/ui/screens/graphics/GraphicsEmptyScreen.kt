@@ -18,13 +18,10 @@ import com.example.logifitappp.ui.components.graphics.EmptyInfoGraph
 import com.example.logifitappp.ui.components.graphics.StepEmptyGraphCard
 import com.example.logifitappp.ui.components.headers.UserProfileCard
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Lime30
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Orange170
-import com.example.logifitappp.ui.theme.Rose120
 
 @Composable
 fun GraphicsEmptyScreen(
@@ -49,7 +46,7 @@ fun GraphicsEmptyScreen(
                 title = stringResource(id = R.string.information_between),
                 timeRange = "19:00 - 07:00",
                 indicatorInformation = stringResource(id = R.string.without_data),
-                icon = painterResource(id = R.drawable.ic_refresh)
+                icon = painterResource(id = R.drawable.ic_update)
             )
             Spacer(modifier = Modifier.height(16.dp))
             IconTitle(
