@@ -12,21 +12,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.ui.components.graphics.HeaderIndicator
+import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 @Composable
 fun InfoBarColorGraph(
-    title: String,
     timeRange: String,
     data: List<Int>,
-    titleAccentColor: Color = Blue690,
-    indicatorAccentColor: Color = Green298,
-    indicatorBackgroundColor: Color = Lime70,
-    indicatorInformation: String,
-    icon: Painter
+
 ) {
     val barColors = List(17) {
         when (it % 4) {
@@ -37,44 +38,38 @@ fun InfoBarColorGraph(
         }
     }.take(data.size)
 
-    Card(
-        modifier = Modifier .padding(2.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.outline
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            HeaderIndicator(
-                title = title,
-                subtitle = timeRange,
-                titleAccentColor = titleAccentColor,
-                indicatorAccentColor = indicatorAccentColor,
-                indicatorBackgroundColor = indicatorBackgroundColor,
-                textIndicator = indicatorInformation,
-                icon = icon
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            BarChart(data = data, colors = barColors)
-            TimeLabels()
-        }
-    }
-}
+    CardLayout(
+        modifier = Modifier.padding(2.dp),
+        icon = painterResource(id = R.drawable.ic_update),
+        iconSize = 20.dp,
+        label = stringResource(id = R.string.information_between),
+        sutitle = timeRange,
+        fontWeight = FontWeight.Medium,
+        labelStyle = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+            color = Blue690
+        ),
 
-@Composable
-private fun TimeLabels() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = "22:00", fontSize = 12.sp, color = Stone470)
-        Text(text = "06:00", fontSize = 12.sp, color = Stone470)
-    }
+        suffixComponent = {
+            ConnectedIndicator(
+                text = "7h 36min",
+                color = Green298,
+                backgroundColor = Lime70,
+                pointColor = Green298
+            )
+        },
+        bodyComponent = {
+            BarChart(data = data, colors = barColors)
+            CardTimeLabels(
+                hourStart = "22:00",
+                hourFinal = "24:00",
+                fontSize = 12.sp,
+                textColor = Stone470
+
+            )
+        }
+    )
 }
 
 @Composable

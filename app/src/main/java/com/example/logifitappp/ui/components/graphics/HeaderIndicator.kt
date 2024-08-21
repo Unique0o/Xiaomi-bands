@@ -34,6 +34,7 @@ fun HeaderIndicator(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+
             Icon(
                 painter = icon,
                 contentDescription = "Icon",

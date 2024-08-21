@@ -18,18 +18,8 @@ import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.data.models.HeartRateData
+import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
-
-@Composable
-private fun TimeLabels() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = "00:00", fontSize = 12.sp, color = Stone470)
-        Text(text = "24:00", fontSize = 12.sp, color = Stone470)
-    }
-}
 
 @Composable
 fun MeasurementHeartCard(
@@ -41,36 +31,38 @@ fun MeasurementHeartCard(
     indicatorInformation: String,
     icon : Painter
 ) {
-
-    Card(
-        modifier = modifier.fillMaxWidth() .padding(2.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.outline
-        )
-
-    ) {
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            HeaderIndicator(
-                title = stringResource(id = R.string.graph_card_heart_rate),
-                subtitle = "",
-                titleAccentColor = titleAccentColor,
-                indicatorAccentColor = indicatorAccentColor,
-                indicatorBackgroundColor = indicatorBackgroundColor,
-                textIndicator = indicatorInformation,
-                icon = icon
+    CardLayout(
+        modifier = modifier,
+        icon = icon,
+        label = stringResource(id = R.string.graph_card_heart_rate),
+        labelStyle = MaterialTheme.typography.titleMedium.copy(color = titleAccentColor),
+        suffixComponent = {
+            ConnectedIndicator(
+                text = indicatorInformation,
+                color = indicatorAccentColor,
+                pointColor = indicatorAccentColor,
+                backgroundColor = indicatorBackgroundColor
             )
-            HeartRateChart1(heartRateData.ranges)
-            TimeLabels()
+        },
+        bodyComponent = {
+            Column {
+                HeartRateCharts(heartRateData.ranges)
+                CardTimeLabels(
+                    hourStart = "00:00",
+                    hourFinal = "24:00",
+                    fontSize = 12.sp,
+                    textColor = Stone470
+
+                )
+            }
         }
-    }
+    )
+
+
 }
 
 @Composable
-fun HeartRateChart1(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) {
+fun HeartRateCharts(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) {
     val maxRate = ranges.maxOfOrNull { it.second } ?: 0
     Row(
         modifier = modifier

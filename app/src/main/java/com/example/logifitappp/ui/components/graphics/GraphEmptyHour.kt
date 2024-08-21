@@ -53,7 +53,7 @@ fun ChartEmptyHour(
                 barColor = barColor,
                 accentColor = accentColor
             )
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .fillMaxWidth()
