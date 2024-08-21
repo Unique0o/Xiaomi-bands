@@ -21,4 +21,7 @@ val Zinc940 = Color(0xff092c4c)
 val Violet = Color(0xff8B5CF6)
 val LightBlue = Color(0xff78B6F1)
 val LightGray = Color(0xff4F4F4F)
-
+val Gray1 = Color(0xff495656)
+val Gray2 = Color(0xff8D9B9B)
+val Gray3 = Color(0xff768484)
+val Gray4 = Color(0xff606D6D)

@@ -71,6 +71,8 @@
     <string name="steps_taken">Steps taken</string>
     <string name="summary">Summary</string>
     <string name="average_heart_rate">Average heart rate</string>
+    <string name="sleep_condition">Sleep Condition</string>
+    <string name="naps">Naps</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>

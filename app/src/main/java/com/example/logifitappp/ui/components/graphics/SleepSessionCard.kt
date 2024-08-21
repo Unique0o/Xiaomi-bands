@@ -26,7 +26,7 @@ fun SleepSessionCard(modifier: Modifier = Modifier) {
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F4F8))
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline),
     ) {
         Column(
             modifier = Modifier
@@ -144,13 +144,13 @@ fun SleepTypeInfo(
             Text(
                 text = "$type ($percentage)",
                 style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
+
             )
             Text(
                 text = duration,
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+
             )
         }
     }
