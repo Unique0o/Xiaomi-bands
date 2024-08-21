@@ -9,6 +9,7 @@ import com.example.logifitappp.ui.screens.graphics.GraphicsEmptyScreen
 import com.example.logifitappp.ui.screens.home.admin.HomeAdminScreen
 import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
+import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 
 @Composable
 fun MainNavigation(navigation: NavHostController) {
@@ -18,6 +19,7 @@ fun MainNavigation(navigation: NavHostController) {
     ) {
         composable<MainRoutes.Login> { LoginView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+        composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
 
         composable<MainRoutes.Home> {
             HomeAdminScreen(navigation)

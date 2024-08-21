@@ -1,17 +1,30 @@
 <resources>
     <string name="app_name">Logifit</string>
+    <string name="authenticating">Authenticating</string>
+    <string name="authentication_required">Authentication required</string>
+    <string name="button_device_detection">Devices detection</string>
     <string name="button_get_into">Get into</string>
     <string name="button_send">Send</string>
+    <string name="button_start_detection">Start detection</string>
+    <string name="button_stop_detection">Stop detection</string>
+    <string name="connecting">Connecting</string>
+    <string name="device_unknown_name">(unknown)</string>
     <string name="go_back">Go back</string>
-    <string name="message_password_recovery">A manager will be notified to assist you</string>
-    <string name="message_recover_password">Don`t remember your password?</string>
+    <string name="initialized">Initialized</string>
+    <string name="initializing">Initializing</string>
     <string name="link_hide">Hide</string>
     <string name="link_recover_password">Get it back here</string>
     <string name="link_show">Show</string>
+    <string name="message_password_recovery">A manager will be notified to assist you</string>
+    <string name="message_recover_password">Don`t remember your password?</string>
+    <string name="not_connected">Not connected</string>
     <string name="password_recovery_title">Recover password</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
+    <string name="scanned">Scanned</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+    <string name="waiting_for_device_scan">Waiting for device scan</string>
+    <string name="waiting_for_reconnect">Waiting for reconnect</string>
 
     <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>
     <string name="face_status">FATIGUE</string>
