@@ -1,4 +1,4 @@
-package com.example.logifitappp.ui.screens.home
+package com.example.logifitappp.ui.components.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,14 +34,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
-import com.example.logifitappp.ui.components.home.ShareButton
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.ui.res.stringResource
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Lime30
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.Orange170
 import com.example.logifitappp.ui.theme.Rose120
@@ -54,21 +51,21 @@ fun SmartBandScreen(modifier: Modifier = Modifier) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(350.dp)
+            .height(335.dp)
             .padding(horizontal = 1.dp, vertical = 1.dp),
 
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFEBEFF5)),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp)
     ) {
-
+        SmartBandHeader()
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .background(Color(0xFFF5F5F5))
+                .background(MaterialTheme.colorScheme.outline)
                 .padding(14.dp)
         ) {
-            SmartBandHeader()
+
             BatteryStatus(
                 title = stringResource(id = R.string.battery_status),
                 color = Color(0xFF2196F3)
@@ -103,8 +100,7 @@ fun SmartBandHeader() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_watch),
-                contentDescription = null,
-                tint = Color.Black
+                contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
@@ -115,10 +111,9 @@ fun SmartBandHeader() {
         ShareButton(
             title = stringResource(id = R.string.share),
             color = White,
-            modifier = Modifier
-                .height(40.dp)
-                .width(122.dp),
-            onClick = { /*TODO*/ })
+            onClick = { /*TODO*/ }
+        )
+
     }
 }
 
@@ -138,7 +133,7 @@ fun BatteryStatus(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_battery_full),
+                painter = painterResource(id = R.drawable.ic_battery),
                 contentDescription = null,
                 tint = Blue690
             )
@@ -194,7 +189,7 @@ fun StatusCard(title: String, isApt: Boolean) {
             .width(160.dp)
             .height(160.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = White)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline)
     ) {
         Column(
             modifier = Modifier
@@ -225,7 +220,7 @@ fun StatusCard(title: String, isApt: Boolean) {
 }
 
 @Composable
-fun TestsSection() {
+fun TestsSection(buttonColor: Color) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -233,9 +228,9 @@ fun TestsSection() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_assignment),
+            painter = painterResource(id = R.drawable.ic_test),
             contentDescription = null,
-            tint = Color.Black
+            modifier = Modifier .padding(bottom = 41.dp)
         )
         Column(
             modifier = Modifier
@@ -252,7 +247,7 @@ fun TestsSection() {
         IconButton(
             onClick = { /* TODO */ },
             modifier = Modifier
-                .background(Green298, CircleShape)
+                .background(buttonColor, CircleShape)
                 .size(40.dp)
         ) {
             Icon(Icons.Default.Add, contentDescription = null, tint = Color.White)
@@ -369,7 +364,7 @@ fun TestFatigaItem() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 2.dp, vertical = 1.dp),
-        colors = CardDefaults.cardColors(containerColor = Stone240),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp)
     ) {
@@ -415,15 +410,22 @@ fun TestFatigaItem() {
                 modifier = Modifier
                     .height(40.dp)
                     .width(122.dp),
-                onClick = { /*TODO*/ })
+                onClick = { /*TODO*/ }
+            )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     LogifitApppTheme {
         SmartBandScreen()
+        //SmartBandHeader()
+        //TestFatigaItem()
+        //TestsSection( buttonColor = Green298)
+        //TestsSomnolenciaCard()
+
     }
 }

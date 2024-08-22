@@ -75,12 +75,12 @@ fun HeaderHome(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = null,
-                    tint = Blue690,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
                     text = plan,
-                    color = Blue690,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = modifier.padding(start = 4.dp)
@@ -91,7 +91,7 @@ fun HeaderHome(
         Icon(
             imageVector = Icons.Default.Notifications,
             contentDescription = stringResource(id = R.string.notificacions_content_description),
-            tint = Blue690
+            tint = MaterialTheme.colorScheme.outlineVariant
         )
     }
 }
