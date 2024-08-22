@@ -38,19 +38,19 @@ fun BottomNavigationBar(
     ) {
         NavItem(
             icon = Icons.Default.Home,
-            isSelected = selectedRoute == MainRoutes.Home
+            isSelected = selectedRoute is MainRoutes.Home
         ) { onRouteSelected(MainRoutes.Home) }
         NavItem(
             icon = Icons.Default.PieChart,
-            isSelected = selectedRoute == MainRoutes.Graphics
+            isSelected = selectedRoute is MainRoutes.Graphics
         ) { onRouteSelected(MainRoutes.Graphics) }
         NavItem(
             icon = Icons.Default.EmojiEvents,
-            isSelected = selectedRoute == MainRoutes.Profile
+            isSelected = selectedRoute is MainRoutes.Profile
         ) { onRouteSelected(MainRoutes.Profile) }
         NavItem(
             icon = Icons.Default.Person,
-            isSelected = selectedRoute == MainRoutes.Profile
+            isSelected = selectedRoute is MainRoutes.Profile
         ) { onRouteSelected(MainRoutes.Profile) }
     }
 }

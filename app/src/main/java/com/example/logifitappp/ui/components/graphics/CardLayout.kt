@@ -1,0 +1,129 @@
+package com.example.logifitappp.ui.components.graphics
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime70
+
+@Composable
+fun CardLayout(
+    modifier: Modifier = Modifier,
+    bodyComponent: @Composable () -> Unit,
+    icon: Painter? = null,
+    iconSize: Dp = 24.dp,
+    label: String,
+    sutitle: String? = "",
+    labelStyle: TextStyle = TextStyle.Default,
+    fontWeight: FontWeight = FontWeight.Normal,
+    style: Modifier = Modifier,
+    fontSize: TextUnit = 16.sp,
+    suffixComponent: @Composable (() -> Unit)? = null
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .then(style),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.outline
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    icon?.let {
+                        Icon(
+                            painter = it,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(iconSize)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+
+                    Text(
+                        text = "$label $sutitle",
+                        style = labelStyle.copy(color = MaterialTheme.colorScheme.primary),
+                        fontSize = labelStyle.fontSize,
+                        fontWeight = labelStyle.fontWeight
+                    )
+                }
+
+                if (suffixComponent != null) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    suffixComponent()
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            bodyComponent()
+        }
+    }
+}
+
+@Composable
+fun CardTemplate(
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colorScheme.outline,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(backgroundColor)
+            .padding(16.dp)
+    ) {
+        content()
+    }
+}
+
+@Preview
+@Composable
+fun CardTemplatePreview() {
+    CardLayout(
+        modifier = Modifier
+            .padding(start = 8.dp),
+        bodyComponent = {},
+        icon = painterResource(id = R.drawable.ic_shoe_sneaker),
+        iconSize = 24.dp,
+        label = "Steps",
+        labelStyle = MaterialTheme.typography.labelMedium,
+        style =  Modifier.padding(8.dp),
+        suffixComponent = {
+            ConnectedIndicator(text = "10 Steps", color = Green298 , backgroundColor = Lime70, pointColor = Green298)
+        }
+    )
+}

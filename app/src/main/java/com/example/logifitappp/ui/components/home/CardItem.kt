@@ -29,10 +29,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.Blue690
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.Stone470
 import com.example.logifitappp.ui.theme.White
 
@@ -162,4 +165,17 @@ fun CardItemWithDescription(
         }
     }
 
+}
+
+@Preview
+@Composable
+fun CardItemPreview() {
+    CardItem(
+        title = "Steps",
+        status = "10 Steps",
+        iconRes = R.drawable.ic_shoe_sneaker,
+        statusColor = Green298,
+        backgroundColor = Lime70,
+        modifier = Modifier
+    )
 }
