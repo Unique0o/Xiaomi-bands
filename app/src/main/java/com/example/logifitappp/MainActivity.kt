@@ -1,6 +1,5 @@
 package com.example.logifitappp
 
-import MainScreen
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity

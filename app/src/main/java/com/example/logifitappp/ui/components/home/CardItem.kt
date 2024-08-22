@@ -119,28 +119,20 @@ fun CardItemWithDescription(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
 
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(8.dp),
-      colors = CardDefaults.cardColors(containerColor = White),
-    ) {
         Column(modifier = modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = iconRes),
                     contentDescription = null,
-                    tint = Blue690
+
                 )
                 Text(
                     text = title,
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 16.dp),
-                    color = Blue690,
+
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(
@@ -165,7 +157,7 @@ fun CardItemWithDescription(
         }
     }
 
-}
+
 
 @Preview
 @Composable

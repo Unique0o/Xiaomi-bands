@@ -10,16 +10,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectDevice
-import com.example.logifitappp.ui.components.home.HeaderHome
 import com.example.logifitappp.ui.components.home.OptionsList
+import com.example.logifitappp.ui.components.home.HeaderHome
+import com.example.logifitappp.ui.components.home.SmartBandScreen
+import com.example.logifitappp.ui.components.home.TestsSection
 import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun HomeScreen() {
-    SimplePage(
-        content = {
+fun HomeDeviceConnectedScreen() {
+    SimplePage(content = {
         //BackgroundCurve(modifier = Modifier.fillMaxSize())
         Column(
             modifier = Modifier
@@ -32,25 +33,31 @@ fun HomeScreen() {
                 plan = stringResource(id = R.string.plan)
             )
             OptionsList()
-            ConnectDevice()
+            SmartBandScreen()
+            TestsSection(buttonColor = Blue690)
+
+
         }
     })
+
+
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun HomeDeviceConnectedScreenPreview() {
     LogifitApppTheme {
-        HomeScreen()
+        HomeDeviceConnectedScreen()
 
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenDarkModePreview() {
+fun HomeDeviceConnectedScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeScreen()
+        HomeDeviceConnectedScreen()
 
     }
 }
