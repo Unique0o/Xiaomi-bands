@@ -6,16 +6,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.graphics.bars.ProgressBar
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Lime30
 import com.example.logifitappp.ui.theme.Lime70
+import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Orange390
 import com.example.logifitappp.ui.theme.Stone240
 
@@ -87,7 +88,11 @@ fun AlarmRow(
 
                 )
         }
-        ProgressBar(color = Orange390)
+        ProgressBar(
+            primaryProgressColor = Orange390,
+            primaryProgressFraction = 1f,
+            secondaryProgressFraction = 0f
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -107,3 +112,12 @@ fun AlarmRow(
 
     }
 }
+
+@Preview
+@Composable
+fun AlarmClockCardPreview() {
+    LogifitApppTheme() {
+        AlarmClockCard()
+    }
+}
+

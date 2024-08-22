@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.logifitappp.ui.components.graphics.bars.Bar
 import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -96,14 +97,15 @@ fun ChartEmptyHour(
 }
 
 @Composable
-private fun EmptyGraph(
+fun EmptyGraph(
     data: List<Float>,
     barColor: Color,
     accentColor: Color,
+    modifier: Modifier = Modifier
 ) {
     val maxValue = data.maxOrNull() ?: 1f
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(130.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -120,36 +122,6 @@ private fun EmptyGraph(
     }
 }
 
-@Composable
-private fun Bar(
-    height: Float,
-    barColor: Color,
-    accentColor: Color,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .padding(horizontal = 1.dp)
-
-    ) {
-        // Barra de fondo (vacía)
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(barColor)
-        )
-        // Barra de progreso
-        //Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .fillMaxHeight(height)
-//                .align(Alignment.BottomCenter)
-//                .background(accentColor)
-//        )
-    }
-}
 
 @Composable
 fun EmptyCardHour(
