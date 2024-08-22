@@ -88,7 +88,7 @@ fun HeartRateDetailScreen(navigation: NavHostController) {
                     style = Modifier.padding(8.dp),
                     suffixComponent = {
                         ConnectedIndicator(
-                            text = "85 LPM",
+                            text = "90 LPM",
                             color = Green298,
                             backgroundColor = Lime70,
                             pointColor = Green298
