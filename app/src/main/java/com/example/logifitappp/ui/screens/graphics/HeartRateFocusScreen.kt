@@ -7,17 +7,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.HeartRateFocusCard
 import com.example.logifitappp.data.models.HeartRateData
+import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.home.CardItem
+import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
@@ -59,21 +65,37 @@ fun HeartRateFocusScreen(navigation: NavHostController) {
                     icon = ImageVector.vectorResource(id = R.drawable.ic_chart_box_outline),
                     text = stringResource(id = R.string.summary)
                 )
-                CardItem(
-                    title = stringResource(id = R.string.average_heart_rate),
-                    status = "85 LPM",
-                    R.drawable.ic_heart_pulse,
-                    statusColor = Green298,
-                    backgroundColor = Lime70,
-                    modifier = Modifier.padding()
+                CardLayout(bodyComponent = { /*TODO*/ },
+                    icon = painterResource(id = R.drawable.ic_heart_pulse),
+                    iconSize = 24.dp,
+                    label = stringResource(id = R.string.average_heart_rate),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    style = Modifier.padding(8.dp),
+                    suffixComponent = {
+                        ConnectedIndicator(
+                            text = "85 LPM",
+                            color = Green298,
+                            backgroundColor = Lime70,
+                            pointColor = Green298
+                        )
+                    }
                 )
-                CardItem(
-                    title = stringResource(id = R.string.graph_card_heart_rate),
-                    status = "90 LPM",
-                    R.drawable.ic_heart_cog,
-                    statusColor = Green298,
-                    backgroundColor = Lime70,
-                    modifier = Modifier.padding()
+                CardLayout(bodyComponent = { /*TODO*/ },
+                    icon = painterResource(id = R.drawable.ic_heart_cog),
+                    iconSize = 24.dp,
+                    label = stringResource(id = R.string.graph_card_heart_rate),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    style = Modifier.padding(8.dp),
+                    suffixComponent = {
+                        ConnectedIndicator(
+                            text = "90 LPM",
+                            color = Green298,
+                            backgroundColor = Lime70,
+                            pointColor = Green298
+                        )
+                    }
                 )
             }
 
@@ -83,7 +105,7 @@ fun HeartRateFocusScreen(navigation: NavHostController) {
 
 @Preview
 @Composable
-fun HeartRateFocusPreview(){
+fun HeartRateFocusPreview() {
     LogifitApppTheme {
         HeartRateFocusScreen(rememberNavController())
     }
@@ -91,7 +113,7 @@ fun HeartRateFocusPreview(){
 
 @Preview
 @Composable
-fun HeartRateDarkModeFocuslPreview(){
+fun HeartRateDarkModeFocuslPreview() {
     LogifitApppTheme(darkTheme = true) {
         HeartRateFocusScreen(rememberNavController())
     }
