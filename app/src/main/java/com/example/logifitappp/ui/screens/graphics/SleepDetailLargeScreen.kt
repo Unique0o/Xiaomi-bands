@@ -21,7 +21,6 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.graphics.InfoBarDetailGraph
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.titles.IconTitle
@@ -101,7 +100,7 @@ fun SleepDetailLargeScreen(navigation: NavHostController) {
 
 }
 
-@Preview(showBackground = true, heightDp = 1100)
+@Preview(showBackground = true, heightDp = 1200)
 @Composable
 fun SleepDetailLargeScreenPreview() {
     LogifitApppTheme {
@@ -109,7 +108,7 @@ fun SleepDetailLargeScreenPreview() {
     }
 }
 
-@Preview(showBackground = true, heightDp = 1100)
+@Preview(showBackground = true, heightDp = 1200)
 @Composable
 fun SleepDetailLargeScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {

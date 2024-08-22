@@ -44,7 +44,7 @@ fun CardLayout(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .then(style),
+            .then(style) .padding(8.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(

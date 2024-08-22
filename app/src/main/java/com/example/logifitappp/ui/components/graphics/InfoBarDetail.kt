@@ -42,8 +42,6 @@ fun InfoBarDetailGraph(
                 title = stringResource(id = R.string.sleep_time),
             )
 
-
-
             HeartRateSummary(time, hour)
         }
 

@@ -6,15 +6,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.graphics.InfoBarFocusGraph
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.home.CardItem
+import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
@@ -46,29 +51,59 @@ fun SleepDetailFocusScreen(
                 text = stringResource(id = R.string.summary)
             )
             SleepInfoCard()
-            CardItem(
-                title = stringResource(id = R.string.sleep_condition),
-                status = stringResource(id = R.string.status_person),
-                R.drawable.ic_weather_night,
-                statusColor = Green298,
-                backgroundColor = Lime70,
-                modifier = Modifier.padding()
+            CardLayout(
+                bodyComponent = { /*TODO*/ },
+                icon = painterResource(id = R.drawable.ic_weather_night),
+                iconSize = 20.dp,
+                label = stringResource(id = R.string.sleep_condition),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                style = Modifier.padding(2.dp),
+                suffixComponent = {
+                    ConnectedIndicator(
+                        text = stringResource(id = R.string.status_person),
+                        color = Green298,
+                        backgroundColor = Lime70,
+                        pointColor = Green298,
+                        modifier = Modifier.padding(2.dp)
+                    )
+               }
             )
-            CardItem(
-                title = stringResource(id = R.string.title_fatige),
-                status = stringResource(id = R.string.status_no_apto),
-                R.drawable.ic_snore_sleep,
-                statusColor = Rose120,
-                backgroundColor = Orange170,
-                modifier = Modifier.padding()
+            CardLayout(
+                bodyComponent = { /*TODO*/ },
+                icon = painterResource(id = R.drawable.ic_snore_sleep),
+                iconSize = 20.dp,
+                label = stringResource(id = R.string.title_fatige),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                style = Modifier.padding(2.dp),
+                suffixComponent = {
+                    ConnectedIndicator(
+                        text = stringResource(id = R.string.status_no_apto),
+                        color = Rose120,
+                        backgroundColor = Orange170,
+                        pointColor = Rose120,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                }
             )
-            CardItem(
-                title = stringResource(id = R.string.average_heart_rate),
-                status = " 70 LPM",
-                R.drawable.ic_heart_pulse,
-                statusColor = Green298,
-                backgroundColor = Lime70,
-                modifier = Modifier.padding()
+            CardLayout(
+                bodyComponent = { /*TODO*/ },
+                icon = painterResource(id = R.drawable.ic_heart_pulse),
+                iconSize = 20.dp,
+                label = stringResource(id = R.string.average_heart_rate),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                style = Modifier.padding(2.dp),
+                suffixComponent = {
+                    ConnectedIndicator(
+                        text = "70 LPM",
+                        color = Green298,
+                        backgroundColor = Lime70,
+                        pointColor = Green298,
+                        modifier = Modifier.padding(2.dp)
+                    )
+                }
             )
         }
     )
