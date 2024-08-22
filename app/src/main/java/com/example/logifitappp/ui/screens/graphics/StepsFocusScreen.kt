@@ -19,7 +19,6 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.graphics.StepCard
-import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298

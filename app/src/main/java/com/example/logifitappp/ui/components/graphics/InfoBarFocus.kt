@@ -70,6 +70,7 @@ fun HeartRateSummary1(time: String, hour: String) {
         Text(
             text = time,
             style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
             fontWeight = FontWeight.Bold
         )
         Text(

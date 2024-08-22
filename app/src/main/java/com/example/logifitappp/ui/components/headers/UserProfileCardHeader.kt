@@ -72,12 +72,12 @@ fun UserProfileCard(
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = null,
-                        tint = Orange390,
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
                         text = plan,
-                        color = Orange390,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = modifier.padding(start = 4.dp)
