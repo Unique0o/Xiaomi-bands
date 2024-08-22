@@ -27,8 +27,7 @@ import com.example.logifitappp.ui.theme.Violet
 fun SleepSessionCard(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline),
