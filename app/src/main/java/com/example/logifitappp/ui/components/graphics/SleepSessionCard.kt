@@ -41,7 +41,6 @@ fun SleepSessionCard(modifier: Modifier = Modifier) {
         ) {
             SessionHeader()
             ProgressBar(
-                modifier = Modifier.padding(16.dp),
                 primaryProgressColor = Blue690,
                 secondaryProgressColor = Violet,
                 primaryProgressFraction = 0.5f,
