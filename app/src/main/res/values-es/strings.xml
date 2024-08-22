@@ -53,7 +53,6 @@
     <string name="add_content_description" >Añadir</string>
     <string name="profile_pic">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
-
     <string name="title_fatige">Fatiga</string>
 
     // Graphics
@@ -71,6 +70,8 @@
     <string name="steps_taken">Pasos realizados</string>
     <string name="summary">Resumen</string>
     <string name="average_heart_rate">Ritmo cardiaco promedio</string>
+    <string name="sleep_condition">Condición de sueño</string>
+    <string name="naps">Siestas</string>
 
     // CardSleepSession
     <string name="content_description_sleep">Sleep</string>

@@ -29,7 +29,7 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
             .padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Stone240),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline),
     ) {
         Column(
             modifier = Modifier
@@ -44,7 +44,7 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_alarm),
+                        painter = painterResource(id = R.drawable.ic_lightbulb_on),
                         contentDescription = stringResource(id = R.string.content_description_alarm),
                         tint = Blue690
                     )
