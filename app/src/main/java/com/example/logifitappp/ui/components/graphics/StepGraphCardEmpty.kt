@@ -1,11 +1,9 @@
 package com.example.logifitappp.ui.components.graphics
 
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,6 +12,7 @@ import androidx.compose.ui.graphics.painter.Painter
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.logifitappp.ui.components.graphics.bars.Bar
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
@@ -84,17 +83,3 @@ private fun StepGraph(
     }
 }
 
-@Composable
-private fun Bar(height: Float, barColor: Color, accentColor: Color, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .padding(horizontal = 1.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(barColor)
-        )
-    }
-}
