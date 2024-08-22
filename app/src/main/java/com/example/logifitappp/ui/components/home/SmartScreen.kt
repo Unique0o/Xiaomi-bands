@@ -110,7 +110,6 @@ fun SmartBandHeader() {
         }
         ShareButton(
             title = stringResource(id = R.string.share),
-            color = White,
             onClick = { /*TODO*/ }
         )
 
@@ -349,7 +348,6 @@ fun TestsSomnolenciaCard() {
                     )
                     ShareButton(
                         title = "Compartir",
-                        color = White,
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { /*TODO*/ })
                 }
@@ -406,7 +404,6 @@ fun TestFatigaItem() {
             )
             ShareButton(
                 title = stringResource(id = R.string.share),
-                color = White,
                 modifier = Modifier
                     .height(40.dp)
                     .width(122.dp),

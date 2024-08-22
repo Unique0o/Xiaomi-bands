@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.home.BackgroundCurve
 import com.example.logifitappp.ui.components.home.ConnectDevice
 import com.example.logifitappp.ui.components.home.HeaderHome
 import com.example.logifitappp.ui.components.home.OptionsList
@@ -20,7 +21,6 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 fun HomeScreen() {
     SimplePage(
         content = {
-        //BackgroundCurve(modifier = Modifier.fillMaxSize())
         Column(
             modifier = Modifier
                 .fillMaxSize()

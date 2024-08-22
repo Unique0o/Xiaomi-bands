@@ -3,6 +3,7 @@ package com.example.logifitappp.ui.components.forms
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -24,8 +25,10 @@ fun IconButton(
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
     elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     horizontalPadding: Dp = 24.dp,
+    verticalPadding: Dp = 16.dp,
     icon: ImageVector,
     onClick: () -> Unit,
+    iconSize: Dp = 20.dp,
     text: String,
     textColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
@@ -37,19 +40,20 @@ fun IconButton(
         elevation = elevation,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = horizontalPadding, vertical = 16.dp),
+            modifier = Modifier.padding(horizontal = horizontalPadding, verticalPadding),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = icon,
+                modifier = Modifier.size(iconSize),
                 contentDescription = null,
                 tint = textColor
             )
 
             Text(
                 color = textColor,
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 5.dp),
                 text = text,
                 typography = MaterialTheme.typography.headlineMedium
             )
