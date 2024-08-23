@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CardElevation
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -35,6 +36,7 @@ fun CardLayout(
     iconSize: Dp = 24.dp,
     label: String,
     sutitle: String? = "",
+    elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     labelStyle: TextStyle = TextStyle.Default,
     fontWeight: FontWeight = FontWeight.Normal,
     style: Modifier = Modifier,
@@ -44,9 +46,9 @@ fun CardLayout(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .then(style) .padding(8.dp),
+            .then(style).padding(8.dp),
         shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        elevation = elevation,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.outline
         )

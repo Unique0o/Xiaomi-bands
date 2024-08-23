@@ -10,9 +10,10 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.home.OptionsList
 import com.example.logifitappp.ui.components.home.HeaderHome
-import com.example.logifitappp.ui.components.home.SmartBandScreen
+import com.example.logifitappp.ui.components.home.CardTest
 import com.example.logifitappp.ui.components.home.TestFatigaItem
 import com.example.logifitappp.ui.components.home.TestsSection
+import com.example.logifitappp.ui.components.home.TitleSmartBandHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.LogifitApppTheme
@@ -22,22 +23,19 @@ fun HomeTestScreen() {
     SimplePage(
         content = {
             //BackgroundCurve(modifier = Modifier.fillMaxSize())
-            Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp)
-            ) {
-                HeaderHome(
-                    title = "Bienvenido de vuelta",
-                    nameUser = "MARIA MERCEDEZ",
-                    plan = stringResource(id = R.string.plan)
-                )
-                OptionsList()
-                SmartBandScreen()
-                TestsSection(buttonColor = Green298)
-                TestFatigaItem()
 
-            }
+            HeaderHome(
+                title = "Bienvenido de vuelta",
+                nameUser = "MARIA MERCEDEZ",
+                plan = stringResource(id = R.string.plan)
+            )
+            OptionsList()
+            Spacer(modifier = Modifier.height(16.dp))
+            TitleSmartBandHeader()
+            CardTest()
+            TestsSection(buttonColor = Green298)
+            TestFatigaItem()
+
         }
     )
 }

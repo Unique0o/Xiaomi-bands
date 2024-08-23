@@ -1,6 +1,7 @@
 package com.example.logifitappp.ui.components.home
 
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -18,12 +19,12 @@ fun ShareButton(
 
     IconButton(
         icon = Icons.Default.Share,
-        iconSize = 20.dp,
+        iconSize = 15.dp,
         elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
         text = title,
         onClick = onClick,
         verticalPadding = 0.dp,
-        modifier = modifier.height(27.dp)
+        modifier = modifier.height(24.dp)
 
-        )
+    )
 }
