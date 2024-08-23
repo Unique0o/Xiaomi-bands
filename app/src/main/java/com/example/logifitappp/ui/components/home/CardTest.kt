@@ -37,6 +37,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.ui.res.stringResource
+import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
@@ -47,34 +48,24 @@ import com.example.logifitappp.ui.theme.Stone470
 import com.example.logifitappp.ui.theme.White
 
 @Composable
-fun SmartBandScreen(modifier: Modifier = Modifier) {
-    Card(
-        modifier = Modifier
+fun CardTest(modifier: Modifier = Modifier) {
+    CardLayout(
+        modifier = modifier
             .fillMaxWidth()
-            .height(335.dp)
-            .padding(horizontal = 1.dp, vertical = 1.dp),
+            .height(335.dp),
+        style = modifier.background(MaterialTheme.colorScheme.surface),
+        label = stringResource(id = R.string.battery_status),
+        labelStyle = MaterialTheme.typography.labelMedium.copy(Blue690),
+        icon = painterResource(id = R.drawable.ic_battery),
+        bodyComponent = {
 
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(8.dp)
-    ) {
-        SmartBandHeader()
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.outline)
-                .padding(14.dp)
-        ) {
+            Spacer(modifier = modifier.height(8.dp))
 
-            BatteryStatus(
-                title = stringResource(id = R.string.battery_status),
-                color = Color(0xFF2196F3)
-            )
             WarningMessage(
                 title = stringResource(id = R.string.warning_title),
-                color = Color.LightGray,
+                color = Stone470,
+            )
 
-                )
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -85,68 +76,52 @@ fun SmartBandScreen(modifier: Modifier = Modifier) {
                 StatusCard(stringResource(id = R.string.face_status), false)
             }
 
+        },
+        suffixComponent = {
+            ConnectedIndicator(
+                text = stringResource(id = R.string.connected),
+                color = Green298,
+                backgroundColor = Lime70,
+                pointColor = Green298
+            )
         }
-    }
-
+    )
 }
 
 @Composable
-fun SmartBandHeader() {
+fun TitleSmartBandHeader() {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .height(48.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(end = 8.dp)
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_watch),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(4.dp)) 
             Text(
-                stringResource(id = R.string.title_smart_band),
-                fontWeight = FontWeight.Bold
+                text = stringResource(id = R.string.title_smart_band),
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
             )
         }
         ShareButton(
             title = stringResource(id = R.string.share),
             onClick = { /*TODO*/ }
         )
-
     }
 }
 
-@Composable
-fun BatteryStatus(
-    title: String,
-    modifier: Modifier = Modifier,
-    color: Color,
-
-    ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_battery),
-                contentDescription = null,
-                tint = Blue690
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(title, color = color)
-        }
-        ConnectedIndicator(
-            text = stringResource(id = R.string.connected),
-            color = Green298,
-            backgroundColor = Lime70,
-            pointColor = Green298
-        )
-    }
-}
 
 @Composable
 fun WarningMessage(
@@ -185,7 +160,7 @@ fun StatusCard(title: String, isApt: Boolean) {
 
     Card(
         modifier = Modifier
-            .width(160.dp)
+            .width(150.dp)
             .height(160.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline)
@@ -229,7 +204,7 @@ fun TestsSection(buttonColor: Color) {
         Icon(
             painter = painterResource(id = R.drawable.ic_test),
             contentDescription = null,
-            modifier = Modifier .padding(bottom = 41.dp)
+            modifier = Modifier.padding(bottom = 41.dp)
         )
         Column(
             modifier = Modifier
@@ -298,7 +273,7 @@ fun TestsSomnolenciaCard() {
 
             Text(
                 text = "Realiza un test de somnolencia para verificar si estás apto o no para realizar tus labores.",
-              style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelSmall,
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 5.dp, bottom = 16.dp)
             )
@@ -381,7 +356,7 @@ fun TestFatigaItem() {
                 )
                 Text(
                     text = stringResource(id = R.string.title_test_fatiga),
-                    color =Blue690,
+                    color = Blue690,
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 0.dp)
@@ -418,10 +393,23 @@ fun TestFatigaItem() {
 @Composable
 fun GreetingPreview() {
     LogifitApppTheme {
-        SmartBandScreen()
+        CardTest()
         //SmartBandHeader()
         //TestFatigaItem()
         //TestsSection( buttonColor = Green298)
+        //TestsSomnolenciaCard()
+
+    }
+}
+
+@Preview
+@Composable
+fun GreetingPreviewDark() {
+    LogifitApppTheme(darkTheme = true) {
+       CardTest()
+        //SmartBandHeader()
+//       TestFatigaItem()
+//        TestsSection( buttonColor = Green298)
         //TestsSomnolenciaCard()
 
     }
