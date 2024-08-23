@@ -52,7 +52,7 @@ fun CardTest(modifier: Modifier = Modifier) {
     CardLayout(
         modifier = modifier
             .fillMaxWidth()
-            .height(335.dp),
+            .height(310.dp),
         style = modifier.background(MaterialTheme.colorScheme.surface),
         label = stringResource(id = R.string.battery_status),
         labelStyle = MaterialTheme.typography.labelMedium.copy(Blue690),
@@ -352,14 +352,14 @@ fun TestFatigaItem() {
                     imageVector = Icons.Default.Edit,
                     contentDescription = null,
                     tint = Blue690,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(15.dp)
                 )
                 Text(
                     text = stringResource(id = R.string.title_test_fatiga),
                     color = Blue690,
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 0.dp)
+                    modifier = Modifier.padding(start = 1.dp)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -379,9 +379,7 @@ fun TestFatigaItem() {
             )
             ShareButton(
                 title = stringResource(id = R.string.share),
-                modifier = Modifier
-                    .height(40.dp)
-                    .width(122.dp),
+                iconSize = 10.dp,
                 onClick = { /*TODO*/ }
             )
         }

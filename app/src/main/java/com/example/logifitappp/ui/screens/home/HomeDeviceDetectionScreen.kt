@@ -109,7 +109,6 @@ fun DeviceDetectionScreen(
             selectedDevice = null
         }
     )
-    // ejemplo para simular un tiempo de busqueda
     LaunchedEffect(key1 = Unit) {
         delay(10000)
         isSearching = false
