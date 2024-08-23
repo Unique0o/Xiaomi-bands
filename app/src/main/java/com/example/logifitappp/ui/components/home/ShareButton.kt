@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.forms.IconButton
 
@@ -14,12 +15,13 @@ import com.example.logifitappp.ui.components.forms.IconButton
 fun ShareButton(
     title: String,
     modifier: Modifier = Modifier,
+    iconSize: Dp = 15.dp,
     onClick: () -> Unit
 ) {
 
     IconButton(
         icon = Icons.Default.Share,
-        iconSize = 15.dp,
+        iconSize = iconSize,
         elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
         text = title,
         onClick = onClick,
