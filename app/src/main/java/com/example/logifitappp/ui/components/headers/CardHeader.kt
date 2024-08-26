@@ -37,7 +37,7 @@ fun UserProfileCard(
         modifier = Modifier
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
@@ -72,14 +72,14 @@ fun UserProfileCard(
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.Star,
+                            painter = painterResource(id =R.drawable.ic_crown),
                             contentDescription = null,
-                            tint = Orange390,
-                            modifier = Modifier.size(16.dp)
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.size(12.dp)
                         )
                         Text(
                             text = plan,
-                            color = Orange390,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Bold,
                             modifier = modifier.padding(start = 4.dp)
