@@ -1,7 +1,9 @@
 package com.example.logifitappp.ui.screens.graphics
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -29,70 +31,80 @@ import com.example.logifitappp.ui.components.titles.IconTitle
 fun Graphics(
     navigation: NavHostController
 ) {
-    SimplePage(
-        content = {
-            UserProfileCard(
-                userName = "MARIA MERCEDES",
-                userType = "PREMIUM",
-                profileImageRes = R.drawable.user1,
-                plan = "PREMIUM",
-                onNotificationClick = { }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            IconTitle(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
-                text = stringResource(id = R.string.my_sleep)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            val data = List(17) { (1..100).random() }
-            InfoBarColorGraph(
-                timeRange = "19:00 - 07:00",
-                data = data,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            IconTitle(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
-                text = stringResource(id = R.string.my_steps)
-            )
-            val steps = listOf(10, 20, 15, 30, 25, 35, 40)
-            StepHomeCard(
-                steps= steps,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            IconTitle(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_heart_pulse),
-                text = stringResource(id = R.string.my_heart_rate)
-            )
-            val heartdata = HeartRateData(
-                date = "Noviembre 20, 2023",
-                minRate = 70,
-                maxRate = 101,
-                timeRange = "02:00 - 02:30",
-                ranges = listOf(
-                    10 to 35,
-                    25 to 50,
-                    15 to 40,
-                    20 to 40,
-                    10 to 40,
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
+        UserProfileCard(
+            userName = "MARIA MERCEDES",
+            userType = "PREMIUM",
+            profileImageRes = R.drawable.user1,
+            onNotificationClick = { },
+            plan = "PREMIUM",
+            bodyComponent = {}
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        SimplePage(
+            content = {
+
+                Spacer(modifier = Modifier.height(16.dp))
+                IconTitle(
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
+                    text = stringResource(id = R.string.my_sleep)
                 )
-            )
+                Spacer(modifier = Modifier.height(4.dp))
+                val data = List(17) { (1..100).random() }
+                InfoBarColorGraph(
+                    timeRange = "19:00 - 07:00",
+                    data = data,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                IconTitle(
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
+                    text = stringResource(id = R.string.my_steps)
+                )
+                val steps = listOf(10, 20, 15, 30, 25, 35, 40)
+                StepHomeCard(
+                    steps= steps,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                IconTitle(
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_heart_pulse),
+                    text = stringResource(id = R.string.my_heart_rate)
+                )
+                val heartdata = HeartRateData(
+                    date = "Noviembre 20, 2023",
+                    minRate = 70,
+                    maxRate = 101,
+                    timeRange = "02:00 - 02:30",
+                    ranges = listOf(
+                        10 to 35,
+                        25 to 50,
+                        15 to 40,
+                        20 to 40,
+                        10 to 40,
+                    )
+                )
 
-            MeasurementHeartCard(
-                heartRateData = heartdata,
-                indicatorInformation = "90 LPM",
-                icon = painterResource(id = R.drawable.ic_heart_cog)
-            )
+                MeasurementHeartCard(
+                    heartRateData = heartdata,
+                    indicatorInformation = "90 LPM",
+                    icon = painterResource(id = R.drawable.ic_heart_cog)
+                )
 
-        },
-        bottomBar = {
-            BottomNavigationBar(
-                selectedRoute = MainRoutes.Graphics,
-                onRouteSelected = {
-                    navigation.navigate(MainRoutes.Graphics)
-                }
-            )
-        }
-    )
+            },
+            bottomBar = {
+                BottomNavigationBar(
+                    selectedRoute = MainRoutes.Graphics,
+                    onRouteSelected = {
+                        navigation.navigate(MainRoutes.Graphics)
+                    }
+                )
+            }
+        )
+    }
+
 }
 
 
