@@ -1,6 +1,8 @@
 package com.example.logifitappp.ui.screens.graphics
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,67 +29,76 @@ import com.example.logifitappp.ui.theme.Orange170
 fun GraphicsEmptyScreen(
     navigation: NavHostController
 ) {
-    SimplePage(
-        content = {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
+        UserProfileCard(
+            userName = "MARIA MERCEDES",
+            userType = "PREMIUM",
+            profileImageRes = R.drawable.user1,
+            plan = "PREMIUM",
+            onNotificationClick = { },
+            bodyComponent = {}
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        SimplePage(
+            content = {
 
-            UserProfileCard(
-                userName = "MARIA MERCEDES",
-                userType = "PREMIUM",
-                profileImageRes = R.drawable.user1,
-                plan = "PREMIUM",
-                onNotificationClick = { },
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            IconTitle(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
-                text = stringResource(id = R.string.my_sleep)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            EmptyInfoGraph(
-                title = stringResource(id = R.string.information_between),
-                timeRange = "19:00 - 07:00",
-                indicatorInformation = stringResource(id = R.string.without_data),
-                icon = painterResource(id = R.drawable.ic_update)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            IconTitle(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
-                text = stringResource(id = R.string.my_steps)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            val stepData = List(24) { kotlin.random.Random.nextFloat() }
-             StepEmptyGraphCard(
-                 data = stepData,
-                 title = stringResource(id = R.string.kcal),
-                indicatorInformation= stringResource(id = R.string.without_data),
-                icon = painterResource(id = R.drawable.ic_fire),
-                barColor = Lime70
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                IconTitle(
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
+                    text = stringResource(id = R.string.my_sleep)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                EmptyInfoGraph(
+                    title = stringResource(id = R.string.information_between),
+                    timeRange = "19:00 - 07:00",
+                    indicatorInformation = stringResource(id = R.string.without_data),
+                    icon = painterResource(id = R.drawable.ic_update)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                IconTitle(
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
+                    text = stringResource(id = R.string.my_steps)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                val stepData = List(24) { kotlin.random.Random.nextFloat() }
+                StepEmptyGraphCard(
+                    data = stepData,
+                    title = stringResource(id = R.string.kcal),
+                    indicatorInformation= stringResource(id = R.string.without_data),
+                    icon = painterResource(id = R.drawable.ic_fire),
+                    barColor = Lime70
+                )
+                Spacer(modifier = Modifier.height(16.dp))
 
-            IconTitle(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_heart_pulse),
-                text = stringResource(id = R.string.my_heart_rate)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            StepEmptyGraphCard(
-                title = stringResource(id = R.string.graph_card_heart_rate),
-                data = stepData,
-                icon = painterResource(id = R.drawable.ic_heart_cog),
-                barColor = Orange170,
-                indicatorInformation= stringResource(id = R.string.without_data),
-            )
-        },
-        bottomBar = {
-            BottomNavigationBar(
-                selectedRoute = MainRoutes.Graphics,
-                onRouteSelected = {
-                    navigation.navigate(MainRoutes.Graphics)
-                }
-            )
-        }
+                IconTitle(
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_heart_pulse),
+                    text = stringResource(id = R.string.my_heart_rate)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                StepEmptyGraphCard(
+                    title = stringResource(id = R.string.graph_card_heart_rate),
+                    data = stepData,
+                    icon = painterResource(id = R.drawable.ic_heart_cog),
+                    barColor = Orange170,
+                    indicatorInformation= stringResource(id = R.string.without_data),
+                )
+            },
+            bottomBar = {
+                BottomNavigationBar(
+                    selectedRoute = MainRoutes.Graphics,
+                    onRouteSelected = {
+                        navigation.navigate(MainRoutes.Graphics)
+                    }
+                )
+            }
 
-    )
+        )
+
+    }
 
 }
 

@@ -20,9 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.theme.Blue690
+
 import com.example.logifitappp.ui.theme.Orange390
-import com.example.logifitappp.ui.theme.White
 
 @Composable
 fun UserProfileCard(
@@ -31,66 +30,71 @@ fun UserProfileCard(
     plan: String,
     modifier: Modifier = Modifier,
     @DrawableRes profileImageRes: Int,
-    onNotificationClick: () -> Unit
+    onNotificationClick: () -> Unit,
+    bodyComponent: @Composable () -> Unit,
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(16.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(id = profileImageRes),
-                contentDescription = "Profile picture",
-                contentScale = ContentScale.Crop,
+            Row(
                 modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "Bienvenido de vuelta",
-                    style = MaterialTheme.typography.bodySmall
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = profileImageRes),
+                    contentDescription = "Profile picture",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clip(CircleShape)
                 )
-                Text(
-                    text = userName.uppercase(),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.size(16.dp)
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "Bienvenido de vuelta",
+                        style = MaterialTheme.typography.bodySmall
                     )
                     Text(
-                        text = plan,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold,
-                        modifier = modifier.padding(start = 4.dp)
+                        text = userName.uppercase(),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = null,
+                            tint = Orange390,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text(
+                            text = plan,
+                            color = Orange390,
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = modifier.padding(start = 4.dp)
+                        )
+                    }
+                }
+
+                IconButton(onClick = onNotificationClick) {
+                    Icon(
+                        Icons.Default.Notifications,
+                        contentDescription = "Notifications"
                     )
                 }
             }
-
-            IconButton(onClick = onNotificationClick) {
-                Icon(
-                    Icons.Default.Notifications,
-                    contentDescription = "Notifications"
-                )
-            }
+            bodyComponent()
         }
     }
 }
@@ -103,6 +107,7 @@ fun UserProfileCardPreview() {
         userType = "PREMIUM",
         profileImageRes = R.drawable.user1,
         onNotificationClick = { },
-        plan = "PREMIUM"
+        plan = "PREMIUM",
+        bodyComponent = {}
     )
 }
