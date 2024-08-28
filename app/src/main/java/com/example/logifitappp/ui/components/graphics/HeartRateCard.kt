@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
-import com.example.logifitappp.data.models.HeartRateData
+import com.example.logifitappp.data.HeartRateData
 
 @Composable
 fun HeartRateCard(heartRateData: HeartRateData) {

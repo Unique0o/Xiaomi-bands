@@ -1,4 +1,4 @@
-package com.example.logifitappp.data.models
+package com.example.logifitappp.data
 
 data class HeartRateData(
      val date: String,
