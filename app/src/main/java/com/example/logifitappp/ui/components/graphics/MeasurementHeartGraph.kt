@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
-import com.example.logifitappp.data.models.HeartRateData
+import com.example.logifitappp.data.HeartRateData
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 

@@ -19,7 +19,7 @@ import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.BottomNavigationBar
 import com.example.logifitappp.ui.components.graphics.InfoBarColorGraph
 import com.example.logifitappp.ui.components.graphics.MeasurementHeartCard
-import com.example.logifitappp.data.models.HeartRateData
+import com.example.logifitappp.data.HeartRateData
 import com.example.logifitappp.ui.components.graphics.StepHomeCard
 import com.example.logifitappp.ui.components.headers.UserProfileCard
 import com.example.logifitappp.ui.components.pages.SimplePage
