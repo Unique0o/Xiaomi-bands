@@ -85,8 +85,8 @@
     <string name="connected">CONNECTED</string>
     <string name="kcal">0 kcal</string>
     <string name="graph_card_heart_rate">Last Recorded Measurement</string>
-    <string name="title_card_message_raking">You`re on top</string>
-    <string name="message_card_message_ranking">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
+    <string name="leaderboard_message_title">You`re on top</string>
+    <string name="leaderboard_message_summary">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
 
     <string name="searching_for_devices">Searching for devices</string>
     <string name="make_your_device_detectable">Make your device detectable</string>
@@ -100,8 +100,11 @@
     <string name="authentication_description">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="enter_key">Enter the key</string>
 
+    <string name="title_leaderboard_topbar">Clasificación</string>
+
     <string name="status_no_aptos">Not fit</string>
     <string name="status_aptos">Fit</string>
     <string name="updated_information">Information updated on </string>
     <string name="my_statistics">My Statistics</string>
+
 </resources>
