@@ -100,8 +100,11 @@
     <string name="authentication_description">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
     <string name="enter_key">Escribe la clave</string>
 
+    <!-- My statistics -->
     <string name="status_no_aptos">No aptos</string>
     <string name="status_aptos">Aptos</string>
     <string name="updated_information">Informaciòn actualizada al </string>
     <string name="my_statistics">Mi estadísticas </string>
+    <string name="shift">Turno </string>
+    <string name="my_team">Mi equipo </string>
 </resources>

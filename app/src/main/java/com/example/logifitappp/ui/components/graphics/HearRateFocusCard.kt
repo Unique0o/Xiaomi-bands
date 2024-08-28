@@ -25,27 +25,6 @@ import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.data.HeartRateData
 
 @Composable
-fun DateSelectorFocus(date: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { /* TODO */ }) {
-            Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Previous day")
-        }
-        Text(
-            text = date,
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center
-        )
-        IconButton(onClick = { /* TODO */ }) {
-            Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Next day")
-        }
-    }
-}
-
-@Composable
 fun HeartRateFocusCard(
     heartRateData: HeartRateData,
     highlightIndex: Int
@@ -55,8 +34,7 @@ fun HeartRateFocusCard(
             .padding(16.dp)
             .fillMaxWidth()
     ) {
-        DateSelectorFocus(heartRateData.date)
-        Spacer(modifier = Modifier.height(16.dp))
+        HeaderRow(date = heartRateData.date, stringResource(R.string.heart_rate_card_title))
         HeartRateFocusSummary(heartRateData)
         Spacer(modifier = Modifier.height(24.dp))
         HeartRateFocusChart(heartRateData.ranges, highlightIndex)
@@ -69,11 +47,6 @@ fun HeartRateFocusSummary(data: HeartRateData) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(R.string.heart_rate_card_title),
-            style = MaterialTheme.typography.labelSmall,
-            fontWeight = FontWeight.Bold
-        )
         Text(
             text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
             style = MaterialTheme.typography.labelMedium,
