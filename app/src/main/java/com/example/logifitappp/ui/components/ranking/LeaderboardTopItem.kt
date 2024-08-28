@@ -145,11 +145,7 @@ fun ClassificationScreen(topUsers: List<User>) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Your existing TopBar and DateDisplay components here
-
         TopRankingSection(topUsers)
-
-        // Your existing UserList component here
     }
 }
 
