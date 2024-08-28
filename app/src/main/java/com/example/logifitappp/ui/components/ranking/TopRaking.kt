@@ -1,6 +1,7 @@
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -28,23 +29,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.ranking.RankingUser
-import com.example.logifitappp.ui.components.ranking.getMedalResource
+import com.example.logifitappp.data.User
+import com.example.logifitappp.ui.components.ranking.LeaderboardTopItem
+import com.example.logifitappp.ui.components.ranking.TopRankingSection
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Stone470
 import com.example.logifitappp.ui.theme.White
 
-data class RankingUser(
-    val id: Int,
-    val name: String,
-    val score: Int,
-    val imageRes: Int
-)
 
 @Composable
-fun ClassificationScreen(otherUsers: List<RankingUser>) {
+fun ClassificationScreen(topUsers:List<User>) {
     Scaffold(
-        topBar = { TopBar() }
+        topBar = {  }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -53,38 +49,13 @@ fun ClassificationScreen(otherUsers: List<RankingUser>) {
 
         ) {
             DateDisplay()
-            TopRankingSection()
-            UserList( otherUsers)
+            Spacer(modifier = Modifier.height(20.dp))
+            TopRankingSection(topUsers)
+            UserList( topUsers )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBar() {
-    TopAppBar(
-        title = {
-            Text(
-                "Clasificación",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                color = Blue690
-            )
-        },
-        actions = {
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(
-                    Icons.Default.Person,
-                    contentDescription = "Usuario",
-                    tint = Blue690
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White
-        )
-    )
-}
 
 @Composable
 fun DateDisplay() {
@@ -100,7 +71,7 @@ fun DateDisplay() {
 }
 
 @Composable
-fun TopRankingSection() {
+fun TopRankingSection1() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -213,21 +184,16 @@ fun UserAvatar(size: Dp, borderColor: Color) {
 }
 
 @Composable
-fun UserList(users: List<RankingUser>) {
+fun UserList(users: List<User>) {
     LazyColumn {
-        itemsIndexed(
-            listOf(
-                "RICARDO LOPEZ HUAMAN" to "110",
-                "CARLOS EDUARDO TORRES ZARATE" to "105"
-            )
-        ) { index, (name, score) ->
-            UserListItem(index + 4, name, score, users[index])
+        items(users) { user ->
+            UserListItem(user)
         }
     }
 }
 
 @Composable
-fun UserListItem(rank: Int, name: String, score: String, user: RankingUser) {
+fun UserListItem(user: User) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -247,7 +213,7 @@ fun UserListItem(rank: Int, name: String, score: String, user: RankingUser) {
                 modifier = Modifier.width(24.dp)
             )
             Image(
-                painter = painterResource(id = user.imageRes),
+                painter = painterResource(id = user.imageResId),
                 contentDescription = "User ${user.name}",
                 modifier = Modifier
                     .size(40.dp)
@@ -272,9 +238,13 @@ fun UserListItem(rank: Int, name: String, score: String, user: RankingUser) {
 @Composable
 @Preview(showBackground = true)
 fun MyRankingScreenPreview() {
-    val otherUsers = listOf(
-        RankingUser(4, "RICARDO LOPEZ HUAMAN", 110, R.drawable.user1),
-        RankingUser(5, "CARLOS EDUARDO TORRES ZARATE", 105, R.drawable.user1    )
+    val topUsers = listOf(
+        User("User 1", 100,R.drawable.user1, false, 4),
+        User("User 2", 200, R.drawable.user1, false, 5),
+        User("User 3", 300, R.drawable.user1, false, 7)
+
     )
-    ClassificationScreen(otherUsers)
+    ClassificationScreen(
+        topUsers = topUsers
+    )
 }

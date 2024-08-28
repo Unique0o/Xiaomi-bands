@@ -84,8 +84,8 @@
     <string name="connected">CONECTADO</string>
     <string name="kcal" >0 kcal</string>
     <string name="graph_card_heart_rate">Ultima medicion registrada</string>
-    <string name="title_card_message_raking">Estas en la cima!!!</string>
-    <string name="message_card_message_ranking">La disciplina y consistencia te acompañan en este proceso. sigo alcanzando los triunfos por los que te vienes esmerando.</string>
+    <string name="leaderboard_message_title">Estas en la cima!!!</string>
+    <string name="leaderboard_message_summary">La disciplina y consistencia te acompañan en este proceso. sigo alcanzando los triunfos por los que te vienes esmerando.</string>
 
     <string name="detecting_devices">Detectando dispositivos</string>
     <string name="searching_for_devices">Buscando dispositivos</string>
@@ -99,4 +99,5 @@
     <string name="close">Cerrar</string>
     <string name="authentication_description">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
     <string name="enter_key">Escribe la clave</string>
+    <string name="title_leaderboard_topbar">Clasificacion</string>
 </resources>
