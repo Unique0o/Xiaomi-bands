@@ -30,12 +30,13 @@ fun IconButton(
     onClick: () -> Unit,
     iconSize: Dp = 20.dp,
     text: String,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary
+    textColor: Color = MaterialTheme.colorScheme.onPrimary,
+    cornerRadius: Dp = 24.dp,
 ) {
     FloatingActionButton(
         onClick = onClick,
         modifier = modifier,
-        shape = RoundedCornerShape(size = 24.dp),
+        shape = RoundedCornerShape(size = cornerRadius ),
         containerColor = backgroundColor,
         elevation = elevation,
     ) {

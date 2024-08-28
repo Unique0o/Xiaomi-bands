@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,9 +19,9 @@ import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.UserProfileCard
+import com.example.logifitappp.ui.components.home.CardItemButton
 import com.example.logifitappp.ui.components.home.CardTest
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
-import com.example.logifitappp.ui.components.home.TestsSection
 import com.example.logifitappp.ui.components.home.TitleSmartBandHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Blue690
@@ -45,7 +46,7 @@ fun HomeDeviceConnectedScreen() {
             bodyComponent = {
                 CardLayout(bodyComponent = { /*TODO*/ },
                     icon = painterResource(id = R.drawable.ic_clock),
-                    iconSize = 24.dp,
+                    iconSize = 20.dp,
                     label = stringResource(id = R.string.schedule),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -82,7 +83,14 @@ fun HomeDeviceConnectedScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
                 TitleSmartBandHeader()
                 CardTest()
-                TestsSection(buttonColor = Blue690)
+                CardItemButton(
+                    title = stringResource(id = R.string.title_my_test),
+                    description = stringResource(id = R.string.card_description_message),
+                    icon = R.drawable.ic_test,
+                    iconButton = R.drawable.ic_add,
+                    buttonColor = Blue690,
+                    onClick = { /*TODO*/ }
+                )
 
             }
         )

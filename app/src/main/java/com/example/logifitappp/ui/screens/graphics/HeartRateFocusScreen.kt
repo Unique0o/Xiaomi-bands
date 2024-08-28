@@ -18,11 +18,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.HeartRateFocusCard
-import com.example.logifitappp.data.models.HeartRateData
+import com.example.logifitappp.data.HeartRateData
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
