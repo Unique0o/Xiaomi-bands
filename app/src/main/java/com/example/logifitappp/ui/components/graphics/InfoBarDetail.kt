@@ -28,7 +28,9 @@ fun InfoBarDetailGraph(
     ) {
 
         Column(
-            modifier = Modifier.fillMaxWidth() .padding(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             HeaderRow(
                 date = "Noviembre 20, 2023",
@@ -120,9 +122,11 @@ private fun BarChart(
 @Preview(showBackground = true)
 @Composable
 fun PreviewInfoBarDetailGraph() {
-    InfoBarDetailGraph(
-        data = listOf(3, 5, 2, 4, 7, 6, 4),
-        time = "7h 36min",
-        hour = "19:00 - 07:00"
-    )
+    LogifitApppTheme {
+        InfoBarDetailGraph(
+            data = listOf(3, 5, 2, 4, 7, 6, 4),
+            time = "7h 36min",
+            hour = "19:00 - 07:00"
+        )
+    }
 }

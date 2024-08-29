@@ -35,8 +35,8 @@ fun InfoBarColorGraph(
         modifier = Modifier.padding(2.dp),
         icon = painterResource(id = R.drawable.ic_update),
         iconSize = 20.dp,
-        label = stringResource(id = R.string.information_between),
-        sutitle = timeRange,
+        label = stringResource(id = R.string.information_between )+ " " + timeRange,
+        //subtitle = timeRange,
         fontWeight = FontWeight.Medium,
         labelStyle = TextStyle(
             fontSize = 14.sp,

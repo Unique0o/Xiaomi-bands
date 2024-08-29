@@ -1,5 +1,7 @@
 package com.example.logifitappp.ui.components.forms
 
+
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -16,15 +18,18 @@ fun Button(
     onClick: () -> Unit,
     text: String,
     containerColors: Color = MaterialTheme.colorScheme.primary,
+    colorText: Color = MaterialTheme.colorScheme.onPrimary,
+    borderColor: Color = MaterialTheme.colorScheme.primary,
 ) {
     MaterialButton(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = containerColors),
         modifier = modifier,
-        shape = RoundedCornerShape(size = 24.dp)
+        shape = RoundedCornerShape(size = 24.dp),
+        border = BorderStroke(1.dp, borderColor),
     ) {
         Text(
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = colorText,
             text = text,
             typography = MaterialTheme.typography.headlineMedium
         )

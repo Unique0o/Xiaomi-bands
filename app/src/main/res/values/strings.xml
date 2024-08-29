@@ -100,11 +100,20 @@
     <string name="authentication_description">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="enter_key">Enter the key</string>
 
+
+    <!-- My statistics -->
+
     <string name="title_leaderboard_topbar">Clasificación</string>
+
 
     <string name="status_no_aptos">Not fit</string>
     <string name="status_aptos">Fit</string>
     <string name="updated_information">Information updated on </string>
     <string name="my_statistics">My Statistics</string>
+
+    <string name="shift">Shift </string>
+    <string name="my_team">My Team </string>
+
+
 
 </resources>

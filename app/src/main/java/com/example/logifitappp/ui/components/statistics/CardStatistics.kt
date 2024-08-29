@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.components.statistics
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,17 +25,23 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.Blue690
 
 @Composable
-fun CardStatistics() {
+fun CardStatistics(
+    total: String,
+    notFitTotal: String,
+    fitTotal: String,
+    sdTotal: String
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceContainer),
         shape = RectangleShape
     ) {
         Row(
             modifier = Modifier
                 .padding(10.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_pie_chart),
@@ -56,8 +61,7 @@ fun CardStatistics() {
 
                     )
                 Text(
-                    text = "12",
-
+                    text = total
                     )
             }
             Spacer(modifier = Modifier.width(44.dp))
@@ -70,8 +74,7 @@ fun CardStatistics() {
 
                     )
                 Text(
-                    text = "3",
-
+                    text = notFitTotal
                     )
             }
             Spacer(modifier = Modifier.width(42.dp))
@@ -84,8 +87,7 @@ fun CardStatistics() {
 
                     )
                 Text(
-                    text = "7",
-
+                    text = fitTotal
                     )
             }
             Spacer(modifier = Modifier.width(44.dp))
@@ -94,12 +96,10 @@ fun CardStatistics() {
             ) {
                 Text(
                     text ="S/D" ,
-                    fontWeight = FontWeight.Bold,
-
+                    fontWeight = FontWeight.Bold
                     )
                 Text(
-                    text = "2",
-
+                    text = sdTotal
                     )
             }
         }
@@ -109,5 +109,10 @@ fun CardStatistics() {
 @Preview(showBackground = true)
 @Composable
 fun CardStatisticsPreview() {
-    CardStatistics()
+    CardStatistics(
+        total = "10",
+        notFitTotal = "5",
+        fitTotal = "5",
+        sdTotal = "5"
+    )
 }

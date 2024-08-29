@@ -35,13 +35,14 @@ fun CardLayout(
     icon: Painter? = null,
     iconSize: Dp = 24.dp,
     label: String,
-    sutitle: String? = "",
     elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     labelStyle: TextStyle = TextStyle.Default,
+    Textcolor: Color = MaterialTheme.colorScheme.primary,
     fontWeight: FontWeight = FontWeight.Normal,
     style: Modifier = Modifier,
     fontSize: TextUnit = 16.sp,
-    suffixComponent: @Composable (() -> Unit)? = null
+    suffixComponent: @Composable (() -> Unit)? = null,
+    cardBackgroundColor: Color = MaterialTheme.colorScheme.outline
 ) {
     Card(
         modifier = modifier
@@ -50,7 +51,7 @@ fun CardLayout(
         shape = RoundedCornerShape(8.dp),
         elevation = elevation,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.outline
+            containerColor = cardBackgroundColor
         )
     ) {
         Column(
@@ -76,8 +77,8 @@ fun CardLayout(
                     }
 
                     Text(
-                        text = "$label $sutitle",
-                        style = labelStyle.copy(color = MaterialTheme.colorScheme.primary),
+                        text = label,
+                        style = labelStyle.copy(color = Textcolor),
                         fontSize = labelStyle.fontSize,
                         fontWeight = labelStyle.fontWeight
                     )
@@ -88,7 +89,6 @@ fun CardLayout(
                     suffixComponent()
                 }
             }
-
             Spacer(modifier = Modifier.height(8.dp))
 
             bodyComponent()

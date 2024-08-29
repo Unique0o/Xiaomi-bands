@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.data.HeartRateData
+import okhttp3.internal.http2.Header
 
 @Composable
 fun HeartRateCard(heartRateData: HeartRateData) {
@@ -31,8 +32,8 @@ fun HeartRateCard(heartRateData: HeartRateData) {
             .padding(16.dp)
             .fillMaxWidth()
     ) {
-        DateSelector(heartRateData.date)
-        Spacer(modifier = Modifier.height(16.dp))
+
+        HeaderRow(heartRateData.date, stringResource(R.string.heart_rate_card_title))
         HeartRateSummary(heartRateData)
         Spacer(modifier = Modifier.height(24.dp))
         HeartRateChart(heartRateData.ranges)
@@ -40,26 +41,6 @@ fun HeartRateCard(heartRateData: HeartRateData) {
 
 }
 
-@Composable
-fun DateSelector(date: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { /* TODO */ }) {
-            Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Previous day")
-        }
-        Text(
-            text = date,
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center
-        )
-        IconButton(onClick = { /* TODO */ }) {
-            Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Next day")
-        }
-    }
-}
 
 @Composable
 fun HeartRateSummary(data: HeartRateData) {
@@ -67,11 +48,6 @@ fun HeartRateSummary(data: HeartRateData) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(R.string.heart_rate_card_title),
-            style = MaterialTheme.typography.labelSmall,
-            fontWeight = FontWeight.Bold
-        )
         Text(
             text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
             style = MaterialTheme.typography.labelMedium,
