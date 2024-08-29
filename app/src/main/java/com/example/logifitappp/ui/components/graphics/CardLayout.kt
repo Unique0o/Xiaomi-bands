@@ -96,21 +96,7 @@ fun CardLayout(
     }
 }
 
-@Composable
-fun CardTemplate(
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colorScheme.outline,
-    content: @Composable () -> Unit
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(backgroundColor)
-            .padding(16.dp)
-    ) {
-        content()
-    }
-}
+
 
 @Preview
 @Composable

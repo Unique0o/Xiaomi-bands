@@ -69,3 +69,13 @@ fun LeaderboardScreenPreview() {
         )
     }
 }
+@Preview
+@Composable
+fun LeaderboardScreenDarkPreview() {
+
+    LogifitApppTheme(darkTheme = true) {
+        LeaderboardScreen(
+            rememberNavController()
+        )
+    }
+}
