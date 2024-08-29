@@ -1,5 +1,5 @@
 package com.example.logifitappp.ui.components.graphics
-import androidx.compose.foundation.background
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -33,6 +32,7 @@ fun CardLayout(
     modifier: Modifier = Modifier,
     bodyComponent: @Composable () -> Unit,
     icon: Painter? = null,
+    iconColor: Color = MaterialTheme.colorScheme.primary,
     iconSize: Dp = 24.dp,
     label: String,
     elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
@@ -42,7 +42,10 @@ fun CardLayout(
     style: Modifier = Modifier,
     fontSize: TextUnit = 16.sp,
     suffixComponent: @Composable (() -> Unit)? = null,
-    cardBackgroundColor: Color = MaterialTheme.colorScheme.outline
+    cardBackgroundColor: Color = MaterialTheme.colorScheme.outline,
+    titleAlternateText: String? = null,
+    subtitleAlternateText: String = ""
+
 ) {
     Card(
         modifier = modifier
@@ -70,18 +73,32 @@ fun CardLayout(
                         Icon(
                             painter = it,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = iconColor,
                             modifier = Modifier.size(iconSize)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                     }
 
-                    Text(
-                        text = label,
-                        style = labelStyle.copy(color = Textcolor),
-                        fontSize = labelStyle.fontSize,
-                        fontWeight = labelStyle.fontWeight
-                    )
+                    Column {
+                        Text(
+                            text = label,
+                            style = labelStyle.copy(color = Textcolor),
+                            fontSize = labelStyle.fontSize,
+                            fontWeight = labelStyle.fontWeight
+                        )
+                        if(titleAlternateText != null){
+                            Row() {
+                                Text(
+                                    text = titleAlternateText,
+                                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                )
+                                Text(
+                                    text = subtitleAlternateText,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        }
+                    }
                 }
 
                 if (suffixComponent != null) {
