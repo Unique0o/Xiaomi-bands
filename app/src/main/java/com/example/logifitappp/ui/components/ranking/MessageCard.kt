@@ -59,8 +59,8 @@ fun MessageCard(
 @Composable
 fun MessageCardPreview() {
     MessageCard(
-        title = stringResource(id = R.string.title_card_message_raking),
-        message = stringResource(id = R.string.message_card_message_ranking),
+        title = stringResource(id = R.string.leaderboard_message_title),
+        message = stringResource(id = R.string.leaderboard_message_summary),
         backgroundColor = Blue690,
         textColor = White
     )
