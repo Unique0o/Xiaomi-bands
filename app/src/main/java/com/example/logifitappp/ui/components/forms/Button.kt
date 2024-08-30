@@ -20,12 +20,13 @@ fun Button(
     containerColors: Color = MaterialTheme.colorScheme.primary,
     colorText: Color = MaterialTheme.colorScheme.onPrimary,
     borderColor: Color = MaterialTheme.colorScheme.primary,
+    shape: RoundedCornerShape = RoundedCornerShape(24.dp)
 ) {
     MaterialButton(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = containerColors),
         modifier = modifier,
-        shape = RoundedCornerShape(size = 24.dp),
+        shape = shape,
         border = BorderStroke(1.dp, borderColor),
     ) {
         Text(

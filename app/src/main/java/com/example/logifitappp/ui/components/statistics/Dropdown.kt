@@ -8,37 +8,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun DropdownShift(
-    modifier: Modifier = Modifier
+fun Dropdown(
+    modifier: Modifier = Modifier,
+    title: String
 ) {
-    val shift = stringResource(id = R.string.shift)
     var expanded by remember { mutableStateOf(false) }
-    var selectedOption by remember { mutableStateOf(shift) }
+    var selectedOption by remember { mutableStateOf(title) }
     val options = listOf("Option 1", "Option 2", "Option 3")
 
     Column(modifier = modifier) {
@@ -66,6 +54,7 @@ fun DropdownShift(
                 )
             }
         }
+
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -80,14 +69,14 @@ fun DropdownShift(
                 )
             }
         }
+
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
 fun DropdownShiftPreview() {
     LogifitApppTheme {
-        DropdownShift()
+        Dropdown(title = "Select an option")
     }
 }

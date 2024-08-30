@@ -22,26 +22,25 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 @Composable
 fun RangeDateSelect(
     label: String,
-    labelStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .border(1.dp, MaterialTheme.colorScheme.outline, RectangleShape)
-            .padding(14.dp),
+            .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
             icon = Icons.AutoMirrored.Rounded.ArrowBackIos,
-            iconSize = 15.dp,
+            iconSize = 10.dp,
             onClick = { /* TODO */ },
-            horizontalPadding = 0.dp,
+            horizontalPadding = 10.dp,
             verticalPadding = 0.dp,
             text = "",
             backgroundColor = MaterialTheme.colorScheme.primary,
             textColor = MaterialTheme.colorScheme.surface,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(30.dp),
             cornerRadius = 5.dp
         )
         Text(
@@ -52,14 +51,14 @@ fun RangeDateSelect(
         )
         IconButton(
             icon = Icons.AutoMirrored.Rounded.ArrowForwardIos,
-            iconSize = 15.dp,
+            iconSize = 10.dp,
             onClick = { /* TODO */ },
-            horizontalPadding = 0.dp,
+            horizontalPadding = 10.dp,
             verticalPadding = 0.dp,
             text = "",
             backgroundColor = MaterialTheme.colorScheme.primary,
             textColor = MaterialTheme.colorScheme.surface,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(30.dp),
             cornerRadius = 5.dp
         )
     }

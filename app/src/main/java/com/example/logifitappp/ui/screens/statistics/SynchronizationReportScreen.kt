@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -28,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.statistics.CardStatistics
-import com.example.logifitappp.ui.components.statistics.DropdownShift
+import com.example.logifitappp.ui.components.statistics.Dropdown
 import com.example.logifitappp.ui.components.statistics.MyTeamCard
 import com.example.logifitappp.ui.components.statistics.RangeDateSelect
 import com.example.logifitappp.ui.theme.LogifitApppTheme
@@ -47,12 +48,16 @@ import com.example.logifitappp.ui.theme.Lime70
 fun SynchronizationReportScreen() {
     var showNoFitTeamCards by remember { mutableStateOf(true) }
     var showFitTeamCards by remember { mutableStateOf(false) }
+    var showSDTeamCards by remember { mutableStateOf(false) }
 
     SimplePage(
         content = {
             Text(
                 stringResource(id = R.string.my_statistics),
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
             )
             Spacer(modifier = Modifier.height(15.dp))
             CardStatistics(
@@ -65,48 +70,82 @@ fun SynchronizationReportScreen() {
                 Icons.Outlined.CheckCircle,
                 text = stringResource(id = R.string.updated_information) + " " + "24/03/2023, 8.25AM"
             )
+            RangeDateSelect(
+                label = "27/07/2023",
+            )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(top = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                RangeDateSelect(
-                    label = "27/07/2023",
-                    modifier = Modifier.weight(1f)
+                Dropdown(
+                    modifier = Modifier.weight(1f),
+                    title = stringResource(id = R.string.shift)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                DropdownShift(
-                    modifier = Modifier.weight(1f)
+                Spacer(modifier = Modifier.width(15.dp))
+                Dropdown(
+                    modifier = Modifier.weight(1f),
+                    title = stringResource(id = R.string.group)
                 )
+
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                    modifier = Modifier.width(150.dp),
-                    onClick = {
-                        showNoFitTeamCards = true
-                        showFitTeamCards = false
-                    },
-                    text = stringResource(id = R.string.status_no_apto),
-                    containerColors = if(showNoFitTeamCards) Blue690 else Color.Transparent,
-                    colorText = if(showNoFitTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
-                )
-                Spacer(modifier = Modifier.width(42.dp))
-                Button(
-                    modifier = Modifier.width(150.dp),
-                    onClick = {
-                        showNoFitTeamCards = false
-                        showFitTeamCards = true
-                    },
-                    text = stringResource(id = R.string.status_person),
-                    containerColors = if(showFitTeamCards) Blue690 else Color.Transparent,
-                    colorText = if(showFitTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
-                )
+                item {
+                    Button(
+                        modifier = Modifier
+                            .width(150.dp)
+                            .padding(3.dp),
+                        onClick = {
+                            showNoFitTeamCards = true
+                            showFitTeamCards = false
+                            showSDTeamCards = false
+                        },
+                        text = stringResource(id = R.string.status_no_apto),
+                        containerColors = if (showNoFitTeamCards) Blue690 else Color.Transparent,
+                        colorText = if (showNoFitTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
+                    )
+                }
+
+                item {
+                    Button(
+                        modifier = Modifier
+                            .width(150.dp)
+                            .padding(3.dp),
+                        onClick = {
+                            showNoFitTeamCards = false
+                            showFitTeamCards = true
+                            showSDTeamCards = false
+                        },
+                        text = stringResource(id = R.string.status_person),
+                        containerColors = if (showFitTeamCards) Blue690 else Color.Transparent,
+                        colorText = if (showFitTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
+                    )
+                }
+                item {
+                    Button(
+                        modifier = Modifier
+                            .width(150.dp)
+                            .padding(3.dp),
+                        onClick = {
+                            showNoFitTeamCards = false
+                            showFitTeamCards = false
+                            showSDTeamCards = true
+                        },
+                        text = "S/D",
+                        containerColors = if (showSDTeamCards) Blue690 else Color.Transparent,
+                        colorText = if (showSDTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
+                    )
+                }
+
             }
             TitleIcon(title = stringResource(id = R.string.my_team), icon = Icons.Default.Share)
             if (showNoFitTeamCards) {
@@ -137,10 +176,10 @@ fun SynchronizationReportScreen() {
                 MyTeamCard(
                     name = "Eduardo Palomino Cacéres",
                     subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.without_data),
-                    textIndicatorColor = Stone470,
-                    backgroundIndicatorColor = Stone240,
-                    pointIndicatorColor = Stone470
+                    statusIndicator = stringResource(id = R.string.status_no_apto),
+                    textIndicatorColor = Rose120,
+                    backgroundIndicatorColor = Orange170,
+                    pointIndicatorColor = Rose120
                 )
             }
             if (showFitTeamCards) {
@@ -177,18 +216,51 @@ fun SynchronizationReportScreen() {
                     pointIndicatorColor = Green298
                 )
             }
+            if (showSDTeamCards) {
+                MyTeamCard(
+                    name = "Eduardo Palomino Cacéres",
+                    subtitleAlternateText = "DIA",
+                    statusIndicator = stringResource(id = R.string.without_data),
+                    textIndicatorColor = Stone470,
+                    backgroundIndicatorColor = Stone240,
+                    pointIndicatorColor = Stone470
+                )
+                MyTeamCard(
+                    name = "Eduardo Palomino Cacéres",
+                    subtitleAlternateText = "DIA",
+                    statusIndicator = stringResource(id = R.string.without_data),
+                    textIndicatorColor = Stone470,
+                    backgroundIndicatorColor = Stone240,
+                    pointIndicatorColor = Stone470
+                )
+                MyTeamCard(
+                    name = "Eduardo Palomino Cacéres",
+                    subtitleAlternateText = "DIA",
+                    statusIndicator = stringResource(id = R.string.without_data),
+                    textIndicatorColor = Stone470,
+                    backgroundIndicatorColor = Stone240,
+                    pointIndicatorColor = Stone470
+                )
+                MyTeamCard(
+                    name = "Eduardo Palomino Cacéres",
+                    subtitleAlternateText = "DIA",
+                    statusIndicator = stringResource(id = R.string.without_data),
+                    textIndicatorColor = Stone470,
+                    backgroundIndicatorColor = Stone240,
+                    pointIndicatorColor = Stone470
+                )
+            }
         }
     )
 }
 
 
-
 @Composable
 fun IconText(icon: ImageVector, text: String) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier =  Modifier.padding(5.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
         Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(16.dp))
         Spacer(modifier = Modifier.width(8.dp))
-        Text(text = text,  style = MaterialTheme.typography.titleSmall , fontSize = 12.sp)
+        Text(text = text, style = MaterialTheme.typography.titleSmall, fontSize = 12.sp)
     }
 }
 

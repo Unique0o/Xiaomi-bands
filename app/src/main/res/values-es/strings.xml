@@ -34,7 +34,7 @@
     <string name="share">Compartir</string>
     <string name="title_tests">Mis tests de somnolencia</string>
     <string name="description_tests">Realiza un test de somnolencia para verificar si estás apto o no para realizar tus labores.</string>
-    <string name="title_test_fatiga">TEST DE AUTOEVALUACIÓN DE FATIGA</string>
+    <string name="title_test_fatiga">Test de autoevaluación de fatiga</string>
     <string name="status_person">APTO</string>
     <string name="result_date">Resultado de 24/10/2023</string>
     <string name="plan">PREMIUM</string>
@@ -100,16 +100,24 @@
     <string name="authentication_description">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
     <string name="enter_key">Escribe la clave</string>
 
-    <!-- My statistics -->
-
+    <!-- Statistics -->
     <string name="title_leaderboard_topbar">Clasificacion</string>
     <string name="status_no_aptos">No aptos</string>
     <string name="status_aptos">Aptos</string>
     <string name="updated_information">Informaciòn actualizada al </string>
     <string name="my_statistics">Mi estadísticas </string>
-
     <string name="shift">Turno </string>
     <string name="my_team">Mi equipo </string>
+    <string name="group">Grupo </string>
+
+    <!-- Settings -->
+    <string name="subjective_test">Test subjetivos</string>
+    <string name="settings">Herramientas</string>
+    <string name="settings_2">Herramientas 2</string>
+    <string name="test_description">Descripción  del test</string>
+    <string name="description_fatigue_test">Este cuestionario de autoevaluación debe ser llenado previamente por personas que vayan a conducir algún tipo de vehiculo. </string>
+    <string name="detail">Detallar </string>
+    <string name="yes">Sì </string>
 
     <!-- Addition Information -->
 
