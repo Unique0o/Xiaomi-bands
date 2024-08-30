@@ -121,4 +121,7 @@
     <string name="placeholder_phone">Celular</string>
     <string name="first_additional_information_message">Valida la información correspondiente a tus datos personales</string>
     <string name="first_additional_information_title">Antes de comenzar</string>
+    <string name="second_additional_information_title">¡Ya casi terminamos!</string>
+    <string name="second_additional_information_message">Es necesario sacarse una selfie para continuar</string>
+    <string name="button_continue">Continuar</string>
 </resources>

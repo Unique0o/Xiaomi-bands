@@ -124,5 +124,8 @@
     <string name="placeholder_phone">Mobile</string>
     <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
     <string name="first_additional_information_title">Before starting</string>
+    <string name="second_additional_information_title">We are almost done!</string>
+    <string name="second_additional_information_message">You need to take a selfie to continue</string>
+    <string name="button_continue">Continue</string>
 
 </resources>

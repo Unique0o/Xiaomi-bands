@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.screens.additionalInformation.AdditionalInformationPicture
 import com.example.logifitappp.ui.screens.graphics.GraphicsEmptyScreen
 import com.example.logifitappp.ui.screens.home.admin.HomeAdminScreen
 import com.example.logifitappp.ui.screens.login.LoginView
@@ -27,5 +28,6 @@ fun MainNavigation(navigation: NavHostController) {
         composable<MainRoutes.Graphics> {
             GraphicsEmptyScreen(navigation)
         }
+        composable<MainRoutes.AdditionalInformationPicture> { AdditionalInformationPicture(navigation) }
     }
 }
