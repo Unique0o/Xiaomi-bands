@@ -34,7 +34,7 @@
     <string name="share">Share</string>
     <string name="title_tests">My Drowsiness Tests</string>
     <string name="description_tests">Take a drowsiness test to check if you are fit to perform your tasks.</string>
-    <string name="title_test_fatiga">FATIGUE SELF-ASSESSMENT TEST</string>
+    <string name="title_test_fatiga">Fatigue self-assessment test</string>
     <string name="status_person">FIT</string>
     <string name="result_date">Result from 24/10/2023</string>
     <string name="plan">PREMIUM</string>
@@ -101,19 +101,22 @@
     <string name="enter_key">Enter the key</string>
 
 
-    <!-- My statistics -->
-
+    <!-- Statistics -->
     <string name="title_leaderboard_topbar">Clasificación</string>
-
-
     <string name="status_no_aptos">Not fit</string>
     <string name="status_aptos">Fit</string>
     <string name="updated_information">Information updated on </string>
     <string name="my_statistics">My Statistics</string>
-
     <string name="shift">Shift </string>
     <string name="my_team">My Team </string>
+    <string name="group">Group </string>
 
-
-
+    <!-- Settings -->
+    <string name="subjective_test">Subjective Tests</string>
+    <string name="settings">Settings</string>
+    <string name="settings_2">Settings 2</string>
+    <string name="test_description">Test description</string>
+    <string name="description_fatigue_test">This self-assessment test must be completed in advance by people who are going to drive some type of vehicle. </string>
+    <string name="detail">Detail: </string>
+    <string name="yes">Yes </string>
 </resources>

@@ -52,7 +52,7 @@ fun FatigueTestItem() {
                     modifier = Modifier.size(15.dp)
                 )
                 Text(
-                    text = stringResource(id = R.string.title_test_fatiga),
+                    text = stringResource(id = R.string.title_test_fatiga).uppercase(),
                     color = Blue690,
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,

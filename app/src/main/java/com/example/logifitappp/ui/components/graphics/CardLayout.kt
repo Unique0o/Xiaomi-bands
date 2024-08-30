@@ -44,8 +44,8 @@ fun CardLayout(
     suffixComponent: @Composable (() -> Unit)? = null,
     cardBackgroundColor: Color = MaterialTheme.colorScheme.outline,
     titleAlternateText: String? = null,
-    subtitleAlternateText: String = ""
-
+    subtitleAlternateText: String = "",
+    onClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = modifier
@@ -55,7 +55,8 @@ fun CardLayout(
         elevation = elevation,
         colors = CardDefaults.cardColors(
             containerColor = cardBackgroundColor
-        )
+        ),
+        onClick = onClick ?: {}
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
