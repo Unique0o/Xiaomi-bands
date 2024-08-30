@@ -5,3 +5,10 @@ data class CountryModel(
     val id: Int,
     val name: String
 )
+
+data class CountryPhoneCode(
+    val name: String,
+    val code: String,
+    val flagResId: Int?,
+    val id: String
+)

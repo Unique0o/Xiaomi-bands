@@ -119,4 +119,19 @@
     <string name="description_fatigue_test">This self-assessment test must be completed in advance by people who are going to drive some type of vehicle. </string>
     <string name="detail">Detail: </string>
     <string name="yes">Yes </string>
+
+    <!-- Addition Information -->
+
+    <string name="placeholder_name">Name</string>
+    <string name="placeholder_lastname">Last Name</string>
+    <string name="placeholder_type_document">Document type</string>
+    <string name="placeholder_document_identity">Identity Document</string>
+    <string name="placeholder_country">Country</string>
+    <string name="placeholder_phone">Mobile</string>
+    <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
+    <string name="first_additional_information_title">Before starting</string>
+    <string name="second_additional_information_title">We are almost done!</string>
+    <string name="second_additional_information_message">You need to take a selfie to continue</string>
+    <string name="button_continue">Continue</string>
+
 </resources>
