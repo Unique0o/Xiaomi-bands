@@ -1,9 +1,7 @@
 package com.example.logifitappp.ui.components.statistics
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -17,18 +15,20 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 
+
 @Composable
 fun MyTeamCard(
     name: String,
-    shift: String,
+    subtitleAlternateText: String,
     statusIndicator: String,
     textIndicatorColor: Color,
     backgroundIndicatorColor: Color,
     pointIndicatorColor: Color
 ) {
     CardLayout(
-        //icon = painterResource(id = R.drawable._135715_1),
-        iconSize = 20.dp,
+        icon = painterResource(id = R.mipmap.ic_user_profile_foreground),
+        iconColor = Color.Unspecified,
+        iconSize = 65.dp,
         label = name,
         labelStyle = TextStyle(
             fontSize = 17.sp,
@@ -45,17 +45,10 @@ fun MyTeamCard(
                 pointColor = pointIndicatorColor
             )
         },
+        titleAlternateText = stringResource(id = R.string.shift) +": ",
+        subtitleAlternateText = subtitleAlternateText,
         bodyComponent = {
-            Row {
-                Text(
-                    text = stringResource(id = R.string.shift) +": ",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                )
-                Text(
-                    text = shift,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+            /* to do */
         },
     )
 }
