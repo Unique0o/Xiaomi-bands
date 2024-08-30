@@ -114,6 +114,15 @@
     <string name="shift">Shift </string>
     <string name="my_team">My Team </string>
 
+    <!-- Addition Information -->
 
+    <string name="placeholder_name">Name</string>
+    <string name="placeholder_lastname">Last Name</string>
+    <string name="placeholder_type_document">Document type</string>
+    <string name="placeholder_document_identity">Identity Document</string>
+    <string name="placeholder_country">Country</string>
+    <string name="placeholder_phone">Mobile</string>
+    <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
+    <string name="first_additional_information_title">Before starting</string>
 
 </resources>
