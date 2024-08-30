@@ -8,9 +8,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.material3.OutlinedTextField as MaterialOutlinedTextField
 import androidx.compose.ui.unit.dp
+
+interface SelectableItem {
+    val name: String
+}
 
 @Composable
 fun <T : SelectableItem> SelectableBottomSheetList(
@@ -123,6 +126,3 @@ fun <T : SelectableItem> BottomSheetSelector(
 }
 
 
-interface SelectableItem {
-    val name: String
-}

@@ -56,7 +56,7 @@ class AdditionalInformationViewModel : ViewModel() {
 
     fun getCountryCodes(): List<CountryPhoneCode> {
         return listOf(
-            CountryPhoneCode("Seleccionar país", "", null, "EMPTY"),
+            CountryPhoneCode("Select Contry", "", null, "EMPTY"),
             CountryPhoneCode("Perú", "+51", R.drawable.peru, "PE/PER"),
             CountryPhoneCode("Costa Rica", "+506", R.drawable.costa_rica, "CR/CRC"),
         )
