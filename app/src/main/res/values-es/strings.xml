@@ -111,6 +111,14 @@
     <string name="shift">Turno </string>
     <string name="my_team">Mi equipo </string>
 
+    <!-- Addition Information -->
 
-
+    <string name="placeholder_name">Nombre</string>
+    <string name="placeholder_lastname">Apellido</string>
+    <string name="placeholder_type_document">Tipo de documento</string>
+    <string name="placeholder_document_identity">Documento de identidad</string>
+    <string name="placeholder_country">País</string>
+    <string name="placeholder_phone">Celular</string>
+    <string name="first_additional_information_message">Valida la información correspondiente a tus datos personales</string>
+    <string name="first_additional_information_title">Antes de comenzar</string>
 </resources>
