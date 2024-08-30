@@ -2,16 +2,12 @@ package com.example.logifitappp.viewmodel.views.AdditionalInformation
 
 import androidx.lifecycle.ViewModel
 import com.example.logifitappp.ui.components.forms.SelectableItem
+import com.example.logifitappp.ui.screens.additionalInformation.states.SelectableBottomSheetUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-data class SelectableBottomSheetUiState(
-    val countries: List<SelectableItem> = emptyList(),
-    val selectedCountry: SelectableItem? = null,
-    val countryError: String? = null
-)
 
 class SelectableBottomSheetViewModel : ViewModel() {
 

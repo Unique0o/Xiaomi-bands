@@ -118,7 +118,7 @@ fun AdditionalInformationForm(
             icon = Icons.AutoMirrored.Rounded.Send,
             onClick = {},
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.button_send)
+            text = stringResource(id = R.string.button_continue)
         )
     }
 }

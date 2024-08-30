@@ -9,6 +9,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.data.models.CountryPhoneCode
 import com.example.logifitappp.ui.components.forms.SelectableItem
 
+
 class AdditionalInformationViewModel : ViewModel() {
 
 
@@ -61,4 +62,5 @@ class AdditionalInformationViewModel : ViewModel() {
             CountryPhoneCode("Costa Rica", "+506", R.drawable.costa_rica, "CR/CRC"),
         )
     }
+
 }

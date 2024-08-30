@@ -16,7 +16,7 @@ sealed class MainRoutes {
     @Serializable
 
     data object WearableDetection: MainRoutes()
-
+    @Serializable
     data object Home : MainRoutes()
 
     @Serializable
@@ -24,5 +24,6 @@ sealed class MainRoutes {
 
     @Serializable
     data object Profile : MainRoutes()
-
+    @Serializable
+    data object AdditionalInformationPicture : MainRoutes()
 }
