@@ -23,7 +23,6 @@ import com.example.logifitappp.ui.theme.White
 fun HeaderRow(date: String, title: String) {
     Column(
         modifier = Modifier.fillMaxWidth(),
-
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -46,7 +45,8 @@ fun HeaderRow(date: String, title: String) {
             )
             Text(
                 text = date,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.inverseSurface
             )
             IconButton(
                 icon = Icons.AutoMirrored.Rounded.ArrowForwardIos,
@@ -67,7 +67,8 @@ fun HeaderRow(date: String, title: String) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
+            color = MaterialTheme.colorScheme.inverseSurface
         )
     }
 }

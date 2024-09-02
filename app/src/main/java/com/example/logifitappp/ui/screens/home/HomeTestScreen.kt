@@ -88,7 +88,7 @@ fun HomeTestScreen() {
                     buttonColor = Green298,
                     onClick = { /*TODO*/ }
                 )
-                FatigueTestItem()
+                FatigueTestItem(date = "24/10/2023")
 
             }
         )
