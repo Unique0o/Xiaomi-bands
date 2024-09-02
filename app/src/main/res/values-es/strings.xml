@@ -36,7 +36,7 @@
     <string name="description_tests">Realiza un test de somnolencia para verificar si estás apto o no para realizar tus labores.</string>
     <string name="title_test_fatiga">Test de autoevaluación de fatiga</string>
     <string name="status_person">APTO</string>
-    <string name="result_date">Resultado de 24/10/2023</string>
+    <string name="result_date">Resultado de:</string>
     <string name="plan">PREMIUM</string>
 
     // Card Item
@@ -110,7 +110,7 @@
     <string name="my_team">Mi equipo </string>
     <string name="group">Grupo </string>
 
-    <!-- Settings -->
+    <!-- Tests -->
     <string name="subjective_test">Test subjetivos</string>
     <string name="settings">Herramientas</string>
     <string name="settings_2">Herramientas 2</string>
@@ -118,9 +118,22 @@
     <string name="description_fatigue_test">Este cuestionario de autoevaluación debe ser llenado previamente por personas que vayan a conducir algún tipo de vehiculo. </string>
     <string name="detail">Detallar </string>
     <string name="yes">Sì </string>
+    <string name="finish">Finalizar </string>
+    <string name="result">Resultado </string>
+    <string name="test_question_1">"1. ¿Has descansado 07 horas consecutivas antes de tu jornada laboral?"</string>
+    <string name="test_question_2">"2. ¿Tiene / Sientes sueño ahora?"</string>
+    <string name="test_question_3">"3. ¿Has ingerido medicamentos durante el día u horas previas al servicio? Si la respuesta es afirmativa detallar qué medicamento."</string>
+    <string name="test_question_4">"4. ¿En los dos últimos días has tenido problemas personales en la casa o con alguien del trabajo que dificultan tu concentración o interrumpan el sueño?"</string>
+    <string name="test_question_5">"5. ¿Tienes / sientes sueño, cansancio, te tiemblan los párpados, tienes temblor en las piernas o en los brazos y/o bostezos constantes durante la última semana?"</string>
+    <string name="test_question_6">"6. ¿Tienes / sientes otra molestia de salud que no haya recibido atención? Especificar"</string>
+    <string name="test_question_7">"7. ¿Has realizado ac tividad física o ejercicios físicos más de lo habitual previo a tu turno de trabajo?"</string>
+    <string name="test_question_8">"8. En caso de sentir fatiga / somnolencia, ¿sabes lo que tiene que hacer? Detallar"</string>
+    <string name="no_drive">"No puede conducir / realizar actividad."</string>
+    <string name="medical_evaluation">"Requiere evaluación médica."</string>
+    <string name="user_can_perform">"El usuario puede realizar su actividad."</string>
+
 
     <!-- Addition Information -->
-
     <string name="placeholder_name">Nombre</string>
     <string name="placeholder_lastname">Apellido</string>
     <string name="placeholder_type_document">Tipo de documento</string>

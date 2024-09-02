@@ -30,7 +30,7 @@ fun InfoBarDetailGraph(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+
         ) {
             HeaderRow(
                 date = "Noviembre 20, 2023",
@@ -71,7 +71,8 @@ fun HeartRateSummary(time: String, hour: String) {
         Text(
             text = time,
             style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.inverseSurface
         )
         Text(
             text = stringResource(id = R.string.information_between) + " " + hour,
