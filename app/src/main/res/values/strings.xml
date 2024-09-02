@@ -41,7 +41,7 @@
     <string name="share">Share</string>
     <string name="title_tests">My Drowsiness Tests</string>
     <string name="description_tests">Take a drowsiness test to check if you are fit to perform your tasks.</string>
-    <string name="title_test_fatiga">FATIGUE SELF-ASSESSMENT TEST</string>
+    <string name="title_test_fatiga">Fatigue self-assessment test</string>
     <string name="status_person">FIT</string>
     <string name="result_date">Result from 24/10/2023</string>
     <string name="plan">PREMIUM</string>
@@ -78,6 +78,8 @@
     <string name="steps_taken">Steps taken</string>
     <string name="summary">Summary</string>
     <string name="average_heart_rate">Average heart rate</string>
+    <string name="sleep_condition">Sleep Condition</string>
+    <string name="naps">Naps</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>
@@ -90,8 +92,8 @@
     <string name="connected">CONNECTED</string>
     <string name="kcal">0 kcal</string>
     <string name="graph_card_heart_rate">Last Recorded Measurement</string>
-    <string name="title_card_message_raking">You`re on top</string>
-    <string name="message_card_message_ranking">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
+    <string name="leaderboard_message_title">You`re on top</string>
+    <string name="leaderboard_message_summary">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
 
     <string name="searching_for_devices">Searching for devices</string>
     <string name="make_your_device_detectable">Make your device detectable</string>
@@ -104,4 +106,39 @@
     <string name="close">Close</string>
     <string name="authentication_description">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="enter_key">Enter the key</string>
+
+
+    <!-- Statistics -->
+    <string name="title_leaderboard_topbar">Clasificación</string>
+    <string name="status_no_aptos">Not fit</string>
+    <string name="status_aptos">Fit</string>
+    <string name="updated_information">Information updated on </string>
+    <string name="my_statistics">My Statistics</string>
+    <string name="shift">Shift </string>
+    <string name="my_team">My Team </string>
+    <string name="group">Group </string>
+
+    <!-- Settings -->
+    <string name="subjective_test">Subjective Tests</string>
+    <string name="settings">Settings</string>
+    <string name="settings_2">Settings 2</string>
+    <string name="test_description">Test description</string>
+    <string name="description_fatigue_test">This self-assessment test must be completed in advance by people who are going to drive some type of vehicle. </string>
+    <string name="detail">Detail: </string>
+    <string name="yes">Yes </string>
+
+    <!-- Addition Information -->
+
+    <string name="placeholder_name">Name</string>
+    <string name="placeholder_lastname">Last Name</string>
+    <string name="placeholder_type_document">Document type</string>
+    <string name="placeholder_document_identity">Identity Document</string>
+    <string name="placeholder_country">Country</string>
+    <string name="placeholder_phone">Mobile</string>
+    <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
+    <string name="first_additional_information_title">Before starting</string>
+    <string name="second_additional_information_title">We are almost done!</string>
+    <string name="second_additional_information_message">You need to take a selfie to continue</string>
+    <string name="button_continue">Continue</string>
+
 </resources>

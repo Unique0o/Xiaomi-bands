@@ -10,23 +10,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.graphics.bars.ProgressBar
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.LightBlue
 import com.example.logifitappp.ui.theme.Lime70
+import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.ui.theme.Violet
 
 
 @Composable
 fun SleepSessionCard(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F4F8))
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline),
     ) {
         Column(
             modifier = Modifier
@@ -35,7 +39,14 @@ fun SleepSessionCard(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SessionHeader()
-            ProgressBar()
+            ProgressBar(
+                primaryProgressColor = Blue690,
+                secondaryProgressColor = Violet,
+                primaryProgressFraction = 0.5f,
+                secondaryProgressFraction = 0.2f,
+                tertiaryProgressFraction = 0f
+            )
+
             SleepTypeDetails()
         }
     }
@@ -66,29 +77,6 @@ fun SessionHeader() {
             color = Green298,
             backgroundColor = Lime70,
             pointColor = Green298
-        )
-    }
-}
-
-@Composable
-fun ProgressBar() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp)
-            .background(Color(0xFF8AB4F8), RoundedCornerShape(4.dp))
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.76f)
-                .height(8.dp)
-                .background(Blue690, RoundedCornerShape(4.dp))
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.11f)
-                .height(8.dp)
-                .background(Color(0xFF7E57C2), RoundedCornerShape(4.dp))
         )
     }
 }
@@ -144,14 +132,22 @@ fun SleepTypeInfo(
             Text(
                 text = "$type ($percentage)",
                 style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
+
             )
             Text(
                 text = duration,
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun SleepSessionCardDarkModePreview(){
+    LogifitApppTheme() {
+        SleepSessionCard()
     }
 }

@@ -29,7 +29,7 @@ fun BackHeader(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceContainer)
-            .padding(16.dp)
+            .padding(10.dp)
     ) {
         Row(
             modifier = Modifier
@@ -43,7 +43,8 @@ fun BackHeader(
                 icon = Icons.AutoMirrored.Rounded.KeyboardBackspace,
                 onClick = { navigation.popBackStack() },
                 text = "",
-                textColor = MaterialTheme.colorScheme.primary
+                textColor = MaterialTheme.colorScheme.primary,
+                iconSize = 25.dp
             )
             Text(
                 text = title,
@@ -52,7 +53,7 @@ fun BackHeader(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(end = 45.dp),
+                    .padding(end = 60.dp),
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp)
             )
         }

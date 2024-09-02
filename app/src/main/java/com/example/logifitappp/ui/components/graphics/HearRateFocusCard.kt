@@ -22,39 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
-
-
-data class HeartRateFocusData(
-    val date: String,
-    val minRate: Int,
-    val maxRate: Int,
-    val timeRange: String,
-    val ranges: List<Pair<Int, Int>>
-)
-@Composable
-fun DateSelectorFocus(date: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { /* TODO */ }) {
-            Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "Previous day")
-        }
-        Text(
-            text = date,
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center
-        )
-        IconButton(onClick = { /* TODO */ }) {
-            Icon(Icons.Default.KeyboardArrowRight, contentDescription = "Next day")
-        }
-    }
-}
+import com.example.logifitappp.data.HeartRateData
 
 @Composable
 fun HeartRateFocusCard(
-    heartRateData: HeartRateFocusData,
+    heartRateData: HeartRateData,
     highlightIndex: Int
 ) {
     Column(
@@ -62,8 +34,7 @@ fun HeartRateFocusCard(
             .padding(16.dp)
             .fillMaxWidth()
     ) {
-        DateSelectorFocus(heartRateData.date)
-        Spacer(modifier = Modifier.height(16.dp))
+        HeaderRow(date = heartRateData.date, stringResource(R.string.heart_rate_card_title))
         HeartRateFocusSummary(heartRateData)
         Spacer(modifier = Modifier.height(24.dp))
         HeartRateFocusChart(heartRateData.ranges, highlightIndex)
@@ -71,19 +42,16 @@ fun HeartRateFocusCard(
 }
 
 @Composable
-fun HeartRateFocusSummary(data: HeartRateFocusData) {
+fun HeartRateFocusSummary(data: HeartRateData) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.heart_rate_card_title),
-            style = MaterialTheme.typography.labelSmall,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
             text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            fontWeight = FontWeight.Bold
         )
         Text(
             text = data.timeRange,
@@ -185,7 +153,7 @@ fun HeartRateFocusChart(
 @Preview(showBackground = true)
 @Composable
 fun HeartRateFocusCardPreview() {
-    val heartRateFocusData = HeartRateFocusData(
+    val heartRateFocusData = HeartRateData(
         date = "Noviembre 20, 2023",
         minRate = 70,
         maxRate = 101,

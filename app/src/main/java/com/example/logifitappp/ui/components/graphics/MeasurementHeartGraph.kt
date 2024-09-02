@@ -1,6 +1,6 @@
 package com.example.logifitappp.ui.components.graphics
 
-import androidx.annotation.DrawableRes
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,103 +10,59 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.*
+import com.example.logifitappp.data.HeartRateData
+import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
-data class MeasurementHeartData(
-    val date: String,
-    val minRate: Int,
-    val maxRate: Int,
-    val timeRange: String,
-    val ranges: List<Pair<Int, Int>>
-)
+
 @Composable
-private fun Header(
-    title: String,
-    accentColor: Color,
-    backgroundColorConnect: Color,
-    @DrawableRes iconResId: Int
+fun MeasurementHeartCard(
+    heartRateData: HeartRateData,
+    modifier: Modifier = Modifier,
+    titleAccentColor: Color = Blue690,
+    indicatorAccentColor: Color = Green298,
+    indicatorBackgroundColor: Color = Lime70,
+    indicatorInformation: String,
+    icon : Painter
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = iconResId),
-                contentDescription = "Calories icon",
-                tint = accentColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(7.dp))
-            Text(
-                text = title,
-                color = accentColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            Spacer(modifier = Modifier.width(8.dp))
+    CardLayout(
+        modifier = modifier,
+        icon = icon,
+        label = stringResource(id = R.string.graph_card_heart_rate),
+        labelStyle = MaterialTheme.typography.titleMedium.copy(color = titleAccentColor),
+        suffixComponent = {
             ConnectedIndicator(
-                text = "90 LPM",
-                color =  Green298,
-                backgroundColor =  Lime70,
-                pointColor =  Green298
+                text = indicatorInformation,
+                color = indicatorAccentColor,
+                pointColor = indicatorAccentColor,
+                backgroundColor = indicatorBackgroundColor
             )
+        },
+        bodyComponent = {
+            Column {
+                HeartRateCharts(heartRateData.ranges)
+                CardTimeLabels(
+                    hourStart = "00:00",
+                    hourFinal = "24:00",
+                    fontSize = 12.sp,
+                    textColor = Stone470
+
+                )
+            }
         }
-    }
-}
-@Composable
-private fun TimeLabels() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = "00:00", fontSize = 12.sp, color = Stone470)
-        Text(text = "24:00", fontSize = 12.sp, color = Stone470)
-    }
+    )
+
+
 }
 
 @Composable
-fun MeasurementHeartCard(heartRateData1: MeasurementHeartData,  modifier: Modifier = Modifier,) {
-
-    Card(
-        modifier = modifier.fillMaxWidth() .padding(15.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.outline
-        )
-
-    ) {
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            Header(
-                title = stringResource(id = R.string.graph_card_heart_rate),
-                accentColor = Blue690 ,
-                backgroundColorConnect = Orange170,
-                iconResId = R.drawable.ic_heart_cog,
-            )
-            HeartRateChart1(heartRateData1.ranges)
-            TimeLabels()
-        }
-    }
-}
-
-@Composable
-fun HeartRateChart1(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) {
+fun HeartRateCharts(ranges: List<Pair<Int, Int>>, modifier: Modifier = Modifier) {
     val maxRate = ranges.maxOfOrNull { it.second } ?: 0
     Row(
         modifier = modifier

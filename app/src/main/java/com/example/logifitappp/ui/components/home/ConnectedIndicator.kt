@@ -31,11 +31,11 @@ fun ConnectedIndicator(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
             .background( backgroundColor, RoundedCornerShape(12.dp))
-            .padding(horizontal = 6.dp, vertical = 2.dp)
+            .padding(horizontal = 6.dp, vertical = 0.dp)
     ) {
         Box(
             modifier = modifier
-                .size(8.dp)
+                .size(6.dp)
                 .background(pointColor, CircleShape)
         )
         Text(

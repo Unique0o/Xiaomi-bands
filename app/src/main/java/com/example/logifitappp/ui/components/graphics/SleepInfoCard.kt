@@ -20,11 +20,10 @@ import com.example.logifitappp.ui.theme.Blue690
 fun SleepInfoCard(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth() .padding(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.outline),
     ) {
         Column(
             modifier = Modifier
@@ -34,7 +33,7 @@ fun SleepInfoCard(modifier: Modifier = Modifier) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_bed),
+                    painter = painterResource(id = R.drawable.ic_update),
                     contentDescription = "Sleep",
                     tint = Color(0xFF4285F4)
                 )
@@ -77,48 +76,3 @@ fun SleepInfoCard(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun SleepTypeInfo(
-    color: Color,
-    type: String,
-    percentage: String,
-    duration: String,
-    isColumn: Boolean
-) {
-    val content = @Composable {
-        Box(
-            modifier = Modifier
-                .size(12.dp)
-                .background(color, CircleShape)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Column {
-            Text(
-                text = "$type ($percentage)",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.Black
-            )
-            Text(
-                text = duration,
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-
-    if (isColumn) {
-        Column {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                content()
-            }
-        }
-    } else {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            content()
-        }
-    }
-}

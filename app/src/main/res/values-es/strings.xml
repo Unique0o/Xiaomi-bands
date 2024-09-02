@@ -41,7 +41,7 @@
     <string name="share">Compartir</string>
     <string name="title_tests">Mis tests de somnolencia</string>
     <string name="description_tests">Realiza un test de somnolencia para verificar si estás apto o no para realizar tus labores.</string>
-    <string name="title_test_fatiga">TEST DE AUTOEVALUACIÓN DE FATIGA</string>
+    <string name="title_test_fatiga">Test de autoevaluación de fatiga</string>
     <string name="status_person">APTO</string>
     <string name="result_date">Resultado de 24/10/2023</string>
     <string name="plan">PREMIUM</string>
@@ -60,7 +60,6 @@
     <string name="add_content_description" >Añadir</string>
     <string name="profile_pic">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
-
     <string name="title_fatige">Fatiga</string>
 
     // Graphics
@@ -78,6 +77,8 @@
     <string name="steps_taken">Pasos realizados</string>
     <string name="summary">Resumen</string>
     <string name="average_heart_rate">Ritmo cardiaco promedio</string>
+    <string name="sleep_condition">Condición de sueño</string>
+    <string name="naps">Siestas</string>
 
     // CardSleepSession
     <string name="content_description_sleep">Sleep</string>
@@ -90,8 +91,8 @@
     <string name="connected">CONECTADO</string>
     <string name="kcal" >0 kcal</string>
     <string name="graph_card_heart_rate">Ultima medicion registrada</string>
-    <string name="title_card_message_raking">Estas en la cima!!!</string>
-    <string name="message_card_message_ranking">La disciplina y consistencia te acompañan en este proceso. sigo alcanzando los triunfos por los que te vienes esmerando.</string>
+    <string name="leaderboard_message_title">Estas en la cima!!!</string>
+    <string name="leaderboard_message_summary">La disciplina y consistencia te acompañan en este proceso. sigo alcanzando los triunfos por los que te vienes esmerando.</string>
 
     <string name="detecting_devices">Detectando dispositivos</string>
     <string name="searching_for_devices">Buscando dispositivos</string>
@@ -105,4 +106,37 @@
     <string name="close">Cerrar</string>
     <string name="authentication_description">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
     <string name="enter_key">Escribe la clave</string>
+
+    <!-- Statistics -->
+    <string name="title_leaderboard_topbar">Clasificacion</string>
+    <string name="status_no_aptos">No aptos</string>
+    <string name="status_aptos">Aptos</string>
+    <string name="updated_information">Informaciòn actualizada al </string>
+    <string name="my_statistics">Mi estadísticas </string>
+    <string name="shift">Turno </string>
+    <string name="my_team">Mi equipo </string>
+    <string name="group">Grupo </string>
+
+    <!-- Settings -->
+    <string name="subjective_test">Test subjetivos</string>
+    <string name="settings">Herramientas</string>
+    <string name="settings_2">Herramientas 2</string>
+    <string name="test_description">Descripción  del test</string>
+    <string name="description_fatigue_test">Este cuestionario de autoevaluación debe ser llenado previamente por personas que vayan a conducir algún tipo de vehiculo. </string>
+    <string name="detail">Detallar </string>
+    <string name="yes">Sì </string>
+
+    <!-- Addition Information -->
+
+    <string name="placeholder_name">Nombre</string>
+    <string name="placeholder_lastname">Apellido</string>
+    <string name="placeholder_type_document">Tipo de documento</string>
+    <string name="placeholder_document_identity">Documento de identidad</string>
+    <string name="placeholder_country">País</string>
+    <string name="placeholder_phone">Celular</string>
+    <string name="first_additional_information_message">Valida la información correspondiente a tus datos personales</string>
+    <string name="first_additional_information_title">Antes de comenzar</string>
+    <string name="second_additional_information_title">¡Ya casi terminamos!</string>
+    <string name="second_additional_information_message">Es necesario sacarse una selfie para continuar</string>
+    <string name="button_continue">Continuar</string>
 </resources>

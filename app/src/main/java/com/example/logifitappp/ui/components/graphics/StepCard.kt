@@ -164,7 +164,7 @@ fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
                 Text(
                     text = "1200 pasos",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.inverseSurface,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(16.dp))

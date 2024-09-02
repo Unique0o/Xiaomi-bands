@@ -62,7 +62,6 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 protobuf-java = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref="protobufJava" }
 protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref="protobufKotlin" }
 
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
