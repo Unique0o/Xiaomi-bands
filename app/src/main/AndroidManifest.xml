@@ -35,7 +35,7 @@
         </activity>
 
         <service
-            android:name=".services.WearableCommunicationService"
+            android:name=".core.services.WearableCommunicationService"
             android:foregroundServiceType="connectedDevice" />
     </application>
 

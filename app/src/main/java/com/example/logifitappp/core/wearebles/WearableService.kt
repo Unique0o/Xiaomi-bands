@@ -3,7 +3,7 @@ package com.example.logifitappp.core.wearebles
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import com.example.logifitappp.services.WearableCommunicationService
+import com.example.logifitappp.core.services.WearableCommunicationService
 
 open class WearableService(private val context: Context, private val wearable: Wearable?) {
     private var serviceClass: Class<out Service> = WearableCommunicationService::class.java
@@ -40,10 +40,16 @@ open class WearableService(private val context: Context, private val wearable: W
         return WearableService(context, wearable)
     }
 
+    fun onFetchRecordedData(dataTypes: Int) {
+        invokeService(createIntent().setAction(ACTION_FETCH_RECORDED_DATA).putExtra(EXTRA_RECORDED_DATA_TYPES, dataTypes))
+    }
+
     companion object {
         const val ACTION_CONNECT = "action.connect"
         const val ACTION_DISCONNECT = "action.disconnect"
+        const val ACTION_FETCH_RECORDED_DATA = "action.fetch_activity_data"
 
         const val EXTRA_CONNECT_FIRST_TIME = "connect_first_time"
+        const val EXTRA_RECORDED_DATA_TYPES = "data_types"
     }
 }

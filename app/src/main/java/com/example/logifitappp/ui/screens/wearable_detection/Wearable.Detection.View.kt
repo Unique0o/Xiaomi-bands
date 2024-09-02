@@ -24,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
-import com.example.logifitappp.broadcasters.BluetoothBroadcastReceiver
+import com.example.logifitappp.core.broadcasters.BluetoothBroadcastReceiver
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.ui.components.forms.IconButton

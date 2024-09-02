@@ -21,9 +21,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.bluetooth.ScanEventProcessor
 import com.example.logifitappp.core.wearebles.WearableCandidate
+import com.example.logifitappp.core.wearebles.WearableCoordinator
+import com.example.logifitappp.core.wearebles.WearableHelper
 
 class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
     private var adapter: BluetoothAdapter? = null
@@ -156,6 +159,29 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         } else adapter = null
     }
 
+    fun handleCandidatePressed(candidate: WearableCandidate) {
+        val wearableType = WearableHelper.getInstance().resolveWearableType(candidate)
+
+        if (!wearableType.isSupported()) {
+            println("Unsupported device candidate $candidate")
+            return
+        }
+
+        stopDiscovery()
+
+        val coordinator = wearableType.getWearableCoordinator()
+        println("Using device candidate $candidate with coordinator ${coordinator::class.java}")
+
+        if (coordinator.getBondingStyle() == BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
+            val key = "0x50fd0e5818e60f16eee715652918c5b1"
+            val sharedPrefers = App.getWearableSpecificSharedPrefs(candidate.getMacAddress())
+            val editor = sharedPrefers?.edit()
+
+            editor?.putString("authentication_key", key)
+            editor?.apply()
+        }
+    }
+
     fun handleWearableFound(event: ScanEvent) {
         scanEventProcessor.scheduleProcessing(event)
     }
@@ -236,6 +262,10 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
 
         isScanning = true
         return true
+    }
+
+    private fun startPair(candidate: WearableCandidate, coordinator: WearableCoordinator) {
+
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")

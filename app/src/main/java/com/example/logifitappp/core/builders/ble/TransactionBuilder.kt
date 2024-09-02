@@ -1,0 +1,53 @@
+package com.example.logifitappp.core.builders.ble
+
+import android.bluetooth.BluetoothGattCharacteristic
+import com.example.logifitappp.core.bluetooth.BleQueue
+import com.example.logifitappp.core.builders.ble.actions.Action
+import com.example.logifitappp.core.builders.ble.actions.NotifyAction
+import com.example.logifitappp.core.builders.ble.actions.RequestMtuAction
+import com.example.logifitappp.core.builders.ble.actions.WriteAction
+import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
+
+class TransactionBuilder(taskName: String) {
+    private val transaction = Transaction(taskName)
+    private var queued = false
+
+    fun add(action: Action) {
+        transaction.add(action)
+    }
+
+    protected fun createNotifyAction(characteristic: BluetoothGattCharacteristic, enable: Boolean) = NotifyAction(characteristic, enable)
+
+    fun notify(characteristic: BluetoothGattCharacteristic?, enable: Boolean) {
+        if (characteristic == null) {
+            println("Unable to notify characteristic: null")
+            return
+        }
+
+        add(createNotifyAction(characteristic, enable))
+    }
+
+    fun setCallback(callback: BluetoothGattCallbackHandler?) {
+        transaction.callbackHandler = callback
+    }
+
+    fun queue(queue: BleQueue) {
+        if (queued) throw IllegalStateException("This builder had already been queued. You must not reuse it.")
+
+        queued = true
+        queue.add(transaction)
+    }
+
+    fun requestMtu(mtu: Int) {
+        add(RequestMtuAction(mtu))
+    }
+
+    fun write(characteristic: BluetoothGattCharacteristic?, payload: ByteArray) {
+        if (characteristic == null) {
+            println("Unable to write characteristic: null")
+            return
+        }
+
+        add(WriteAction(characteristic, payload))
+    }
+}
