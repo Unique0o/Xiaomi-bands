@@ -14,5 +14,15 @@ sealed class MainRoutes {
     data object PasswordRecovery: MainRoutes()
 
     @Serializable
+
     data object WearableDetection: MainRoutes()
+
+    data object Home : MainRoutes()
+
+    @Serializable
+    data object Graphics : MainRoutes()
+
+    @Serializable
+    data object Profile : MainRoutes()
+
 }

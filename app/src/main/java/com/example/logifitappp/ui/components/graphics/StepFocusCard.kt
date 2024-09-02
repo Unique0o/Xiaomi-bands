@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.components.graphics
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,24 +10,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
-import com.example.logifitappp.ui.theme.Stone240
 import com.example.logifitappp.ui.theme.Stone470
-import com.example.logifitappp.ui.theme.White
-
 
 @Composable
 fun StepChart(
     steps: List<Int>,
+    highlightIndex: Int,
     modifier: Modifier = Modifier
 ) {
     val barWidth = 6.dp
@@ -62,13 +58,15 @@ fun StepChart(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.Bottom
             ) {
-                steps.forEach { step ->
+                steps.forEachIndexed { index, step ->
+                    val barColor = if (index == highlightIndex) Green298 else Lime70
+
                     Box(
                         modifier = Modifier
                             .width(barWidth)
                             .fillMaxHeight(step.toFloat() / maxValue)
                             .background(
-                                Color(0xFF8BC34A),
+                                barColor,
                                 RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
                             )
                     )
@@ -103,7 +101,7 @@ fun StepChart(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(end = 40.dp, top= 1.dp),
+            .padding(end = 40.dp, top = 1.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         listOf("00:00", "04:00", "08:00", "12:00", "16:00").forEach { time ->
@@ -117,71 +115,46 @@ fun StepChart(
         }
     }
 }
+
+
 @Composable
-fun ChartGrids() {
-    Canvas(modifier = Modifier.fillMaxSize()) {
-        val yStep = size.height / 3
-        val xStep = size.width / 5
-
-        // Vertical lines
-        for (i in 0..5) {
-            drawLine(
-                color = Color.LightGray.copy(alpha = 0.3f),
-                start = Offset(i * xStep, 0f),
-                end = Offset(i * xStep, size.height),
-                strokeWidth = 0.5f
+fun StepCard(modifier: Modifier = Modifier, steps: List<Int>, highlightIndex: Int) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .height(300.dp)
+    ) {
+        HeaderRow(date = "Noviembre 20, 2023", title = stringResource(id = R.string.steps_taken))
+        Column(
+            modifier = Modifier
+                .height(280.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "1200 pasos",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.inverseSurface,
+                fontWeight = FontWeight.Bold
             )
-        }
-
-        // Horizontal lines
-        for (i in 0..3) {
-            drawLine(
-                color = Color.LightGray.copy(alpha = 0.3f),
-                start = Offset(0f, i * yStep),
-                end = Offset(size.width, i * yStep),
-                strokeWidth = 0.5f
+            Spacer(modifier = Modifier.height(16.dp))
+            StepChart(
+                steps = steps,
+                highlightIndex = highlightIndex
             )
         }
     }
 }
 
-@Composable
-fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .height(300.dp)
-        ) {
-            HeaderRow(date = "Noviembre 20, 2023", title = stringResource(id = R.string.steps_taken))
-            Column(
-                modifier = Modifier
-                    .height(280.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "1200 pasos",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.inverseSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                StepChart(
-                    steps = steps,
-                )
-            }
-
-        }
-    }
-
-
 @Preview(showBackground = true)
 @Composable
-fun GraphicsPreview1() {
+fun StepFocusPreview() {
     val steps = listOf(10, 20, 15, 30, 25, 35, 40)
     LogifitApppTheme {
-        StepCard(steps = steps)
+        StepCard(
+            steps = steps,
+            highlightIndex = 1
+        )
     }
 }

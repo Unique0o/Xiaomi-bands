@@ -13,9 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.graphics.HeartRateCard
+import com.example.logifitappp.ui.components.graphics.HeartRateData
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.components.graphics.StepCard
 import com.example.logifitappp.ui.components.home.CardItem
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
@@ -23,14 +24,12 @@ import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun StepsDetail(navigation: NavHostController) {
-    val stepData = List(24) { (1..50).random() }
-
+fun HeartRateDetailScreen(navigation: NavHostController) {
     SimplePage(
         topBar = {
             ColumnStackHeader(
                 navigation = navigation,
-                title = stringResource(id = R.string.my_steps)
+                title = stringResource(id = R.string.my_heart_rate)
             )
         },
         content = {
@@ -39,24 +38,36 @@ fun StepsDetail(navigation: NavHostController) {
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Top
             ) {
-                val steps = listOf(10, 20, 15, 30, 25, 35, 40)
-                StepCard(steps= steps)
+                val heartdata = HeartRateData(
+                    date = "Noviembre 20, 2023",
+                    minRate = 70,
+                    maxRate = 101,
+                    timeRange = "02:00 - 02:30",
+                    ranges = listOf(
+                        10 to 35,
+                        25 to 45,
+                        15 to 40,
+                        20 to 40,
+                        10 to 40,
+                    )
+                )
+                HeartRateCard(heartdata)
                 IconTitle(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_chart_box_outline),
                     text = stringResource(id = R.string.summary)
                 )
                 CardItem(
-                    title = stringResource(id = R.string.calories_burned),
-                    status = "200 KCAL",
-                    R.drawable.ic_fire,
+                    title = stringResource(id = R.string.average_heart_rate),
+                    status = "85 LPM",
+                    R.drawable.ic_heart_pulse,
                     statusColor = Green298,
                     backgroundColor = Lime70,
                     modifier = Modifier.padding()
                 )
                 CardItem(
-                    title = stringResource(id = R.string.distance_traveled),
-                    status = "1.5 km",
-                    R.drawable.ic_road_variant,
+                    title = stringResource(id = R.string.graph_card_heart_rate),
+                    status = "90 LPM",
+                    R.drawable.ic_heart_cog,
                     statusColor = Green298,
                     backgroundColor = Lime70,
                     modifier = Modifier.padding()
@@ -69,8 +80,16 @@ fun StepsDetail(navigation: NavHostController) {
 
 @Preview
 @Composable
-fun StepsDetailPreview(){
+fun HeartRateDetailPreview(){
+    LogifitApppTheme {
+        HeartRateDetailScreen(rememberNavController())
+    }
+}
+
+@Preview
+@Composable
+fun HeartRateDarkModeDetailPreview(){
     LogifitApppTheme(darkTheme = true) {
-        StepsDetail(rememberNavController())
+        HeartRateDetailScreen(rememberNavController())
     }
 }

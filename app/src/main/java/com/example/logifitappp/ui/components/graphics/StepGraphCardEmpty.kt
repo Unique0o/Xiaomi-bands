@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,7 +43,7 @@ fun StepEmptyGraphCard(
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = White
+            containerColor = MaterialTheme.colorScheme.outline
         )
     ) {
         Column(
@@ -153,24 +154,4 @@ private fun TimeLabels() {
         Text(text = "00:00", fontSize = 12.sp, color = Stone470)
         Text(text = "24:00", fontSize = 12.sp, color = Stone470)
     }
-}
-
-@Composable
-fun MyScreen() {
-    val stepData = List(24) { kotlin.random.Random.nextFloat() }
-    StepEmptyGraphCard(
-        title = "Mis pasos",
-        data = stepData,
-        modifier = Modifier.padding(16.dp),
-        iconResId = R.drawable.ic_fire,
-        backgroundColorConnect = Lime30,
-        barColor =Lime70,
-        accentColor = Green298
-    )
-}
-
-@Composable
-@Preview(showBackground = true)
-fun MyScreenPreview() {
-    MyScreen()
 }

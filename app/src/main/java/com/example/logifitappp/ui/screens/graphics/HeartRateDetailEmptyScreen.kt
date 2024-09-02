@@ -17,7 +17,7 @@ import com.example.logifitappp.ui.theme.Rose120
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun HeartRateDetailEmpty(navigation: NavHostController) {
+fun HeartRateDetailEmptyScreen(navigation: NavHostController) {
     val HeartData = List(24) { (1..50).random() }
 
     SimplePage(
@@ -30,6 +30,7 @@ fun HeartRateDetailEmpty(navigation: NavHostController) {
         content = {
                 Column(
                     modifier = Modifier
+
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -52,7 +53,7 @@ fun HeartRateDetailEmpty(navigation: NavHostController) {
 @Composable
 fun HeartRateDetailEmptyPreview() {
     LogifitApppTheme {
-        HeartRateDetailEmpty(rememberNavController())
+        HeartRateDetailEmptyScreen(rememberNavController())
     }
 }
 
@@ -60,6 +61,6 @@ fun HeartRateDetailEmptyPreview() {
 @Composable
 fun HeartRateDetailEmptyDarkPreview() {
     LogifitApppTheme(darkTheme = true) {
-        HeartRateDetailEmpty(rememberNavController())
+        HeartRateDetailEmptyScreen(rememberNavController())
     }
 }
