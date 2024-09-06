@@ -152,7 +152,7 @@ fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .height(300.dp)
+                .height(330.dp)
         ) {
             HeaderRow(date = "Noviembre 20, 2023", title = stringResource(id = R.string.steps_taken))
             Column(
