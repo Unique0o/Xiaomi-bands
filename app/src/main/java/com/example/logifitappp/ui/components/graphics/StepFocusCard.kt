@@ -123,7 +123,7 @@ fun StepCard(modifier: Modifier = Modifier, steps: List<Int>, highlightIndex: In
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .height(300.dp)
+            .height(320.dp)
     ) {
         HeaderRow(date = "Noviembre 20, 2023", title = stringResource(id = R.string.steps_taken))
         Column(
