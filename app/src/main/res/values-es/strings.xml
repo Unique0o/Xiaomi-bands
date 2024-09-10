@@ -54,6 +54,7 @@
     <string name="profile_pic">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
     <string name="title_fatige">Fatiga</string>
+    <string name="welcome">Bienvenido de vuelta</string>
 
     // Graphics
     <string name="wake_up" >Despertar</string>
