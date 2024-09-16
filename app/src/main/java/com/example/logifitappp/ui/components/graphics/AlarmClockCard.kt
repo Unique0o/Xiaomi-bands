@@ -18,7 +18,6 @@ import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Orange390
-import com.example.logifitappp.ui.theme.Stone240
 
 
 @Composable

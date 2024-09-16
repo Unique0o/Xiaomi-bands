@@ -2,17 +2,12 @@ package com.example.logifitappp.ui.components.graphics
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 
@@ -35,9 +30,10 @@ fun InfoBarDetailGraph(
             HeaderRow(
                 date = "Noviembre 20, 2023",
                 title = stringResource(id = R.string.sleep_time),
+                firstAlternativeTitle = time,
+                firstAlternativeSubtitle = stringResource(id = R.string.information_between),
+                secondAlternativeSubtitle = hour
             )
-
-            HeartRateSummary(time, hour)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -56,40 +52,8 @@ fun InfoBarDetailGraph(
             BarChart(data = data, colors = barColors)
 
             Spacer(modifier = Modifier.height(8.dp))
-
-            TimeLabels()
+            CardTimeLabels(hourStart = "22:00" , hourFinal = "06:00")
         }
-    }
-}
-
-@Composable
-fun HeartRateSummary(time: String, hour: String) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = time,
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.inverseSurface
-        )
-        Text(
-            text = stringResource(id = R.string.information_between) + " " + hour,
-            style = MaterialTheme.typography.labelSmall,
-            color = Blue690
-        )
-    }
-}
-
-@Composable
-private fun TimeLabels() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = "22:00", fontSize = 12.sp, color = Stone470)
-        Text(text = "06:00", fontSize = 12.sp, color = Stone470)
     }
 }
 

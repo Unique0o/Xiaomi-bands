@@ -1,8 +1,6 @@
 package com.example.logifitappp.ui.components.graphics
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -140,23 +138,15 @@ fun EmptyCardHour(
             val date = "Noviembre 20, 2023"
             HeaderRow(date, title)
             Spacer(modifier = Modifier.height(16.dp))
-            Column(
+            ChartEmptyHour(
+                steps = steps,
+                maxValue = maxValue,
+                barColor = barColor,
+                accentColor = accentColor,
                 modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                    .fillMaxWidth()
 
-                ChartEmptyHour(
-                    steps = steps,
-                    maxValue = maxValue,
-                    barColor = barColor,
-                    accentColor = accentColor,
-                    modifier = Modifier
-                        .fillMaxWidth()
-
-                )
-            }
+            )
         }
     }
 
