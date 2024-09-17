@@ -3,9 +3,6 @@ package com.example.logifitappp.ui.components.graphics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,7 +12,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +19,6 @@ import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.data.HeartRateData
-import okhttp3.internal.http2.Header
 
 @Composable
 fun HeartRateCard(heartRateData: HeartRateData) {
@@ -33,33 +28,14 @@ fun HeartRateCard(heartRateData: HeartRateData) {
             .fillMaxWidth()
     ) {
 
-        HeaderRow(heartRateData.date, stringResource(R.string.heart_rate_card_title))
-        HeartRateSummary(heartRateData)
+        HeaderRow(heartRateData.date, stringResource(R.string.heart_rate_card_title),
+            firstAlternativeTitle = "Min: ${heartRateData.minRate} LPM - Max: ${heartRateData.maxRate} LPM",
+            secondAlternativeSubtitle = heartRateData.timeRange,
+            subColor = Stone470)
         Spacer(modifier = Modifier.height(24.dp))
         HeartRateChart(heartRateData.ranges)
     }
 
-}
-
-
-@Composable
-fun HeartRateSummary(data: HeartRateData) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Min: ${data.minRate} LPM - Max: ${data.maxRate} LPM",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onTertiaryContainer,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = data.timeRange,
-            style = MaterialTheme.typography.labelSmall,
-            color = Stone470
-        )
-    }
 }
 
 @Composable
