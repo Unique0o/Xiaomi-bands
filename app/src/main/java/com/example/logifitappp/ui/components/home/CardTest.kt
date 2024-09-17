@@ -72,7 +72,7 @@ fun CardTest(modifier: Modifier = Modifier) {
                     .padding(vertical = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                StatusCard(stringResource(id = R.string.face_dream), true)
+                StatusCard(stringResource(id = R.string.content_description_sleep).uppercase(), true)
                 StatusCard(stringResource(id = R.string.face_status), false)
             }
 

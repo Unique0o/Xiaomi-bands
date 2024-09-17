@@ -1,3 +1,5 @@
+package com.example.logifitappp.ui.components.graphics
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -17,7 +19,6 @@ import com.example.logifitappp.ui.components.graphics.bars.ProgressBar
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.LightBlue
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Violet

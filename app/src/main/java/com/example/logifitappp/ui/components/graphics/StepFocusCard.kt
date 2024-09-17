@@ -11,7 +11,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -123,27 +122,10 @@ fun StepCard(modifier: Modifier = Modifier, steps: List<Int>, highlightIndex: In
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .height(300.dp)
+            .height(320.dp)
     ) {
-        HeaderRow(date = "Noviembre 20, 2023", title = stringResource(id = R.string.steps_taken))
-        Column(
-            modifier = Modifier
-                .height(280.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "1200 pasos",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            StepChart(
-                steps = steps,
-                highlightIndex = highlightIndex
-            )
-        }
+        HeaderRow(date = "Noviembre 20, 2023", title = stringResource(id = R.string.steps_taken), firstAlternativeTitle = "1200 pasos")
+        StepChart(steps = steps, highlightIndex = highlightIndex)
     }
 }
 

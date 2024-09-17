@@ -98,8 +98,7 @@ fun LeaderboardTopItem(
 fun TopRankingSection(topUsers: List<User>) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         LeaderboardTopItem(
@@ -137,8 +136,6 @@ fun TopRankingSection(topUsers: List<User>) {
         )
     }
 }
-
-
 
 @Composable
 fun ClassificationScreen(topUsers: List<User>) {

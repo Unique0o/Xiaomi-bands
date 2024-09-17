@@ -29,7 +29,9 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Stone470
 
 @Composable
-fun FatigueTestItem() {
+fun FatigueTestItem(
+    date : String
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,7 +71,7 @@ fun FatigueTestItem() {
 
             }
             Text(
-                text = stringResource(id = R.string.result_date),
+                text = stringResource(id = R.string.result_date) + " "+ date,
                 style = MaterialTheme.typography.labelSmall,
                 color = Stone470,
                 modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
@@ -88,7 +90,7 @@ fun FatigueTestItem() {
 @Composable
 fun FatigueTestItemPreview() {
     LogifitApppTheme {
-        FatigueTestItem()
+        FatigueTestItem( date = "24/10/2023")
     }
 }
 
@@ -96,6 +98,6 @@ fun FatigueTestItemPreview() {
 @Composable
 fun FatigueTestItemDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        FatigueTestItem()
+        FatigueTestItem(date = "24/10/2023")
     }
 }

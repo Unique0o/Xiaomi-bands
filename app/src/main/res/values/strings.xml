@@ -48,7 +48,7 @@
     <string name="description_tests">Take a drowsiness test to check if you are fit to perform your tasks.</string>
     <string name="title_test_fatiga">Fatigue self-assessment test</string>
     <string name="status_person">FIT</string>
-    <string name="result_date">Result from 24/10/2023</string>
+    <string name="result_date">Result of: </string>
     <string name="plan">PREMIUM</string>
 
     <!-- Card Item -->
@@ -65,7 +65,7 @@
     <string name="add_content_description">Add</string>
     <string name="profile_pic">Profile Picture</string>
     <string name="notificacions_content_description">Notifications</string>
-
+    <string name="welcome">Welcome back</string>
     <string name="title_fatige">Fatigue</string>
 
     <!-- Graphics -->
@@ -123,7 +123,7 @@
     <string name="my_team">My Team </string>
     <string name="group">Group </string>
 
-    <!-- Settings -->
+    <!-- Tests -->
     <string name="subjective_test">Subjective Tests</string>
     <string name="settings">Settings</string>
     <string name="settings_2">Settings 2</string>
@@ -131,9 +131,21 @@
     <string name="description_fatigue_test">This self-assessment test must be completed in advance by people who are going to drive some type of vehicle. </string>
     <string name="detail">Detail: </string>
     <string name="yes">Yes </string>
+    <string name="finish">Finish</string>
+    <string name="result">Result</string>
+    <string name="test_question_1">"1. Have you rested 7 consecutive hours before your work day?"</string>
+    <string name="test_question_2">"2. Are you/Do you feel sleepy now?"</string>
+    <string name="test_question_3">"3. Have you taken medication during the day or hours prior to the service? If the answer is affirmative, detail which medication."</string>
+    <string name="test_question_4">"4. In the last two days have you had personal problems at home or with someone at work that make it difficult for you to concentrate or interrupt your sleep?"</string>
+    <string name="test_question_5">"5. Do you/do you feel sleepy, tired, do your eyelids tremble, do you have tremors in your legs or arms and/or have you constantly yawned during the last week?"</string>
+    <string name="test_question_6">"6. Do you have/feel another health complaint that has not received attention? Specify"</string>
+    <string name="test_question_7">"7. Have you done physical activity or physical exercises more than usual before your work shift?"</string>
+    <string name="test_question_8">"8. If you feel fatigue/drowsiness, do you know what to do? Detail"</string>
+    <string name="no_drive">"You cannot drive/do any activity."</string>
+    <string name="medical_evaluation">"Requires medical evaluation."</string>
+    <string name="user_can_perform">"The user can perform their activity."</string>
 
     <!-- Addition Information -->
-
     <string name="placeholder_name">Name</string>
     <string name="placeholder_lastname">Last Name</string>
     <string name="placeholder_type_document">Document type</string>
