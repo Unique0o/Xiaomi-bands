@@ -2,6 +2,7 @@ package com.example.logifitappp.core.wearebles
 
 import com.example.logifitappp.core.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ConnectionTypeEnum
+import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 import java.util.EnumSet
 import java.util.regex.Pattern
 
@@ -28,6 +29,10 @@ abstract class WearableCoordinator {
         return true
     }
 
+    fun suggestUnbindBeforePair(): Boolean {
+        return true
+    }
+
     fun supports(candidate: WearableCandidate): Boolean {
         val pattern = getSupportedWearableName()
 
@@ -39,6 +44,9 @@ abstract class WearableCoordinator {
         return pattern.matcher(candidate.getName()).matches()
     }
 
+    open fun supportsActivityDataFetching() = false
+
+    abstract fun getActivityProvider(wearable: Wearable): WearableActivityProvider<out WearableRawActivityModel>
     abstract fun getSupportedWearableName(): Pattern?
     abstract fun getWearableSupportClass(): Class<out WearableSupport>
 }

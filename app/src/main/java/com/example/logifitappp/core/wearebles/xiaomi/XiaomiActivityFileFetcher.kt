@@ -34,11 +34,11 @@ class XiaomiActivityFileFetcher(private val healthService: XiaomiHealthService) 
             return
         }
 
-        val arrCrc32 = CheckSumUtils.getCRC32(payload, 0, data.size - 4)
+        val arrCrc32 = CheckSumUtils.getCRC32(data, 0, data.size - 4)
         val expectedCrc32 = BleTypeConversionsUtils.toUint32(data, data.size - 4)
 
         if (arrCrc32 != expectedCrc32) {
-            println("\"Invalid activity data checksum: got ${String.format("%08X", arrCrc32)}, expected ${String.format("%08X", expectedCrc32)}")
+            println("Invalid activity data checksum: got ${String.format("%08X", arrCrc32)}, expected ${String.format("%08X", expectedCrc32)}")
             triggerNextFetch()
             return
         }

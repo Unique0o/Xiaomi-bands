@@ -2,6 +2,7 @@ package com.example.logifitappp.core.wearebles.xiaomi
 
 import android.bluetooth.BluetoothGattCharacteristic
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiAuthService
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -78,7 +79,75 @@ class XiaomiCharacteristic(
                 }
 
                 1.toByte() -> {
+                    val subtype = buffer.get()
+                    val remaining = ByteArray(buffer.remaining())
 
+                    if (buffer.hasRemaining()) {
+                        buffer.get(remaining)
+                        println("Operation CHUNK_ACK of type $subtype has additional payload: ${remaining.contentToString()}")
+                    }
+
+                    when (subtype) {
+                        0.toByte(),
+                        2.toByte() -> {
+                            if (subtype == 0.toByte()) {
+                                println("Got chunked ack end")
+                                currentPayload?.callback?.onSend()
+                            } else {
+                                println("Got chunked nack for ${currentPayload?.taskName}")
+                                currentPayload?.callback?.onNack()
+                            }
+
+                            currentPayload = null
+                            sendingChunked = false
+                            sendNext(null)
+                            return
+                        }
+
+                        1.toByte() -> {
+                            println("Got chunked ack start")
+
+                            val mBuilder = support.createTransactionBuilder("send chunks for ${currentPayload?.taskName}")
+                            val bytes = currentPayload!!.getBytesToSend()
+                            val chunkPayloadSize = maxWriteSizeForCurrentMessage - 2
+
+                            for (i in 0 .. bytes.size / chunkPayloadSize) sendChunk(mBuilder, i, chunkPayloadSize)
+
+                            mBuilder.queue(support.getQueue())
+                            return
+                        }
+
+                        5.toByte() -> {
+                            val invalidChunks = ShortArray(remaining.size / 2)
+
+                            if (remaining.size > 0) {
+                                val remainingBuffer = ByteBuffer.wrap(remaining).order(ByteOrder.LITTLE_ENDIAN)
+
+                                for (i in 0 .. remaining.size / 2) invalidChunks[i] = remainingBuffer.getShort()
+
+                                println("Got chunk request, requested chunks: ${invalidChunks.contentToString()}")
+                                val mBuilder = support.createTransactionBuilder("resend chunks for ${currentPayload?.taskName}")
+
+                                invalidChunks.forEach {
+                                    sendChunk(mBuilder, it - 1, maxWriteSizeForCurrentMessage - 2)
+                                }
+                            } else {
+                                println("Got chunk request, no chunk indices requested")
+
+                                if (maxWriteSize != maxWriteSizeForCurrentMessage) {
+                                    println("MTU changed while sending message, prepending message to queue and resending")
+                                    payloadQueue.addFirst(currentPayload)
+                                    currentPayload = null
+                                    sendingChunked = false
+                                    sendNext(null)
+                                    return
+                                }
+                            }
+                        }
+                    }
+
+                    println("Unknown chunked ack subtype $subtype for ${currentPayload?.taskName}")
+                    return
                 }
 
                 2.toByte() -> {
@@ -129,6 +198,20 @@ class XiaomiCharacteristic(
         val builder = support.createTransactionBuilder("send ack")
         builder.write(characteristic, byteArrayOf(0, 0, 3, 0))
         builder.queue(support.getQueue())
+    }
+
+    private fun sendChunk(builder: TransactionBuilder, index: Int, chunkPayloadSize: Int) {
+        val payload = currentPayload!!.getBytesToSend()
+        val startIndex = index * chunkPayloadSize
+        val endIndex = ((index + 1) * chunkPayloadSize).coerceAtMost(payload.size)
+
+        println("Sending chunk $index from $startIndex to $endIndex for ${currentPayload!!.taskName}")
+
+        val chunkToSend = ByteArray(2 + endIndex - startIndex)
+        BleTypeConversionsUtils.writeUint16(chunkToSend, 0, index + 1)
+        System.arraycopy(payload, startIndex, chunkToSend, 2, endIndex - startIndex)
+
+        builder.write(characteristic, chunkToSend)
     }
 
     private fun sendChunkEndAck() {
@@ -191,7 +274,7 @@ class XiaomiCharacteristic(
             val mBuilder = builder ?: support.createTransactionBuilder("send chunked start for ${currentPayload?.taskName}")
             mBuilder.write(characteristic, buffer.array())
 
-            builder?.queue(support.getQueue())
+            if (builder == null) mBuilder.queue(support.getQueue())
         } else {
             println("Sending ${currentPayload?.taskName} - single")
 
@@ -212,7 +295,7 @@ class XiaomiCharacteristic(
             val mBuilder = builder ?: support.createTransactionBuilder("send single command for ${currentPayload?.taskName}")
             mBuilder.write(characteristic, buffer.array())
 
-            builder?.queue(support.getQueue())
+            if (builder == null) mBuilder.queue(support.getQueue())
         }
     }
 

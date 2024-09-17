@@ -51,7 +51,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         val miwearAuthBytes = "miwear-auth".toByteArray()
         val mac: Mac = try {
             Mac.getInstance("HmacSHA256"). apply {
-                init(SecretKeySpec(phoneNonce + watchNonce, ""))
+                init(SecretKeySpec(phoneNonce + watchNonce, "HmacSHA256"))
                 init(SecretKeySpec(doFinal(secretKey), "HmacSHA256"))
             }
         } catch (e: Exception) {
@@ -59,7 +59,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         }
 
         val output = ByteArray(64)
-        val tmp = ByteArray(0)
+        var tmp = ByteArray(0)
         var b: Byte = 1
         var i = 0
 
@@ -67,6 +67,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
             mac.update(tmp)
             mac.update(miwearAuthBytes)
             mac.update(b) //b.toInt().toByte()
+            tmp = mac.doFinal()
 
             for (j in tmp.indices) {
                 if (i < output.size) {
@@ -180,10 +181,12 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
                 if (command == null) {
                     // TODO AUTHENTICATION FAILED
 
+                    println("handleWatchNonce returned null, disconnecting")
                     App.getWearableServiceTo(support.getWearable()).disconnect()
+                    return
                 }
 
-                support.sendCommand("auth step 2", command!!)
+                support.sendCommand("auth step 2", command)
             }
 
             CMD_AUTH,
@@ -202,6 +205,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
                 } else {
                     // TODO AUTHENTICATION FAILED
 
+                    println("Authentication failed, subtype=${cmd.subtype}, status=${cmd.status}")
                     App.getWearableServiceTo(support.getWearable()).disconnect()
                 }
             }
@@ -217,6 +221,11 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         System.arraycopy(step2hmac, 16, encryptionKey, 0, 16)
         System.arraycopy(step2hmac, 32, decryptionNonce, 0, 4)
         System.arraycopy(step2hmac, 36, encryptionNonce, 0, 4)
+
+        println("decryptionKey: ${decryptionKey.contentToString()}")
+        println("encryptionKey: ${encryptionKey.contentToString()}")
+        println("decryptionNonce: ${decryptionNonce.contentToString()}")
+        println("encryptionNonce: ${encryptionNonce.contentToString()}")
 
         val decryptionConfirmation = hmacSHA256(decryptionKey, watchNonce.nonce.toByteArray() + nonce)
 

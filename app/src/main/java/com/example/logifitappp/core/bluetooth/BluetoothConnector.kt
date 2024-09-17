@@ -27,7 +27,7 @@ object BluetoothConnector {
             wearables.add(wearable)
             fromExtra = true
         } else {
-            val storedWearables = App.wearableManager.wearables
+            val storedWearables = App.wearableManager.getWearables()
 
             if (storedWearables.isNotEmpty()) {
                 if (App.preferences.getBoolean(AppPreferences.RECONNECT_ONLY_TO_CONNECTED, true)) {
@@ -52,7 +52,7 @@ object BluetoothConnector {
 
             if (!fromExtra && !autoReconnect) continue
 
-            val lastWearableAddresses = App.preferences.getStringSet(AppPreferences.LAST_DEVICE_ADDRESSES, Collections.emptySet()) as HashSet
+            val lastWearableAddresses = HashSet(App.preferences.getStringSet(AppPreferences.LAST_DEVICE_ADDRESSES, Collections.emptySet()))
 
             if (!lastWearableAddresses.contains(address)) {
                 lastWearableAddresses.add(address!!)

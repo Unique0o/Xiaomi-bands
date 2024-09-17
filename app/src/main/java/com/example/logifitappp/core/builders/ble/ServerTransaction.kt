@@ -7,8 +7,7 @@ import java.util.Collections
 import java.util.Locale
 
 class ServerTransaction(taskName: String) : AbstractTransaction(taskName) {
-    val actions = mutableListOf<ServerAction>()
-        get() = Collections.unmodifiableList(field)
+    private val actions = mutableListOf<ServerAction>()
 
     var callbackHandler: BluetoothGattServerCallbackHandler? = null
 
@@ -17,6 +16,8 @@ class ServerTransaction(taskName: String) : AbstractTransaction(taskName) {
     }
 
     override fun getActionCount() = actions.size
+
+    fun getActions(): List<ServerAction> = Collections.unmodifiableList(actions)
 
     fun isEmpty() = actions.isEmpty()
 

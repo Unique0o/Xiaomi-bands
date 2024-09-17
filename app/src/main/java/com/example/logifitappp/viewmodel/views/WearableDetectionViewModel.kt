@@ -1,6 +1,7 @@
 package com.example.logifitappp.viewmodel.views
 
 import android.Manifest
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -20,13 +21,19 @@ import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
+import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.core.analyzers.ActivityAmount
+import com.example.logifitappp.core.analyzers.ActivityAnalyzer
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.bluetooth.ScanEventProcessor
+import com.example.logifitappp.core.utils.BondingUtils
+import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableCoordinator
 import com.example.logifitappp.core.wearebles.WearableHelper
+import java.util.GregorianCalendar
 
 class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
     private var adapter: BluetoothAdapter? = null
@@ -44,6 +51,12 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         private set
 
     var isScanning by mutableStateOf(false)
+        private set
+
+    var wearables = mutableStateListOf<Wearable>()
+        private set
+
+    var sleeps = mutableStateListOf<ActivityAmount>()
         private set
 
     private fun checkBluetoothAvailable(): Boolean {
@@ -159,6 +172,7 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         } else adapter = null
     }
 
+    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     fun handleCandidatePressed(candidate: WearableCandidate) {
         val wearableType = WearableHelper.getInstance().resolveWearableType(candidate)
 
@@ -180,6 +194,17 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
             editor?.putString("authentication_key", key)
             editor?.apply()
         }
+
+        if (coordinator.suggestUnbindBeforePair() && candidate.IsBonded()) {
+            AlertDialog.Builder(App.context)
+                .setTitle(R.string.unbind_before_pair_title)
+                .setMessage(R.string.unbind_before_pair_message)
+                .setPositiveButton(R.string.button_ok) { _, _ ->
+                    startPair(candidate, coordinator)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
+        } else startPair(candidate, coordinator)
     }
 
     fun handleWearableFound(event: ScanEvent) {
@@ -188,6 +213,30 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
 
     override fun onWearableChanged() {
         refreshWearableList(true)
+    }
+
+    fun refreshPairedWearables() {
+        wearables.clear()
+        wearables.addAll(App.wearableManager.getWearables())
+
+        if (wearables.isNotEmpty()) {
+            val now = GregorianCalendar.getInstance()
+            val endTs = (now.timeInMillis / 1000).toInt()
+            val startTs = endTs - 3 * 24 * 60 * 60 - 1
+
+            val analyzer = ActivityAnalyzer()
+            val activities = wearables[0].getWearableCoordinator().getActivityProvider(wearables[0]).getRawActivitiesBetween(startTs, endTs)
+
+            sleeps.clear()
+            sleeps.addAll(analyzer.calculateSleepAmounts(activities))
+        }
+    }
+
+    fun refreshSingleWearable(wearable: Wearable) {
+        val index = wearables.indexOf(wearable)
+
+        if (index > 0) wearables[index].copyFromDevice(wearable)
+        else refreshPairedWearables()
     }
 
     private fun refreshWearableList(throttle: Boolean) {
@@ -264,8 +313,23 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         return true
     }
 
+    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     private fun startPair(candidate: WearableCandidate, coordinator: WearableCoordinator) {
+        when (coordinator.getBondingStyle()) {
+            BondingStyleEnum.BONDING_STYLE_NONE,
+            BondingStyleEnum.BONDING_STYLE_LAZY -> {
+                println("No bonding needed, according to coordinator, so connecting right away")
+                BondingUtils.connectThenComplete(candidate)
+            }
 
+            else -> {
+                try {
+                    BondingUtils.initiateCorrectBonding(candidate, coordinator)
+                } catch (e: Exception) {
+                    println("Error pairing device ${candidate.getMacAddress()}")
+                }
+            }
+        }
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")

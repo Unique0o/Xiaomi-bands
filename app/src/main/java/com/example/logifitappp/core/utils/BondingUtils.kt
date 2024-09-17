@@ -26,7 +26,6 @@ object BondingUtils {
     const val REQUEST_CODE = 1
 
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun askCompanionPairing(candidate: WearableCandidate, macAddress: String) = AlertDialog.Builder(App.context)
         .setTitle(Resources.getSystem().getString(R.string.companion_pairing_request_title))
         .setMessage(Resources.getSystem().getString(R.string.companion_pairing_request_message))
@@ -73,7 +72,6 @@ object BondingUtils {
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun companionDeviceManagerBond(candidate: WearableCandidate, macAddress: String) {
         val deviceFilter = BluetoothDeviceFilter.Builder()
             .setAddress(macAddress)
@@ -102,7 +100,7 @@ object BondingUtils {
         manager.associate(pairingRequest, getCompanionDeviceManagerCallback(), null)
     }
 
-    private fun connectThenComplete(candidate: WearableCandidate) = connectThenComplete(WearableHelper.getInstance().getSupportedWearable(candidate))
+    fun connectThenComplete(candidate: WearableCandidate) = connectThenComplete(WearableHelper.getInstance().getSupportedWearable(candidate))
 
     private fun connectThenComplete(wearable: Wearable) {
         App.getWearableServiceTo(wearable).disconnect()
@@ -111,7 +109,6 @@ object BondingUtils {
 
     private fun connectToWearable(wearable: Wearable) = App.getWearableServiceTo(wearable).connect(true)
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getCompanionDeviceManagerCallback() = object: CompanionDeviceManager.Callback() {
         override fun onFailure(error: CharSequence?) = println("Bonding failed immediately: $error")
 
@@ -174,8 +171,12 @@ object BondingUtils {
 
             BluetoothDevice.BOND_BONDED -> {
                 println("Already bonded with ${device.name} (${device.address})")
+                askCompanionPairing(candidate, macAddress)
+            }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) askCompanionPairing(candidate, macAddress)
+            else -> {
+                println("Creating bond with ${device.name} (${device.address})")
+                bluetoothBond(candidate)
             }
         }
     }

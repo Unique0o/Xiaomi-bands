@@ -6,8 +6,7 @@ import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
 import java.util.Collections
 
 class Transaction(taskName: String) : AbstractTransaction(taskName) {
-    val actions = mutableListOf<Action>()
-        get() = Collections.unmodifiableList(field)
+    private val actions = mutableListOf<Action>()
 
     var callbackHandler: BluetoothGattCallbackHandler? = null
         set(value) {
@@ -20,6 +19,8 @@ class Transaction(taskName: String) : AbstractTransaction(taskName) {
     fun add(action: Action) = action.let { actions.add(it) }
 
     override fun getActionCount(): Int = actions.size
+
+    fun getActions(): List<Action> = Collections.unmodifiableList(actions)
 
     fun isEmpty(): Boolean = actions.isEmpty()
 }

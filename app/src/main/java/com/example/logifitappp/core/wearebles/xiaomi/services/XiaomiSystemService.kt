@@ -139,6 +139,8 @@ class XiaomiSystemService(support: XiaomiSupport) : AbstractXiaomiService(suppor
     private fun rearmBatteryStateRequestTimer() {
         handler.removeCallbacks(batteryStateRequestRunnable)
 
+        val wearablePreferences = getWearablePreferences()
+
         if (wearablePreferences.getBatteryPollingEnabled()) {
             handler.postDelayed(
                 batteryStateRequestRunnable,

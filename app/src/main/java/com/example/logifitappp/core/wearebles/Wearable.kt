@@ -7,7 +7,7 @@ import android.os.Parcelable
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.logifitappp.R
 
-class Wearable() : Parcelable {
+class Wearable(): Parcelable {
     private var address: String? = null
     private var alias: String? = null
     private var batteryLevel: IntArray? = intArrayOf(BATTERY_UNKNOWN.toInt(), BATTERY_UNKNOWN.toInt(), BATTERY_UNKNOWN.toInt())
@@ -32,11 +32,26 @@ class Wearable() : Parcelable {
         this.busyTask = parcel.readString()
     }
 
-    constructor(address: String, name: String?, alias: String?, wearableType: WearableTypeEnum): this() {
+    constructor(address: String, name: String?, alias: String?, wearableType: WearableTypeEnum, firmwareVersion: String? = null): this() {
         this.address = address
         this.alias = alias
+        this.firmwareVersion = firmwareVersion
         this.name = name ?: address
         this.wearableType = wearableType
+    }
+
+    fun copyFromDevice(wearable: Wearable) {
+        if (wearable.getAddress() != this.address) throw RuntimeException("Cannot copy from device with other address")
+
+        this.name = wearable.name
+        this.alias = wearable.alias
+        this.batteryLevel = wearable.batteryLevel
+        this.busyTask = wearable.busyTask
+        this.firmwareVersion = wearable.firmwareVersion
+        this.model = wearable.model
+        this.rssi = wearable.rssi
+        this.state = wearable.state
+        this.wearableType = wearable.wearableType
     }
 
     override fun describeContents(): Int {
@@ -44,7 +59,7 @@ class Wearable() : Parcelable {
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other == this) return true
+        if (other === this) return true
 
         if (other !is Wearable) return false
 
@@ -53,6 +68,12 @@ class Wearable() : Parcelable {
 
     fun getAddress(): String? {
         return address
+    }
+
+    fun getAliasOrName(): String {
+        if (!alias.isNullOrEmpty()) return alias!!
+
+        return name!!
     }
 
     fun getBusyTask(): String? {
@@ -70,6 +91,8 @@ class Wearable() : Parcelable {
     fun getState(): State {
         return state
     }
+
+    fun getType() = wearableType
 
     fun getWearableCoordinator(): WearableCoordinator {
         return wearableType.getWearableCoordinator()
@@ -141,6 +164,10 @@ class Wearable() : Parcelable {
         this.state = state
 
         if (state.ordinal <= State.CONNECTED.ordinal) unsetDynamicState()
+    }
+
+    override fun toString(): String {
+        return "wearable: {name=$name, mac=$address, type=${wearableType.name}, state=${state.name}, isSupported=${wearableType.isSupported()}}"
     }
 
     fun unsetBusyTask() {

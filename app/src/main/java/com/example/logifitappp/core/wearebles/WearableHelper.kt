@@ -1,10 +1,34 @@
 package com.example.logifitappp.core.wearebles
 
+import com.example.logifitappp.core.App
+import com.example.logifitappp.data.models.WearableModel
+
 class WearableHelper {
     private val cache = HashMap<String, WearableTypeEnum>()
 
+    fun getAvailableWearables() = LinkedHashSet(getStoredWearables())
+
     private fun getOrderedDeviceTypes(): Array<WearableTypeEnum> {
         return WearableTypeEnum.entries.toTypedArray()
+    }
+
+    private fun getStoredWearables(): List<Wearable> {
+        val result = mutableListOf<Wearable>()
+
+        //FIXME: change to specific user
+        App.database.wearableDao().all(0).forEach {
+            val wearable = toSupportedDevice(it)
+
+            if (wearable.getType().isSupported()) result.add(wearable)
+        }
+
+        return result
+    }
+
+    fun getSupportedWearable(candidate: WearableCandidate): Wearable {
+        val wearableType = resolveWearableType(candidate)
+
+        return wearableType.getWearableCoordinator().createDevice(candidate, wearableType)
     }
 
     fun resolveWearableType(candidate: WearableCandidate): WearableTypeEnum {
@@ -32,10 +56,8 @@ class WearableHelper {
         return WearableTypeEnum.UNKNOWN
     }
 
-    fun getSupportedWearable(candidate: WearableCandidate): Wearable {
-        val wearableType = resolveWearableType(candidate)
-
-        return wearableType.getWearableCoordinator().createDevice(candidate, wearableType)
+    private fun toSupportedDevice(model: WearableModel): Wearable {
+        return Wearable(model.mac, model.name, model.alias, WearableTypeEnum.fromName(model.typeName), model.firmwareVersion)
     }
 
     fun toSupportedDevice(candidate: WearableCandidate): Wearable {

@@ -14,9 +14,9 @@ import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 import okhttp3.internal.notify
 
 class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): XiaomiConnectionSupport {
-    private lateinit var characteristicActivityData: XiaomiCharacteristic
-    private lateinit var characteristicCommandRead: XiaomiCharacteristic
-    private lateinit var characteristicCommandWrite: XiaomiCharacteristic
+    private var characteristicActivityData: XiaomiCharacteristic? = null
+    private var characteristicCommandRead: XiaomiCharacteristic? = null
+    private var characteristicCommandWrite: XiaomiCharacteristic? = null
     private var characteristicDataUpload: XiaomiCharacteristic? = null
 
     private val commsSupport = object: AbstractBleWearableSupport() {
@@ -70,22 +70,22 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
             val mCharacteristicDataUpload = getCharacteristic(uuidSet.characteristicDataUpload)
 
             characteristicCommandRead = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, characteristicRead, xiaomiSupport.getAuthService())
-            characteristicCommandRead.setIsEncrypted(uuidSet.encrypted)
-            characteristicCommandRead.setHandler(object: XiaomiChannelHandler {
+            characteristicCommandRead?.setIsEncrypted(uuidSet.encrypted)
+            characteristicCommandRead?.setHandler(object: XiaomiChannelHandler {
                 override fun handler(payload: ByteArray) = xiaomiSupport.handleCommandBytes(payload)
             })
-            characteristicCommandRead.setMtu(expectedMtu)
+            characteristicCommandRead?.setMtu(expectedMtu)
 
             characteristicCommandWrite = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, characteristicWrite, xiaomiSupport.getAuthService())
-            characteristicCommandWrite.setIsEncrypted(uuidSet.encrypted)
-            characteristicCommandWrite.setMtu(expectedMtu)
+            characteristicCommandWrite?.setIsEncrypted(uuidSet.encrypted)
+            characteristicCommandWrite?.setMtu(expectedMtu)
 
             characteristicActivityData = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, mCharacteristicActivityData, xiaomiSupport.getAuthService())
-            characteristicActivityData.setHandler(object: XiaomiChannelHandler {
+            characteristicActivityData?.setHandler(object: XiaomiChannelHandler {
                 override fun handler(payload: ByteArray) = xiaomiSupport.getHealthService().getActivityFetcher().addChunk(payload)
             })
-            characteristicActivityData.setIsEncrypted(uuidSet.encrypted)
-            characteristicActivityData.setMtu(expectedMtu)
+            characteristicActivityData?.setIsEncrypted(uuidSet.encrypted)
+            characteristicActivityData?.setMtu(expectedMtu)
 
             mCharacteristicDataUpload?.let {
                 characteristicDataUpload = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, it, xiaomiSupport.getAuthService())
@@ -117,18 +117,18 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
             if (super.onCharacteristicChanged(gatt, characteristic)) return true
 
             when (characteristic.uuid) {
-                characteristicCommandRead.characteristicUuid -> {
-                    characteristicCommandRead.onCharacteristicChanged(characteristic.value)
+                characteristicCommandRead?.characteristicUuid -> {
+                    characteristicCommandRead?.onCharacteristicChanged(characteristic.value)
                     return true
                 }
 
-                characteristicCommandWrite.characteristicUuid -> {
-                    characteristicCommandWrite.onCharacteristicChanged(characteristic.value)
+                characteristicCommandWrite?.characteristicUuid -> {
+                    characteristicCommandWrite?.onCharacteristicChanged(characteristic.value)
                     return true
                 }
 
-                characteristicActivityData.characteristicUuid -> {
-                    characteristicActivityData.onCharacteristicChanged(characteristic.value)
+                characteristicActivityData?.characteristicUuid -> {
+                    characteristicActivityData?.onCharacteristicChanged(characteristic.value)
                     return true
                 }
 
@@ -145,9 +145,9 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
         override fun onMtuChanged(gatt: BluetoothGatt, mtu: Int, status: Int) {
             super.onMtuChanged(gatt, mtu, status)
 
-            characteristicCommandRead.setMtu(mtu)
-            characteristicCommandWrite.setMtu(mtu)
-            characteristicActivityData.setMtu(mtu)
+            characteristicCommandRead?.setMtu(mtu)
+            characteristicCommandWrite?.setMtu(mtu)
+            characteristicActivityData?.setMtu(mtu)
             characteristicDataUpload?.setMtu(mtu)
         }
 
@@ -169,14 +169,14 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
     fun getQueue() = commsSupport.getQueue()!!
 
     override fun onAuthSuccess() {
-        characteristicCommandRead.reset()
-        characteristicCommandWrite.reset()
-        characteristicActivityData.reset()
+        characteristicCommandRead?.reset()
+        characteristicCommandWrite?.reset()
+        characteristicActivityData?.reset()
         characteristicDataUpload?.reset()
     }
 
     override fun sendCommand(taskName: String, command: XiaomiProto.Command) {
-        characteristicCommandWrite.write(taskName, command.toByteArray())
+        characteristicCommandWrite?.write(taskName, command.toByteArray())
     }
 
     override fun setAutoReconnect(enabled: Boolean) {

@@ -6,14 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Build.VERSION
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
+import androidx.room.Room
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.core.wearebles.WearablePreferences
 import com.example.logifitappp.core.wearebles.WearableService
+import com.example.logifitappp.data.AppDatabase
 
 class App: Application() {
     init {
@@ -22,6 +22,11 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        database = Room
+            .databaseBuilder(this, AppDatabase::class.java, "logifit_db")
+            .allowMainThreadQueries()
+            .build()
 
         preferences = AppPreferences(PreferenceManager.getDefaultSharedPreferences(context))
         wearableManager = WearableManager(this)
@@ -32,6 +37,7 @@ class App: Application() {
         const val ACTION_NEW_DATA = "com.info.logifit.pe.action.quit"
 
         lateinit var context: App
+        lateinit var database: AppDatabase
         lateinit var preferences: AppPreferences
 
         @SuppressLint("StaticFieldLeak")
@@ -49,8 +55,6 @@ class App: Application() {
 
             return context.getSharedPreferences("wearable_settings_$wearableIdentifier", Context.MODE_PRIVATE)
         }
-
-        fun isRunningMarshmallowOrLater() = VERSION.SDK_INT >= Build.VERSION_CODES.O
 
         fun signalActivityDataFinish(wearable: Wearable) {
             val intent = Intent(ACTION_NEW_DATA)

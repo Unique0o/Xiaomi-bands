@@ -1,4 +1,5 @@
 <resources>
+    <string name="activity">Activity</string>
     <string name="app_name">Logifit</string>
     <string name="authenticating">Authenticating</string>
     <string name="authentication_required">Authentication required</string>
@@ -25,11 +26,15 @@
     <string name="message_password_recovery">A manager will be notified to assist you</string>
     <string name="message_recover_password">Don`t remember your password?</string>
     <string name="not_connected">Not connected</string>
+    <string name="not_worn">Device not worn</string>
     <string name="password_recovery_title">Recover password</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
     <string name="scanned">Scanned</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+    <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
+    <string name="unbind_before_pair_title">Already bound</string>
+    <string name="unknown_activity">Unknown activity</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
 

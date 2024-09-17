@@ -1,5 +1,6 @@
 package com.example.logifitappp.core.wearebles
 
+import com.example.logifitappp.core.wearebles.unknown.UnknownWearableCoordinator
 import com.example.logifitappp.core.wearebles.xiaomi.miband8.MiBand8Coordinator
 
 enum class WearableTypeEnum(private val coordinatorClass: Class<out WearableCoordinator>) {
@@ -12,5 +13,15 @@ enum class WearableTypeEnum(private val coordinatorClass: Class<out WearableCoor
 
     fun isSupported(): Boolean {
         return this !== UNKNOWN
+    }
+
+    companion object {
+        fun fromName(name: String): WearableTypeEnum {
+            entries.forEach {
+                if (it.name == name) return it
+            }
+
+            return UNKNOWN
+        }
     }
 }

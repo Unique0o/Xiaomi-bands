@@ -66,18 +66,6 @@ class WearableCandidate() : Parcelable, Cloneable {
         return "(unknown)"
     }
 
-    fun getIsBonded(): Boolean {
-        if (isBonded == null) {
-            isBonded = try {
-                wearable!!.bondState == BluetoothDevice.BOND_BONDING
-            } catch (e: SecurityException) {
-                false
-            }
-        }
-
-        return isBonded!!
-    }
-
     fun getRssi(): Short {
         return rssi
     }
@@ -90,7 +78,19 @@ class WearableCandidate() : Parcelable, Cloneable {
         return wearable!!.address.hashCode() xor 37
     }
 
-    fun isNameKnown(): Boolean {
+    fun IsBonded(): Boolean {
+        if (isBonded == null) {
+            isBonded = try {
+                wearable!!.bondState == BluetoothDevice.BOND_BONDING
+            } catch (e: SecurityException) {
+                false
+            }
+        }
+
+        return isBonded!!
+    }
+
+    private fun isNameKnown(): Boolean {
         return !name.isNullOrEmpty()
     }
 

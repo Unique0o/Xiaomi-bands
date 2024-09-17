@@ -1,0 +1,11 @@
+package com.example.logifitappp.data.dao
+
+import androidx.room.Dao
+import androidx.room.Query
+import com.example.logifitappp.data.models.UserModel
+
+@Dao
+abstract class UserDao {
+    @Query("SELECT * FROM users WHERE has_logged_in = 1 LIMIT 1")
+    abstract fun getLoggedIn(): UserModel?
+}

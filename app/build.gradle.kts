@@ -104,6 +104,10 @@ dependencies {
     implementation(libs.bcpkix.jdk15to18)
     implementation(libs.commons.lang3)
 
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }

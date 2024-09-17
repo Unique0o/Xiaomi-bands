@@ -1,4 +1,5 @@
 <resources>
+    <string name="activity">Actividad</string>
     <string name="app_name">Logifit</string>
     <string name="authenticating">Autenticando</string>
     <string name="authentication_required">Autenticación requerida</string>
@@ -25,11 +26,15 @@
     <string name="message_password_recovery">Se notificará a un encargado para que lo pueda ayudar</string>
     <string name="message_recover_password">¿No recuerda su contraseña?</string>
     <string name="not_connected">No conectado</string>
+    <string name="not_worn">Dispositivo no usado</string>
     <string name="password_recovery_title">Recuperar contraseña</string>
     <string name="placeholder_password">Contraseña</string>
     <string name="placeholder_user">Usuario</string>
     <string name="scanned">Escaneado</string>
     <string name="subtitle_login">Ingrese sus credenciales para continuar</string>
+    <string name="unbind_before_pair_message">Este dispositivo ya está vinculado en los ajustes de Android, lo que puede hacer que el emparejamiento falle en algunos dispositivos. Si no se puede añadir el dispositivo, elimínelo de los ajustes de Android y vuelva a intentarlo.</string>
+    <string name="unbind_before_pair_title">Ya vinculado</string>
+    <string name="unknown_activity">Actividad desconocida</string>
     <string name="waiting_for_device_scan">Esperando por escaneo de dispositivos</string>
     <string name="waiting_for_reconnect">Esperando por reconexión</string>
 

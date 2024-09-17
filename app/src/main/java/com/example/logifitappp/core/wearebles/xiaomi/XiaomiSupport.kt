@@ -67,7 +67,22 @@ class XiaomiSupport: AbstractWearableSupport() {
     fun getHealthService() = healthService
 
     fun handleCommandBytes(payload: ByteArray) {
+        println("Got command: ${payload.contentToString()}")
 
+        val cmd = try {
+            XiaomiProto.Command.parseFrom(payload)
+        } catch (e: Exception) {
+            println("Failed to parse bytes as protobuf command payload")
+            return
+        }
+
+        val service = serviceMap[cmd.type]
+        if (service != null) {
+            service.handleCommand(cmd)
+            return
+        }
+
+        println("Unexpected watch command type ${cmd.type}")
     }
 
     fun onAuthSuccess() {

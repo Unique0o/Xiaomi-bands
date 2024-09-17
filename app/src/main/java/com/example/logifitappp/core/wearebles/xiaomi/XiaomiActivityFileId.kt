@@ -55,7 +55,7 @@ class XiaomiActivityFileId(
                 "timezone=$timezone}," +
                 "type=$mType, " +
                 "subtype=$mSubtype, " +
-                "detailType=$detailType, " +
+                "detailType=$mDetailType, " +
                 "version=$version" +
                 "}"
     }

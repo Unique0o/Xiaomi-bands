@@ -52,8 +52,6 @@ class WearableSupportFactory(private val context: Context) {
         } catch (e: Exception) {
             throw Exception("Cannot connect. Bluetooth address invalid?")
         }
-
-        return null
     }
 
     private fun createClassNameWearableSupport(wearable: Wearable): WearableSupport? {
@@ -84,14 +82,14 @@ class WearableSupportFactory(private val context: Context) {
 
             return WearableSupportService(supportInstance, coordinator.getInitialFlags())
         } catch (e: NoSuchMethodException) {
-            // ignore
+            println("Ignoring exception: $e")
         } catch (e: ReflectiveOperationException) {
             println("error calling DeviceSupport constructor with argument 'DeviceType'")
             throw Exception(e)
         }
 
         try {
-            val supportInstance = supportClass.getDeclaredConstructor().newInstance() as WearableSupport
+            val supportInstance = supportClass.newInstance() as WearableSupport
             return WearableSupportService(supportInstance, coordinator.getInitialFlags())
         } catch (e: ReflectiveOperationException) {
             println("error calling DeviceSupport constructor with zero arguments")

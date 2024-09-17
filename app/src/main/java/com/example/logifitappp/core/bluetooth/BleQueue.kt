@@ -78,7 +78,7 @@ class BleQueue(
                             internalGattServerCallback.setTransactionGattServerCallback(transaction.callbackHandler)
                             abortServerTransaction = false
 
-                            for (action in transaction.actions) {
+                            for (action in transaction.getActions()) {
                                 if (abortServerTransaction) {
                                     println("Aborting running transaction")
                                     break
@@ -107,7 +107,7 @@ class BleQueue(
 
                             abortTransaction = false
 
-                            for (action in transaction.actions) {
+                            for (action in transaction.getActions()) {
                                 if (abortTransaction) {
                                     println("Aborting running transaction")
                                     break
@@ -207,10 +207,7 @@ class BleQueue(
         }
 
         synchronized(gattMonitor) {
-            bluetoothGatt = when(App.isRunningMarshmallowOrLater()) {
-                true -> remoteWearable.connectGatt(context, false, internalGattCallback, BluetoothDevice.TRANSPORT_LE)
-                else -> remoteWearable.connectGatt(context, false, internalGattCallback)
-            }
+            bluetoothGatt = remoteWearable.connectGatt(context, false, internalGattCallback, BluetoothDevice.TRANSPORT_LE)
         }
 
         val result = bluetoothGatt != null
