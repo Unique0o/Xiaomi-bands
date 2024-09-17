@@ -1,17 +1,41 @@
 package com.example.logifitappp.core.wearebles
 
-class WearableHelper {
-    private val cache = HashMap<String, WearableType>()
+import com.example.logifitappp.core.App
+import com.example.logifitappp.data.models.WearableModel
 
-    private fun getOrderedDeviceTypes(): Array<WearableType> {
-        return WearableType.entries.toTypedArray()
+class WearableHelper {
+    private val cache = HashMap<String, WearableTypeEnum>()
+
+    fun getAvailableWearables() = LinkedHashSet(getStoredWearables())
+
+    private fun getOrderedDeviceTypes(): Array<WearableTypeEnum> {
+        return WearableTypeEnum.entries.toTypedArray()
     }
 
-    private fun resolveWearableType(candidate: WearableCandidate): WearableType {
+    private fun getStoredWearables(): List<Wearable> {
+        val result = mutableListOf<Wearable>()
+
+        //FIXME: change to specific user
+        App.database.wearableDao().all(0).forEach {
+            val wearable = toSupportedDevice(it)
+
+            if (wearable.getType().isSupported()) result.add(wearable)
+        }
+
+        return result
+    }
+
+    fun getSupportedWearable(candidate: WearableCandidate): Wearable {
+        val wearableType = resolveWearableType(candidate)
+
+        return wearableType.getWearableCoordinator().createDevice(candidate, wearableType)
+    }
+
+    fun resolveWearableType(candidate: WearableCandidate): WearableTypeEnum {
         return resolveWearableType(candidate, true)
     }
 
-    fun resolveWearableType(candidate: WearableCandidate, useCache: Boolean): WearableType {
+    fun resolveWearableType(candidate: WearableCandidate, useCache: Boolean): WearableTypeEnum {
         synchronized(this) {
             if (useCache) {
                 val cachedType = cache.get(candidate.getMacAddress().lowercase())
@@ -26,16 +50,19 @@ class WearableHelper {
                 }
             }
 
-            cache[candidate.getMacAddress().lowercase()] = WearableType.UNKNOWN
+            cache[candidate.getMacAddress().lowercase()] = WearableTypeEnum.UNKNOWN
         }
 
-        return WearableType.UNKNOWN
+        return WearableTypeEnum.UNKNOWN
     }
 
-    fun getSupportedWearable(candidate: WearableCandidate): Wearable {
-        val wearableType = resolveWearableType(candidate)
+    private fun toSupportedDevice(model: WearableModel): Wearable {
+        return Wearable(model.mac, model.name, model.alias, WearableTypeEnum.fromName(model.typeName), model.firmwareVersion)
+    }
 
-        return wearableType.getWearableCoordinator().createDevice(candidate, wearableType)
+    fun toSupportedDevice(candidate: WearableCandidate): Wearable {
+        val resolvedType = resolveWearableType(candidate)
+        return resolvedType.getWearableCoordinator().createDevice(candidate, resolvedType)
     }
 
     companion object {

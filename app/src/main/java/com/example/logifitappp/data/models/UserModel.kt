@@ -1,39 +1,46 @@
 package com.example.logifitappp.data.models
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "users")
 data class UserModel(
-    val accessToken: String,
-    val attentionValue: Int? = null,
-    val bandType: String = "MIBAND",
-    val birthDate: String? = null,
-    val bloodType: String? = null,
-    val breakAfterSeconds: Int? = null,
-    val breakAverageSeconds: Int? = null,
-    val breakFrequencySeconds: Int? = null,
-    val commutingSeconds: Int? = null,
-    val continuousWorkSeconds: Int? = null,
-    val countryExternalIdentifier: Int? = null,
-    val departmentExternalIdentifier: Int? = null,
-    val documentTypeExternalIdentifier: Int? = null,
+    @ColumnInfo(name = "access_token") val accessToken: String,
+    @ColumnInfo(name = "attention_value") val attentionValue: Int? = null,
+    @ColumnInfo(name = "band_type") val bandType: String = "MIBAND",
+    @ColumnInfo(name = "birth_date") val birthDate: String? = null,
+    @ColumnInfo(name = "blood_type") val bloodType: String? = null,
+    @ColumnInfo(name = "break_after_seconds") val breakAfterSeconds: Int? = null,
+    @ColumnInfo(name = "break_average_seconds") val breakAverageSeconds: Int? = null,
+    @ColumnInfo(name = "break_frequency_seconds") val breakFrequencySeconds: Int? = null,
+    @ColumnInfo(name = "commuting_seconds") val commutingSeconds: Int? = null,
+    @ColumnInfo(name = "continuous_work_seconds") val continuousWorkSeconds: Int? = null,
+    @ColumnInfo(name = "country_id") val countryId: Int? = null,
+    @ColumnInfo(name = "department_id") val departmentId: Int? = null,
+    @ColumnInfo(name = "document_type_id") val documentId: Int? = null,
     val email: String? = null,
-    val externalIdentifier: Int,
-    val firstName: String? = null,
-    val functionName: String? = null,
+    @ColumnInfo(name = "first_name") val firstName: String? = null,
+    @ColumnInfo(name = "function_name") val functionName: String? = null,
     val gender: String? = null,
-    val groupExternalIdentifier: Int? = null,
-    val hasLoggedIn: Boolean = false,
+    @ColumnInfo(name = "group_id") val groupId: Int? = null,
+    @ColumnInfo(name = "has_logged_in") val hasLoggedIn: Boolean = false,
     val height: Int? = null,
-    val identificationDocument: String? = null,
-    val isActive: Boolean,
-    val lastName: String? = null,
+    @PrimaryKey val id: Int,
+    @ColumnInfo(name = "identification_document") val identificationDocument: String? = null,
+    @ColumnInfo(name = "is_active") val isActive: Boolean,
+    @ColumnInfo(name = "last_name") val lastName: String? = null,
     val license: String? = null,
-    val locationExternalIdentifier: Int? = null,
+    @ColumnInfo(name = "location_id") val locationId: Int? = null,
     val phone: String? = null,
-    val profilePhoto: String? = null,
-    val provinceExternalIdentifier: Int? = null,
+    @ColumnInfo(name = "profile_photo") val profilePhoto: String? = null,
+    @ColumnInfo(name = "province_id") val provinceId: Int? = null,
     val role: Int,
-    val shiftExternalIdentifier: Int? = null,
-    val tenantExternalIdentifier: Int,
+    @ColumnInfo(name = "shift_id") val shiftId: Int? = null,
+    @ColumnInfo(name = "tenant_id") val tenantId: Int,
     val weight: Int? = null,
-    val workPosition: String? = null,
-    val workloadValue: Int? = null
-)
+    @ColumnInfo(name = "work_position") val workPosition: String? = null,
+    @ColumnInfo(name = "workload_value") val workloadValue: Int? = null
+) {
+    fun isAdmin() = role == 1 || role == 3
+}

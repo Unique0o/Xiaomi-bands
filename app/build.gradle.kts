@@ -1,9 +1,12 @@
+import com.google.protobuf.gradle.*
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.serialization.kotlin)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -48,6 +51,22 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/INDEX.LIST"
+        }
+    }
+    sourceSets {
+        getByName("main") {
+            java {
+                java.srcDirs("build/generated/source/proto/main/java")
+            }
+
+            kotlin {
+                java.srcDirs("build/generated/source/proto/main/kotlin")
+            }
+
+            proto {
+                java.srcDir("src/main/proto")
+            }
         }
     }
 }
@@ -76,10 +95,44 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("ch.qos.logback:logback-classic:1.4.7")
+    implementation(libs.logback.classic)
     implementation(libs.retrofit)
     implementation(libs.convert.gson)
+    implementation(libs.androidx.preference)
+    implementation(libs.protobuf.java)
+    implementation(libs.protobuf.kotlin)
+    implementation(libs.bcpkix.jdk15to18)
+    implementation(libs.commons.lang3)
+
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.20.1"
+    }
+
+    plugins {
+        create("javalite") {
+            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+        }
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+                id("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
