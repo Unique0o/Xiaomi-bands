@@ -3,7 +3,7 @@ package com.example.logifitappp.core.bluetooth
 import android.content.Context
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
-import com.example.logifitappp.core.exceptions.WearableNotFoundException
+import com.example.logifitappp.exceptions.WearableNotFoundException
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCoordinator
 import com.example.logifitappp.core.wearebles.WearableService

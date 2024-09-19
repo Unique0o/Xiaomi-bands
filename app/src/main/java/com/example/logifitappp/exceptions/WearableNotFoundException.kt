@@ -1,4 +1,4 @@
-package com.example.logifitappp.core.exceptions
+package com.example.logifitappp.exceptions
 
 import com.example.logifitappp.core.wearebles.Wearable
 

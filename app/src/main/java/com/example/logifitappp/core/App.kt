@@ -14,7 +14,9 @@ import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.core.wearebles.WearablePreferences
 import com.example.logifitappp.core.wearebles.WearableService
 import com.example.logifitappp.data.AppDatabase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App: Application() {
     init {
         context = this
@@ -37,14 +39,21 @@ class App: Application() {
         const val ACTION_NEW_DATA = "com.info.logifit.pe.action.quit"
 
         lateinit var context: App
+            private set
+
         lateinit var database: AppDatabase
+            private set
+
         lateinit var preferences: AppPreferences
+            private set
 
         @SuppressLint("StaticFieldLeak")
         lateinit var wearableManager: WearableManager
+            private set
 
         @SuppressLint("StaticFieldLeak")
         lateinit var wearableService: WearableService
+            private set
 
         fun getWearableServiceTo(wearable: Wearable) = wearableService.forDevice(wearable)
 

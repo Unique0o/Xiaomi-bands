@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.protobuf.kotlin)
     implementation(libs.bcpkix.jdk15to18)
     implementation(libs.commons.lang3)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)

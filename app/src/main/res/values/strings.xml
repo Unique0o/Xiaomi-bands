@@ -26,7 +26,9 @@
     <string name="message_password_recovery">A manager will be notified to assist you</string>
     <string name="message_recover_password">Don`t remember your password?</string>
     <string name="not_connected">Not connected</string>
+    <string name="no_internet_connection_message">Check your Internet connection</string>
     <string name="not_worn">Device not worn</string>
+    <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
     <string name="password_recovery_title">Recover password</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
@@ -35,6 +37,7 @@
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
     <string name="unbind_before_pair_title">Already bound</string>
     <string name="unknown_activity">Unknown activity</string>
+    <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
 

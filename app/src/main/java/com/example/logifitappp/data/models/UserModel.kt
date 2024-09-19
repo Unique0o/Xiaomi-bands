@@ -25,7 +25,7 @@ data class UserModel(
     val gender: String? = null,
     @ColumnInfo(name = "group_id") val groupId: Int? = null,
     @ColumnInfo(name = "has_logged_in") val hasLoggedIn: Boolean = false,
-    val height: Int? = null,
+    val height: Float? = null,
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "identification_document") val identificationDocument: String? = null,
     @ColumnInfo(name = "is_active") val isActive: Boolean,
@@ -38,7 +38,7 @@ data class UserModel(
     val role: Int,
     @ColumnInfo(name = "shift_id") val shiftId: Int? = null,
     @ColumnInfo(name = "tenant_id") val tenantId: Int,
-    val weight: Int? = null,
+    val weight: Float? = null,
     @ColumnInfo(name = "work_position") val workPosition: String? = null,
     @ColumnInfo(name = "workload_value") val workloadValue: Int? = null
 ) {

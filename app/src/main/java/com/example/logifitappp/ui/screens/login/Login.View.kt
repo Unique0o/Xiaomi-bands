@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
@@ -27,7 +27,7 @@ import com.example.logifitappp.viewmodel.views.LoginViewModel
 fun LoginView(
     navigation: NavHostController
 ) {
-    val loginViewModel: LoginViewModel = viewModel()
+    val loginViewModel: LoginViewModel = hiltViewModel()
 
     SimplePage(
         content = {
@@ -49,7 +49,10 @@ fun LoginView(
             LoginForm(
                 loginViewModel = loginViewModel,
                 modifier = Modifier.padding(top = 24.dp),
-                onSubmit = { navigation.navigate(MainRoutes.WearableDetection) }
+                onSubmit = {
+                    //navigation.navigate(MainRoutes.WearableDetection)
+                    loginViewModel.login()
+                }
             )
 
             Spacer(modifier = Modifier.weight(1f))
