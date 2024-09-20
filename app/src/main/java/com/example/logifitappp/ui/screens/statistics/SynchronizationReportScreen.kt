@@ -7,20 +7,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,20 +32,30 @@ import com.example.logifitappp.ui.components.statistics.RangeDateSelect
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.theme.Orange170
 import com.example.logifitappp.ui.theme.Rose120
-import com.example.logifitappp.ui.components.statistics.TitleIcon
 import com.example.logifitappp.ui.theme.Stone240
 import com.example.logifitappp.ui.theme.Stone470
 import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.theme.Blue690
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.logifitappp.ui.components.titles.IconPosition
+import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
+import com.example.logifitappp.viewmodel.views.statistics.SynchronizationReportViewModel
+
 
 @Composable
 fun SynchronizationReportScreen() {
+    val reportViewModel: SynchronizationReportViewModel = viewModel()
+    val filteredMembers by reportViewModel.filteredMembers.observeAsState(emptyList())
+    val dropdownOptions = reportViewModel.dropdownData
+
     var showNoFitTeamCards by remember { mutableStateOf(true) }
     var showFitTeamCards by remember { mutableStateOf(false) }
     var showSDTeamCards by remember { mutableStateOf(false) }
+
 
     SimplePage(
         content = {
@@ -61,15 +68,16 @@ fun SynchronizationReportScreen() {
             )
             Spacer(modifier = Modifier.height(15.dp))
             CardStatistics(
-                total = "12",
-                notFitTotal = "3",
-                fitTotal = "7",
-                sdTotal = "2"
+                total = reportViewModel.totalCount.toString(),
+                notFitTotal = reportViewModel.notFitCount.toString(),
+                fitTotal = reportViewModel.fitCount.toString(),
+                sdTotal = reportViewModel.sdCount.toString()
             )
-            IconText(
-                Icons.Outlined.CheckCircle,
-                text = stringResource(id = R.string.updated_information) + " " + "24/03/2023, 8.25AM"
-            )
+
+            IconTitle(icon = Icons.Outlined.CheckCircle, text = stringResource(id = R.string.updated_information) + " " + "24/03/2023, 8.25AM",
+                iconSize = 16, textTypography = MaterialTheme.typography.bodyMedium)
+
+            Spacer(modifier = Modifier.height(15.dp))
             RangeDateSelect(
                 label = "27/07/2023",
             )
@@ -81,17 +89,18 @@ fun SynchronizationReportScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Dropdown(
-                    modifier = Modifier.weight(1f),
-                    title = stringResource(id = R.string.shift)
-                )
-                Spacer(modifier = Modifier.width(15.dp))
-                Dropdown(
-                    modifier = Modifier.weight(1f),
-                    title = stringResource(id = R.string.group)
-                )
-
+                dropdownOptions.forEachIndexed { index, (title, options) ->
+                    Dropdown(
+                        modifier = Modifier.weight(1f),
+                        title = stringResource(id = title),
+                        options = options
+                    )
+                    if (index < dropdownOptions.size - 1) {
+                        Spacer(modifier = Modifier.width(15.dp))
+                    }
+                }
             }
+
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -147,121 +156,58 @@ fun SynchronizationReportScreen() {
                 }
 
             }
-            TitleIcon(title = stringResource(id = R.string.my_team), icon = Icons.Default.Share)
+            IconTitle(icon = Icons.Default.Share,
+                text = stringResource(id = R.string.my_team),
+                iconPosition= IconPosition.TRAILING,
+                iconColor = Blue690,
+                )
             if (showNoFitTeamCards) {
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_no_apto),
-                    textIndicatorColor = Rose120,
-                    backgroundIndicatorColor = Orange170,
-                    pointIndicatorColor = Rose120
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_no_apto),
-                    textIndicatorColor = Rose120,
-                    backgroundIndicatorColor = Orange170,
-                    pointIndicatorColor = Rose120
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_no_apto),
-                    textIndicatorColor = Rose120,
-                    backgroundIndicatorColor = Orange170,
-                    pointIndicatorColor = Rose120
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_no_apto),
-                    textIndicatorColor = Rose120,
-                    backgroundIndicatorColor = Orange170,
-                    pointIndicatorColor = Rose120
-                )
+                filteredMembers.forEach { member ->
+                    if (member.attentionValue == 1) {
+                        MyTeamCard(
+                            icon = R.mipmap.ic_user_profile_foreground,
+                            name = "${member.firstName} ${member.lastName}",
+                            subtitleAlternateText = "Shift ${member.shiftId}",
+                            statusIndicator = stringResource(id = R.string.status_no_apto),
+                            textIndicatorColor = Rose120,
+                            backgroundIndicatorColor = Orange170,
+                            pointIndicatorColor = Rose120
+                        )
+                    }
+                }
             }
             if (showFitTeamCards) {
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_person),
-                    textIndicatorColor = Green298,
-                    backgroundIndicatorColor = Lime70,
-                    pointIndicatorColor = Green298
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_person),
-                    textIndicatorColor = Green298,
-                    backgroundIndicatorColor = Lime70,
-                    pointIndicatorColor = Green298
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_person),
-                    textIndicatorColor = Green298,
-                    backgroundIndicatorColor = Lime70,
-                    pointIndicatorColor = Green298
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.status_person),
-                    textIndicatorColor = Green298,
-                    backgroundIndicatorColor = Lime70,
-                    pointIndicatorColor = Green298
-                )
+                filteredMembers.forEach { member ->
+                    if (member.attentionValue == 2) {
+                        MyTeamCard(
+                            icon = R.mipmap.ic_user_profile_foreground,
+                            name = "${member.firstName} ${member.lastName}",
+                            subtitleAlternateText = "Shift ${member.shiftId}",
+                            statusIndicator = stringResource(id = R.string.status_person),
+                            textIndicatorColor = Green298,
+                            backgroundIndicatorColor = Lime70,
+                            pointIndicatorColor = Green298
+                        )
+                    }
+                }
             }
             if (showSDTeamCards) {
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.without_data),
-                    textIndicatorColor = Stone470,
-                    backgroundIndicatorColor = Stone240,
-                    pointIndicatorColor = Stone470
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.without_data),
-                    textIndicatorColor = Stone470,
-                    backgroundIndicatorColor = Stone240,
-                    pointIndicatorColor = Stone470
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.without_data),
-                    textIndicatorColor = Stone470,
-                    backgroundIndicatorColor = Stone240,
-                    pointIndicatorColor = Stone470
-                )
-                MyTeamCard(
-                    name = "Eduardo Palomino Cacéres",
-                    subtitleAlternateText = "DIA",
-                    statusIndicator = stringResource(id = R.string.without_data),
-                    textIndicatorColor = Stone470,
-                    backgroundIndicatorColor = Stone240,
-                    pointIndicatorColor = Stone470
-                )
+                filteredMembers.forEach { member ->
+                    if (member.attentionValue == 3) {
+                        MyTeamCard(
+                            icon = R.mipmap.ic_user_profile_foreground,
+                            name = "${member.firstName} ${member.lastName}",
+                            subtitleAlternateText = "Shift ${member.shiftId}",
+                            statusIndicator = stringResource(id = R.string.without_data),
+                            textIndicatorColor = Stone470,
+                            backgroundIndicatorColor = Stone240,
+                            pointIndicatorColor = Stone470
+                        )
+                    }
+                }
             }
         }
     )
-}
-
-
-@Composable
-fun IconText(icon: ImageVector, text: String) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
-        Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(16.dp))
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = text, style = MaterialTheme.typography.titleSmall, fontSize = 12.sp)
-    }
 }
 
 @Preview(showBackground = true)

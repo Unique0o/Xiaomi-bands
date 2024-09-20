@@ -4,6 +4,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -18,6 +19,7 @@ import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 @Composable
 fun MyTeamCard(
+    icon : Int,
     name: String,
     subtitleAlternateText: String,
     statusIndicator: String,
@@ -26,7 +28,8 @@ fun MyTeamCard(
     pointIndicatorColor: Color
 ) {
     CardLayout(
-        icon = painterResource(id = R.mipmap.ic_user_profile_foreground),
+     //   icon = painterResource(id = R.mipmap.ic_user_profile_foreground),
+        icon = painterResource(icon),
         iconColor = Color.Unspecified,
         iconSize = 65.dp,
         label = name,

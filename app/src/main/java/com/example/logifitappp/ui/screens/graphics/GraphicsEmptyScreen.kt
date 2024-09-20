@@ -51,7 +51,6 @@ fun GraphicsEmptyScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
                     text = stringResource(id = R.string.my_sleep)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
                 EmptyInfoGraph(
                     title = stringResource(id = R.string.information_between),
                     timeRange = "19:00 - 07:00",
@@ -63,7 +62,6 @@ fun GraphicsEmptyScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_shoe_sneaker),
                     text = stringResource(id = R.string.my_steps)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
                 val stepData = List(24) { kotlin.random.Random.nextFloat() }
                 StepEmptyGraphCard(
                     data = stepData,
@@ -78,7 +76,6 @@ fun GraphicsEmptyScreen(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_heart_pulse),
                     text = stringResource(id = R.string.my_heart_rate)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
                 StepEmptyGraphCard(
                     title = stringResource(id = R.string.graph_card_heart_rate),
                     data = stepData,
