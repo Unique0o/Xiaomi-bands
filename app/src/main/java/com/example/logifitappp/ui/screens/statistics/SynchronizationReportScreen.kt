@@ -167,7 +167,7 @@ fun SynchronizationReportScreen() {
                         MyTeamCard(
                             icon = R.mipmap.ic_user_profile_foreground,
                             name = "${member.firstName} ${member.lastName}",
-                            subtitleAlternateText = "Shift ${member.shiftId}",
+                            subtitleAlternateText = member.shiftDescription,
                             statusIndicator = stringResource(id = R.string.status_no_apto),
                             textIndicatorColor = Rose120,
                             backgroundIndicatorColor = Orange170,
@@ -182,7 +182,7 @@ fun SynchronizationReportScreen() {
                         MyTeamCard(
                             icon = R.mipmap.ic_user_profile_foreground,
                             name = "${member.firstName} ${member.lastName}",
-                            subtitleAlternateText = "Shift ${member.shiftId}",
+                            subtitleAlternateText = member.shiftDescription,
                             statusIndicator = stringResource(id = R.string.status_person),
                             textIndicatorColor = Green298,
                             backgroundIndicatorColor = Lime70,
@@ -197,7 +197,7 @@ fun SynchronizationReportScreen() {
                         MyTeamCard(
                             icon = R.mipmap.ic_user_profile_foreground,
                             name = "${member.firstName} ${member.lastName}",
-                            subtitleAlternateText = "Shift ${member.shiftId}",
+                            subtitleAlternateText = member.shiftDescription,
                             statusIndicator = stringResource(id = R.string.without_data),
                             textIndicatorColor = Stone470,
                             backgroundIndicatorColor = Stone240,

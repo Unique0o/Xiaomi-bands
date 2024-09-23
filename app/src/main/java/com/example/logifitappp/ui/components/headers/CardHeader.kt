@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,10 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 
-import com.example.logifitappp.ui.theme.Orange390
-
 @Composable
-fun UserProfileCard(
+fun CardHeader(
     userName: String,
     userType: String,
     plan: String,
@@ -102,8 +99,8 @@ fun UserProfileCard(
 
 @Preview(showBackground = true)
 @Composable
-fun UserProfileCardPreview() {
-    UserProfileCard(
+fun CardHeaderPreview() {
+    CardHeader(
         userName = "MARIA MERCEDES",
         userType = "PREMIUM",
         profileImageRes = R.drawable.user1,

@@ -57,6 +57,7 @@
     // Card Item
     <string name="schedule">Mi horario</string>
     <string name="status" >DIURNO</string>
+    <string name="night" >NOCTURNO</string>
     <string name="PGT">PGT</string>
     <string name="my_location">Mi localización</string>
     <string name="my_device">Mi dispositivo</string>

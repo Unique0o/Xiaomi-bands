@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
@@ -29,19 +31,12 @@ import com.example.logifitappp.ui.components.headers.BackHeader
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.components.tests.SelectableQuestion
+import com.example.logifitappp.viewmodel.views.tests.FatigueSelfAssessmentViewModel
 
 @Composable
 fun FatigueSelfAssessmentTestScreen(navigation: NavHostController) {
-    val questions = listOf(
-        stringResource(id = R.string.test_question_1),
-        stringResource(id = R.string.test_question_2),
-        stringResource(id = R.string.test_question_3),
-        stringResource(id = R.string.test_question_4),
-        stringResource(id = R.string.test_question_5),
-        stringResource(id = R.string.test_question_6),
-        stringResource(id = R.string.test_question_7),
-        stringResource(id = R.string.test_question_8)
-    )
+    val testViewModel: FatigueSelfAssessmentViewModel = viewModel()
+    val questions by testViewModel.questions.collectAsState()
 
     Column(
         modifier = Modifier
@@ -75,18 +70,18 @@ fun FatigueSelfAssessmentTestScreen(navigation: NavHostController) {
             }
 
             items(questions.size) { index ->
-                var selectedOption by remember { mutableStateOf("") }
+                val question = questions[index]
+                val selectedOption by remember { mutableStateOf("") }
                 var detailText by remember { mutableStateOf(TextFieldValue("")) }
 
                 SelectableQuestion(
-                    questionText = questions[index],
+                    questionText = stringResource(id = testViewModel.getTranslatedQuestionResourceId(question)),
                     options = listOf(stringResource(id = R.string.yes), "No"),
                     selectedOption = selectedOption,
-                    onOptionSelected = { selectedOption = it },
+                    onOptionSelected = { testViewModel.updateAnswer(question.id, it) },
                     detailText = detailText,
                     onDetailTextChanged = { detailText = it }
                 )
-
                 if (index != questions.lastIndex) {
                     Spacer(modifier = Modifier.height(24.dp))
                 }

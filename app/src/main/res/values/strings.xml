@@ -57,6 +57,7 @@
     <!-- Card Item -->
     <string name="schedule">My Schedule</string>
     <string name="status">DAYTIME</string>
+    <string name="night" >NIGHT</string>
     <string name="PGT">PGT</string>
     <string name="my_location">My Location</string>
     <string name="my_device">My Device</string>
