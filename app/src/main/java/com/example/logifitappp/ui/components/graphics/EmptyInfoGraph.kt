@@ -24,7 +24,7 @@ fun EmptyInfoGraph(
     icon: Painter,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth() .padding(2.dp),
+        modifier = Modifier.fillMaxWidth() .padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(

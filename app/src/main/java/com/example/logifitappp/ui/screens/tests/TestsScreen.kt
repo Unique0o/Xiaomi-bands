@@ -30,7 +30,7 @@ fun Tests( navigation: NavHostController) {
     ) {
         BackHeader(
             navigation = navigation,
-            title = stringResource(id = R.string.settings)
+            title = stringResource(id = R.string.tools)
         )
         SimplePage(
             content = {
@@ -53,7 +53,7 @@ fun Tests( navigation: NavHostController) {
                     bodyComponent = { /*TODO*/ },
                     icon = rememberVectorPainter(Icons.Default.Edit),
                     iconSize = 20.dp,
-                    label = stringResource(id = R.string.settings_2),
+                    label = stringResource(id = R.string.tools) + " 2",
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
                     Textcolor = Color.Unspecified

@@ -53,7 +53,6 @@ fun Graphics(
                     icon = ImageVector.vectorResource(id = R.drawable.ic_weather_night),
                     text = stringResource(id = R.string.my_sleep)
                 )
-                Spacer(modifier = Modifier.height(4.dp))
                 val data = List(17) { (1..100).random() }
                 InfoBarColorGraph(
                     timeRange = "19:00 - 07:00",

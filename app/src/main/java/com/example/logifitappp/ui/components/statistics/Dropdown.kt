@@ -23,11 +23,11 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 @Composable
 fun Dropdown(
     modifier: Modifier = Modifier,
-    title: String
+    title: String,
+    options: List<String>
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(title) }
-    val options = listOf("Option 1", "Option 2", "Option 3")
 
     Column(modifier = modifier) {
         Button(
@@ -73,10 +73,10 @@ fun Dropdown(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DropdownShiftPreview() {
-    LogifitApppTheme {
-        Dropdown(title = "Select an option")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DropdownShiftPreview() {
+//    LogifitApppTheme {
+//        Dropdown(title = "Select an option")
+//    }
+//}

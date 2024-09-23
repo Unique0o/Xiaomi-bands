@@ -70,7 +70,7 @@ fun HeartRateFocusScreen(navigation: NavHostController) {
                     label = stringResource(id = R.string.average_heart_rate),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
-                    style = Modifier.padding(8.dp),
+                    style = Modifier.padding(2.dp),
                     suffixComponent = {
                         ConnectedIndicator(
                             text = "85 LPM",
@@ -86,7 +86,7 @@ fun HeartRateFocusScreen(navigation: NavHostController) {
                     label = stringResource(id = R.string.graph_card_heart_rate),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
-                    style = Modifier.padding(8.dp),
+                    style = Modifier.padding(2.dp),
                     suffixComponent = {
                         ConnectedIndicator(
                             text = "90 LPM",

@@ -48,7 +48,7 @@ fun StepsDetailScreen(navigation: NavHostController) {
                 label = stringResource(id = R.string.calories_burned),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                style = Modifier.padding(8.dp),
+                style = Modifier.padding(2.dp),
                 suffixComponent = {
                     ConnectedIndicator(
                         text = "200 KCAL",
@@ -64,7 +64,7 @@ fun StepsDetailScreen(navigation: NavHostController) {
                 label = stringResource(id = R.string.distance_traveled),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                style = Modifier.padding(8.dp),
+                style = Modifier.padding(2.dp),
                 suffixComponent = {
                     ConnectedIndicator(
                         text = "1.5 km",
