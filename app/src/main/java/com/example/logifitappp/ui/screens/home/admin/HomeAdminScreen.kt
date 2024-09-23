@@ -32,11 +32,6 @@ fun HomeAdminScreen(
     navigation: NavHostController
 ) {
     SimplePage(
-        topBar = {
-            CustomTopBar(
-                title = stringResource(id = R.string.app_name),
-            )
-        },
         content = {
             Column(
                 modifier = Modifier.fillMaxSize(),
