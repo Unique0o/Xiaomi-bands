@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.LogifitAppp" parent="Theme.SplashScreen">
+    <style name="Theme.LogifitAppp" parent="Theme.SplashScreen" >
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
     </style>

@@ -28,7 +28,7 @@ fun LoginView(
     navigation: NavHostController
 ) {
     val loginViewModel: LoginViewModel = hiltViewModel()
-
+    val uiState = loginViewModel.uiState
     SimplePage(
         content = {
             Spacer(modifier = Modifier.weight(1f))
@@ -45,13 +45,24 @@ fun LoginView(
                 text = stringResource(id = R.string.subtitle_login),
                 typography = MaterialTheme.typography.labelMedium
             )
+            if (uiState.error != null) {
+                Text(
+                    text = uiState.error,
+                    color = MaterialTheme.colorScheme.error,
+                    typography = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
 
             LoginForm(
                 loginViewModel = loginViewModel,
                 modifier = Modifier.padding(top = 24.dp),
                 onSubmit = {
-                    //navigation.navigate(MainRoutes.WearableDetection)
-                    loginViewModel.login()
+                    loginViewModel.login { isAdmin ->
+                        navigation.navigate("${MainRoutes.Home::class.simpleName}/$isAdmin") {
+                            popUpTo(MainRoutes.Login::class.simpleName ?: "") { inclusive = true }
+                        }
+                    }
                 }
             )
 

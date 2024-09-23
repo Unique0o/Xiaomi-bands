@@ -42,6 +42,7 @@ fun CardHeader(
             modifier = Modifier
                 .padding(16.dp)
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
