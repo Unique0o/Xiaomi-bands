@@ -3,12 +3,14 @@ package com.example.logifitappp.ui.screens.login
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Login
 import androidx.compose.material.icons.rounded.AlternateEmail
 import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -31,6 +33,7 @@ fun LoginForm(
     val (passwordFocusRequester) = FocusRequester.createRefs()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val uiState = loginViewModel.uiState
 
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -72,6 +75,13 @@ fun LoginForm(
                 icon = Icons.AutoMirrored.Rounded.Login,
                 onClick = onSubmit,
                 text = stringResource(id = R.string.button_get_into)
+            )
+        }
+        if (uiState.isLoading) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
             )
         }
     }

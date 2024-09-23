@@ -16,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.UserProfileCard
@@ -28,7 +30,9 @@ import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigation: NavHostController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,7 +109,7 @@ fun HomeScreen() {
 @Composable
 fun HomeScreenPreview() {
     LogifitApppTheme {
-        HomeScreen()
+        HomeScreen(rememberNavController())
 
     }
 }
@@ -114,7 +118,7 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeScreen()
+        HomeScreen(rememberNavController())
 
     }
 }
