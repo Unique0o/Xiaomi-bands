@@ -18,7 +18,7 @@ import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.BottomNavigationBar
 import com.example.logifitappp.ui.components.graphics.EmptyInfoGraph
 import com.example.logifitappp.ui.components.graphics.StepEmptyGraphCard
-import com.example.logifitappp.ui.components.headers.UserProfileCard
+import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
@@ -34,7 +34,7 @@ fun GraphicsEmptyScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        UserProfileCard(
+        CardHeader(
             userName = "MARIA MERCEDES",
             userType = "PREMIUM",
             profileImageRes = R.drawable.user1,

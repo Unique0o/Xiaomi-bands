@@ -21,7 +21,7 @@ import com.example.logifitappp.ui.components.graphics.InfoBarColorGraph
 import com.example.logifitappp.ui.components.graphics.MeasurementHeartCard
 import com.example.logifitappp.data.HeartRateData
 import com.example.logifitappp.ui.components.graphics.StepHomeCard
-import com.example.logifitappp.ui.components.headers.UserProfileCard
+import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.components.titles.IconTitle
@@ -36,7 +36,7 @@ fun Graphics(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        UserProfileCard(
+        CardHeader(
             userName = "MARIA MERCEDES",
             userType = "PREMIUM",
             profileImageRes = R.drawable.user1,

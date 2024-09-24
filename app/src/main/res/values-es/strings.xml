@@ -161,4 +161,12 @@
     <string name="second_additional_information_title">¡Ya casi terminamos!</string>
     <string name="second_additional_information_message">Es necesario sacarse una selfie para continuar</string>
     <string name="button_continue">Continuar</string>
+
+    <string name="error_username_empty">El nombre de usuario no puede estar vacío</string>
+    <string name="error_password_empty">La contraseña no puede estar vacía</string>
+
+    <!-- Errores de autenticación -->
+    <string name="error_unregistered_user">Usuario no registrado</string>
+    <string name="error_invalid_password">Contraseña incorrecta</string>
+    <string name="error_general">Ha ocurrido un error. Por favor, intenta nuevamente.</string>
 </resources>

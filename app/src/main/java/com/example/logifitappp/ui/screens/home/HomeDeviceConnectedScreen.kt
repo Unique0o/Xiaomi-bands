@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
-import com.example.logifitappp.ui.components.headers.UserProfileCard
+import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.home.CardItemButton
 import com.example.logifitappp.ui.components.home.CardTest
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
@@ -37,7 +37,7 @@ fun HomeDeviceConnectedScreen() {
             .background(MaterialTheme.colorScheme.surface)
     ) {
         
-        UserProfileCard(
+        CardHeader(
             userName = "MARIA MERCEDES",
             userType = "PREMIUM",
             profileImageRes = R.drawable.user1,
