@@ -20,7 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
-import com.example.logifitappp.ui.components.headers.UserProfileCard
+import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.home.CardItemButton
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.pages.SimplePage
@@ -38,7 +38,7 @@ fun HomeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        UserProfileCard(
+        CardHeader(
             userName = "MARIA MERCEDES",
             userType = "PREMIUM",
             profileImageRes = R.drawable.user1,

@@ -7,6 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logifitappp.R
+import com.example.logifitappp.core.App.Companion.context
+import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.di.services.AuthService
 import com.example.logifitappp.di.services.requests.LoginRequest
 import com.example.logifitappp.enums.AppStatusCodeEnum
@@ -16,6 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.bouncycastle.cms.RecipientId.password
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,14 +43,16 @@ class LoginViewModel @Inject constructor(
     val isAdmin: StateFlow<Boolean> = _isAdmin
 
     fun login(onLoginSuccess: (Boolean) -> Unit) {
+        if (!validateInputsNotEmpty()) {
+            return
+        }
+
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
             try {
                 val user = authService.login(LoginRequest(username.text, password.text))
-                Log.d("LoginViewModel", "User logged in. Role: ${user.role}")
                 val adminStatus = user.isAdmin()
                 _isAdmin.value = adminStatus
-                Log.d("LoginViewModel", "Is admin: $adminStatus")
                 uiState = uiState.copy(
                     isLoading = false,
                     isLoggedIn = true,
@@ -54,24 +60,48 @@ class LoginViewModel @Inject constructor(
                 )
                 onLoginSuccess(adminStatus)
             } catch (e: HttpConsumerException) {
-                val errorMessage = when (e.getStatus()) {
-                    AppStatusCodeEnum.PASSWORD_NOT_VALIDATED,
-                    AppStatusCodeEnum.UNREGISTERED_USER -> "Usuario o contraseña incorrectos"
-                    else -> "Ha ocurrido un error. Por favor, intenta nuevamente más tarde."
-                }
-                uiState = uiState.copy(
-                    isLoading = false,
-                    error = errorMessage
-                )
+                handleLoginError(e)
             }
         }
     }
+    private fun handleLoginError(e: HttpConsumerException) {
+        println("Error code: ${e.getStatus().code()}")
+        val (usernameError, passwordError) = when (e.getStatus()) {
+            AppStatusCodeEnum.UNREGISTERED_USER -> Pair(context.getString(R.string.unregistered_user_error_message), null)
+            AppStatusCodeEnum.PASSWORD_NOT_VALIDATED -> Pair(null, context.getString(R.string.password_not_validated_error_message))
+            else -> Pair(null, null)
+        }
 
+        uiState = uiState.copy(
+            isLoading = false,
+            usernameError = usernameError,
+            passwordError = passwordError,
+            error = if (usernameError == null && passwordError == null) context.getString(R.string.error_general) else null
+        )
+    }
+
+    private fun validateInputsNotEmpty(): Boolean {
+        val isUsernameValid = username.text.isNotBlank()
+        val isPasswordValid = password.text.isNotBlank()
+
+        uiState = uiState.copy(
+            usernameError = if (isUsernameValid) null else context.getString(R.string.error_username_empty),
+            passwordError = if (isPasswordValid) null else context.getString(R.string.error_password_empty)
+        )
+
+        return isUsernameValid && isPasswordValid
+    }
+
+    private fun clearErrors() {
+        uiState = uiState.copy(error = null, usernameError = null, passwordError = null)
+    }
     fun updatePassword(password: TextFieldValue) {
         this.password = password
+        clearErrors()
     }
 
     fun updateUsername(username: TextFieldValue) {
         this.username = username
+        clearErrors()
     }
 }

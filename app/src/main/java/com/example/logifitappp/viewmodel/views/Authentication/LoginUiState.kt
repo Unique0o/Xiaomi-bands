@@ -5,6 +5,8 @@ import com.example.logifitappp.data.models.UserModel
 data class LoginUiState(
     val isLoading: Boolean = false,
     val isLoggedIn: Boolean = false,
+    val user: UserModel? = null,
     val error: String? = null,
-    val user: UserModel? = null
+    val usernameError: String? = null,
+    val passwordError: String? = null
 )

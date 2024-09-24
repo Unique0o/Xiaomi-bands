@@ -47,7 +47,8 @@ fun LoginForm(
                 loginViewModel.updateUsername(it)
             },
             placeholder = stringResource(id = R.string.placeholder_user),
-            value = loginViewModel.username
+            value = loginViewModel.username,
+            error = uiState.usernameError,
         )
 
         OutlinedTextField(
@@ -65,16 +66,17 @@ fun LoginForm(
                 .focusRequester(passwordFocusRequester),
             onValueChange = { loginViewModel.updatePassword(it) },
             placeholder = stringResource(id = R.string.placeholder_password),
-            value = loginViewModel.password
+            value = loginViewModel.password,
+            error = uiState.passwordError,
         )
 
         Row(modifier = Modifier.padding(top = 8.dp)) {
             Spacer(modifier = Modifier.weight(1f))
-            
+
             IconButton(
                 icon = Icons.AutoMirrored.Rounded.Login,
                 onClick = onSubmit,
-                text = stringResource(id = R.string.button_get_into)
+                text = stringResource(id = R.string.button_get_into),
             )
         }
         if (uiState.isLoading) {

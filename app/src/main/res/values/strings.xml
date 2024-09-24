@@ -161,4 +161,12 @@
     <string name="second_additional_information_message">You need to take a selfie to continue</string>
     <string name="button_continue">Continue</string>
 
+    <string name="error_username_empty">Username cannot be empty</string>
+    <string name="error_password_empty">Password cannot be empty</string>
+
+    <!-- Authentication errors -->
+    <string name="error_unregistered_user">User not registered</string>
+    <string name="error_invalid_password">Incorrect password</string>
+    <string name="error_general">An error has occurred. Please try again.</string>
+
 </resources>
