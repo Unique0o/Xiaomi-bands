@@ -64,7 +64,7 @@ class SynchronizationReportViewModel : ViewModel() {
                 lastName = "Hernandez", profilePhoto = "profile_photo", role = 1, shiftId = 1, tenantId = 1
             ),
             UserModel(accessToken = "1", attentionValue = 1, firstName = "Pamela", groupId = 1, hasLoggedIn = true, id = 1, isActive = true,
-                lastName = "Hernandez", profilePhoto = "profile_photo", role = 1, shiftId = 1, tenantId = 1
+                lastName = "Hernandez", profilePhoto = "profile_photo", role = 1, shiftId = 2, tenantId = 1
             ),
             UserModel(accessToken = "1", attentionValue = 3, firstName = "Luis", groupId = 1, hasLoggedIn = true, id = 1, isActive = true,
                 lastName = "Hernandez", profilePhoto = "profile_photo", role = 1, shiftId = 1, tenantId = 1

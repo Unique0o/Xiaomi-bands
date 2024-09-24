@@ -1,8 +1,11 @@
 package com.example.logifitappp.data.models
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.logifitappp.R
 
 @Entity(tableName = "users")
 data class UserModel(
@@ -43,4 +46,12 @@ data class UserModel(
     @ColumnInfo(name = "workload_value") val workloadValue: Int? = null
 ) {
     fun isAdmin() = role == 1 || role == 3
+
+    val shiftDescription: String
+        @Composable
+        get() = when (shiftId) {
+            1 -> stringResource(R.string.status)
+            2 -> stringResource(R.string.night)
+            else -> "without shift"
+        }
 }
