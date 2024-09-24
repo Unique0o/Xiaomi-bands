@@ -18,8 +18,7 @@ import com.example.logifitappp.ui.theme.*
 
 @Composable
 fun StepHomeCard(
-    steps: List<Int>,
-    modifier: Modifier = Modifier
+    steps: List<Int>
 ) {
     CardLayout(
         icon = painterResource(id = R.drawable.ic_fire),

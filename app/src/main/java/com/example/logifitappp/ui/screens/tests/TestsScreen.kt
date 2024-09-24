@@ -44,7 +44,7 @@ fun Tests( navigation: NavHostController) {
                     label = stringResource(id = R.string.subjective_test),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
-                    Textcolor = Color.Unspecified
+                    textcolor = Color.Unspecified
                 )
                 CardLayout(
                     modifier = Modifier
@@ -56,7 +56,7 @@ fun Tests( navigation: NavHostController) {
                     label = stringResource(id = R.string.tools) + " 2",
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
-                    Textcolor = Color.Unspecified
+                    textcolor = Color.Unspecified
                 )
             }
         )

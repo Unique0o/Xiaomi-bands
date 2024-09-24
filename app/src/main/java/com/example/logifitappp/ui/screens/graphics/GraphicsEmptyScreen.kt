@@ -24,10 +24,12 @@ import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Orange170
+import com.example.logifitappp.viewmodel.views.graphics.GraphicsViewModel
 
 @Composable
 fun GraphicsEmptyScreen(
-    navigation: NavHostController
+    navigation: NavHostController,
+    viewModel: GraphicsViewModel
 ) {
     Column(
         modifier = Modifier
@@ -35,10 +37,7 @@ fun GraphicsEmptyScreen(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         CardHeader(
-            userName = "MARIA MERCEDES",
-            userType = "PREMIUM",
-            profileImageRes = R.drawable.user1,
-            plan = "PREMIUM",
+            user = viewModel.mockUsers[0],
             onNotificationClick = { },
             bodyComponent = {}
         )
@@ -94,9 +93,7 @@ fun GraphicsEmptyScreen(
             }
 
         )
-
     }
-
 }
 
 
@@ -104,7 +101,10 @@ fun GraphicsEmptyScreen(
 @Composable
 fun GraphicsEmptyPreview() {
     LogifitApppTheme {
-        GraphicsEmptyScreen(navigation = NavHostController(LocalContext.current))
+        GraphicsEmptyScreen(
+            navigation = NavHostController(LocalContext.current),
+            GraphicsViewModel()
+        )
     }
 }
 
@@ -112,7 +112,10 @@ fun GraphicsEmptyPreview() {
 @Composable
 fun GraphicsEmptyDarkPreview() {
     LogifitApppTheme(darkTheme = true) {
-        GraphicsEmptyScreen(navigation = NavHostController(LocalContext.current))
+        GraphicsEmptyScreen(
+            navigation = NavHostController(LocalContext.current),
+            GraphicsViewModel()
+        )
     }
 }
 

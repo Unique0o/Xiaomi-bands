@@ -25,11 +25,13 @@ import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.ui.components.titles.IconTitle
+import com.example.logifitappp.viewmodel.views.graphics.GraphicsViewModel
 
 
 @Composable
 fun Graphics(
-    navigation: NavHostController
+    navigation: NavHostController,
+    viewModel: GraphicsViewModel
 ) {
     Column(
         modifier = Modifier
@@ -37,11 +39,8 @@ fun Graphics(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         CardHeader(
-            userName = "MARIA MERCEDES",
-            userType = "PREMIUM",
-            profileImageRes = R.drawable.user1,
+            user = viewModel.mockUsers[0],
             onNotificationClick = { },
-            plan = "PREMIUM",
             bodyComponent = {}
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -112,7 +111,10 @@ fun Graphics(
 @Composable
 fun GraphicsPreview() {
     LogifitApppTheme {
-        Graphics( navigation = NavHostController(LocalContext.current))
+        Graphics(
+            navigation = NavHostController(LocalContext.current),
+            GraphicsViewModel()
+        )
     }
 }
 
@@ -120,6 +122,9 @@ fun GraphicsPreview() {
 @Composable
 fun GraphicsDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        Graphics(navigation = NavHostController(LocalContext.current))
+        Graphics(
+            navigation = NavHostController(LocalContext.current),
+            GraphicsViewModel()
+        )
     }
 }

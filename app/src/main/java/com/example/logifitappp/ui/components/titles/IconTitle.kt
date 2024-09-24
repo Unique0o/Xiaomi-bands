@@ -35,7 +35,7 @@ fun IconTitle(
     icon: ImageVector,
     text: String,
     iconPosition: IconPosition = IconPosition.LEADING,
-    iconColor: Color = Color.Black,
+    iconColor: Color = MaterialTheme.colorScheme.inverseSurface,
     textColor: Color = MaterialTheme.colorScheme.inverseSurface,
     iconSize: Int = 24,
     textTypography: TextStyle = MaterialTheme.typography.displayLarge

@@ -37,7 +37,7 @@ fun CardLayout(
     label: String,
     elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     labelStyle: TextStyle = TextStyle.Default,
-    Textcolor: Color = MaterialTheme.colorScheme.primary,
+    textcolor: Color = MaterialTheme.colorScheme.primary,
     fontWeight: FontWeight = FontWeight.Normal,
     style: Modifier = Modifier,
     fontSize: TextUnit = 16.sp,
@@ -83,12 +83,12 @@ fun CardLayout(
                     Column {
                         Text(
                             text = label,
-                            style = labelStyle.copy(color = Textcolor),
+                            style = labelStyle.copy(color = textcolor),
                             fontSize = labelStyle.fontSize,
                             fontWeight = labelStyle.fontWeight
                         )
                         if(titleAlternateText != null){
-                            Row() {
+                            Row {
                                 Text(
                                     text = titleAlternateText,
                                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)

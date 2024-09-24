@@ -148,7 +148,5 @@ fun SleepTypeInfo(
 @Preview
 @Composable
 fun SleepSessionCardDarkModePreview(){
-    LogifitApppTheme() {
-        SleepSessionCard()
-    }
+    LogifitApppTheme {SleepSessionCard()}
 }

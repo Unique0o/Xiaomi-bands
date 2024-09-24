@@ -43,7 +43,7 @@ fun StepsDetailEmptyScreen(navigation: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun StepsDetailEmptyPreview() {
-    LogifitApppTheme(){ StepsDetailEmptyScreen(rememberNavController()) }
+    LogifitApppTheme{ StepsDetailEmptyScreen(rememberNavController()) }
 }
 @Preview
 @Composable
