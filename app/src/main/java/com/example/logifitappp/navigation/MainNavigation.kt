@@ -30,7 +30,7 @@ fun MainNavigation(
     navigation: NavHostController = rememberNavController()
 ) {
     val isAdmin by loginViewModel.isAdmin.collectAsState()
-    Log.d("MainNavigation", "Recomposition triggered. Is admin: $isAdmin")
+
     NavHost(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen

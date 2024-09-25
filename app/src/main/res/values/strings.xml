@@ -169,4 +169,26 @@
     <string name="error_invalid_password">Incorrect password</string>
     <string name="error_general">An error has occurred. Please try again.</string>
     <string name="password_recovery_success">A recovery email has been sent to reset your password.</string>
+
+    <!-- Onboarding Strings -->
+    <string name="omit">Skip</string>
+    <string name="activate_bluetooth">Activate Bluetooth</string>
+
+    <!-- Administrator Onboarding -->
+    <string name="first_administrator_onboarding_top_message">Welcome to Logifit\nManage your team efficiently</string>
+    <string name="first_administrator_onboarding_bottom_message">Monitor your team\'s performance and ensure their well-being</string>
+
+    <string name="second_administrator_onboarding_top_message">Real-time data at your fingertips</string>
+    <string name="second_administrator_onboarding_bottom_message">Get instant insights on your team\'s activities and productivity</string>
+
+    <string name="third_administrator_onboarding_top_message">Connect and optimize</string>
+
+    <!-- Operator Onboarding -->
+    <string name="first_operator_onboarding_top_message">Welcome to Logifit\nYour personal work assistant</string>
+    <string name="first_operator_onboarding_bottom_message">Track your activities and improve your work-life balance</string>
+
+    <string name="second_operator_onboarding_top_message">Stay connected with your team</string>
+    <string name="second_operator_onboarding_bottom_message">Communicate easily and efficiently with your colleagues</string>
+
+    <string name="third_operator_onboarding_top_message">Optimize your performance</string>
 </resources>

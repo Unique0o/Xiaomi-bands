@@ -171,4 +171,26 @@
     <string name="error_general">Ha ocurrido un error. Por favor, intenta nuevamente.</string>
 
     <string name="password_recovery_success">Se ha enviado un correo para recuperar tu contraseña</string>
+
+    <!-- Onboarding Strings -->
+    <string name="omit">Omitir</string>
+    <string name="activate_bluetooth">Activar Bluetooth</string>
+
+    <!-- Administrator Onboarding -->
+    <string name="first_administrator_onboarding_top_message">Bienvenido a Logifit\nGestiona tu equipo eficientemente</string>
+    <string name="first_administrator_onboarding_bottom_message">Monitorea el rendimiento de tu equipo y asegura su bienestar</string>
+
+    <string name="second_administrator_onboarding_top_message">Datos en tiempo real al alcance de tu mano</string>
+    <string name="second_administrator_onboarding_bottom_message">Obtén información instantánea sobre las actividades y productividad de tu equipo</string>
+
+    <string name="third_administrator_onboarding_top_message">Conéctate y optimiza</string>
+
+    <!-- Operator Onboarding -->
+    <string name="first_operator_onboarding_top_message">Bienvenido a Logifit\nTu asistente personal de trabajo</string>
+    <string name="first_operator_onboarding_bottom_message">Rastrea tus actividades y mejora tu equilibrio trabajo-vida</string>
+
+    <string name="second_operator_onboarding_top_message">Mantente conectado con tu equipo</string>
+    <string name="second_operator_onboarding_bottom_message">Comunícate fácil y eficientemente con tus colegas</string>
+
+    <string name="third_operator_onboarding_top_message">Optimiza tu rendimiento</string>
 </resources>
