@@ -2,17 +2,24 @@ package com.example.logifitappp.ui.screens.password_recovery
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.AlternateEmail
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -29,9 +36,10 @@ import com.example.logifitappp.viewmodel.views.PasswordRecoveryViewModel
 fun PasswordRecoveryView(
     navigation: NavHostController
 ) {
-    val passwordRecoveryViewModel: PasswordRecoveryViewModel = viewModel()
+    val passwordRecoveryViewModel: PasswordRecoveryViewModel = hiltViewModel()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val uiState = passwordRecoveryViewModel.uiState
 
     SimplePage(
         content = {
@@ -53,17 +61,34 @@ fun PasswordRecoveryView(
                     passwordRecoveryViewModel.updateUsername(it)
                 },
                 placeholder = stringResource(id = R.string.placeholder_user),
-                value = passwordRecoveryViewModel.username
+                value = passwordRecoveryViewModel.username,
+                error = uiState.error
             )
-
+            if (uiState.isSuccess) {
+                Text(
+                    text = uiState.successMessage ?: stringResource(id = R.string.password_recovery_success),
+                    color = MaterialTheme.colorScheme.primary,
+                    typography = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
 
             IconButton(
                 icon = Icons.AutoMirrored.Rounded.Send,
-                onClick = {},
+                onClick = { passwordRecoveryViewModel.recoverPassword() },
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.button_send)
             )
+            if (uiState.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .height(24.dp)
+                        .padding(top = 16.dp)
+                )
+            }
         },
 
         topBar = {

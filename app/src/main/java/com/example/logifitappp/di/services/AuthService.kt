@@ -2,7 +2,10 @@ package com.example.logifitappp.di.services
 
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.di.repositories.AuthRepository
+import com.example.logifitappp.di.services.requests.FirebaseKeyRequest
 import com.example.logifitappp.di.services.requests.LoginRequest
+import com.example.logifitappp.di.services.requests.PasswordRecoveryRequest
+import com.example.logifitappp.di.services.responses.GeneralResponse
 import com.example.logifitappp.di.services.responses.toUser
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
@@ -28,6 +31,30 @@ class AuthService @Inject constructor(private val authRepository: AuthRepository
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
         } catch (e: Exception) {
             e.printStackTrace()
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun recoverPassword(email: String): GeneralResponse = withContext(Dispatchers.IO) {
+        try {
+            val response = authRepository.recoverPassword(PasswordRecoveryRequest(email))
+            if (!response.isSuccessful) {
+                throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
+            }
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun updateNotificationToken(userId: Int, firebaseKey: String): GeneralResponse = withContext(Dispatchers.IO) {
+        try {
+            val response = authRepository.updateNotificationToken(userId, FirebaseKeyRequest(firebaseKey))
+            if (!response.isSuccessful) {
+                throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
+            }
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        } catch (e: Exception) {
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         }
     }
