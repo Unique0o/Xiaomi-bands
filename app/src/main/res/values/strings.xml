@@ -168,5 +168,5 @@
     <string name="error_unregistered_user">User not registered</string>
     <string name="error_invalid_password">Incorrect password</string>
     <string name="error_general">An error has occurred. Please try again.</string>
-
+    <string name="password_recovery_success">A recovery email has been sent to reset your password.</string>
 </resources>

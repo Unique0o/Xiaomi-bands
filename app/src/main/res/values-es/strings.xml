@@ -169,4 +169,6 @@
     <string name="error_unregistered_user">Usuario no registrado</string>
     <string name="error_invalid_password">Contraseña incorrecta</string>
     <string name="error_general">Ha ocurrido un error. Por favor, intenta nuevamente.</string>
+
+    <string name="password_recovery_success">Se ha enviado un correo para recuperar tu contraseña</string>
 </resources>
