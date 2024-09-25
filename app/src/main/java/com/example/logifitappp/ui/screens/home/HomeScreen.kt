@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,8 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.CardHeader
@@ -28,10 +25,11 @@ import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    navigation: NavHostController
+    viewModel: HomeViewModel
 ) {
     Column(
         modifier = Modifier
@@ -39,11 +37,8 @@ fun HomeScreen(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         CardHeader(
-            userName = "MARIA MERCEDES",
-            userType = "PREMIUM",
-            profileImageRes = R.drawable.user1,
+            user = viewModel.mockUsers[0],
             onNotificationClick = { },
-            plan = "PREMIUM",
             bodyComponent = {
                 CardLayout(bodyComponent = { /*TODO*/ },
                     icon = painterResource(id = R.drawable.ic_clock),
@@ -109,7 +104,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     LogifitApppTheme {
-        HomeScreen(rememberNavController())
+        HomeScreen(HomeViewModel())
 
     }
 }
@@ -118,7 +113,7 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeScreen(rememberNavController())
+        HomeScreen(HomeViewModel())
 
     }
 }

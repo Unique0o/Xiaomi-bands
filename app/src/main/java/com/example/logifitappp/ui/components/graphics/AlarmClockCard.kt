@@ -114,8 +114,6 @@ fun AlarmRow(
 @Preview
 @Composable
 fun AlarmClockCardPreview() {
-    LogifitApppTheme() {
-        AlarmClockCard()
-    }
+    LogifitApppTheme { AlarmClockCard()}
 }
 

@@ -19,7 +19,6 @@ fun EmptyInfoGraphDetail(
     title: String,
     titleGraph: String,
     timeRange: String,
-    backgroundColor: Color = Stone470,
     textColor: Color = Blue690
 ) {
     Column(

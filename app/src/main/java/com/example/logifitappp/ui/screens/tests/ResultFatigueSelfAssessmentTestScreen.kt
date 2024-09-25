@@ -63,7 +63,7 @@ fun ResultFatigueSelfAssessmentTestScreen(
                     CardLayout(
                         bodyComponent = { /*TODO*/ },
                         label = stringResource(id = R.string.user_can_perform),
-                        Textcolor = MaterialTheme.colorScheme.inverseSurface,
+                        textcolor = MaterialTheme.colorScheme.inverseSurface,
                         cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
                         elevation= CardDefaults.cardElevation(defaultElevation = 1.dp)
                     )
@@ -71,14 +71,14 @@ fun ResultFatigueSelfAssessmentTestScreen(
                     CardLayout(
                         bodyComponent = { /*TODO*/ },
                         label = stringResource(id = R.string.no_drive),
-                        Textcolor = MaterialTheme.colorScheme.inverseSurface,
+                        textcolor = MaterialTheme.colorScheme.inverseSurface,
                         cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
                         elevation= CardDefaults.cardElevation(defaultElevation = 1.dp)
                     )
                     CardLayout(
                         bodyComponent = { /*TODO*/ },
                         label = stringResource(id = R.string.medical_evaluation),
-                        Textcolor = MaterialTheme.colorScheme.inverseSurface,
+                        textcolor = MaterialTheme.colorScheme.inverseSurface,
                         cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
                         elevation= CardDefaults.cardElevation(defaultElevation = 1.dp)
                     )
