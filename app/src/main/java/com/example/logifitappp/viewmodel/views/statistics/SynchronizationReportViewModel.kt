@@ -3,12 +3,15 @@ package com.example.logifitappp.viewmodel.views.statistics
 import androidx.lifecycle.*
 import com.example.logifitappp.R
 import com.example.logifitappp.data.models.UserModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.util.*
+import javax.inject.Inject
 
-class SynchronizationReportViewModel : ViewModel() {
+@HiltViewModel
+class SynchronizationReportViewModel @Inject constructor(): ViewModel() {
     private val _teamMembers = MutableLiveData<List<UserModel>>()
     val teamMembers: LiveData<List<UserModel>> get() = _teamMembers
 

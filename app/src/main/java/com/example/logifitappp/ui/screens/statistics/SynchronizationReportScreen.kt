@@ -38,6 +38,7 @@ import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.theme.Blue690
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.logifitappp.ui.components.titles.IconPosition
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
@@ -46,7 +47,7 @@ import com.example.logifitappp.viewmodel.views.statistics.SynchronizationReportV
 
 
 @Composable
-fun SynchronizationReportScreen(viewModel: SynchronizationReportViewModel) {
+fun SynchronizationReportScreen(viewModel: SynchronizationReportViewModel = hiltViewModel()) {
 
     val filteredMembers by viewModel.filteredMembers.observeAsState(emptyList())
     val dropdownOptions = viewModel.dropdownData
