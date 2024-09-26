@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App.Companion.context
-import com.example.logifitappp.di.services.AuthService
+import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import dagger.hilt.android.lifecycle.HiltViewModel

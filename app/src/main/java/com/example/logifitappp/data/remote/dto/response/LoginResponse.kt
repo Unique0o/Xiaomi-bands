@@ -1,4 +1,4 @@
-package com.example.logifitappp.di.services.responses
+package com.example.logifitappp.data.remote.dto.response
 
 import com.example.logifitappp.data.models.UserModel
 import com.google.gson.annotations.SerializedName

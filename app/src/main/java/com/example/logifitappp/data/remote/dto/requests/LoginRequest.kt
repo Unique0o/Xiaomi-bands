@@ -1,4 +1,4 @@
-package com.example.logifitappp.di.services.requests
+package com.example.logifitappp.data.remote.dto.requests
 
 data class LoginRequest(
     val nick: String,

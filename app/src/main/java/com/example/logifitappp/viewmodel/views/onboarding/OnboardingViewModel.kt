@@ -2,6 +2,7 @@ package com.example.logifitappp.viewmodel.views.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logifitappp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +40,3 @@ class OnboardingViewModel @Inject constructor(
     }
 }
 
-interface UserRepository {
-    suspend fun isUserAdmin(): Boolean
-}

@@ -1,6 +1,5 @@
 package com.example.logifitappp.viewmodel.views
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App.Companion.context
-import com.example.logifitappp.data.models.UserModel
-import com.example.logifitappp.di.services.AuthService
-import com.example.logifitappp.di.services.requests.LoginRequest
+import com.example.logifitappp.data.remote.dto.requests.LoginRequest
+import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import com.example.logifitappp.viewmodel.views.Authentication.LoginUiState
@@ -19,12 +18,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.bouncycastle.cms.RecipientId.password
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authService: AuthService
+    private val loginUseCase: LoginUseCase
 
 ) : ViewModel() {
     var isLogin by mutableStateOf(false)
@@ -42,6 +40,7 @@ class LoginViewModel @Inject constructor(
     private val _isAdmin = MutableStateFlow(false)
     val isAdmin: StateFlow<Boolean> = _isAdmin
 
+
     fun login(onLoginSuccess: (Boolean) -> Unit) {
         if (!validateInputsNotEmpty()) {
             return
@@ -50,7 +49,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
             try {
-                val user = authService.login(LoginRequest(username.text, password.text))
+                val user = loginUseCase(username.text, password.text)
                 val adminStatus = user.isAdmin()
                 _isAdmin.value = adminStatus
                 uiState = uiState.copy(
@@ -64,6 +63,7 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
     private fun handleLoginError(e: HttpConsumerException) {
         println("Error code: ${e.getStatus().code()}")
         val (usernameError, passwordError) = when (e.getStatus()) {
