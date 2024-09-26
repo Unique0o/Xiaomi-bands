@@ -1,12 +1,12 @@
-package com.example.logifitappp.di.services
+package com.example.logifitappp.domain.service
 
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.di.repositories.AuthRepository
-import com.example.logifitappp.di.services.requests.FirebaseKeyRequest
-import com.example.logifitappp.di.services.requests.LoginRequest
-import com.example.logifitappp.di.services.requests.PasswordRecoveryRequest
-import com.example.logifitappp.di.services.responses.GeneralResponse
-import com.example.logifitappp.di.services.responses.toUser
+import com.example.logifitappp.data.remote.dto.requests.FirebaseKeyRequest
+import com.example.logifitappp.data.remote.dto.requests.LoginRequest
+import com.example.logifitappp.data.remote.dto.requests.PasswordRecoveryRequest
+import com.example.logifitappp.data.remote.dto.response.GeneralResponse
+import com.example.logifitappp.data.remote.dto.response.toUser
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import kotlinx.coroutines.Dispatchers
