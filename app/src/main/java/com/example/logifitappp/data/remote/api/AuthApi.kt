@@ -3,7 +3,6 @@ package com.example.logifitappp.data.remote.api
 import com.example.logifitappp.data.remote.dto.requests.LoginRequest
 import com.example.logifitappp.data.remote.dto.requests.PasswordRecoveryRequest
 import com.example.logifitappp.data.remote.dto.requests.FirebaseKeyRequest
-import com.example.logifitappp.data.remote.dto.response.UserResponse
 import com.example.logifitappp.data.remote.dto.response.GeneralResponse
 import com.example.logifitappp.data.remote.dto.response.LoginResponse
 import retrofit2.Response
