@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App.Companion.context
 import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordRecoveryViewModel @Inject constructor(
-    private val authService: AuthService
+    private val recoverPasswordUseCase: RecoverPasswordUseCase
 ) : ViewModel() {
 
     var username by mutableStateOf(TextFieldValue(""))
@@ -38,7 +39,7 @@ class PasswordRecoveryViewModel @Inject constructor(
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
             try {
-                val response = authService.recoverPassword(username.text)
+                val response = recoverPasswordUseCase(username.text)
                 uiState = uiState.copy(
                     isLoading = false,
                     isSuccess = true,
@@ -55,6 +56,7 @@ class PasswordRecoveryViewModel @Inject constructor(
             }
         }
     }
+
 
     private fun validateUsername(): Boolean {
         return if (username.text.isBlank()) {

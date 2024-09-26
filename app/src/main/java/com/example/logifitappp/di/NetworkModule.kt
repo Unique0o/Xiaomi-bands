@@ -1,12 +1,12 @@
 package com.example.logifitappp.di
 
 import com.example.logifitappp.data.repository.UserRepositoryImpl
-import com.example.logifitappp.di.repositories.AuthRepository
+import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.LoginUseCase
+import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,5 +54,10 @@ object NetworkModule {
     @Singleton
     fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository {
         return userRepositoryImpl
+    }
+
+    @Provides
+    fun provideRecoverPasswordUseCase(authService: AuthService): RecoverPasswordUseCase {
+        return RecoverPasswordUseCase(authService)
     }
 }
