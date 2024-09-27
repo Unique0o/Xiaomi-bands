@@ -48,9 +48,6 @@ object NetworkModule {
     @Singleton
     fun provideAuthRepositoryImpl(authApi: AuthApi): AuthRepositoryImpl = AuthRepositoryImpl(authApi)
 
-    @Provides
-    @Singleton
-    fun provideAuthRepositoryImpl(authApi: AuthApi): AuthRepositoryImpl = AuthRepositoryImpl(authApi)
 
     @Provides
     @Singleton
