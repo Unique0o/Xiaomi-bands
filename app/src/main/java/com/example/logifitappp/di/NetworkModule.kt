@@ -1,5 +1,7 @@
 package com.example.logifitappp.di
 
+import com.example.logifitappp.data.remote.api.AuthApi
+import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.UserRepository
@@ -38,11 +40,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(retrofit: Retrofit): AuthRepository = retrofit.create(AuthRepository::class.java)
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 
     @Provides
     @Singleton
-    fun provideAuthService(authRepository: AuthRepository) = AuthService(authRepository)
+    fun provideAuthRepositoryImpl(authApi: AuthApi): AuthRepositoryImpl = AuthRepositoryImpl(authApi)
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository = authRepositoryImpl
+
+
+    @Provides
+    @Singleton
+    fun provideAuthService(authRepository: AuthRepository): AuthService = AuthService(authRepository)
 
     @Provides
     @Singleton
@@ -57,6 +68,7 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideRecoverPasswordUseCase(authService: AuthService): RecoverPasswordUseCase {
         return RecoverPasswordUseCase(authService)
     }
