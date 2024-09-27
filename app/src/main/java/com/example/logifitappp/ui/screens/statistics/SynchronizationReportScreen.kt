@@ -47,8 +47,8 @@ import com.example.logifitappp.viewmodel.views.statistics.SynchronizationReportV
 
 
 @Composable
-fun SynchronizationReportScreen(viewModel: SynchronizationReportViewModel = hiltViewModel()) {
-
+fun SynchronizationReportScreen() {
+    val viewModel: SynchronizationReportViewModel = hiltViewModel()
     val filteredMembers by viewModel.filteredMembers.observeAsState(emptyList())
     val dropdownOptions = viewModel.dropdownData
 
@@ -214,14 +214,12 @@ fun SynchronizationReportScreen(viewModel: SynchronizationReportViewModel = hilt
 @Composable
 fun SynchronizationReportScreenPreview() {
     LogifitApppTheme {
-        SynchronizationReportScreen(SynchronizationReportViewModel())
-    }
+        SynchronizationReportScreen()}
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SynchronizationReportScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        SynchronizationReportScreen(SynchronizationReportViewModel())
-    }
+        SynchronizationReportScreen() }
 }
