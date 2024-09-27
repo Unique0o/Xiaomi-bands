@@ -50,7 +50,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideAuthRepositoryImpl(authApi: AuthApi): AuthRepositoryImpl = AuthRepositoryImpl(authApi)
+
+    @Provides
+    @Singleton
     fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository = authRepositoryImpl
+
 
     @Provides
     @Singleton
@@ -69,6 +74,7 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideRecoverPasswordUseCase(authService: AuthService): RecoverPasswordUseCase {
         return RecoverPasswordUseCase(authService)
     }
