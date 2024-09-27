@@ -169,6 +169,8 @@
     <string name="error_invalid_password">Incorrect password</string>
     <string name="error_general">An error has occurred. Please try again.</string>
     <string name="password_recovery_success">A recovery email has been sent to reset your password.</string>
+    <string name="server_error_message">Server error. Please try again later.</string>
+    <string name="unknown_error_message">An unknown error has occurred.</string>
 
     <!-- Onboarding Strings -->
     <string name="omit">Skip</string>

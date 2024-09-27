@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App.Companion.context
-import com.example.logifitappp.data.remote.dto.requests.LoginRequest
-import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
@@ -50,6 +48,7 @@ class LoginViewModel @Inject constructor(
             uiState = uiState.copy(isLoading = true, error = null)
             try {
                 val user = loginUseCase(username.text, password.text)
+                println("User: $user")
                 val adminStatus = user.isAdmin()
                 _isAdmin.value = adminStatus
                 uiState = uiState.copy(
@@ -78,6 +77,7 @@ class LoginViewModel @Inject constructor(
             passwordError = passwordError,
             error = if (usernameError == null && passwordError == null) context.getString(R.string.error_general) else null
         )
+
     }
 
     private fun validateInputsNotEmpty(): Boolean {
