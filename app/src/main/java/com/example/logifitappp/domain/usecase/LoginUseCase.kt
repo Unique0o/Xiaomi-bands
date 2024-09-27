@@ -6,7 +6,7 @@ import com.example.logifitappp.domain.service.AuthService
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(private val authService: AuthService) {
-    suspend operator fun invoke(username: String, password: String): UserModel {
-        return authService.login(LoginRequest(username, password))
+    suspend operator fun invoke(nick: String, password: String): UserModel {
+        return authService.login(LoginRequest(nick, password))
     }
 }

@@ -171,7 +171,8 @@
     <string name="error_general">Ha ocurrido un error. Por favor, intenta nuevamente.</string>
 
     <string name="password_recovery_success">Se ha enviado un correo para recuperar tu contraseña</string>
-
+    <string name="server_error_message">Error del servidor. Por favor, inténtelo más tarde</string>
+    <string name="unknown_error_message">Ha ocurrido un error desconocido</string>
     <!-- Onboarding Strings -->
     <string name="omit">Omitir</string>
     <string name="activate_bluetooth">Activar Bluetooth</string>

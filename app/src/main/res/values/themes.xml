@@ -3,5 +3,6 @@
     <style name="Theme.LogifitAppp" parent="Theme.SplashScreen" >
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+
     </style>
 </resources>
