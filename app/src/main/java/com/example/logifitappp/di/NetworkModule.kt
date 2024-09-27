@@ -22,6 +22,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
     @Provides
     @Singleton
     fun provideOkHttpClient() = OkHttpClient.Builder()
@@ -38,9 +39,14 @@ object NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+
     @Provides
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthRepositoryImpl(authApi: AuthApi): AuthRepositoryImpl = AuthRepositoryImpl(authApi)
 
     @Provides
     @Singleton
