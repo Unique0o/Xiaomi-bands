@@ -55,7 +55,6 @@ fun HomeScreen(
             user = viewModel.mockUsers[0],
             onNotificationClick = { },
             onProfileImageClick = { isSideMenuOpen = true },
-            plan = "PREMIUM",
             bodyComponent = {
                 CardLayout(bodyComponent = { /*TODO*/ },
                     icon = painterResource(id = R.drawable.ic_clock),
