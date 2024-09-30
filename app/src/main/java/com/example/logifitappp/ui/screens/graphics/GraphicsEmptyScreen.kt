@@ -39,6 +39,7 @@ fun GraphicsEmptyScreen(
         CardHeader(
             user = viewModel.mockUsers[0],
             onNotificationClick = { },
+            onProfileImageClick = {},
             bodyComponent = {}
         )
         Spacer(modifier = Modifier.height(8.dp))

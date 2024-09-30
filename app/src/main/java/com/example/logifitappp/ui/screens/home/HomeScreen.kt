@@ -6,8 +6,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,6 +31,8 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.home.CardItemButton
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
+import com.example.logifitappp.ui.components.menu.MenuItem
+import com.example.logifitappp.ui.components.menu.SideMenu
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
@@ -31,14 +44,18 @@ import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 fun HomeScreen(
     viewModel: HomeViewModel
 ) {
+    var isSideMenuOpen by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
+
         CardHeader(
             user = viewModel.mockUsers[0],
             onNotificationClick = { },
+            onProfileImageClick = { isSideMenuOpen = true },
+            plan = "PREMIUM",
             bodyComponent = {
                 CardLayout(bodyComponent = { /*TODO*/ },
                     icon = painterResource(id = R.drawable.ic_clock),
@@ -97,8 +114,24 @@ fun HomeScreen(
 
         )
     }
-
+    // SideMenu
+    SideMenu(
+        isOpen = isSideMenuOpen,
+        onClose = { isSideMenuOpen = false },
+        name = "MARIA MERCEDES",
+        role = "Operador en LOGIFIT",
+        avatarResId = R.drawable.user1,
+        menuItems = listOf(
+            MenuItem(Icons.Default.Person, "Información personal") { /* TODO */ },
+            MenuItem(Icons.Default.Work, "Información laboral") { /* TODO */ },
+            MenuItem(Icons.Default.Favorite, "Información de salud") { /* TODO */ },
+            MenuItem(Icons.Default.Help, "Ayuda") { /* TODO */ },
+            MenuItem(Icons.Default.Description, "Términos y condiciones") { /* TODO */ },
+            MenuItem(Icons.Default.ExitToApp, "Cerrar sesión") { /* TODO */ }
+        )
+    )
 }
+
 
 @Preview(showBackground = true)
 @Composable

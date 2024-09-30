@@ -2,6 +2,7 @@ package com.example.logifitappp.ui.components.headers
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +27,7 @@ fun CardHeader(
     user: UserModel,
     modifier: Modifier = Modifier,
     onNotificationClick: () -> Unit,
+    onProfileImageClick: () -> Unit,
     bodyComponent: @Composable () -> Unit,
 ) {
     val licenseInfo = getLicenseInfo(user.license)
@@ -54,6 +56,7 @@ fun CardHeader(
                     modifier = Modifier
                         .size(60.dp)
                         .clip(CircleShape)
+                        .clickable(onClick = onProfileImageClick)
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -95,4 +98,18 @@ fun CardHeader(
             bodyComponent()
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardHeaderPreview() {
+    CardHeader(
+        userName = "MARIA MERCEDES",
+        userType = "PREMIUM",
+        profileImageRes = R.drawable.user1,
+        onNotificationClick = { },
+        onProfileImageClick = { },
+        plan = "PREMIUM",
+        bodyComponent = {}
+    )
 }

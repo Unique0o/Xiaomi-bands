@@ -40,6 +40,8 @@ fun HomeDeviceConnectedScreen(viewModel: HomeViewModel) {
         CardHeader(
             user = viewModel.mockUsers[0],
             onNotificationClick = { },
+            onProfileImageClick = {},
+            plan = "PREMIUM",
             bodyComponent = {
                 CardLayout(bodyComponent = { /*TODO*/ },
                     icon = painterResource(id = R.drawable.ic_clock),
