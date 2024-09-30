@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,6 +21,8 @@ import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
+import com.example.logifitappp.viewmodel.views.graphics.GraphicsViewModel
+import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
 @Composable
 fun MainNavigation(
@@ -48,11 +49,11 @@ fun MainNavigation(
             if (isAdmin) {
                 HomeAdminScreen(navigation)
             } else {
-                HomeScreen(navigation)
+                HomeScreen(HomeViewModel())
             }
         }
         composable<MainRoutes.Graphics> {
-            GraphicsEmptyScreen(navigation)
+            GraphicsEmptyScreen(navigation, GraphicsViewModel())
         }
         composable<MainRoutes.AdditionalInformationPicture> { AdditionalInformationPicture(navigation) }
     }

@@ -21,13 +21,13 @@ import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.home.FatigueTestItem
 import com.example.logifitappp.ui.components.home.TitleSmartBandHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
 @Composable
-fun HomeTestScreen() {
+fun HomeTestScreen(viewModel: HomeViewModel) {
 
     Column(
         modifier = Modifier
@@ -35,9 +35,7 @@ fun HomeTestScreen() {
             .background(MaterialTheme.colorScheme.surface)
     ) {
         CardHeader(
-            userName = "MARIA MERCEDES",
-            userType = "PREMIUM",
-            profileImageRes = R.drawable.user1,
+            user = viewModel.mockUsers[0],
             onNotificationClick = { },
             onProfileImageClick = {},
             plan = "PREMIUM",
@@ -102,7 +100,7 @@ fun HomeTestScreen() {
 @Composable
 fun HomeTestScreenPreview() {
     LogifitApppTheme {
-        HomeTestScreen()
+        HomeTestScreen(HomeViewModel())
 
     }
 }
@@ -111,7 +109,7 @@ fun HomeTestScreenPreview() {
 @Composable
 fun HomeTestDarkModeScreenPreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeTestScreen()
+        HomeTestScreen(HomeViewModel())
 
     }
 }

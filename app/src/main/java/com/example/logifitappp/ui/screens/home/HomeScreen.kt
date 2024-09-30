@@ -26,8 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.CardHeader
@@ -40,10 +38,11 @@ import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    navigation: NavHostController
+    viewModel: HomeViewModel
 ) {
     var isSideMenuOpen by remember { mutableStateOf(false) }
     Column(
@@ -53,9 +52,7 @@ fun HomeScreen(
     ) {
 
         CardHeader(
-            userName = "MARIA MERCEDES",
-            userType = "PREMIUM",
-            profileImageRes = R.drawable.user1,
+            user = viewModel.mockUsers[0],
             onNotificationClick = { },
             onProfileImageClick = { isSideMenuOpen = true },
             plan = "PREMIUM",
@@ -140,7 +137,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     LogifitApppTheme {
-        HomeScreen(rememberNavController())
+        HomeScreen(HomeViewModel())
 
     }
 }
@@ -149,7 +146,7 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeScreen(rememberNavController())
+        HomeScreen(HomeViewModel())
 
     }
 }

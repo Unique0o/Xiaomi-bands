@@ -18,7 +18,7 @@ import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
 fun HeartRateDetailEmptyScreen(navigation: NavHostController) {
-    val HeartData = List(24) { (1..50).random() }
+    val heartData = List(24) { (1..50).random() }
 
     SimplePage(
         topBar = {
@@ -36,7 +36,7 @@ fun HeartRateDetailEmptyScreen(navigation: NavHostController) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     EmptyCardHour(
-                        steps = HeartData,
+                        steps = heartData,
                         maxValue = 50,
                         barColor = Orange170,
                         accentColor = Rose120,

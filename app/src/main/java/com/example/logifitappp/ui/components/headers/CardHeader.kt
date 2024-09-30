@@ -1,7 +1,6 @@
 package com.example.logifitappp.ui.components.headers
 
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,21 +17,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.domain.utils.getLicenseInfo
 
 @Composable
 fun CardHeader(
-    userName: String,
-    userType: String,
-    plan: String,
+    user: UserModel,
     modifier: Modifier = Modifier,
-    @DrawableRes profileImageRes: Int,
     onNotificationClick: () -> Unit,
     onProfileImageClick: () -> Unit,
     bodyComponent: @Composable () -> Unit,
 ) {
+    val licenseInfo = getLicenseInfo(user.license)
+
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -51,7 +50,7 @@ fun CardHeader(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = profileImageRes),
+                    painter = painterResource(id = R.drawable.user1),
                     contentDescription = "Profile picture",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -68,19 +67,19 @@ fun CardHeader(
                         style = MaterialTheme.typography.bodySmall
                     )
                     Text(
-                        text = userName.uppercase(),
+                        text = "${user.firstName} ${user.lastName}".uppercase(),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            painter = painterResource(id =R.drawable.ic_crown),
+                            painter = painterResource(id =licenseInfo.icon),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             modifier = Modifier.size(12.dp)
                         )
                         Text(
-                            text = plan,
+                            text = licenseInfo.label,
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Bold,

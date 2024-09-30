@@ -141,7 +141,7 @@ fun ChartGrids() {
 }
 
 @Composable
-fun StepCard(modifier: Modifier = Modifier,  steps: List<Int>) {
+fun StepCard(steps: List<Int>) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

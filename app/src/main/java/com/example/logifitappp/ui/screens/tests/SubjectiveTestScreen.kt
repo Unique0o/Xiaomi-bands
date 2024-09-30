@@ -44,7 +44,7 @@ fun SubjectiveTestScreen( navigation: NavHostController) {
                     label = stringResource(id = R.string.title_test_fatiga),
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
-                    Textcolor = Color.Unspecified
+                    textcolor = Color.Unspecified
                 )
                 CardLayout(
                     modifier = Modifier
@@ -56,7 +56,7 @@ fun SubjectiveTestScreen( navigation: NavHostController) {
                     label = "Test",
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     cardBackgroundColor = MaterialTheme.colorScheme.surfaceContainer,
-                    Textcolor = Color.Unspecified
+                    textcolor = Color.Unspecified
                 )
             }
         )

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,9 +27,10 @@ import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
 @Composable
-fun HomeDeviceConnectedScreen() {
+fun HomeDeviceConnectedScreen(viewModel: HomeViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,9 +38,7 @@ fun HomeDeviceConnectedScreen() {
     ) {
         
         CardHeader(
-            userName = "MARIA MERCEDES",
-            userType = "PREMIUM",
-            profileImageRes = R.drawable.user1,
+            user = viewModel.mockUsers[0],
             onNotificationClick = { },
             onProfileImageClick = {},
             plan = "PREMIUM",
@@ -103,7 +101,7 @@ fun HomeDeviceConnectedScreen() {
 @Composable
 fun HomeDeviceConnectedScreenPreview() {
     LogifitApppTheme {
-        HomeDeviceConnectedScreen()
+        HomeDeviceConnectedScreen(HomeViewModel())
 
     }
 }
@@ -112,7 +110,7 @@ fun HomeDeviceConnectedScreenPreview() {
 @Composable
 fun HomeDeviceConnectedScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeDeviceConnectedScreen()
+        HomeDeviceConnectedScreen(HomeViewModel())
 
     }
 }

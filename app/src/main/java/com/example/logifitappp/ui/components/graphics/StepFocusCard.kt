@@ -117,7 +117,7 @@ fun StepChart(
 
 
 @Composable
-fun StepCard(modifier: Modifier = Modifier, steps: List<Int>, highlightIndex: Int) {
+fun StepCard(steps: List<Int>, highlightIndex: Int) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

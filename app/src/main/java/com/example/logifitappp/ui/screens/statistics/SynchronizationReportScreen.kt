@@ -38,7 +38,7 @@ import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.theme.Blue690
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.logifitappp.ui.components.titles.IconPosition
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
@@ -48,9 +48,9 @@ import com.example.logifitappp.viewmodel.views.statistics.SynchronizationReportV
 
 @Composable
 fun SynchronizationReportScreen() {
-    val reportViewModel: SynchronizationReportViewModel = viewModel()
-    val filteredMembers by reportViewModel.filteredMembers.observeAsState(emptyList())
-    val dropdownOptions = reportViewModel.dropdownData
+    val viewModel: SynchronizationReportViewModel = hiltViewModel()
+    val filteredMembers by viewModel.filteredMembers.observeAsState(emptyList())
+    val dropdownOptions = viewModel.dropdownData
 
     var showNoFitTeamCards by remember { mutableStateOf(true) }
     var showFitTeamCards by remember { mutableStateOf(false) }
@@ -68,10 +68,10 @@ fun SynchronizationReportScreen() {
             )
             Spacer(modifier = Modifier.height(15.dp))
             CardStatistics(
-                total = reportViewModel.totalCount.toString(),
-                notFitTotal = reportViewModel.notFitCount.toString(),
-                fitTotal = reportViewModel.fitCount.toString(),
-                sdTotal = reportViewModel.sdCount.toString()
+                total = viewModel.totalCount.toString(),
+                notFitTotal = viewModel.notFitCount.toString(),
+                fitTotal = viewModel.fitCount.toString(),
+                sdTotal = viewModel.sdCount.toString()
             )
 
             IconTitle(icon = Icons.Outlined.CheckCircle, text = stringResource(id = R.string.updated_information) + " " + "24/03/2023, 8.25AM",
@@ -214,14 +214,12 @@ fun SynchronizationReportScreen() {
 @Composable
 fun SynchronizationReportScreenPreview() {
     LogifitApppTheme {
-        SynchronizationReportScreen()
-    }
+        SynchronizationReportScreen()}
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SynchronizationReportScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        SynchronizationReportScreen()
-    }
+        SynchronizationReportScreen() }
 }
