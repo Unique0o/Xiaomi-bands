@@ -3,6 +3,7 @@ package com.example.logifitappp.ui.components.headers
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,7 @@ fun CardHeader(
     modifier: Modifier = Modifier,
     @DrawableRes profileImageRes: Int,
     onNotificationClick: () -> Unit,
+    onProfileImageClick: () -> Unit,
     bodyComponent: @Composable () -> Unit,
 ) {
     Card(
@@ -55,6 +57,7 @@ fun CardHeader(
                     modifier = Modifier
                         .size(60.dp)
                         .clip(CircleShape)
+                        .clickable(onClick = onProfileImageClick)
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -106,6 +109,7 @@ fun CardHeaderPreview() {
         userType = "PREMIUM",
         profileImageRes = R.drawable.user1,
         onNotificationClick = { },
+        onProfileImageClick = { },
         plan = "PREMIUM",
         bodyComponent = {}
     )

@@ -39,6 +39,7 @@ fun HomeTestScreen() {
             userType = "PREMIUM",
             profileImageRes = R.drawable.user1,
             onNotificationClick = { },
+            onProfileImageClick = {},
             plan = "PREMIUM",
             bodyComponent = {
                 CardLayout(bodyComponent = { /*TODO*/ },

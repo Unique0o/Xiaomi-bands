@@ -40,6 +40,7 @@ fun GraphicsEmptyScreen(
             profileImageRes = R.drawable.user1,
             plan = "PREMIUM",
             onNotificationClick = { },
+            onProfileImageClick = {},
             bodyComponent = {}
         )
         Spacer(modifier = Modifier.height(8.dp))
