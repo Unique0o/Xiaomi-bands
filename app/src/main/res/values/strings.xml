@@ -198,4 +198,31 @@
     <string name="second_operator_onboarding_bottom_message">Communicate easily and efficiently with your colleagues</string>
 
     <string name="third_operator_onboarding_top_message">Optimize your performance</string>
+
+    <!-- Ocupacional Information -->
+    <string name="occupational_info">Occupational Information</string>
+    <string name="personal_info">Personal Information</string>
+
+    <string name="company">Company</string>
+    <string name="work_position">Work position</string>
+    <string name="function">Function</string>
+    <string name="travel_time">What is the typical travel time for operators to or from work?</string>
+    <string name="workload">Workload</string>
+    <string name="occupational_attention_type">Occupational attention type</string>
+    <string name="breaks_frequency">How often are breaks typically provided or taken?</string>
+    <string name="breaks_length">What is the typical average length of these breaks provided or taken?</string>
+    <string name="not_assigned">Not assigned</string>
+    <string name="not_selected">Not selected</string>
+
+    <!-- Personal information -->
+    <string name="names">Names</string>
+    <string name="surnames">Surnames</string>
+    <string name="email">Email</string>
+    <string name="document_type">Document type</string>
+    <string name="country">Country</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="phone">Phone</string>
+
+    <string name="health_info">Health Information</string>
+
 </resources>
