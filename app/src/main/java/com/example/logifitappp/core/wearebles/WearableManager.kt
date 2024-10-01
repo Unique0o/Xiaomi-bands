@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.data.models.WearableModel
 import java.util.Collections
 
@@ -14,7 +15,7 @@ class WearableManager(private val context: Context) {
         override fun onReceive(context: Context?, intent: Intent) {
             when (intent.action) {
                 Wearable.ACTION_DEVICE_CHANGED -> {
-                    val wearable = intent.getParcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
+                    val wearable = intent.parcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
 
                     if (wearable.getAddress() != null) {
                         val index = wearables.indexOf(wearable)
@@ -54,8 +55,6 @@ class WearableManager(private val context: Context) {
         availableWearables.forEach {
             if (!wearables.contains(it)) wearables.add(it)
         }
-
-        println("paired wearables: $wearables")
 
         notifyWearablesChanged()
     }

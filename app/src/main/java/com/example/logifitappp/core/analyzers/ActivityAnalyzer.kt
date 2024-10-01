@@ -2,6 +2,7 @@ package com.example.logifitappp.core.analyzers
 
 import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
+import java.util.Date
 
 class ActivityAnalyzer {
     fun calculateSleepAmounts(activities: List<WearableRawActivityModel>): List<ActivityAmount> {
@@ -9,6 +10,7 @@ class ActivityAnalyzer {
         var previousActivity: WearableRawActivityModel? = null
 
         activities.forEach {
+            println("activity ${Date(it.timestamp * 1000)}: $it")
             val amount = ActivityAmount(it.provider?.normalizeType(it.type) ?: WearableActivityTypeEnum.NOT_WORN)
 
             val isEmpty = amounts.isEmpty()

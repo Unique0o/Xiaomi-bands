@@ -1,5 +1,8 @@
 package com.example.logifitappp.di
 
+import com.example.logifitappp.core.App
+import com.example.logifitappp.domain.repository.WearableRepository
+import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
@@ -13,6 +16,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,10 +26,21 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     @Provides
     @Singleton
     fun provideOkHttpClient() = OkHttpClient.Builder()
+        .addInterceptor(Interceptor {
+            val request = it.request()
+                .newBuilder()
+                .addHeader("Accept", "application/json")
+                .addHeader("Content-Type", "application/json")
+
+            App.database.userDao().getLoggedIn()?.let { user ->
+                request.addHeader("Authorization", "Bearer ${user.accessToken}")
+            }
+
+            it.proceed(request.build())
+        })
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .build()
@@ -60,6 +75,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideWearableRepository(retrofit: Retrofit): WearableRepository = retrofit.create(
+        WearableRepository::class.java)
+
+    @Provides
+    @Singleton
     fun provideLoginUseCase(authService: AuthService): LoginUseCase {
         return LoginUseCase(authService)
     }
@@ -75,4 +95,8 @@ object NetworkModule {
     fun provideRecoverPasswordUseCase(authService: AuthService): RecoverPasswordUseCase {
         return RecoverPasswordUseCase(authService)
     }
+
+    @Provides
+    @Singleton
+    fun provideWearableService(wearableRepository: WearableRepository) = WearableService(wearableRepository)
 }

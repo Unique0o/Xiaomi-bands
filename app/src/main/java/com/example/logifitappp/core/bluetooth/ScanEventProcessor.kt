@@ -1,7 +1,6 @@
 package com.example.logifitappp.core.bluetooth
 
 import android.bluetooth.le.ScanSettings
-import android.os.Build
 import android.os.ParcelUuid
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableHelper
@@ -187,10 +186,7 @@ class ScanEventProcessor(private val callback: Callback): Runnable {
             builder.setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
             builder.setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE)
             builder.setNumOfMatches(ScanSettings.MATCH_NUM_ONE_ADVERTISEMENT)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                builder.setPhy(ScanSettings.PHY_LE_ALL_SUPPORTED)
-            }
+            builder.setPhy(ScanSettings.PHY_LE_ALL_SUPPORTED)
 
             return builder.build()
         }

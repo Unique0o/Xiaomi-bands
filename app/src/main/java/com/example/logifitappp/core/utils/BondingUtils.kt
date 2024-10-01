@@ -8,10 +8,8 @@ import android.companion.CompanionDeviceManager
 import android.content.Context
 import android.content.IntentSender
 import android.content.res.Resources
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import com.example.logifitappp.R

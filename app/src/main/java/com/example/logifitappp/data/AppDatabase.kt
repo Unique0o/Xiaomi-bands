@@ -7,6 +7,7 @@ import com.example.logifitappp.data.dao.WearableDao
 import com.example.logifitappp.data.dao.XiaomiRawActivityDao
 import com.example.logifitappp.data.dao.XiaomiSleepStageDao
 import com.example.logifitappp.data.dao.XiaomiSleepTimeDao
+import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.models.WearableModel
 import com.example.logifitappp.data.models.XiaomiRawActivityModel
@@ -15,6 +16,7 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
 
 @Database(
     entities = [
+        TenantModel::class,
         UserModel::class,
         WearableModel::class,
         XiaomiRawActivityModel::class,

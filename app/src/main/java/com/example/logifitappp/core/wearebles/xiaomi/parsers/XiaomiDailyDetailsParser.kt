@@ -15,10 +15,12 @@ class XiaomiDailyDetailsParser: XiaomiActivityParser() {
         val headerSize = when (version) {
             1, 2 -> 4
             3 -> 5
+            4 -> 6
             else -> return false.also { println("Unable to parse daily details version $version") }
         }
 
         val buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+        buffer.limit(buffer.limit() - 4)
         buffer.get(ByteArray(7))
         val fileIdPadding = buffer.get()
 
@@ -36,7 +38,7 @@ class XiaomiDailyDetailsParser: XiaomiActivityParser() {
 
         val samples = mutableListOf<XiaomiRawActivityModel>()
 
-        while (buffer.position() < buffer.limit() - 4) {
+        while (buffer.position() < buffer.limit()) {
             complexParser.reset()
 
             val sample = XiaomiRawActivityModel()
@@ -47,7 +49,7 @@ class XiaomiDailyDetailsParser: XiaomiActivityParser() {
             if (complexParser.nextGroup(16)) {
                 if (complexParser.hasSecond()) includeExtraEntry = complexParser.get(1, 1)
 
-                if (complexParser.hasThrid()) sample.steps = complexParser.get(2, 16)
+                if (complexParser.hasThrid()) sample.steps = complexParser.get(2, 14)
             }
 
             if (complexParser.nextGroup(8)) {
@@ -82,6 +84,11 @@ class XiaomiDailyDetailsParser: XiaomiActivityParser() {
             }
 
             if (includeExtraEntry == 1) complexParser.nextGroup(8)
+
+            if (version == 4) {
+                complexParser.nextGroup(16)
+                complexParser.nextGroup(16)
+            }
 
             samples.add(sample)
             timestamp.add(Calendar.MINUTE, 1)

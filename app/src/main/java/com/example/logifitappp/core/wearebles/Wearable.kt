@@ -73,7 +73,7 @@ class Wearable(): Parcelable {
     fun getAliasOrName(): String {
         if (!alias.isNullOrEmpty()) return alias!!
 
-        return name!!
+        return name ?: "unknown"
     }
 
     fun getBusyTask(): String? {

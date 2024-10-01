@@ -26,10 +26,22 @@ val Typography = Typography(
         lineHeight = 12.sp,
     ),
 
+    displayMedium = TextStyle(
+        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+    ),
+
     displayLarge = TextStyle(
         fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
         fontSize = 18.sp,
         lineHeight = 28.sp,
+    ),
+
+    headlineLarge = TextStyle(
+        fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
     ),
 
     headlineMedium = TextStyle(
@@ -48,6 +60,12 @@ val Typography = Typography(
         fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
         fontSize = 12.sp,
         lineHeight = 16.sp,
+    ),
+
+    titleSmall = TextStyle(
+        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+        fontSize = 10.sp,
+        lineHeight = 12.sp,
     ),
 
     labelMedium = TextStyle(
