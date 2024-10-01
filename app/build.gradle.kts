@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.play.services.wearable)
     implementation(libs.permissions)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.core.i18n)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
