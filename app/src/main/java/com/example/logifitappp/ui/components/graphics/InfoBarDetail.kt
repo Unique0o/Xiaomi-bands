@@ -40,9 +40,9 @@ fun InfoBarDetailGraph(
         val barColors = List(17) {
             when (it % 4) {
                 0 -> Blue690
-                1 -> Violet
+                1 -> Violet500
                 2 -> Orange390
-                else -> LightBlue }
+                else -> Sky320 }
         }.take(data.size)
 
         Column(
@@ -77,7 +77,7 @@ private fun BarChart(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(barWidthFraction)
-                    .background(colors.getOrElse(index) { LightBlue })
+                    .background(colors.getOrElse(index) { Sky320 })
             )
         }
     }

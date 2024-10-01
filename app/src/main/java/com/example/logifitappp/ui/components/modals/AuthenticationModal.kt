@@ -63,7 +63,7 @@ fun AuthenticationModal(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            stringResource(R.string.authentication_title),
+                            stringResource(R.string.authentication_key_bottom_sheet_title),
                             style = MaterialTheme.typography.titleLarge
                         )
                         IconButton(onClick = onDismiss) {
@@ -77,7 +77,7 @@ fun AuthenticationModal(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        stringResource(id = R.string.authentication_description),
+                        stringResource(id = R.string.authentication_key_bottom_sheet_message),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
@@ -103,7 +103,7 @@ fun AuthenticationModal(
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(
                         onClick = { onAuthenticate(authKey) },
-                        text = stringResource(id = R.string.authentication_title),
+                        text = stringResource(id = R.string.button_authenticate_band),
                         modifier = Modifier.fillMaxWidth(),
                         containerColors = if (authKey.length > 2) MaterialTheme.colorScheme.primary else Color.Gray
                     )

@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -47,8 +48,12 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         println("Discovery stopped by thread timeout.")
     }
 
+    var authenticationKey by mutableStateOf(TextFieldValue(""))
+
     var candidates = mutableStateListOf<WearableCandidate>()
         private set
+
+    var isBottomSheetVisible by mutableStateOf(false)
 
     var isScanning by mutableStateOf(false)
         private set

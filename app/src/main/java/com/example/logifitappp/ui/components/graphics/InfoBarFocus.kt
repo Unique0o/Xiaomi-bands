@@ -38,10 +38,10 @@ fun InfoBarFocusGraph(
         Spacer(modifier = Modifier.height(16.dp))
         val barColors = List(17) {
             when (it % 4) {
-                0 -> Gray1
-                1 -> Gray2
-                2 -> Gray3
-                else -> Gray4
+                0 -> Gray615
+                1 -> Slate450
+                2 -> Stone510
+                else -> Slate520
             }
         }.take(data.size)
 
@@ -64,7 +64,7 @@ private fun BarChart(
 ) {
     val maxValue = data.maxOrNull() ?: 1
     val maxBarWidth = 1f
-    val specialColor = LightBlue
+    val specialColor = Sky320
 
     Row(
         modifier = Modifier
@@ -79,7 +79,7 @@ private fun BarChart(
                     .weight(barWidthFraction)
                     .background(
                         if (index == specialBarIndex) specialColor
-                        else colors.getOrElse(index) { LightBlue }
+                        else colors.getOrElse(index) { Sky320 }
                     )
             )
         }

@@ -21,7 +21,7 @@ import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
-import com.example.logifitappp.ui.theme.Violet
+import com.example.logifitappp.ui.theme.Violet500
 
 
 @Composable
@@ -42,7 +42,7 @@ fun SleepSessionCard(modifier: Modifier = Modifier) {
             SessionHeader()
             ProgressBar(
                 primaryProgressColor = Blue690,
-                secondaryProgressColor = Violet,
+                secondaryProgressColor = Violet500,
                 primaryProgressFraction = 0.5f,
                 secondaryProgressFraction = 0.2f,
                 tertiaryProgressFraction = 0f

@@ -105,7 +105,7 @@ fun WearableDetectionAuthenticationBottomSheet(
                         doAuthentication()
                     }
                 ),
-                onValueChange = { wearableDetectionViewModel.updateAuthenticationKey(it) },
+                onValueChange = { wearableDetectionViewModel.authenticationKey = it },
                 placeholder =  stringResource(id = R.string.enter_key),
                 value = wearableDetectionViewModel.authenticationKey
             )

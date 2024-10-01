@@ -8,6 +8,9 @@ sealed class MainRoutes {
     data object Login: MainRoutes()
 
     @Serializable
+    data object Notifications: MainRoutes()
+
+    @Serializable
     data object Onboarding: MainRoutes()
 
     @Serializable

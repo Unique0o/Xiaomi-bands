@@ -7,15 +7,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.theme.Blue690
-import com.example.logifitappp.ui.theme.LightBlue
-import com.example.logifitappp.ui.theme.Violet
+import com.example.logifitappp.ui.theme.Sky320
+import com.example.logifitappp.ui.theme.Violet500
 
 @Composable
 fun ProgressBar(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = LightBlue,
+    backgroundColor: Color = Sky320,
     primaryProgressColor: Color = Blue690,
-    secondaryProgressColor: Color = Violet,
+    secondaryProgressColor: Color = Violet500,
     tertiaryProgressColor: Color? = null,
     primaryProgressFraction: Float = 0.76f,
     secondaryProgressFraction: Float = 0.11f,
