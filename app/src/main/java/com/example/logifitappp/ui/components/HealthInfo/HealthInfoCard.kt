@@ -14,6 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Orange390
+import com.example.logifitappp.ui.theme.Rose120
+import com.example.logifitappp.ui.theme.Violet
 
 @Composable
 fun HealthInfoCard(
@@ -59,10 +63,10 @@ fun HealthInfoCard(
                             text = value,
                             style = MaterialTheme.typography.headlineMedium,
                             color = when (title) {
-                                "Weight" -> Color.Green
-                                "Height" -> Color(0xFFFFA500) // Orange
-                                "Blood type" -> Color.Red
-                                else -> Color(0xFF9C27B0) // Purple for Gender
+                                "Weight" -> Green298
+                                "Height" -> Orange390
+                                "Blood type" -> Rose120
+                                else -> Violet
                             }
                         )
                         Text(
