@@ -217,4 +217,7 @@
     <string name="country">País</string>
     <string name="birthdate">Fecha de nacimiento</string>
     <string name="phone">Teléfono</string>
+
+    <string name="health_info">Información de Salud</string>
+
 </resources>
