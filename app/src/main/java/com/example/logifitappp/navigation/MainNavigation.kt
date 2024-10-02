@@ -27,34 +27,33 @@ import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 @Composable
 fun MainNavigation(
     appViewModel: AppViewModel,
-    loginViewModel: LoginViewModel,
     navigation: NavHostController = rememberNavController()
 ) {
-    val isAdmin by loginViewModel.isAdmin.collectAsState()
+//    val isAdmin by loginViewModel.isAdmin.collectAsState()
 
     NavHost(
         navController = navigation,
-        startDestination = MainRoutes.SplashScreen
+        startDestination = MainRoutes.WearableDetection
     ) {
-        composable<MainRoutes.Login> { LoginView(navigation) }
-        composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
-        composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
+//        composable<MainRoutes.Login> { LoginView(navigation) }
+//        composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+//        composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
 
-        composable(
-            route = "${MainRoutes.Home::class.simpleName}/{isAdmin}",
-            arguments = listOf(navArgument("isAdmin") { type = NavType.BoolType })
-        ) { backStackEntry ->
-            val isAdmin = backStackEntry.arguments?.getBoolean("isAdmin") ?: false
-            if (isAdmin) {
-                HomeAdminScreen(navigation)
-            } else {
-                HomeScreen(HomeViewModel())
-            }
-        }
-        composable<MainRoutes.Graphics> {
-            GraphicsEmptyScreen(navigation, GraphicsViewModel())
-        }
-        composable<MainRoutes.AdditionalInformationPicture> { AdditionalInformationPicture(navigation) }
+//        composable(
+//            route = "${MainRoutes.Home::class.simpleName}/{isAdmin}",
+//            arguments = listOf(navArgument("isAdmin") { type = NavType.BoolType })
+//        ) { backStackEntry ->
+//            val isAdmin = backStackEntry.arguments?.getBoolean("isAdmin") ?: false
+//            if (isAdmin) {
+//                HomeAdminScreen(navigation)
+//            } else {
+//                HomeScreen(HomeViewModel())
+//            }
+//        }
+//        composable<MainRoutes.Graphics> {
+//            GraphicsEmptyScreen(navigation, GraphicsViewModel())
+//        }
+//        composable<MainRoutes.AdditionalInformationPicture> { AdditionalInformationPicture(navigation) }
     }
 }
