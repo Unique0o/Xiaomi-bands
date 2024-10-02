@@ -220,4 +220,31 @@
 
     <string name="health_info">Health Information</string>
 
+    <!-- Trainings -->
+    <string name="trainings">Trainings</string>
+    <string name="training_smartband_title">Smartband Logifit</string>
+    <string name="training_smartband_description">Logifit offers a smartband...</string>
+    <string name="training_app_title">Logifit App</string>
+    <string name="training_app_description">Learn in this training...</string>
+    <string name="training_platform_title">Management Platform</string>
+    <string name="training_platform_description">In this module, you will learn...</string>
+    <string name="training_capacitation_title">Functioning Training</string>
+    <string name="training_capacitation_description">This module is designed...</string>
+    <string name="training_manual_title">Procedures Manual</string>
+    <string name="training_manual_description">This module provides a guide...</string>
+
+    <string name="smartband_logifit">Smartband Logifit</string>
+    <string name="description">Descripción</string>
+    <string name="smartband_description">Logifit cuenta con una smartband inteligente que te acompaña para mejorar la calidad de tu salud. Coloca la tecnología más avanzada a tu alcance y ello contrib…</string>
+    <string name="show_more">Mostrar más</string>
+    <string name="progress">Progreso</string>
+    <string name="lessons">Lecciones</string>
+    <string name="what_is_smartband">Qué es una Smartba…</string>
+    <string name="what_is_smartband_desc">Este módulo de capacitación…</string>
+    <string name="understanding_use">Entendiendo el uso…</string>
+    <string name="understanding_use_desc">Este módulo de capacitación…</string>
+    <string name="how_to_link">¿Cómo vincular mi s…</string>
+    <string name="how_to_link_desc">Este módulo de capacitación…</string>
+
+
 </resources>
