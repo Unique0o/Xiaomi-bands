@@ -106,7 +106,7 @@ dependencies {
     implementation(libs.bcpkix.jdk15to18)
     implementation(libs.commons.lang3)
     implementation(libs.androidx.hilt.navigation.compose)
-
+    implementation(libs.androidx.localbroadcastmanager)
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)

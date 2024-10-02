@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.logifitappp.navigation.MainNavigation
+import com.example.logifitappp.ui.screens.home.HomeWearable
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
@@ -25,7 +26,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LogifitApppTheme {
-                MainNavigation(appViewModel,loginViewModel)
+//                MainNavigation(appViewModel,loginViewModel)
+
             }
         }
     }

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Orange390
 import com.example.logifitappp.ui.theme.Rose120
-import com.example.logifitappp.ui.theme.Violet
+import com.example.logifitappp.ui.theme.Violet500
 
 @Composable
 fun HealthInfoCard(
@@ -66,7 +66,7 @@ fun HealthInfoCard(
                                 "Weight" -> Green298
                                 "Height" -> Orange390
                                 "Blood type" -> Rose120
-                                else -> Violet
+                                else -> Violet500
                             }
                         )
                         Text(

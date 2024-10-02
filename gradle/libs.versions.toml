@@ -29,6 +29,7 @@ protobufJava = "3.20.1"
 protobufKotlin = "3.20.1"
 runtimeLivedata = "1.7.2"
 coreI18n = "1.0.0-alpha01"
+localBroadcastManager = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -71,6 +72,7 @@ protobuf-java = { group = "com.google.protobuf", name = "protobuf-javalite", ver
 protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref="protobufKotlin" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
+androidx-localbroadcastmanager = { group = "androidx.localbroadcastmanager", name = "localbroadcastmanager", version.ref = "localBroadcastManager" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
