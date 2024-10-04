@@ -36,28 +36,6 @@ import com.example.logifitappp.viewmodel.views.SideMenuViewModel.SideMenuViewMod
 import com.example.logifitappp.viewmodel.views.graphics.GraphicsViewModel
 import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
-//@Composable
-//fun MainNavigation(
-//    appViewModel: AppViewModel,
-//    navigation: NavHostController = rememberNavController()
-//) {
-//    NavHost(
-//        navController = navigation,
-//        startDestination = MainRoutes.SplashScreen
-//    ) {
-//        composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
-//
-//        composable<MainRoutes.OccupationalInformation> { GraphicsEmptyScreen() }
-//        composable<MainRoutes.HealthInformation> { GraphicsEmptyScreen() }
-//        composable<MainRoutes.PersonalInformation> { GraphicsEmptyScreen() }
-//        composable<MainRoutes.Trainings> { GraphicsEmptyScreen() }
-//        composable<MainRoutes.AdditionalInformationPicture> { AdditionalInformationPicture() }
-//        composable<MainRoutes.Login> { LoginView(navigation) }
-//        composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
-//        composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
-//    }
-//}
-
 @Composable
 fun MainNavigation(
     appViewModel: AppViewModel,
@@ -75,7 +53,7 @@ fun MainNavigation(
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
         composable(MainRoutes.OccupationalInformation::class.simpleName!!) { OccupationalInfoScreen(navigation) }
-
+        composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
         composable(MainRoutes.Home::class.simpleName!!) {
             val sideMenuViewModel = androidx.lifecycle.viewmodel.compose.viewModel<SideMenuViewModel>()
             LaunchedEffect(navigation) {

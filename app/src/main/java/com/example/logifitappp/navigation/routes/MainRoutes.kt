@@ -35,13 +35,16 @@ sealed class MainRoutes {
 
     @Serializable
     data object OccupationalInformation : MainRoutes()
+
     @Serializable
     data object HealthInformation : MainRoutes()
+
     @Serializable
     data object PersonalInformation : MainRoutes()
 
     @Serializable
     data object Trainings : MainRoutes()
+
     @Serializable
     data object AdditionalInformationPicture : MainRoutes()
 }

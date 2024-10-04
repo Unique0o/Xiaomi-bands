@@ -1,23 +1,31 @@
 package com.example.logifitappp.di
 
+import android.content.Context
 import com.example.logifitappp.core.App
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
+import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
+import com.example.logifitappp.domain.repository.PersonalInfoRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
+import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
-import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModelFactory
+import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
+import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
+//import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -92,14 +100,27 @@ object NetworkModule {
     fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository {
         return userRepositoryImpl
     }
+
     @Provides
     @Singleton
-    fun provideOccupationalInfoRepository(occupationalInfoRepositoryImpl: OccupationalInfoRepositoryImpl): OccupationalInfoRepository {
-        return occupationalInfoRepositoryImpl
+    fun provideApplicationContext(@ApplicationContext context: Context): Context {
+        return context
     }
+
     @Provides
-    fun provideOccupationalInfoViewModelFactory(repository: OccupationalInfoRepository): OccupationalInfoViewModelFactory {
-        return OccupationalInfoViewModelFactory(repository)
+    @Singleton
+    fun provideOccupationalInfoRepository(context: Context): OccupationalInfoRepository {
+        return OccupationalInfoRepositoryImpl(context)
+    }
+
+    @Provides
+    fun provideGetOccupationalInfoUseCase(repository: OccupationalInfoRepository): GetOccupationalInfoUseCase {
+        return GetOccupationalInfoUseCase(repository)
+    }
+
+    @Provides
+    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInfoViewModel {
+        return OccupationalInfoViewModel(getOccupationalInfoUseCase)
     }
 
     @Provides
@@ -111,4 +132,23 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideWearableService(wearableRepository: WearableRepository) = WearableService(wearableRepository)
+
+
+
+    @Provides
+    @Singleton
+    fun providePersonalInfoRepository(context: Context): PersonalInfoRepository {
+        return PersonalInfoRepositoryImpl(context)
+    }
+
+    @Provides
+    fun provideGetPersonalInfoUseCase(repository: PersonalInfoRepository): GetPersonalInfoUseCase {
+        return GetPersonalInfoUseCase(repository)
+    }
+
+    @Provides
+    fun providePersonalInfoViewModel(getPersonalInfoUseCase: GetPersonalInfoUseCase): PersonalInfoViewModel {
+        return PersonalInfoViewModel(getPersonalInfoUseCase)
+    }
+
 }
