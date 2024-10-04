@@ -24,6 +24,8 @@ sealed class MainRoutes {
 
     @Serializable
     data object Home : MainRoutes()
+    @Serializable
+    data object HomeWearable : MainRoutes()
 
     @Serializable
     data object Graphics : MainRoutes()
@@ -31,6 +33,15 @@ sealed class MainRoutes {
     @Serializable
     data object Profile : MainRoutes()
 
+    @Serializable
+    data object OccupationalInformation : MainRoutes()
+    @Serializable
+    data object HealthInformation : MainRoutes()
+    @Serializable
+    data object PersonalInformation : MainRoutes()
+
+    @Serializable
+    data object Trainings : MainRoutes()
     @Serializable
     data object AdditionalInformationPicture : MainRoutes()
 }

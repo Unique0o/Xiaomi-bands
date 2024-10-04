@@ -1,14 +1,16 @@
 package com.example.logifitappp.ui.screens.occupationalInfo
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
@@ -16,13 +18,27 @@ import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItem
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
+import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModelFactory
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.components.ActivityComponent
 
 @Composable
 fun OccupationalInfoScreen(
-    onBackClick: () -> Unit,
-    occupationalInfo: List<OccupationalInfoItem>,
-    navigation: NavHostController
+    navigation: NavHostController,
 ) {
+    val context = LocalContext.current
+    val viewModel: OccupationalInfoViewModel = viewModel(
+        factory = EntryPointAccessors.fromActivity(
+            context as Activity,
+            ViewModelFactoryProvider::class.java
+        ).occupationalInfoViewModelFactory()
+    )
+
+    val occupationalInfo by viewModel.occupationalInfo.collectAsState()
+
     SimplePage(
         content = {
             LazyColumn(
@@ -34,7 +50,7 @@ fun OccupationalInfoScreen(
                     OccupationalInfoItem(
                         label = item.label,
                         value = item.value,
-                        onClick = { /* Handle item click */ }
+                        onClick = { viewModel.onItemClick(item) }
                     )
                 }
             }
@@ -48,10 +64,16 @@ fun OccupationalInfoScreen(
     )
 }
 
+
 data class OccupationalInfoItem(
     val label: String,
     val value: String
 )
+@EntryPoint
+@InstallIn(ActivityComponent::class)
+interface ViewModelFactoryProvider {
+    fun occupationalInfoViewModelFactory(): OccupationalInfoViewModelFactory
+}
 
 @Composable
 @Preview
@@ -71,8 +93,6 @@ fun OccupationalInfoScreenPreview() {
 
     LogifitApppTheme {
         OccupationalInfoScreen(
-            onBackClick = {},
-            occupationalInfo = previewInfo,
             navigation = rememberNavController()
         )
     }

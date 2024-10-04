@@ -5,13 +5,16 @@ import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
+import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
+import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
+import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -88,6 +91,15 @@ object NetworkModule {
     @Singleton
     fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository {
         return userRepositoryImpl
+    }
+    @Provides
+    @Singleton
+    fun provideOccupationalInfoRepository(occupationalInfoRepositoryImpl: OccupationalInfoRepositoryImpl): OccupationalInfoRepository {
+        return occupationalInfoRepositoryImpl
+    }
+    @Provides
+    fun provideOccupationalInfoViewModelFactory(repository: OccupationalInfoRepository): OccupationalInfoViewModelFactory {
+        return OccupationalInfoViewModelFactory(repository)
     }
 
     @Provides
