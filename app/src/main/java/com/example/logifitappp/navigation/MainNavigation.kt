@@ -55,6 +55,8 @@ fun MainNavigation(
         composable(MainRoutes.OccupationalInformation::class.simpleName!!) { OccupationalInfoScreen(navigation) }
         composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
         composable(MainRoutes.Trainings::class.simpleName!!) { TrainingsScreen(navigation) }
+        composable(MainRoutes.HealthInformation::class.simpleName!!) { HealthInfoScreen(navigation) }
+
         composable(MainRoutes.Home::class.simpleName!!) {
             val sideMenuViewModel = androidx.lifecycle.viewmodel.compose.viewModel<SideMenuViewModel>()
             LaunchedEffect(navigation) {

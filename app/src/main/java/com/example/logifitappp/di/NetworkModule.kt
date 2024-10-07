@@ -6,11 +6,13 @@ import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
+import com.example.logifitappp.data.repository.HealthInfoRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
+import com.example.logifitappp.domain.repository.HealthInfoRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
@@ -19,9 +21,11 @@ import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
+import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
+import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
 import com.example.logifitappp.viewmodel.views.Trainings.TrainingViewModel
@@ -155,6 +159,21 @@ object NetworkModule {
         return PersonalInfoViewModel(getPersonalInfoUseCase)
     }
 
+    @Provides
+    @Singleton
+    fun provideHealthInfoRepository(context: Context): HealthInfoRepository {
+        return HealthInfoRepositoryImpl(context)
+    }
+
+    @Provides
+    fun provideGetHealthInfoUseCase(repository: HealthInfoRepository): HealthInfoUseCase {
+        return HealthInfoUseCase(repository)
+    }
+
+    @Provides
+    fun provideHealthInfoViewModel(getHealthUseCase: HealthInfoUseCase): HealthInfoViewModel {
+        return HealthInfoViewModel(getHealthUseCase)
+    }
 
     @Provides
     @Singleton
@@ -171,6 +190,5 @@ object NetworkModule {
     fun provideTrainingInfoViewModel(getTrainingUseCase: GetTrainingUseCase): TrainingViewModel {
         return TrainingViewModel(getTrainingUseCase)
     }
-
 
 }

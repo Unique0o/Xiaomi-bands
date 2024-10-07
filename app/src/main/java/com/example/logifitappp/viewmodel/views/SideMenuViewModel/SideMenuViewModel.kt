@@ -33,6 +33,7 @@ class SideMenuViewModel @Inject constructor() : ViewModel() {
         _menuItems.value = listOf(
             MenuItem(Icons.Default.Person, "Información Ocupacional") { navigateTo(MainRoutes.OccupationalInformation) },
             MenuItem(Icons.Default.Work, "Información Personal") { navigateTo(MainRoutes.PersonalInformation) },
+            MenuItem(Icons.Default.Favorite, "Informaciòn de salud") { navigateTo(MainRoutes.HealthInformation) },
             MenuItem(Icons.Default.Favorite, "Capacitaciones") { navigateTo(MainRoutes.Trainings) },
             MenuItem(Icons.Default.Help, "Notificaciones") { navigateTo(MainRoutes.Notifications) },
             MenuItem(Icons.Default.ExitToApp, "Cerrar sesión") { logout() }
