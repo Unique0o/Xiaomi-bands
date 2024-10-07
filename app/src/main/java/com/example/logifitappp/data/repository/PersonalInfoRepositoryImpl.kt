@@ -1,7 +1,6 @@
 package com.example.logifitappp.data.repository
 
 import android.content.Context
-import androidx.compose.ui.res.stringResource
 import com.example.logifitappp.R
 import com.example.logifitappp.data.models.PersonalInfoItem
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
