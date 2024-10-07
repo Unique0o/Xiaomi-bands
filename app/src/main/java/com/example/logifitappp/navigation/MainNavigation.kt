@@ -33,12 +33,13 @@ fun MainNavigation(
 
     NavHost(
         navController = navigation,
-        startDestination = MainRoutes.WearableDetection
+        startDestination = MainRoutes.Home
     ) {
 //        composable<MainRoutes.Login> { LoginView(navigation) }
 //        composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
 //        composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
+        composable<MainRoutes.Home> { HomeScreen(navigation) }
 
 //        composable(
 //            route = "${MainRoutes.Home::class.simpleName}/{isAdmin}",
