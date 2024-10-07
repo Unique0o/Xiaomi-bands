@@ -54,6 +54,7 @@ fun MainNavigation(
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
         composable(MainRoutes.OccupationalInformation::class.simpleName!!) { OccupationalInfoScreen(navigation) }
         composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
+        composable(MainRoutes.Trainings::class.simpleName!!) { TrainingsScreen(navigation) }
         composable(MainRoutes.Home::class.simpleName!!) {
             val sideMenuViewModel = androidx.lifecycle.viewmodel.compose.viewModel<SideMenuViewModel>()
             LaunchedEffect(navigation) {

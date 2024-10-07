@@ -28,7 +28,7 @@ class PersonalInfoViewModel @Inject constructor (private val getPersonalInfoUseC
         }
     }
 
-    fun onItemClick(label: String) {
+    fun onItemClick() {
         // TODO
     }
 

@@ -8,19 +8,23 @@ import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
+import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
+import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
+import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
+import com.example.logifitappp.viewmodel.views.Trainings.TrainingViewModel
 //import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -150,5 +154,23 @@ object NetworkModule {
     fun providePersonalInfoViewModel(getPersonalInfoUseCase: GetPersonalInfoUseCase): PersonalInfoViewModel {
         return PersonalInfoViewModel(getPersonalInfoUseCase)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideTrainingInfoRepository(context: Context): TrainingRepository {
+        return TrainingRepositoryImpl(context)
+    }
+
+    @Provides
+    fun provideGetTrainingInfoUseCase(repository: TrainingRepository): GetTrainingUseCase {
+        return GetTrainingUseCase(repository)
+    }
+
+    @Provides
+    fun provideTrainingInfoViewModel(getTrainingUseCase: GetTrainingUseCase): TrainingViewModel {
+        return TrainingViewModel(getTrainingUseCase)
+    }
+
 
 }

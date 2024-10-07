@@ -1,12 +1,9 @@
 package com.example.logifitappp.viewmodel.views.OccupationalInfo
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
-import com.example.logifitappp.data.models.OccupationalInfoItem
+import com.example.logifitappp.data.models.OccupationalInfoItemModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +34,7 @@ class OccupationalInfoViewModel @Inject constructor(
             }
         }
     }
-    fun onItemClick(item: OccupationalInfoItem) {
+    fun onItemClick(item: OccupationalInfoItemModel) {
     }
 }
 

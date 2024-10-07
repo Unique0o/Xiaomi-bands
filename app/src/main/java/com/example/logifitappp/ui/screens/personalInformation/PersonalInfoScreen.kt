@@ -22,7 +22,6 @@ import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewMode
 
 @Composable
 fun PersonalInfoScreen(
-   // onBackClick: () -> Unit,
     navigation: NavHostController
 ) {
     val viewModel: PersonalInfoViewModel = hiltViewModel()
@@ -47,7 +46,7 @@ fun PersonalInfoScreen(
                                 label = item.label,
                                 value = item.value,
                                 isValueSelected = item.isValueSelected,
-                                onClick = { viewModel.onItemClick(item.label) }
+                                onClick = { viewModel.onItemClick(/* */) }
                             )
                         }
                     }
@@ -66,8 +65,7 @@ fun PersonalInfoScreen(
         topBar = {
             ColumnStackHeader(
                 navigation = navigation,
-                title = stringResource(id = R.string.personal_info),
-                //onBackClick = onBackClick
+                title = stringResource(id = R.string.personal_info)
             )
         }
     )

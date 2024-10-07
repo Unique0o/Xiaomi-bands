@@ -1,8 +1,8 @@
 package com.example.logifitappp.domain.repository
 
-import com.example.logifitappp.data.models.PersonalInfoItem
+import com.example.logifitappp.data.models.PersonalInfoModel
 
 
 interface PersonalInfoRepository {
-    suspend fun getPersonalInfo(): List<PersonalInfoItem>
+    suspend fun getPersonalInfo(): List<PersonalInfoModel>
 }
