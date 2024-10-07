@@ -8,6 +8,7 @@
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
     <string name="button_authenticate_band">Authenticate band</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_close">Close</string>
     <string name="button_device_detection">Devices detection</string>
     <string name="button_get_into">Get into</string>
     <string name="button_ok">OK</string>
@@ -28,6 +29,7 @@
     <string name="link_recover_password">Get it back here</string>
     <string name="link_show">Show</string>
     <string name="lite_plan">Lite</string>
+    <string name="logging_in_message">Validating user…</string>
     <string name="message_password_recovery">A manager will be notified to assist you</string>
     <string name="message_recover_password">Don`t remember your password?</string>
     <string name="not_connected">Not connected</string>
