@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.ui.components.items.MenuItemComponent
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -65,7 +66,7 @@ fun SideMenu(
 @Composable
 fun MyScreen() {
     LogifitApppTheme {
-        SideMenuScreen()
+        SideMenuScreen(navigation = rememberNavController())
     }
 
 }

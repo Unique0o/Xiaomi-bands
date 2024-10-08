@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.CardHeader
@@ -38,13 +41,17 @@ import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.SideMenuViewModel.SideMenuViewModel
 import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    sideMenuViewModel: SideMenuViewModel,
+    navController: NavHostController
 ) {
     var isSideMenuOpen by remember { mutableStateOf(false) }
+    val menuItems by sideMenuViewModel.menuItems.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,14 +127,7 @@ fun HomeScreen(
         name = "MARIA MERCEDES",
         role = "Operador en LOGIFIT",
         avatarResId = R.drawable.user1,
-        menuItems = listOf(
-            MenuItem(Icons.Default.Person, "Información personal") { /* TODO */ },
-            MenuItem(Icons.Default.Work, "Información laboral") { /* TODO */ },
-            MenuItem(Icons.Default.Favorite, "Información de salud") { /* TODO */ },
-            MenuItem(Icons.Default.Help, "Ayuda") { /* TODO */ },
-            MenuItem(Icons.Default.Description, "Términos y condiciones") { /* TODO */ },
-            MenuItem(Icons.Default.ExitToApp, "Cerrar sesión") { /* TODO */ }
-        )
+        menuItems  = menuItems
     )
 }
 
@@ -136,7 +136,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     LogifitApppTheme {
-        HomeScreen(HomeViewModel())
+        HomeScreen(HomeViewModel(), SideMenuViewModel(), rememberNavController())
 
     }
 }
@@ -145,7 +145,7 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreenDarkModePreview() {
     LogifitApppTheme(darkTheme = true) {
-        HomeScreen(HomeViewModel())
+        HomeScreen(HomeViewModel(), SideMenuViewModel(),rememberNavController())
 
     }
 }

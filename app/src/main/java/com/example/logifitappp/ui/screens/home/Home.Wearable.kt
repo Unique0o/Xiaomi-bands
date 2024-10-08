@@ -33,6 +33,7 @@ fun HomeWearable(
     sleeps: SnapshotStateList<ActivityAmount>,
     wearable: Wearable
 ) {
+
     if (!wearable.isConnected() && !wearable.isInitialized()) {
         InformationOptionCard(
             buttonIcon = Icons.Filled.Bluetooth,

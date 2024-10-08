@@ -193,7 +193,7 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         println("Using device candidate $candidate with coordinator ${coordinator::class.java}")
 
         if (coordinator.getBondingStyle() == BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
-            val key = "0x50fd0e5818e60f16eee715652918c5b1"
+            val key = "2db23445563c8ba96ebe74a0dd1e4253"
             val sharedPrefers = App.getWearableSpecificSharedPrefs(candidate.getMacAddress())
             val editor = sharedPrefers?.edit()
 
