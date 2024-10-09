@@ -29,7 +29,6 @@ import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
 import com.example.logifitappp.viewmodel.views.Trainings.TrainingViewModel
-//import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -190,5 +189,6 @@ object NetworkModule {
     fun provideTrainingInfoViewModel(getTrainingUseCase: GetTrainingUseCase): TrainingViewModel {
         return TrainingViewModel(getTrainingUseCase)
     }
+
 
 }

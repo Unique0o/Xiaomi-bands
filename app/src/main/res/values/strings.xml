@@ -49,7 +49,6 @@
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
-
     <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>
     <string name="face_status">FATIGUE</string>
     <string name="face_dream">DROWSINESS</string>
@@ -112,7 +111,6 @@
     <string name="graph_card_heart_rate">Last Recorded Measurement</string>
     <string name="leaderboard_message_title">You`re on top</string>
     <string name="leaderboard_message_summary">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
-
     <string name="searching_for_devices">Searching for devices</string>
     <string name="make_your_device_detectable">Make your device detectable</string>
     <string name="device_detection_info">Connected devices are not detectable on Android 6 or higher, so you need to enable location (GPS). Disable Privacy Guard for Logfit. If your device does not show up within two minutes, try again after restarting your phone.</string>
@@ -167,7 +165,6 @@
     <string name="second_additional_information_title">We are almost done!</string>
     <string name="second_additional_information_message">You need to take a selfie to continue</string>
     <string name="button_continue">Continue</string>
-
     <string name="error_username_empty">Username cannot be empty</string>
     <string name="error_password_empty">Password cannot be empty</string>
 
@@ -186,25 +183,20 @@
     <!-- Administrator Onboarding -->
     <string name="first_administrator_onboarding_top_message">Welcome to Logifit\nManage your team efficiently</string>
     <string name="first_administrator_onboarding_bottom_message">Monitor your team\'s performance and ensure their well-being</string>
-
     <string name="second_administrator_onboarding_top_message">Real-time data at your fingertips</string>
     <string name="second_administrator_onboarding_bottom_message">Get instant insights on your team\'s activities and productivity</string>
-
     <string name="third_administrator_onboarding_top_message">Connect and optimize</string>
 
     <!-- Operator Onboarding -->
     <string name="first_operator_onboarding_top_message">Welcome to Logifit\nYour personal work assistant</string>
     <string name="first_operator_onboarding_bottom_message">Track your activities and improve your work-life balance</string>
-
     <string name="second_operator_onboarding_top_message">Stay connected with your team</string>
     <string name="second_operator_onboarding_bottom_message">Communicate easily and efficiently with your colleagues</string>
-
     <string name="third_operator_onboarding_top_message">Optimize your performance</string>
 
     <!-- Ocupacional Information -->
     <string name="occupational_info">Occupational Information</string>
     <string name="personal_info">Personal Information</string>
-
     <string name="company">Company</string>
     <string name="work_position">Work position</string>
     <string name="function">Function</string>
@@ -216,6 +208,18 @@
     <string name="not_assigned">Not assigned</string>
     <string name="not_selected">Not selected</string>
 
+    <!-- Side Menu -->
+    <string name="logout">Logout</string>
+    <string name="language">App Language</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="help">Help</string>
+    <string name="exit">Exit</string>
+
+    <!-- App language -->
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="by_default">By default</string>
+
     <!-- Personal information -->
     <string name="names">Names</string>
     <string name="surnames">Surnames</string>
@@ -224,7 +228,6 @@
     <string name="country">Country</string>
     <string name="birthdate">Birthdate</string>
     <string name="phone">Phone</string>
-
     <string name="health_info">Health Information</string>
 
     <!-- Trainings -->
@@ -239,19 +242,16 @@
     <string name="training_capacitation_description">This module is designed...</string>
     <string name="training_manual_title">Procedures Manual</string>
     <string name="training_manual_description">This module provides a guide...</string>
-
     <string name="smartband_logifit">Smartband Logifit</string>
-    <string name="description">Descripción</string>
-    <string name="smartband_description">Logifit cuenta con una smartband inteligente que te acompaña para mejorar la calidad de tu salud. Coloca la tecnología más avanzada a tu alcance y ello contrib…</string>
-    <string name="show_more">Mostrar más</string>
-    <string name="progress">Progreso</string>
-    <string name="lessons">Lecciones</string>
-    <string name="what_is_smartband">Qué es una Smartba…</string>
-    <string name="what_is_smartband_desc">Este módulo de capacitación…</string>
-    <string name="understanding_use">Entendiendo el uso…</string>
-    <string name="understanding_use_desc">Este módulo de capacitación…</string>
-    <string name="how_to_link">¿Cómo vincular mi s…</string>
-    <string name="how_to_link_desc">Este módulo de capacitación…</string>
-
-
+    <string name="description">Description</string>
+    <string name="smartband_description">Logifit has an intelligent smartband that accompanies you to improve your health quality. It puts the most advanced technology at your fingertips and contributes…</string>
+    <string name="show_more">Show more</string>
+    <string name="progress">Progress</string>
+    <string name="lessons">Lessons</string>
+    <string name="what_is_smartband">What is a Smartband?</string>
+    <string name="what_is_smartband_desc">This training module explains…</string>
+    <string name="understanding_use">Understanding the use…</string>
+    <string name="understanding_use_desc">This training module covers…</string>
+    <string name="how_to_link">How to link my s…</string>
+    <string name="how_to_link_desc">This training module shows…</string>
 </resources>

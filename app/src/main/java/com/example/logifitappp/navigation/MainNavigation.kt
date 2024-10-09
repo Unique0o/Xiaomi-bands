@@ -1,29 +1,24 @@
 package com.example.logifitappp.navigation
 
-import android.util.Log
-import androidx.compose.foundation.layout.Box
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.logifitappp.core.analyzers.ActivityAmount
-import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.Trainings.TrainingsScreen
 import com.example.logifitappp.ui.screens.additionalInformation.AdditionalInformationPicture
+import com.example.logifitappp.ui.screens.appLanguage.AppLanguageScreen
 import com.example.logifitappp.ui.screens.graphics.GraphicsEmptyScreen
 import com.example.logifitappp.ui.screens.healthInfo.HealthInfoScreen
 import com.example.logifitappp.ui.screens.home.HomeScreen
-import com.example.logifitappp.ui.screens.home.HomeWearable
 import com.example.logifitappp.ui.screens.home.admin.HomeAdminScreen
 import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.occupationalInfo.OccupationalInfoScreen
@@ -56,6 +51,7 @@ fun MainNavigation(
         composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
         composable(MainRoutes.Trainings::class.simpleName!!) { TrainingsScreen(navigation) }
         composable(MainRoutes.HealthInformation::class.simpleName!!) { HealthInfoScreen(navigation) }
+        composable(MainRoutes.AppLanguage::class.simpleName!!) { AppLanguageScreen(navigation) }
 
         composable(MainRoutes.Home::class.simpleName!!) {
             val sideMenuViewModel = androidx.lifecycle.viewmodel.compose.viewModel<SideMenuViewModel>()

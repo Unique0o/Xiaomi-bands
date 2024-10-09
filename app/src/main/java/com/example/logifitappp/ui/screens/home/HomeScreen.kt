@@ -6,13 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Help
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,7 +27,6 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.CardHeader
 import com.example.logifitappp.ui.components.home.CardItemButton
 import com.example.logifitappp.ui.components.home.ConnectedIndicator
-import com.example.logifitappp.ui.components.menu.MenuItem
 import com.example.logifitappp.ui.components.menu.SideMenu
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.Blue690
@@ -132,20 +124,20 @@ fun HomeScreen(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    LogifitApppTheme {
-        HomeScreen(HomeViewModel(), SideMenuViewModel(), rememberNavController())
-
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenDarkModePreview() {
-    LogifitApppTheme(darkTheme = true) {
-        HomeScreen(HomeViewModel(), SideMenuViewModel(),rememberNavController())
-
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun HomeScreenPreview() {
+//    LogifitApppTheme {
+//        HomeScreen(HomeViewModel(), SideMenuViewModel(), rememberNavController())
+//
+//    }
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun HomeScreenDarkModePreview() {
+//    LogifitApppTheme(darkTheme = true) {
+//        HomeScreen(HomeViewModel(), SideMenuViewModel(),rememberNavController())
+//
+//    }
+//}

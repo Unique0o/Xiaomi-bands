@@ -47,4 +47,7 @@ sealed class MainRoutes {
 
     @Serializable
     data object AdditionalInformationPicture : MainRoutes()
+
+    @Serializable
+    data object AppLanguage : MainRoutes()
 }

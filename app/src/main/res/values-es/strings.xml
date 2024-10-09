@@ -112,12 +112,10 @@
     <string name="graph_card_heart_rate">Ultima medicion registrada</string>
     <string name="leaderboard_message_title">Estas en la cima!!!</string>
     <string name="leaderboard_message_summary">La disciplina y consistencia te acompañan en este proceso. sigo alcanzando los triunfos por los que te vienes esmerando.</string>
-
     <string name="detecting_devices">Detectando dispositivos</string>
     <string name="searching_for_devices">Buscando dispositivos</string>
     <string name="make_your_device_detectable">Haz tu dispositivo detectable</string>
     <string name="device_detection_info">Los dispositivos conectados no son detectables en Android 6 o superior, por lo que se necesita activar la localización (GPS). Desactiva Privacy Guard para Logfit. Si tu dispositivo no aparece en dos minutos, inténtalo nuevamente después de reiniciar tu teléfono.</string>
-
     <string name="add_device">Vincula una Smart Band</string>
     <string name="text_no_device">No tienes ninguna banda conectada</string>
     <string name="device_card_description">Seleccionar dispositivo</string>
@@ -155,7 +153,6 @@
     <string name="medical_evaluation">"Requiere evaluación médica."</string>
     <string name="user_can_perform">"El usuario puede realizar su actividad."</string>
 
-
     <!-- Addition Information -->
     <string name="placeholder_name">Nombre</string>
     <string name="placeholder_lastname">Apellido</string>
@@ -168,7 +165,6 @@
     <string name="second_additional_information_title">¡Ya casi terminamos!</string>
     <string name="second_additional_information_message">Es necesario sacarse una selfie para continuar</string>
     <string name="button_continue">Continuar</string>
-
     <string name="error_username_empty">El nombre de usuario no puede estar vacío</string>
     <string name="error_password_empty">La contraseña no puede estar vacía</string>
 
@@ -176,10 +172,10 @@
     <string name="error_unregistered_user">Usuario no registrado</string>
     <string name="error_invalid_password">Contraseña incorrecta</string>
     <string name="error_general">Ha ocurrido un error. Por favor, intenta nuevamente.</string>
-
     <string name="password_recovery_success">Se ha enviado un correo para recuperar tu contraseña</string>
     <string name="server_error_message">Error del servidor. Por favor, inténtelo más tarde</string>
     <string name="unknown_error_message">Ha ocurrido un error desconocido</string>
+
     <!-- Onboarding Strings -->
     <string name="omit">Omitir</string>
     <string name="activate_bluetooth">Activar Bluetooth</string>
@@ -187,25 +183,20 @@
     <!-- Administrator Onboarding -->
     <string name="first_administrator_onboarding_top_message">Bienvenido a Logifit\nGestiona tu equipo eficientemente</string>
     <string name="first_administrator_onboarding_bottom_message">Monitorea el rendimiento de tu equipo y asegura su bienestar</string>
-
     <string name="second_administrator_onboarding_top_message">Datos en tiempo real al alcance de tu mano</string>
     <string name="second_administrator_onboarding_bottom_message">Obtén información instantánea sobre las actividades y productividad de tu equipo</string>
-
     <string name="third_administrator_onboarding_top_message">Conéctate y optimiza</string>
 
     <!-- Operator Onboarding -->
     <string name="first_operator_onboarding_top_message">Bienvenido a Logifit\nTu asistente personal de trabajo</string>
     <string name="first_operator_onboarding_bottom_message">Rastrea tus actividades y mejora tu equilibrio trabajo-vida</string>
-
     <string name="second_operator_onboarding_top_message">Mantente conectado con tu equipo</string>
     <string name="second_operator_onboarding_bottom_message">Comunícate fácil y eficientemente con tus colegas</string>
-
     <string name="third_operator_onboarding_top_message">Optimiza tu rendimiento</string>
 
     <!-- Ocupacional Information -->
     <string name="occupational_info">Información Ocupacional</string>
     <string name="personal_info">Información Personal</string>
-
     <string name="company">Compañía</string>
     <string name="work_position">Puesto de trabajo</string>
     <string name="function">Función</string>
@@ -216,7 +207,6 @@
     <string name="breaks_length">¿Cuál es la duración promedio típica de estos descansos proporcionados o tomados?</string>
     <string name="not_assigned">No asignado</string>
     <string name="not_selected">No seleccionado</string>
-
     <string name="names">Nombres</string>
     <string name="surnames">Apellidos</string>
     <string name="email">Correo electrónico</string>
@@ -224,11 +214,22 @@
     <string name="country">País</string>
     <string name="birthdate">Fecha de nacimiento</string>
     <string name="phone">Teléfono</string>
-
     <string name="health_info">Información de Salud</string>
 
+    <!-- Side Menu -->
+    <string name="logout">Cerrar sesión</string>
+    <string name="language">Idioma</string>
+    <string name="terms_and_conditions">Términos y condiciones</string>
+    <string name="help">Ayuda</string>
+    <string name="exit">Salir</string>
+
+    <!-- App language -->
+    <string name="english">Inglés</string>
+    <string name="spanish">Español</string>
+    <string name="by_default">Por defecto</string>
+
     <!-- Trainings -->
-    <string name="trainings">Trainings</string>
+    <string name="trainings">Capacitaciones</string>
     <string name="training_smartband_title">Smartband Logifit</string>
     <string name="training_smartband_description">Logifit cuenta con una smar...</string>
     <string name="training_app_title">App Logifit</string>
@@ -239,18 +240,17 @@
     <string name="training_capacitation_description">Este módulo está diseñado...</string>
     <string name="training_manual_title">Manual de Procedimientos</string>
     <string name="training_manual_description">Este módulo ofrece una guía...</string>
-
     <string name="smartband_logifit">Smartband Logifit</string>
-    <string name="description">Description</string>
-    <string name="smartband_description">Logifit has an intelligent smartband that accompanies you to improve your health quality. It puts the most advanced technology at your fingertips and contributes…</string>
-    <string name="show_more">Show more</string>
-    <string name="progress">Progress</string>
-    <string name="lessons">Lessons</string>
-    <string name="what_is_smartband">What is a Smartband?</string>
-    <string name="what_is_smartband_desc">This training module explains…</string>
-    <string name="understanding_use">Understanding the use…</string>
-    <string name="understanding_use_desc">This training module covers…</string>
-    <string name="how_to_link">How to link my s…</string>
-    <string name="how_to_link_desc">This training module shows…</string>
+    <string name="description">Descripción</string>
+    <string name="smartband_description">Logifit cuenta con una smartband inteligente que te acompaña para mejorar la calidad de tu salud. Coloca la tecnología más avanzada a tu alcance y ello contrib…</string>
+    <string name="show_more">Mostrar más</string>
+    <string name="progress">Progreso</string>
+    <string name="lessons">Lecciones</string>
+    <string name="what_is_smartband">Qué es una Smartba…</string>
+    <string name="what_is_smartband_desc">Este módulo de capacitación…</string>
+    <string name="understanding_use">Entendiendo el uso…</string>
+    <string name="understanding_use_desc">Este módulo de capacitación…</string>
+    <string name="how_to_link">¿Cómo vincular mi s…</string>
+    <string name="how_to_link_desc">Este módulo de capacitación…</string>
 
 </resources>
