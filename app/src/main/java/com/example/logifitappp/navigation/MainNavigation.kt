@@ -18,6 +18,7 @@ import com.example.logifitappp.ui.screens.additionalInformation.AdditionalInform
 import com.example.logifitappp.ui.screens.appLanguage.AppLanguageScreen
 import com.example.logifitappp.ui.screens.graphics.GraphicsEmptyScreen
 import com.example.logifitappp.ui.screens.healthInfo.HealthInfoScreen
+import com.example.logifitappp.ui.screens.help.HelpScreen
 import com.example.logifitappp.ui.screens.home.HomeScreen
 import com.example.logifitappp.ui.screens.home.admin.HomeAdminScreen
 import com.example.logifitappp.ui.screens.login.LoginView
@@ -52,6 +53,7 @@ fun MainNavigation(
         composable(MainRoutes.Trainings::class.simpleName!!) { TrainingsScreen(navigation) }
         composable(MainRoutes.HealthInformation::class.simpleName!!) { HealthInfoScreen(navigation) }
         composable(MainRoutes.AppLanguage::class.simpleName!!) { AppLanguageScreen(navigation) }
+        composable(MainRoutes.Help::class.simpleName!!) { HelpScreen(navigation) }
 
         composable(MainRoutes.Home::class.simpleName!!) {
             val sideMenuViewModel = androidx.lifecycle.viewmodel.compose.viewModel<SideMenuViewModel>()

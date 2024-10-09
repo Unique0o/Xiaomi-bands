@@ -74,7 +74,7 @@
     <string name="title_condition_sleep">Condiciones del sueño</string>
     <string name="status_no_apto">NO APTO</string>
     <string name="add_content_description" >Añadir</string>
-    <string name="profile_pic">Foto de perfil</string>
+    <string name="profile_photo">Foto de perfil</string>
     <string name="notificacions_content_description">Notificaciones</string>
     <string name="title_fatige">Fatiga</string>
     <string name="welcome">Bienvenido de vuelta</string>
@@ -121,7 +121,7 @@
     <string name="enter_key">Escribe la clave</string>
 
     <!-- Statistics -->
-    <string name="title_leaderboard_topbar">Clasificacion</string>
+    <string name="title_leaderboard_topbar">Clasificación</string>
     <string name="status_no_aptos">No aptos</string>
     <string name="status_aptos">Aptos</string>
     <string name="updated_information">Informaciòn actualizada al </string>
@@ -212,7 +212,16 @@
     <string name="country">País</string>
     <string name="birthdate">Fecha de nacimiento</string>
     <string name="phone">Teléfono</string>
+
+    <!-- Health Information -->
     <string name="health_info">Información de Salud</string>
+    <string name="weight">Peso</string>
+    <string name="height">Altura</string>
+    <string name="blood_type">Tipo de sangre</string>
+    <string name="gender">Genero</string>
+    <string name="meters">Metros</string>
+    <string name="male">Masculino</string>
+    <string name="female">Femenino</string>
 
     <!-- Side Menu -->
     <string name="logout">Cerrar sesión</string>
@@ -225,6 +234,16 @@
     <string name="english">Inglés</string>
     <string name="spanish">Español</string>
     <string name="by_default">Por defecto</string>
+
+    <!-- Help -->
+    <string name="need_help">¿Necesitas ayuda?</string>
+    <string name="help.instructions">Para poder ayudarte a solucionar tu problema, rellena el siguiente formulario y un responsable se pondrá en contacto contigo</string>
+    <string name="no_sync">No puedo sincronizar mi sueño</string>
+    <string name="non_binding">No puedo vincular el dispositivo</string>
+    <string name="no_send_sleep">No puedo enviar mi sueño</string>
+    <string name="others">Otros</string>
+    <string name="specify">Especifica</string>
+    <string name="ask_help">Solicitar ayuda</string>
 
     <!-- Trainings -->
     <string name="trainings">Capacitaciones</string>
