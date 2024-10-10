@@ -11,10 +11,10 @@ class HealthInfoRepositoryImpl @Inject constructor(
 ) : HealthInfoRepository {
     override suspend fun getHealthInfo(): List<HealthInfoModel> {
         return listOf(
-            HealthInfoModel("Weight", "-", "kg", R.drawable.user1),
-            HealthInfoModel("Height", "-", "meters", R.drawable.user1),
-            HealthInfoModel("Blood type", "B-", "", R.drawable.user1),
-            HealthInfoModel("Gender", "male", "", R.drawable.user1)
+            HealthInfoModel(context.getString(R.string.weight), "-", "kg", R.drawable.user1),
+            HealthInfoModel(context.getString(R.string.height), "-", context.getString(R.string.meters), R.drawable.user1),
+            HealthInfoModel(context.getString(R.string.blood_type), "B-", "", R.drawable.user1),
+            HealthInfoModel(context.getString(R.string.gender), context.getString(R.string.male), "", R.drawable.user1)
         )
     }
 }

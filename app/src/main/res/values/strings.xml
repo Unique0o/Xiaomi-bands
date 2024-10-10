@@ -75,7 +75,7 @@
     <string name="title_condition_sleep">Sleep Conditions</string>
     <string name="status_no_apto">NOT FIT</string>
     <string name="add_content_description">Add</string>
-    <string name="profile_pic">Profile Picture</string>
+    <string name="profile_photo">Profile Photo</string>
     <string name="notificacions_content_description">Notifications</string>
     <string name="welcome">Welcome back</string>
     <string name="title_fatige">Fatigue</string>
@@ -123,7 +123,7 @@
 
 
     <!-- Statistics -->
-    <string name="title_leaderboard_topbar">Clasificación</string>
+    <string name="title_leaderboard_topbar">Leaderboard</string>
     <string name="status_no_aptos">Not fit</string>
     <string name="status_aptos">Fit</string>
     <string name="updated_information">Information updated on </string>
@@ -220,6 +220,17 @@
     <string name="spanish">Spanish</string>
     <string name="by_default">By default</string>
 
+    <!-- Help -->
+    <string name="need_help">Need help?</string>
+    <string name="help.instructions">In order to help you solve your problem, fill out the following form and a person in charge will contact you</string>
+    <string name="no_sync">I can not sync my sleep</string>
+    <string name="non_binding">I can not bond device</string>
+    <string name="no_send_sleep">I can not send my sleep</string>
+    <string name="others">Others</string>
+    <string name="specify">Specify</string>
+    <string name="ask_help">Ask for help</string>
+
+
     <!-- Personal information -->
     <string name="names">Names</string>
     <string name="surnames">Surnames</string>
@@ -228,7 +239,16 @@
     <string name="country">Country</string>
     <string name="birthdate">Birthdate</string>
     <string name="phone">Phone</string>
+
+    <!-- Health Information -->
     <string name="health_info">Health Information</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="blood_type">blood type</string>
+    <string name="gender">Gender</string>
+    <string name="meters">Meters</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
     <!-- Trainings -->
     <string name="trainings">Trainings</string>
