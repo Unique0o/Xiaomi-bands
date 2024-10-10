@@ -20,6 +20,7 @@ import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
+import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
@@ -183,6 +184,10 @@ object NetworkModule {
     @Provides
     fun provideGetTrainingInfoUseCase(repository: TrainingRepository): GetTrainingUseCase {
         return GetTrainingUseCase(repository)
+    }
+    @Provides
+    fun provideGetTrainingDetailsUseCases(repository: TrainingRepository): GetTrainingLessonsUseCase {
+        return GetTrainingLessonsUseCase(repository)
     }
 
     @Provides

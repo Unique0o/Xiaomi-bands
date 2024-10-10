@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
+import com.example.logifitappp.ui.screens.Trainings.TrainingDetailScreen
 import com.example.logifitappp.ui.screens.Trainings.TrainingsScreen
 import com.example.logifitappp.ui.screens.additionalInformation.AdditionalInformationPicture
 import com.example.logifitappp.ui.screens.appLanguage.AppLanguageScreen
@@ -49,7 +50,14 @@ fun MainNavigation(
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
         composable(MainRoutes.OccupationalInformation::class.simpleName!!) { OccupationalInfoScreen(navigation) }
         composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
-        composable(MainRoutes.Trainings::class.simpleName!!) { TrainingsScreen(navigation) }
+        composable(
+            route = MainRoutes.TrainingsDetail::class.simpleName!! + "/{trainingId}",
+            arguments = listOf(navArgument("trainingId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val trainingId = backStackEntry.arguments?.getString("trainingId") ?: ""
+            TrainingDetailScreen(navigation, trainingId)
+        }
+        composable(MainRoutes.TrainingsDetail::class.simpleName!!) { TrainingsScreen(navigation) }
         composable(MainRoutes.HealthInformation::class.simpleName!!) { HealthInfoScreen(navigation) }
         composable(MainRoutes.AppLanguage::class.simpleName!!) { AppLanguageScreen(navigation) }
 

@@ -1,5 +1,6 @@
 package com.example.logifitappp.ui.components.Trainings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 
 @Composable
-fun DescriptionSection() {
+fun DescriptionSection(description: String) {
+    var isExpanded by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
@@ -38,16 +45,18 @@ fun DescriptionSection() {
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.smartband_description),
+            text = description,
             style = MaterialTheme.typography.bodyMedium,
-            maxLines = 3,
+            maxLines = if (isExpanded) Int.MAX_VALUE else 3,
             overflow = TextOverflow.Ellipsis
         )
         Text(
-            text = stringResource(id = R.string.show_more),
+            text = stringResource(id = if (isExpanded) R.string.show_less else R.string.show_more),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .clickable { isExpanded = !isExpanded }
         )
     }
 }
