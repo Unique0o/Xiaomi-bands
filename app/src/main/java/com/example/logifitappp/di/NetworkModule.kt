@@ -29,6 +29,7 @@ import com.example.logifitappp.utils.Constants.BASE_URL
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
+import com.example.logifitappp.viewmodel.views.Trainings.TrainingDetailViewModel
 import com.example.logifitappp.viewmodel.views.Trainings.TrainingViewModel
 import dagger.Module
 import dagger.Provides
@@ -193,6 +194,11 @@ object NetworkModule {
     @Provides
     fun provideTrainingInfoViewModel(getTrainingUseCase: GetTrainingUseCase): TrainingViewModel {
         return TrainingViewModel(getTrainingUseCase)
+    }
+
+    @Provides
+    fun provideTrainingDetailViewModel(useCase: GetTrainingLessonsUseCase, useCase2: GetTrainingUseCase): TrainingDetailViewModel {
+        return TrainingDetailViewModel(useCase2, useCase)
     }
 
 

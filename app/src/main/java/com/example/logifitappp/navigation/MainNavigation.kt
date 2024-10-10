@@ -57,7 +57,7 @@ fun MainNavigation(
             val trainingId = backStackEntry.arguments?.getString("trainingId") ?: ""
             TrainingDetailScreen(navigation, trainingId)
         }
-        composable(MainRoutes.TrainingsDetail::class.simpleName!!) { TrainingsScreen(navigation) }
+        composable(MainRoutes.Trainings::class.simpleName!!) { TrainingsScreen(navigation) }
         composable(MainRoutes.HealthInformation::class.simpleName!!) { HealthInfoScreen(navigation) }
         composable(MainRoutes.AppLanguage::class.simpleName!!) { AppLanguageScreen(navigation) }
 
