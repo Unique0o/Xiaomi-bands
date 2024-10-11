@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.getValue
@@ -38,7 +39,7 @@ import java.util.GregorianCalendar
 
 class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
     private var adapter: BluetoothAdapter? = null
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
     private var refreshAt = System.currentTimeMillis()
     private var scanCallback = BleScanCallback()
     private val scanEventProcessor = ScanEventProcessor(this)

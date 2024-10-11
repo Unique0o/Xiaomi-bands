@@ -14,7 +14,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.logifitappp"
+        applicationId = "com.info.logifit.pe"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

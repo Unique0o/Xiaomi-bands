@@ -53,4 +53,7 @@ sealed class MainRoutes {
 
     @Serializable
     data object AppLanguage : MainRoutes()
+
+    @Serializable
+    data object Help : MainRoutes()
 }
