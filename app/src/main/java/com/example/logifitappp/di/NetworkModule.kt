@@ -23,6 +23,7 @@ import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
+import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
 import com.example.logifitappp.domain.usecase.GetTermsAndConditionsUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
@@ -32,6 +33,7 @@ import com.example.logifitappp.utils.Constants.BASE_URL
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
+import com.example.logifitappp.viewmodel.views.Trainings.TrainingDetailViewModel
 import com.example.logifitappp.viewmodel.views.Trainings.TrainingViewModel
 import com.example.logifitappp.viewmodel.views.termsConditions.TermsAndConditionsViewModel
 import dagger.Module
@@ -189,10 +191,19 @@ object NetworkModule {
     fun provideGetTrainingInfoUseCase(repository: TrainingRepository): GetTrainingUseCase {
         return GetTrainingUseCase(repository)
     }
+    @Provides
+    fun provideGetTrainingDetailsUseCases(repository: TrainingRepository): GetTrainingLessonsUseCase {
+        return GetTrainingLessonsUseCase(repository)
+    }
 
     @Provides
     fun provideTrainingInfoViewModel(getTrainingUseCase: GetTrainingUseCase): TrainingViewModel {
         return TrainingViewModel(getTrainingUseCase)
+    }
+
+    @Provides
+    fun provideTrainingDetailViewModel(useCase: GetTrainingLessonsUseCase, useCase2: GetTrainingUseCase): TrainingDetailViewModel {
+        return TrainingDetailViewModel(useCase2, useCase)
     }
 
 

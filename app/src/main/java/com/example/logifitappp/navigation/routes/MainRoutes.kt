@@ -46,6 +46,9 @@ sealed class MainRoutes {
     data object Trainings : MainRoutes()
 
     @Serializable
+    data object TrainingsDetail : MainRoutes()
+
+    @Serializable
     data object AdditionalInformationPicture : MainRoutes()
 
     @Serializable

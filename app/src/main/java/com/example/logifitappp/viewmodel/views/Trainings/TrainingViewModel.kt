@@ -10,24 +10,42 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
-class TrainingViewModel @Inject constructor (private val TrainingUseCase: GetTrainingUseCase) : ViewModel() {
+class TrainingViewModel @Inject constructor(
+    private val getTrainingsUseCase: GetTrainingUseCase
+) : ViewModel() {
     private val _trainingInfo = MutableStateFlow<TrainingInfoUiState>(TrainingInfoUiState.Loading)
     val trainingInfo: StateFlow<TrainingInfoUiState> = _trainingInfo.asStateFlow()
 
+    private val _navigationEvent = MutableStateFlow<NavigationEvent?>(null)
+    val navigationEvent: StateFlow<NavigationEvent?> = _navigationEvent.asStateFlow()
+
     init {
+        loadTrainings()
+    }
+
+    private fun loadTrainings() {
         viewModelScope.launch {
             _trainingInfo.value = TrainingInfoUiState.Loading
             try {
-                val info = TrainingUseCase()
-                _trainingInfo.value = TrainingInfoUiState.Success(info)
+                val trainings = getTrainingsUseCase()
+                _trainingInfo.value = TrainingInfoUiState.Success(trainings)
             } catch (e: Exception) {
-                _trainingInfo.value = TrainingInfoUiState.Error("Failed to load training info")
+                _trainingInfo.value = TrainingInfoUiState.Error("Failed to load trainings")
             }
         }
     }
 
-    fun onTrainingClick(){
-        /* to do */
+    fun onTrainingClick(trainingId: String) {
+        _navigationEvent.value = NavigationEvent.NavigateToTrainingDetail(trainingId)
     }
+
+    fun onNavigationEventConsumed() {
+        _navigationEvent.value = null
+    }
+}
+
+sealed class NavigationEvent {
+    data class NavigateToTrainingDetail(val trainingId: String) : NavigationEvent()
 }
