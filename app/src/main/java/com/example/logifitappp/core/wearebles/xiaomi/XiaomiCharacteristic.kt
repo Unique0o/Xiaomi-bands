@@ -3,7 +3,6 @@ package com.example.logifitappp.core.wearebles.xiaomi
 import android.bluetooth.BluetoothGattCharacteristic
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiAuthService
@@ -22,7 +21,6 @@ class XiaomiCharacteristic(
     private val authService: XiaomiAuthService?
 ) {
     val characteristicUuid: UUID get() = characteristic.uuid
-    private val chunkBuffer = ByteArrayOutputStream()
     private var currentChunk = 0
     private var currentPayload: Payload? = null
     private var encryptedIndex = 0
@@ -38,70 +36,23 @@ class XiaomiCharacteristic(
 
     private val receivedChunks = mutableMapOf<Int, ByteArray>()
     private val timeoutHandler = Handler(Looper.getMainLooper())
-    private val TIMEOUT_TASK_DELAY = 1000L
-
-
-    fun dispose() {
-        cancelTimeoutTask()
-    }
-    private fun requestMissingChunks() {
-        if (numChunks <= 0) {
-            println("Timeout task ran but not expecting any chunks")
-            return
-        }
-        println("Timeout reached while waiting for all chunks from device")
-
-        val missingChunks = (1..numChunks).filter { !receivedChunks.containsKey(it) }
-        val reqChunkCount = min(missingChunks.size, (maxWriteSize - 4) / 2)
-
-        if (reqChunkCount < missingChunks.size) {
-            println("Missing ${missingChunks.size} chunk(s), only requesting first $reqChunkCount: $missingChunks")
-        } else {
-            println("Missing ${missingChunks.size} chunk(s): $missingChunks")
-        }
-
-        val bb = ByteBuffer.allocate(4 + reqChunkCount * 2).order(ByteOrder.LITTLE_ENDIAN)
-        bb.putShort(0) // chunk ID
-        bb.put(1) // type CHUNKED_ACK
-        bb.put(5) // indicate partially received transmission, followed by missing chunks
-        missingChunks.take(reqChunkCount).forEach { bb.putShort(it.toShort()) }
-
-        val tb = support.createTransactionBuilder("send nack with missing chunks $missingChunks")
-        tb.write(characteristic, bb.array())
-        tb.queue(support.getQueue())
-    }
+    private val timeoutTaskDelay = 5000L
 
     private fun cancelTimeoutTask() {
         timeoutHandler.removeCallbacksAndMessages(null)
     }
 
-    private fun rescheduleTimeoutTask() {
+    fun dispose() {
         cancelTimeoutTask()
-        timeoutHandler.postDelayed({ requestMissingChunks() }, TIMEOUT_TASK_DELAY)
     }
 
-    private fun reconstructPayloadFromChunks(): ByteArray {
-        val out = ByteArrayOutputStream()
-        try {
-            for (i in 0 until numChunks) {
-                val chunk = receivedChunks[i + 1]
-                if (chunk == null) {
-                    println("Missing chunk ${i + 1}")
-                    return ByteArray(0)
-                }
-                out.write(chunk)
-            }
-        } catch (ex: IOException) {
-            println("Failed to reconstruct payload: ${ex.message}")
-            return ByteArray(0)
-        }
-        return out.toByteArray()
-    }
     fun onCharacteristicChanged(payload: ByteArray) {
         val buffer = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN)
         val chunk = buffer.getShort().toInt()
 
         if (chunk != 0) {
+            println("Got chunk $currentChunk of $numChunks")
+
             if (chunk > numChunks) {
                 println("Ignoring chunk $chunk exceeding upper bound $numChunks")
                 return
@@ -109,34 +60,32 @@ class XiaomiCharacteristic(
 
             if (receivedChunks.containsKey(chunk)) {
                 println("Already received chunk $chunk")
-                return
             }
 
             val chunkBytes = ByteArray(buffer.limit() - buffer.position())
             buffer.get(chunkBytes)
-            println("Got chunk $currentChunk of $numChunks")
             receivedChunks[chunk] = chunkBytes
+            rescheduleTimeoutTask()
 
-            if (currentChunk == numChunks) {
+            if (receivedChunks.keys.size == numChunks) {
                 cancelTimeoutTask()
                 sendChunkEndAck()
-                val payload = reconstructPayloadFromChunks()
+                val restructuredPayload = reconstructPayloadFromChunks()
 
-                if (payload.isEmpty()) {
+                if (restructuredPayload.isEmpty()) {
                     println("Payload reconstructed from chunks was empty")
                 } else if (handler != null) {
                     if (isEncrypted) {
-                        handler?.handler(authService!!.decrypt(payload))
+                        handler?.handler(authService!!.decrypt(restructuredPayload))
                     } else {
-                        handler?.handler(payload)
+                        handler?.handler(restructuredPayload)
                     }
                 } else {
                     println("Channel handler for char $characteristicUuid is null!")
                 }
+
                 this.numChunks = 0;
-                this.receivedChunks.clear();
-            } else {
-                rescheduleTimeoutTask()
+                this.receivedChunks.clear()
             }
         } else {
             val type = buffer.get()
@@ -151,12 +100,11 @@ class XiaomiCharacteristic(
                         return
                     }
 
-                    numChunks = buffer.short.toInt()
+                    numChunks = buffer.getShort().toInt()
                     receivedChunks.clear()
 
                     println("Got chunked start request for $numChunks chunks")
                     sendChunkStartAck()
-                    rescheduleTimeoutTask()
                     return
                 }
 
@@ -202,7 +150,7 @@ class XiaomiCharacteristic(
                         5.toByte() -> {
                             val invalidChunks = ShortArray(remaining.size / 2)
 
-                            if (remaining.size > 0) {
+                            if (remaining.isNotEmpty()) {
                                 val remainingBuffer = ByteBuffer.wrap(remaining).order(ByteOrder.LITTLE_ENDIAN)
 
                                 for (i in 0 .. remaining.size / 2) invalidChunks[i] = remainingBuffer.getShort()
@@ -265,16 +213,69 @@ class XiaomiCharacteristic(
         }
     }
 
+    private fun reconstructPayloadFromChunks(): ByteArray {
+        val out = ByteArrayOutputStream()
+
+        try {
+            for (i in 0 until numChunks) {
+                if (!receivedChunks.containsKey(i + 1) || receivedChunks[i + 1] == null) {
+                    println("Missing chunk ${i + 1}")
+                    return ByteArray(0)
+                }
+
+                out.write(receivedChunks[i + 1])
+            }
+        } catch (ex: IOException) {
+            println("Failed to reconstruct payload: ${ex.message}")
+            return ByteArray(0)
+        }
+
+        return out.toByteArray()
+    }
+
+    private fun requestMissingChunks() {
+        if (numChunks <= 0) {
+            println("Timeout task ran but not expecting any chunks")
+            return
+        }
+
+        println("Timeout reached while waiting for all chunks from device")
+
+        val missingChunks = (1..numChunks).filter { !receivedChunks.containsKey(it) }
+        val reqChunkCount = min(missingChunks.size, (maxWriteSize - 4) / 2)
+
+        if (reqChunkCount < missingChunks.size) {
+            println("Missing ${missingChunks.size} chunk(s), only requesting first $reqChunkCount: $missingChunks")
+        } else {
+            println("Missing ${missingChunks.size} chunk(s): $missingChunks")
+        }
+
+        val bb = ByteBuffer.allocate(4 + reqChunkCount * 2).order(ByteOrder.LITTLE_ENDIAN)
+        bb.putShort(0) // chunk ID
+        bb.put(1) // type CHUNKED_ACK
+        bb.put(5) // indicate partially received transmission, followed by missing chunks
+        missingChunks.take(reqChunkCount).forEach { bb.putShort(it.toShort()) }
+
+        val tb = support.createTransactionBuilder("send nack with missing chunks $missingChunks")
+        tb.write(characteristic, bb.array())
+        tb.queue(support.getQueue())
+    }
+
+    private fun rescheduleTimeoutTask() {
+        cancelTimeoutTask()
+        timeoutHandler.postDelayed({ requestMissingChunks() }, timeoutTaskDelay)
+    }
+
     fun reset() {
         numChunks = 0
         currentChunk = 0
         encryptedIndex = 1
-        this.receivedChunks.clear();
+        receivedChunks.clear()
         payloadQueue.clear()
         waitingAck = false
         sendingChunked = false
         currentPayload = null
-        cancelTimeoutTask();
+        cancelTimeoutTask()
     }
 
     private fun sendAck() {

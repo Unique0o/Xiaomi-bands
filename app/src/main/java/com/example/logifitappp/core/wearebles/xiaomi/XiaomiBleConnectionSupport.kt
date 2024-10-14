@@ -11,7 +11,6 @@ import com.example.logifitappp.core.builders.ble.actions.SetWearableStateAction
 import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
 import com.example.logifitappp.core.wearebles.Wearable
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
-import okhttp3.internal.notify
 
 class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): XiaomiConnectionSupport {
     private var characteristicActivityData: XiaomiCharacteristic? = null
