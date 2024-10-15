@@ -56,4 +56,7 @@ sealed class MainRoutes {
 
     @Serializable
     data object Help : MainRoutes()
+
+    @Serializable
+    data object TermsAndConditions : MainRoutes()
 }

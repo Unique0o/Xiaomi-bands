@@ -4,6 +4,7 @@ package com.example.logifitappp.ui.components.menu
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,7 +37,8 @@ fun ProfileHeader(name: String, role: String, avatarResId: Int) {
         Text(
             text = name,
             fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.inverseSurface
         )
         Text(
             text = role,

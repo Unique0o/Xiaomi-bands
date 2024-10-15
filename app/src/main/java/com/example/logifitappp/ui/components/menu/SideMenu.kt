@@ -49,7 +49,7 @@ fun SideMenu(
                 .offset(x = offsetX)
                 .width(300.dp)
                 .fillMaxHeight()
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             Column {
                 ProfileHeader(name = name, role = role, avatarResId = avatarResId)

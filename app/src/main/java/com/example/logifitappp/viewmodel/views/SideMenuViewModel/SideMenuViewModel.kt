@@ -45,7 +45,7 @@ class SideMenuViewModel @Inject constructor(
             MenuItem(Icons.AutoMirrored.Filled.MenuBook, R.string.trainings) { navigateTo(MainRoutes.Trainings) },
             MenuItem(Icons.Default.Translate, R.string.language) { navigateTo(MainRoutes.AppLanguage) },
             MenuItem(Icons.AutoMirrored.Filled.Help, R.string.help) { navigateTo(MainRoutes.Help) },
-            MenuItem(Icons.Default.PrivacyTip, R.string.terms_and_conditions) { navigateTo(MainRoutes.Notifications) },
+            MenuItem(Icons.Default.PrivacyTip, R.string.terms_and_conditions) { navigateTo(MainRoutes.TermsAndConditions) },
             MenuItem(Icons.AutoMirrored.Filled.Logout, R.string.logout) { logout() },
             MenuItem(Icons.Default.Cancel, R.string.exit) { logout() }
         )

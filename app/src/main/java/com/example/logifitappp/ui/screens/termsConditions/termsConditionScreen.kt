@@ -1,59 +1,59 @@
 package com.example.logifitappp.ui.screens.termsConditions
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import android.webkit.WebView
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.viewmodel.views.termsConditions.TermsAndConditionsUiState
+import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.headers.ColumnStackHeader
+import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.termsConditions.TermsAndConditionsViewModel
 
 @Composable
-fun TermsAndConditionsScreen(navigation: NavHostController) {
+fun TermsAndConditionsScreen(
+    navigation: NavHostController,
+) {
     val viewModel: TermsAndConditionsViewModel = hiltViewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    val url by viewModel.url.observeAsState()
+    val isLoading by viewModel.isLoading.observeAsState(initial = true)
+    val backgroundColor = MaterialTheme.colorScheme.surface.toArgb()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Términos y Condiciones",
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+    SimplePage(
+        content = {
+            Box(modifier = Modifier.fillMaxSize()) {
+                AndroidView(
+                    factory = { context ->
+                        WebView(context).apply {
+                            viewModel.getWebViewSettings(this, backgroundColor)
+                            loadUrl(url ?: "")
+                        }
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
 
-        when (val state = uiState) {
-            is TermsAndConditionsUiState.Loading -> {
-                CircularProgressIndicator()
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
             }
-            is TermsAndConditionsUiState.Success -> {
-                Text(
-                    text = state.message,
-                    color = Color.Green
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = state.termsAndConditions.content,
-                )
-            }
-            is TermsAndConditionsUiState.Error -> {
-                Text(
-                    text = state.message,
-                    color = Color.Red
-                )
-            }
+        },
+        topBar = {
+            ColumnStackHeader(
+                navigation = navigation,
+                title = stringResource(id = R.string.terms_and_conditions)
+            )
         }
-    }
+    )
 }
-
