@@ -26,6 +26,7 @@ import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.occupationalInfo.OccupationalInfoScreen
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.personalInformation.PersonalInfoScreen
+import com.example.logifitappp.ui.screens.termsConditions.TermsAndConditionsScreen
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
@@ -51,6 +52,7 @@ fun MainNavigation(
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
         composable(MainRoutes.OccupationalInformation::class.simpleName!!) { OccupationalInfoScreen(navigation) }
         composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
+        composable(MainRoutes.TermsAndConditions::class.simpleName!!) { TermsAndConditionsScreen(navigation) }
         composable(
             route = MainRoutes.TrainingsDetail::class.simpleName!! + "/{trainingId}",
             arguments = listOf(navArgument("trainingId") { type = NavType.StringType })

@@ -5,26 +5,22 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
-import com.example.logifitappp.data.remote.api.TermsAndConditionsApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.HealthInfoRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
-import com.example.logifitappp.data.repository.TermsAndConditionsRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.HealthInfoRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
-import com.example.logifitappp.domain.repository.TermsAndConditionsRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
-import com.example.logifitappp.domain.usecase.GetTermsAndConditionsUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
@@ -35,7 +31,6 @@ import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfo
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoViewModel
 import com.example.logifitappp.viewmodel.views.Trainings.TrainingDetailViewModel
 import com.example.logifitappp.viewmodel.views.Trainings.TrainingViewModel
-import com.example.logifitappp.viewmodel.views.termsConditions.TermsAndConditionsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -205,31 +200,5 @@ object NetworkModule {
     fun provideTrainingDetailViewModel(useCase: GetTrainingLessonsUseCase, useCase2: GetTrainingUseCase): TrainingDetailViewModel {
         return TrainingDetailViewModel(useCase2, useCase)
     }
-
-
-    @Provides
-    @Singleton
-    fun provideTermsAndConditionsApi(retrofit: Retrofit): TermsAndConditionsApi {
-        return retrofit.create(TermsAndConditionsApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTermsAndConditionsRepository(api: TermsAndConditionsApi): TermsAndConditionsRepository {
-        return TermsAndConditionsRepositoryImpl(api)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetTermsAndConditionsUseCase(repository: TermsAndConditionsRepository): GetTermsAndConditionsUseCase {
-        return GetTermsAndConditionsUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTermsAndConditionsViewModel(useCase: GetTermsAndConditionsUseCase): TermsAndConditionsViewModel {
-        return TermsAndConditionsViewModel(useCase)
-    }
-
 
 }
