@@ -1,5 +1,16 @@
-# LogifitApp
+<br />
+<div align="center">
+   <a href="https://github.com/othneildrew/Best-README-Template">
+       <img src="https://github.com/user-attachments/assets/d1843321-7c47-4ffd-8a48-18093a980e5d" />
+   </a>
+   
+  <h1 align = "center">
+    <b><i>LogifitApp</i></b>![Logo]()
 
+  </h1>
+  
+  
+</div>
 LogifitApp is a application developed in Kotlin using the MVVM pattern, Jetpack Compose, and other modern Android technologies. The app focuses on extracting and analyzing data from Xiaomi Smart Bands 8 and 9.
 
 ## Key Features
