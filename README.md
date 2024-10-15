@@ -5,7 +5,7 @@
    </a>
    
   <h1 align = "center">
-    <b><i>LogifitApp</i></b>![Logo]()
+    <b><i>LogifitApp</i></b>
 
   </h1>
   
