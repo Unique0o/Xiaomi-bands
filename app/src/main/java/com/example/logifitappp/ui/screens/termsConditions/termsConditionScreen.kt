@@ -16,6 +16,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.Loader
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.termsConditions.TermsAndConditionsViewModel
@@ -31,7 +32,10 @@ fun TermsAndConditionsScreen(
 
     SimplePage(
         content = {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center)
+            {
                 AndroidView(
                     factory = { context ->
                         WebView(context).apply {
@@ -43,9 +47,7 @@ fun TermsAndConditionsScreen(
                 )
 
                 if (isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                    Loader()
                 }
             }
         },

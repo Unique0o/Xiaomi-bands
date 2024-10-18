@@ -24,10 +24,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.data.models.CountryModel
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.forms.PhoneTextInput
 import com.example.logifitappp.ui.components.forms.SelectableBottomSheetList
+import com.example.logifitappp.ui.components.forms.SelectableItem
 import com.example.logifitappp.viewmodel.views.AdditionalInformation.AdditionalInformationViewModel
 import com.example.logifitappp.viewmodel.views.AdditionalInformation.SelectableBottomSheetViewModel
 
@@ -41,7 +43,8 @@ fun AdditionalInformationForm(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    val uiState by selectableBottomSheetViewModel.uiState.collectAsState()
+    //val uiState by selectableBottomSheetViewModel.uiState.collectAsState()
+    val state by additionalInformationViewModel.state.collectAsState()
 
     val countryCodes = remember { additionalInformationViewModel.getCountryCodes() }
     Column(
@@ -61,30 +64,31 @@ fun AdditionalInformationForm(
             textAlign = TextAlign.Center
         )
         OutlinedTextField(
-            value = additionalInformationViewModel.name,
+            value = state.name,
             onValueChange = { additionalInformationViewModel.updateName(it) },
             placeholder = stringResource(id = R.string.placeholder_name),
         )
         OutlinedTextField(
             keyboardActions = KeyboardActions(
                 onDone = {
-
+                    focusManager.clearFocus()
+                    keyboardController?.hide()
                 }
             ),
             onValueChange = {
                 additionalInformationViewModel.updateLastnames(it)
             },
             placeholder = stringResource(id = R.string.placeholder_lastname),
-            value = additionalInformationViewModel.lastnames
+            value = state.lastnames
         )
 
         SelectableBottomSheetList(
-            items = uiState.countries,
-            value = uiState.selectedCountry,
-            onSelectItem = { selectableBottomSheetViewModel.onCountrySelected(it) },
+            items = state.countries,
+            value = state.selectedCountry,
+            onSelectItem = { additionalInformationViewModel.selectCountry(it) },
             placeholder = stringResource(R.string.placeholder_type_document),
             title = stringResource(R.string.placeholder_country),
-            errorLabel = uiState.countryError,
+            errorLabel = state.error,
         )
         OutlinedTextField(
             keyboardActions = KeyboardActions(
@@ -93,32 +97,37 @@ fun AdditionalInformationForm(
                 }
             ),
             onValueChange = {
-                additionalInformationViewModel.updateDocument_identity(it)
+                additionalInformationViewModel.updateDocumentIdentity(it)
             },
             placeholder = stringResource(id = R.string.placeholder_document_identity),
-            value = additionalInformationViewModel.document_identity
+            value = state.documentIdentity
         )
         SelectableBottomSheetList(
-            items = uiState.countries,
-            value = uiState.selectedCountry,
-            onSelectItem = { selectableBottomSheetViewModel.onCountrySelected(it) },
+            items = state.countries,
+            value = state.selectedCountry,
+            onSelectItem = { additionalInformationViewModel.selectCountry(it) },
             placeholder = stringResource(R.string.placeholder_country),
             title = stringResource(R.string.placeholder_country),
-            errorLabel = uiState.countryError,
+            errorLabel = state.error,
         )
 
 
         PhoneTextInput(
-            value = additionalInformationViewModel.mobile,
+            value = state.mobile,
             onValueChange = { additionalInformationViewModel.updateMobile(it) },
             countryCodes = countryCodes
         )
 
         IconButton(
             icon = Icons.AutoMirrored.Rounded.Send,
-            onClick = {},
+            onClick = {additionalInformationViewModel.onSubmitPersonalInformation { onSubmit() } },
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.button_continue)
         )
     }
 }
+
+fun CountryModel.toSelectableItem() = object : SelectableItem {
+    override val name: String = this@toSelectableItem.name
+}
+
