@@ -30,7 +30,6 @@ class AuthService @Inject constructor(private val authRepository: AuthRepository
         } catch (e: HttpException) {
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
         } catch (e: Exception) {
-            e.printStackTrace()
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         }
     }

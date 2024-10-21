@@ -11,100 +11,79 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.Text
+import com.example.logifitappp.ui.components.layouts.ModalLayout
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.theme.LogifitApppTheme
+import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
 
 @Composable
 fun LoginView(
+    appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
     val loginViewModel: LoginViewModel = hiltViewModel()
-    val uiState = loginViewModel.uiState
-    SimplePage(
-        content = {
+
+    ModalLayout(
+        onClose = { loginViewModel.stopProcessing() },
+        onDismissRequest = { loginViewModel.stopProcessing() },
+        status = loginViewModel.state.status,
+        visible = loginViewModel.state.isLoggedIn || loginViewModel.state.hasLoginProcessFailed
+    )
+
+    SimplePage {
+        Spacer(modifier = Modifier.weight(1f))
+
+        Image(
+            painter = painterResource(
+                id = if (isSystemInDarkTheme()) R.drawable.ic_dark_logo else R.drawable.ic_light_logo
+            ),
+            contentDescription = null
+        )
+
+        Text(
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            text = stringResource(id = R.string.subtitle_login),
+            typography = MaterialTheme.typography.labelMedium
+        )
+
+        LoginForm(
+            loginViewModel = loginViewModel,
+            modifier = Modifier.padding(top = 24.dp),
+            onSubmit = {
+                loginViewModel.login {
+                    appViewModel.updateUser(it)
+                }
+            }
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row {
             Spacer(modifier = Modifier.weight(1f))
 
-            Image(
-                painter = painterResource(
-                    id = if (isSystemInDarkTheme()) R.drawable.ic_dark_logo else R.drawable.ic_light_logo
-                ),
-                contentDescription = null
+            Text(
+                text = stringResource(id = R.string.message_recover_password),
+                typography = MaterialTheme.typography.bodySmall,
             )
 
             Text(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = stringResource(id = R.string.subtitle_login),
-                typography = MaterialTheme.typography.labelMedium
-            )
-            if (uiState.error != null) {
-                Text(
-                    text = uiState.error,
-                    color = MaterialTheme.colorScheme.error,
-                    typography = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-
-            LoginForm(
-                loginViewModel = loginViewModel,
-                modifier = Modifier.padding(top = 24.dp),
-                onSubmit = {
-                    loginViewModel.login { isAdmin ->
-                        navigation.navigate("${MainRoutes.Home::class.simpleName}/$isAdmin") {
-                            popUpTo(MainRoutes.Login::class.simpleName ?: "") { inclusive = true }
-                        }
-                    }
-                }
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .clickable {
+                        navigation.navigate(MainRoutes.PasswordRecovery)
+                    },
+                typography = MaterialTheme.typography.bodySmall,
+                text = stringResource(id = R.string.link_recover_password)
             )
 
             Spacer(modifier = Modifier.weight(1f))
-
-            Row {
-                Spacer(modifier = Modifier.weight(1f))
-
-                Text(
-                    text = stringResource(id = R.string.message_recover_password),
-                    typography = MaterialTheme.typography.bodySmall,
-                )
-
-                Text(
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .padding(start = 4.dp)
-                        .clickable {
-                            navigation.navigate(MainRoutes.PasswordRecovery)
-                        },
-                    typography = MaterialTheme.typography.bodySmall,
-                    text = stringResource(id = R.string.link_recover_password)
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-            }
         }
-    )
-}
-
-@Preview
-@Composable
-fun LoginViewPreview() {
-    LogifitApppTheme {
-        LoginView(rememberNavController())
-    }
-}
-
-@Preview
-@Composable
-fun LoginViewDarkPreview() {
-    LogifitApppTheme(darkTheme = true) {
-        LoginView(rememberNavController())
     }
 }

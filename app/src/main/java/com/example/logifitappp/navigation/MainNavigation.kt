@@ -3,8 +3,6 @@ package com.example.logifitappp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -29,7 +27,6 @@ import com.example.logifitappp.ui.screens.personalInformation.PersonalInfoScreen
 import com.example.logifitappp.ui.screens.termsConditions.TermsAndConditionsScreen
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.viewmodel.views.AppViewModel
-import com.example.logifitappp.viewmodel.views.LoginViewModel
 import com.example.logifitappp.viewmodel.views.SideMenuViewModel.SideMenuViewModel
 import com.example.logifitappp.viewmodel.views.graphics.GraphicsViewModel
 import com.example.logifitappp.viewmodel.views.home.HomeViewModel
@@ -37,19 +34,17 @@ import com.example.logifitappp.viewmodel.views.home.HomeViewModel
 @Composable
 fun MainNavigation(
     appViewModel: AppViewModel,
-    loginViewModel: LoginViewModel,
     navigation: NavHostController = rememberNavController()
 ) {
-    val isAdmin by loginViewModel.isAdmin.collectAsState()
-
     NavHost(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
     ) {
-        composable<MainRoutes.Login> { LoginView(navigation) }
+        composable<MainRoutes.Login> { LoginView(appViewModel, navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
+
         composable(MainRoutes.OccupationalInformation::class.simpleName!!) { OccupationalInfoScreen(navigation) }
         composable(MainRoutes.PersonalInformation::class.simpleName!!) { PersonalInfoScreen(navigation) }
         composable(MainRoutes.TermsAndConditions::class.simpleName!!) { TermsAndConditionsScreen(navigation) }

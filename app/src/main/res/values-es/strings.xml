@@ -23,6 +23,7 @@
     <string name="discovery_pair_title">¿Emparejar con %1$s?</string>
     <string name="go_back">Regresar</string>
     <string name="greeting">Bienvenido de vuelta</string>
+    <string name="help_already_stored_message">Ya se realizó una solicitud de ayuda para el día de hoy</string>
     <string name="initialized">Iniciado</string>
     <string name="initializing">Inicializando</string>
     <string name="link_hide">Ocultar</string>
@@ -40,12 +41,14 @@
     <string name="placeholder_password">Contraseña</string>
     <string name="placeholder_user">Usuario</string>
     <string name="reminder_message">Recuerda activar tu Bluetooth y mantener tu Smart Band cerca a tu celular para facilitar la conexión</string>
+    <string name="require_subscription_upgrading_message">El proyecto no cuenta con saldo para realizar el envío de información. Por favor comuníquese con su administrador a la brevedad.</string>
     <string name="scanned">Escaneado</string>
     <string name="select">Seleccionar</string>
     <string name="subtitle_login">Ingrese sus credenciales para continuar</string>
     <string name="unbind_before_pair_message">Este dispositivo ya está vinculado en los ajustes de Android, lo que puede hacer que el emparejamiento falle en algunos dispositivos. Si no se puede añadir el dispositivo, elimínelo de los ajustes de Android y vuelva a intentarlo.</string>
     <string name="unbind_before_pair_title">Ya vinculado</string>
     <string name="unknown_activity">Actividad desconocida</string>
+    <string name="unprocessable_http_error_message">Falta asociar dispositivo</string>
     <string name="unregistered_user_error_message">Usuario no registrado. Por favor, crear una cuenta para iniciar sesión</string>
     <string name="waiting_for_device_scan">Esperando por escaneo de dispositivos</string>
     <string name="waiting_for_reconnect">Esperando por reconexión</string>

@@ -6,7 +6,7 @@ import com.example.logifitappp.domain.repository.AdminRepository
 import retrofit2.Response
 import javax.inject.Inject
 
-class AdminRepositoryImpl @Inject constructor(  private val adminApi: AdminApi)
+class AdminRepositoryImpl @Inject constructor(private val adminApi: AdminApi)
     : AdminRepository {
     override suspend fun fetchWorkers(): Response<WorkerResponse> {
         return adminApi.fetchWorkers()
