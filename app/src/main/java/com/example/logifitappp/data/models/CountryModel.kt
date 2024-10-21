@@ -1,11 +1,12 @@
 package com.example.logifitappp.data.models
 
 import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import com.example.logifitappp.ui.components.forms.SelectableItem
 
 data class CountryModel(
-    @ColumnInfo(name = "externalIdentifier") val externalIdentifier: Int? = null,
-    @ColumnInfo(name = "id") val id: Int? = null,
+    @ColumnInfo(name = "externalIdentifier")  val externalIdentifier: Int,
+    @PrimaryKey val id: Int? = null,
     @ColumnInfo(name = "name") override val name: String = ""
 ): SelectableItem
 
