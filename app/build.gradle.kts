@@ -90,6 +90,7 @@ dependencies {
     implementation(libs.permissions)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.core.i18n)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
