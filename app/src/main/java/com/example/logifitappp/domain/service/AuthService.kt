@@ -20,7 +20,6 @@ class AuthService @Inject constructor(private val authRepository: AuthRepository
             val response = authRepository.login(loginRequest)
 
             if (!response.isSuccessful) {
-                println(response.code())
                 throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
             }
 
@@ -49,9 +48,11 @@ class AuthService @Inject constructor(private val authRepository: AuthRepository
     suspend fun updateNotificationToken(userId: Int, firebaseKey: String): GeneralResponse = withContext(Dispatchers.IO) {
         try {
             val response = authRepository.updateNotificationToken(userId, FirebaseKeyRequest(firebaseKey))
+
             if (!response.isSuccessful) {
                 throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
             }
+
             return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         } catch (e: Exception) {
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)

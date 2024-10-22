@@ -33,6 +33,7 @@ import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
+import com.example.logifitappp.domain.usecase.UpdateNotificationToken
 import com.example.logifitappp.domain.usecase.UpdateTenantInformationUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
@@ -103,8 +104,9 @@ object NetworkModule {
     @Singleton
     fun provideLoginUseCase(
         authService: AuthService,
+        updateNotificationToken: UpdateNotificationToken,
         updateTenantInformationUseCase: UpdateTenantInformationUseCase
-    ) = LoginUseCase(authService, updateTenantInformationUseCase)
+    ) = LoginUseCase(authService, updateNotificationToken, updateTenantInformationUseCase)
 
     @Provides
     @Singleton
@@ -144,6 +146,10 @@ object NetworkModule {
         tenantService: TenantService,
         evaluationService: EvaluationService
     ) = UpdateTenantInformationUseCase(tenantService, evaluationService)
+
+    @Provides
+    @Singleton
+    fun provideUpdateNotificationToken(authService: AuthService) = UpdateNotificationToken(authService)
 
 
 

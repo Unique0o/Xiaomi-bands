@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.protobuf)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -72,7 +73,7 @@ android {
 }
 
 dependencies {
-
+    implementation(platform(libs.firebase.bom))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -111,6 +112,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.lottie.compose)
+    implementation(libs.firebase.messaging.ktx)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

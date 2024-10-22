@@ -1,5 +1,5 @@
 package com.example.logifitappp.data.remote.dto.requests
 
 data class FirebaseKeyRequest(
-    val firebaseKey: String
+    val key: String?
 )

@@ -18,6 +18,7 @@
     <string name="companion_pairing_request_message">¿Empareje este dispositivo como complementario? Se recomienda para algunas funciones, como buscar dispositivo, y proporciona una mejor conexión.</string>
     <string name="companion_pairing_request_title">Dispositivo complementario</string>
     <string name="connecting">Conectando</string>
+    <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="device_unknown_name">(desconocido)</string>
     <string name="discovery_pair_message">Selecciona Emparejar para emparejar tus dispositivos. Si esto falla, prueba de nuevo sin emparejar.</string>
     <string name="discovery_pair_title">¿Emparejar con %1$s?</string>

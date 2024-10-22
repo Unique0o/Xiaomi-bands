@@ -9,17 +9,20 @@ import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val authService: AuthService,
+    private val updateNotificationToken: UpdateNotificationToken,
     private val updateTenantInformationUseCase: UpdateTenantInformationUseCase
 ) {
     suspend operator fun invoke(nick: String, password: String): UserModel {
         val user = authService.login(LoginRequest(nick, password))
-        val userDao = App.database.userDao()
 
-        try {
-            userDao.store(user)
-            updateTenantInformationUseCase()
-        } catch (e: HttpConsumerException) {
-            userDao.deleteLoggedIn()
+        App.database.userDao().apply {
+            try {
+                store(user)
+                updateTenantInformationUseCase()
+                updateNotificationToken(user.id)
+            } catch (e: HttpConsumerException) {
+                deleteLoggedIn()
+            }
         }
 
         return user

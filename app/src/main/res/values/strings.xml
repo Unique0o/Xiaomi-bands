@@ -18,6 +18,7 @@
     <string name="companion_pairing_request_message">Pair this device as companion?. This is recommended for some functions such as find device, and provides a better connection.</string>
     <string name="companion_pairing_request_title">Companion device</string>
     <string name="connecting">Connecting</string>
+    <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="device_unknown_name">(unknown)</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
