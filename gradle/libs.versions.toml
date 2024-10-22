@@ -12,10 +12,11 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 composeBom = "2024.06.00"
-composeNav = "2.8.0-beta04"
+composeNav = "2.8.3"
 kotlinxSerializationJson = "1.6.3"
 logbackClassic = "1.4.7"
 lottieCompose = "4.0.0"
+material = "1.7.4"
 preference = "1.2.1"
 roomRuntime = "2.6.1"
 serializationKotlin = "1.9.0"
@@ -36,6 +37,7 @@ localBroadcastManager = "1.1.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
 androidx-preference = { module = "androidx.preference:preference", version.ref = "preference" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }

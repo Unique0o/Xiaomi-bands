@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.screens.BottomTabScreen
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.Trainings.TrainingDetailScreen
 import com.example.logifitappp.ui.screens.Trainings.TrainingsScreen
@@ -40,6 +41,7 @@ fun MainNavigation(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
     ) {
+        composable<MainRoutes.BottomTabsNavigation> { BottomTabScreen(appViewModel, navigation) }
         composable<MainRoutes.Login> { LoginView(appViewModel, navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }

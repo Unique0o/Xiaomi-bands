@@ -113,6 +113,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.lottie.compose)
     implementation(libs.firebase.messaging.ktx)
+    implementation(libs.androidx.material)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

@@ -58,7 +58,7 @@ fun LoginView(
             onSubmit = {
                 loginViewModel.login {
                     appViewModel.updateUser(it)
-                    navigation.navigate(MainRoutes.Home) {
+                    navigation.navigate(MainRoutes.BottomTabsNavigation) {
                         popUpTo(0)
                     }
                 }
