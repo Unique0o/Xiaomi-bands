@@ -22,9 +22,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppFirebaseMessagingService @Inject constructor(
-    private val authService: AuthService
-): FirebaseMessagingService() {
+class AppFirebaseMessagingService: FirebaseMessagingService() {
+    @Inject
+    lateinit var authService: AuthService
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification?.let {

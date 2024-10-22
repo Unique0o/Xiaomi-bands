@@ -22,6 +22,7 @@
     <string name="device_unknown_name">(unknown)</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
+    <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
     <string name="go_back">Go back</string>
     <string name="greeting">Welcome back</string>
     <string name="help_already_stored_message">A help request has already been made for today</string>
@@ -39,20 +40,25 @@
     <string name="not_worn">Device not worn</string>
     <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
     <string name="password_recovery_title">Recover password</string>
+    <string name="password_validation_error_message">You must insert a password</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
+    <string name="recovering_password_message">One of our managers will be notified to help you as soon as possible.</string>
     <string name="reminder_message">Remember to activate your Bluetooth and keep your Smart Band close to your cell phone to facilitate the connection</string>
     <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
     <string name="scanned">Scanned</string>
     <string name="select">Select</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+    <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
     <string name="unbind_before_pair_title">Already bound</string>
     <string name="unknown_activity">Unknown activity</string>
     <string name="unprocessable_http_error_message">Missing device paring</string>
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
+    <string name="username_validation_error_message">You must insert an user</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
+
     <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>
     <string name="face_status">FATIGUE</string>
     <string name="face_dream">DROWSINESS</string>

@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.logifitappp.enums.AppStatusCodeEnum
@@ -43,7 +44,7 @@ fun ModalLayout(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.93f)
+                    .fillMaxWidth(0.99f)
                     .wrapContentHeight()
             ) {
                 Column(
@@ -65,7 +66,8 @@ fun ModalLayout(
 
                         Text(
                             text = stringResource(id = status.message),
-                            typography = MaterialTheme.typography.bodySmall
+                            textAlign = TextAlign.Center,
+                            typography = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }
@@ -76,12 +78,12 @@ fun ModalLayout(
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .background(MaterialTheme.colorScheme.onSurface, CircleShape)
-                            .size(20.dp)
+                            .size(26.dp)
                     ) {
                         Icon(
                             contentDescription = null,
                             imageVector = Icons.Filled.Close,
-                            modifier = Modifier.size(16.dp),
+                            modifier = Modifier.size(22.dp),
                             tint = Color.White
                         )
                     }

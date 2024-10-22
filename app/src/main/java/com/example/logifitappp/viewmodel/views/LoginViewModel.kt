@@ -36,10 +36,7 @@ class LoginViewModel @Inject constructor(
                     status = AppStatusCodeEnum.LOGGING_IN
                 )
 
-                val user = loginUseCase(state.username.text, state.password.text)
-                println("User: $user")
-
-                onLoginSuccess(user)
+                onLoginSuccess(loginUseCase(state.username.text, state.password.text))
             } catch (e: HttpConsumerException) {
                 state = state.copy(
                     hasLoginProcessFailed = true,
@@ -71,8 +68,8 @@ class LoginViewModel @Inject constructor(
         val isPasswordValid = state.password.text.isNotBlank()
 
         state = state.copy(
-            usernameError = if (isUsernameValid) null else context.getString(R.string.error_username_empty),
-            passwordError = if (isPasswordValid) null else context.getString(R.string.error_password_empty)
+            usernameError = if (isUsernameValid) null else context.getString(R.string.username_validation_error_message),
+            passwordError = if (isPasswordValid) null else context.getString(R.string.password_validation_error_message)
         )
 
         return isUsernameValid && isPasswordValid
