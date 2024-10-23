@@ -6,17 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.logifitappp.core.App
+import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.navigation.MainNavigation
-import com.example.logifitappp.ui.screens.home.HomeWearable
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.viewmodel.views.AppViewModel
-import com.example.logifitappp.viewmodel.views.LoginViewModel
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val appViewModel: AppViewModel by viewModels()
-    private val loginViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,8 +27,24 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LogifitApppTheme {
-                MainNavigation(appViewModel,loginViewModel)
+                MainNavigation(appViewModel)
             }
         }
+
+        retrieveFCMToken()
+    }
+
+    private fun retrieveFCMToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val token = it.result
+
+                    App.preferences.getPreferences()
+                        .edit()
+                        .putString(AppPreferences.FIREBASE_NOTIFICATION_TOKEN, token)
+                        .apply()
+                }
+            }
     }
 }

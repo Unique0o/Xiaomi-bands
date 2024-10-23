@@ -5,6 +5,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class MainRoutes {
     @Serializable
+    data object BottomTabsNavigation : MainRoutes()
+
+    @Serializable
+    data object Graphics : MainRoutes() //
+
+    @Serializable
     data object Login: MainRoutes()
 
     @Serializable
@@ -23,12 +29,10 @@ sealed class MainRoutes {
     data object WearableDetection: MainRoutes()
 
     @Serializable
-    data object Home : MainRoutes()
-    @Serializable
-    data object HomeWearable : MainRoutes()
+    data object Home : MainRoutes() //
 
     @Serializable
-    data object Graphics : MainRoutes()
+    data object HomeWearable : MainRoutes()
 
     @Serializable
     data object Profile : MainRoutes()

@@ -28,6 +28,7 @@ open class AppPreferences(prefs: SharedPreferences): Preferences(prefs) {
 
     companion object {
         const val DEVICE_AUTO_RECONNECT = "prefs_key_device_auto_reconnect"
+        const val FIREBASE_NOTIFICATION_TOKEN = "firebase_notification_token"
         const val LAST_DEVICE_ADDRESSES = "last_device_addresses"
         const val RECONNECT_ONLY_TO_CONNECTED = "general_reconnectonlytoconnected"
         const val RECONNECT_SCAN_KEY = "prefs_general_key_auto_reconnect_scan"

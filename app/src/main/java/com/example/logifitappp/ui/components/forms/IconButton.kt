@@ -36,7 +36,7 @@ fun IconButton(
     FloatingActionButton(
         onClick = onClick,
         modifier = modifier,
-        shape = RoundedCornerShape(size = cornerRadius ),
+        shape = RoundedCornerShape(size = cornerRadius),
         containerColor = backgroundColor,
         elevation = elevation,
     ) {

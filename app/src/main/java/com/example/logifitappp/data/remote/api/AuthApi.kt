@@ -12,7 +12,6 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface AuthApi {
-
     @POST("api/auth/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
