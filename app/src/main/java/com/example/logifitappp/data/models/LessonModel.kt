@@ -9,5 +9,6 @@ data class LessonModel(
     val name: String,
     val path: String,
     val trainingExternalIdentifier: Int,
-    val videoUrl: String
+    val videoUrl: String,
+    val imageRes: Int
 )

@@ -10,11 +10,7 @@ fun SplashScreen(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    println("splash screen")
-
-    if (appViewModel.user == null) {
-        navigation.navigate(MainRoutes.Login) {
-            popUpTo(0)
-        }
+    navigation.navigate(if (appViewModel.user == null) MainRoutes.Login else MainRoutes.BottomTabsNavigation) {
+        popUpTo(0)
     }
 }

@@ -165,11 +165,3 @@ fun WearableDetectionView(
         }
     )
 }
-
-@Preview
-@Composable
-fun WearableDetectionPreview() {
-    LogifitApppTheme {
-        WearableDetectionView(rememberNavController())
-    }
-}

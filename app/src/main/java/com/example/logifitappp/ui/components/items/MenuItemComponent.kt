@@ -3,14 +3,16 @@ package com.example.logifitappp.ui.components.items
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.logifitappp.ui.components.menu.MenuItem
+import com.example.logifitappp.data.models.MenuItem
+import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.theme.Stone470
 
 @Composable
@@ -25,14 +27,14 @@ fun MenuItemComponent(item: MenuItem) {
         Icon(
             imageVector = item.icon,
             contentDescription = null,
-            tint = Stone470,
+            tint = MaterialTheme.colorScheme.inverseSurface,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(24.dp))
         Text(
-            text = item.title,
-            fontSize = 16.sp,
-            color = Color.DarkGray
+            text = stringResource(id = item.title),
+            //fontSize = 16.sp,
+            color = MaterialTheme.colorScheme.inverseSurface
         )
     }
 }

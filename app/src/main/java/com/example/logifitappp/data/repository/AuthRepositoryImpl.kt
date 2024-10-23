@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi
-) : AuthRepository {
+): AuthRepository {
 
     override suspend fun login(loginRequest: LoginRequest): Response<LoginResponse> {
         return authApi.login(loginRequest)

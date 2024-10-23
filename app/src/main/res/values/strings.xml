@@ -18,11 +18,14 @@
     <string name="companion_pairing_request_message">Pair this device as companion?. This is recommended for some functions such as find device, and provides a better connection.</string>
     <string name="companion_pairing_request_title">Companion device</string>
     <string name="connecting">Connecting</string>
+    <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="device_unknown_name">(unknown)</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
+    <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
     <string name="go_back">Go back</string>
     <string name="greeting">Welcome back</string>
+    <string name="help_already_stored_message">A help request has already been made for today</string>
     <string name="initialized">Initialized</string>
     <string name="initializing">Initializing</string>
     <string name="link_hide">Hide</string>
@@ -37,16 +40,22 @@
     <string name="not_worn">Device not worn</string>
     <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
     <string name="password_recovery_title">Recover password</string>
+    <string name="password_validation_error_message">You must insert a password</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_user">User</string>
+    <string name="recovering_password_message">One of our managers will be notified to help you as soon as possible.</string>
     <string name="reminder_message">Remember to activate your Bluetooth and keep your Smart Band close to your cell phone to facilitate the connection</string>
+    <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
     <string name="scanned">Scanned</string>
     <string name="select">Select</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+    <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
     <string name="unbind_before_pair_title">Already bound</string>
     <string name="unknown_activity">Unknown activity</string>
+    <string name="unprocessable_http_error_message">Missing device paring</string>
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
+    <string name="username_validation_error_message">You must insert an user</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
 
@@ -76,7 +85,7 @@
     <string name="title_condition_sleep">Sleep Conditions</string>
     <string name="status_no_apto">NOT FIT</string>
     <string name="add_content_description">Add</string>
-    <string name="profile_pic">Profile Picture</string>
+    <string name="profile_photo">Profile Photo</string>
     <string name="notificacions_content_description">Notifications</string>
     <string name="welcome">Welcome back</string>
     <string name="title_fatige">Fatigue</string>
@@ -112,7 +121,6 @@
     <string name="graph_card_heart_rate">Last Recorded Measurement</string>
     <string name="leaderboard_message_title">You`re on top</string>
     <string name="leaderboard_message_summary">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
-
     <string name="searching_for_devices">Searching for devices</string>
     <string name="make_your_device_detectable">Make your device detectable</string>
     <string name="device_detection_info">Connected devices are not detectable on Android 6 or higher, so you need to enable location (GPS). Disable Privacy Guard for Logfit. If your device does not show up within two minutes, try again after restarting your phone.</string>
@@ -125,7 +133,7 @@
 
 
     <!-- Statistics -->
-    <string name="title_leaderboard_topbar">Clasificación</string>
+    <string name="title_leaderboard_topbar">Leaderboard</string>
     <string name="status_no_aptos">Not fit</string>
     <string name="status_aptos">Fit</string>
     <string name="updated_information">Information updated on </string>
@@ -167,7 +175,6 @@
     <string name="second_additional_information_title">We are almost done!</string>
     <string name="second_additional_information_message">You need to take a selfie to continue</string>
     <string name="button_continue">Continue</string>
-
     <string name="error_username_empty">Username cannot be empty</string>
     <string name="error_password_empty">Password cannot be empty</string>
 
@@ -186,25 +193,20 @@
     <!-- Administrator Onboarding -->
     <string name="first_administrator_onboarding_top_message">Welcome to Logifit\nManage your team efficiently</string>
     <string name="first_administrator_onboarding_bottom_message">Monitor your team\'s performance and ensure their well-being</string>
-
     <string name="second_administrator_onboarding_top_message">Real-time data at your fingertips</string>
     <string name="second_administrator_onboarding_bottom_message">Get instant insights on your team\'s activities and productivity</string>
-
     <string name="third_administrator_onboarding_top_message">Connect and optimize</string>
 
     <!-- Operator Onboarding -->
     <string name="first_operator_onboarding_top_message">Welcome to Logifit\nYour personal work assistant</string>
     <string name="first_operator_onboarding_bottom_message">Track your activities and improve your work-life balance</string>
-
     <string name="second_operator_onboarding_top_message">Stay connected with your team</string>
     <string name="second_operator_onboarding_bottom_message">Communicate easily and efficiently with your colleagues</string>
-
     <string name="third_operator_onboarding_top_message">Optimize your performance</string>
 
     <!-- Ocupacional Information -->
     <string name="occupational_info">Occupational Information</string>
     <string name="personal_info">Personal Information</string>
-
     <string name="company">Company</string>
     <string name="work_position">Work position</string>
     <string name="function">Function</string>
@@ -216,6 +218,29 @@
     <string name="not_assigned">Not assigned</string>
     <string name="not_selected">Not selected</string>
 
+    <!-- Side Menu -->
+    <string name="logout">Logout</string>
+    <string name="language">App Language</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="help">Help</string>
+    <string name="exit">Exit</string>
+
+    <!-- App language -->
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="by_default">By default</string>
+
+    <!-- Help -->
+    <string name="need_help">Need help?</string>
+    <string name="help.instructions">In order to help you solve your problem, fill out the following form and a person in charge will contact you</string>
+    <string name="no_sync">I can not sync my sleep</string>
+    <string name="non_binding">I can not bond device</string>
+    <string name="no_send_sleep">I can not send my sleep</string>
+    <string name="others">Others</string>
+    <string name="specify">Specify</string>
+    <string name="ask_help">Ask for help</string>
+
+
     <!-- Personal information -->
     <string name="names">Names</string>
     <string name="surnames">Surnames</string>
@@ -225,7 +250,15 @@
     <string name="birthdate">Birthdate</string>
     <string name="phone">Phone</string>
 
+    <!-- Health Information -->
     <string name="health_info">Health Information</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="blood_type">blood type</string>
+    <string name="gender">Gender</string>
+    <string name="meters">Meters</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
     <!-- Trainings -->
     <string name="trainings">Trainings</string>
@@ -239,19 +272,17 @@
     <string name="training_capacitation_description">This module is designed...</string>
     <string name="training_manual_title">Procedures Manual</string>
     <string name="training_manual_description">This module provides a guide...</string>
-
     <string name="smartband_logifit">Smartband Logifit</string>
-    <string name="description">Descripción</string>
-    <string name="smartband_description">Logifit cuenta con una smartband inteligente que te acompaña para mejorar la calidad de tu salud. Coloca la tecnología más avanzada a tu alcance y ello contrib…</string>
-    <string name="show_more">Mostrar más</string>
-    <string name="progress">Progreso</string>
-    <string name="lessons">Lecciones</string>
-    <string name="what_is_smartband">Qué es una Smartba…</string>
-    <string name="what_is_smartband_desc">Este módulo de capacitación…</string>
-    <string name="understanding_use">Entendiendo el uso…</string>
-    <string name="understanding_use_desc">Este módulo de capacitación…</string>
-    <string name="how_to_link">¿Cómo vincular mi s…</string>
-    <string name="how_to_link_desc">Este módulo de capacitación…</string>
-
-
+    <string name="description">Description</string>
+    <string name="smartband_description">Logifit has an intelligent smartband that accompanies you to improve your health quality. It puts the most advanced technology at your fingertips and contributes…</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="progress">Progress</string>
+    <string name="lessons">Lessons</string>
+    <string name="what_is_smartband">What is a Smartband?</string>
+    <string name="what_is_smartband_desc">This training module explains…</string>
+    <string name="understanding_use">Understanding the use…</string>
+    <string name="understanding_use_desc">This training module covers…</string>
+    <string name="how_to_link">How to link my s…</string>
+    <string name="how_to_link_desc">This training module shows…</string>
 </resources>

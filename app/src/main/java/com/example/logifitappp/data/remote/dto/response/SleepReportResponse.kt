@@ -31,22 +31,11 @@ data class Report(
     @SerializedName("id_turno") val shiftId: Int
 )
 
-data class Group(
-    @SerializedName("name") val name: String,
-    @SerializedName("id") val id: Int
-)
-
-data class Shift(
-    @SerializedName("id") val id: Int,
-    @SerializedName("name") val name: String
-)
-
-
 data class UnsynchronizedUser(
     @SerializedName("full_name") val fullName: String,
-    val group: Group? = null,
+    val group: InformationResponse? = null,
     val id: Int,
-    val shift: Shift? = null
+    val shift: InformationResponse? = null
 )
 
 data class SleepReportResponse(

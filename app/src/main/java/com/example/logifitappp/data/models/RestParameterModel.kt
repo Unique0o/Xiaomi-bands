@@ -1,10 +1,15 @@
 package com.example.logifitappp.data.models
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "rest_parameters")
 data class RestParameterModel(
-    val id: Int,
-    val errorLabel: String,
+    @ColumnInfo(name = "error_label") val errorLabel: String,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val measurement: String,
-    val successLabel: String,
-    val tenantExternalIdentifier: Int,
+    @ColumnInfo(name = "success_label") val successLabel: String,
+    @ColumnInfo(name = "tenant_id") val tenantId: Int,
     val type: String
 )

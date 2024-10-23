@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App.Companion.context
-import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
+import com.example.logifitappp.viewmodel.states.PasswordRecoveryState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,64 +21,51 @@ import javax.inject.Inject
 class PasswordRecoveryViewModel @Inject constructor(
     private val recoverPasswordUseCase: RecoverPasswordUseCase
 ) : ViewModel() {
-
-    var username by mutableStateOf(TextFieldValue(""))
+    var state by mutableStateOf(PasswordRecoveryState())
         private set
-
-    var uiState by mutableStateOf(PasswordRecoveryUiState())
-        private set
-
-    fun updateUsername(username: TextFieldValue) {
-        this.username = username
-        uiState = uiState.copy(error = null)
-    }
 
     fun recoverPassword() {
-        if (!validateUsername()) return
+        if (!validateInputsNotEmpty()) return
 
         viewModelScope.launch {
-            uiState = uiState.copy(isLoading = true, error = null)
+            state = state.copy(
+                isPasswordRecovering = true,
+                status = AppStatusCodeEnum.RECOVERING_PASSWORD
+            )
+
             try {
-                val response = recoverPasswordUseCase(username.text)
-                uiState = uiState.copy(
-                    isLoading = false,
-                    isSuccess = true,
-                    successMessage = response.message
+                recoverPasswordUseCase(state.username.text)
+
+                state = state.copy(
+                    hasPasswordRecoveryBeenSuccessful = true,
+                    status = AppStatusCodeEnum.SUCCESSFUL_PASSWORD_RECOVERY
                 )
             } catch (e: HttpConsumerException) {
-                handleError(e)
-            } catch (e: Exception) {
-                uiState = uiState.copy(
-                    isLoading = false,
-                    error = "Error: ${e.message}"
+                state = state.copy(
+                    hasPasswordRecoveryFailed = true,
+                    status = e.getStatus()
                 )
-                Log.e("PasswordRecoveryViewModel", "Unexpected error", e)
+            } finally {
+                state = state.copy(isPasswordRecovering = false)
             }
         }
     }
 
-
-    private fun validateUsername(): Boolean {
-        return if (username.text.isBlank()) {
-            uiState = uiState.copy(error = context.getString(R.string.error_username_empty))
-            false
-        } else {
-            true
-        }
+    fun stopProcessing() {
+        state = state.copy(
+            hasPasswordRecoveryBeenSuccessful = false,
+            hasPasswordRecoveryFailed = false,
+            isPasswordRecovering = false
+        )
     }
 
-    private fun handleError(e: HttpConsumerException) {
-        val errorMessage = when (e.getStatus()) {
-            AppStatusCodeEnum.UNREGISTERED_USER -> context.getString(R.string.unregistered_user_error_message)
-            else -> context.getString(R.string.error_general)
-        }
-        uiState = uiState.copy(isLoading = false, error = errorMessage)
+    fun updateUsername(username: TextFieldValue) {
+        state = state.copy(username = username)
     }
 
-    data class PasswordRecoveryUiState(
-        val isLoading: Boolean = false,
-        val isSuccess: Boolean = false,
-        val successMessage: String? = null,
-        val error: String? = null
-    )
+    private fun validateInputsNotEmpty(): Boolean {
+        return if (state.username.text.isBlank()) false.also {
+            state = state.copy(usernameError = context.getString(R.string.username_validation_error_message))
+        } else true
+    }
 }

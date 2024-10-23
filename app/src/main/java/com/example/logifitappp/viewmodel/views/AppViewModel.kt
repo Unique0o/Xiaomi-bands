@@ -23,4 +23,8 @@ class AppViewModel: ViewModel() {
 
         isLoading = false
     }
+
+    fun updateUser(user: UserModel) {
+        this.user = user
+    }
 }

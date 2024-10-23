@@ -11,8 +11,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.example.logifitappp.data.models.MenuItem
 import com.example.logifitappp.ui.components.items.MenuItemComponent
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -46,7 +49,7 @@ fun SideMenu(
                 .offset(x = offsetX)
                 .width(300.dp)
                 .fillMaxHeight()
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             Column {
                 ProfileHeader(name = name, role = role, avatarResId = avatarResId)
@@ -65,7 +68,7 @@ fun SideMenu(
 @Composable
 fun MyScreen() {
     LogifitApppTheme {
-        SideMenuScreen()
+        SideMenuScreen(navigation = rememberNavController())
     }
 
 }
