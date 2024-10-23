@@ -20,9 +20,9 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
 
     private val commsSupport = object: AbstractBleWearableSupport() {
         @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
-        override fun dispose() {
+        override fun disconnect() {
             xiaomiSupport.onDisconnect()
-            super.dispose()
+            super.disconnect()
         }
 
         override fun getAutoReconnect() = xiaomiSupport.getAutoReconnect()
@@ -163,10 +163,6 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     override fun dispose() {
         commsSupport.dispose()
-        characteristicCommandRead?.dispose()
-        characteristicCommandWrite?.dispose()
-        characteristicDataUpload?.dispose()
-        characteristicActivityData?.dispose()
     }
 
     fun getQueue() = commsSupport.getQueue()!!
