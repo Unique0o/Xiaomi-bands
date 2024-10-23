@@ -4,11 +4,12 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -45,9 +47,11 @@ fun BottomTabScreen(
         bottomBar = {
             BottomNavigation(
                 backgroundColor = MaterialTheme.colorScheme.surfaceContainer,
+                elevation = 10.dp,
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                     .navigationBarsPadding()
-                    .height(64.dp)
             ) {
                 screens.forEachIndexed { index, item ->
                     val iconSize = 25
@@ -71,7 +75,7 @@ fun BottomTabScreen(
                         icon = {
                             Box(
                                 contentAlignment = Alignment.Center,
-                                modifier = Modifier.fillMaxHeight()
+                                modifier = Modifier.height(70.dp)
                             ) {
                                 Canvas(modifier = Modifier.size((iconSize + 16).dp)) {
                                     drawCircle(
