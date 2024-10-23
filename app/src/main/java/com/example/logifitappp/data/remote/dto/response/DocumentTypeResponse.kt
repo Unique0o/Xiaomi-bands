@@ -10,4 +10,3 @@ data class DocumentType(
 data class DocumentTypeResponse(
     @SerializedName("documents") val documents: List<DocumentType>
 )
-
