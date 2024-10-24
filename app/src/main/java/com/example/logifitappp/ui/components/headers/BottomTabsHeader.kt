@@ -1,14 +1,13 @@
 package com.example.logifitappp.ui.components.headers
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DrawerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -18,29 +17,35 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.components.LicenseText
+import com.example.logifitappp.ui.components.ProgressiveImage
 import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.ui.theme.Orange510
+import com.example.logifitappp.viewmodel.views.AppViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomTabsHeader(
-    children: @Composable () -> Unit = {},
-    navigation: NavHostController
+    appViewModel: AppViewModel,
+    drawerState: DrawerState,
+    navigation: NavHostController,
+    content: @Composable () -> Unit = {}
 ) {
+    val scope = rememberCoroutineScope()
+    val user = appViewModel.user!!
+
     Card(
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        shape = RoundedCornerShape(24.dp)
+        shape = RoundedCornerShape(bottomStart =  24.dp, bottomEnd = 24.dp)
     ) {
         TopAppBar(
             actions = {
@@ -56,13 +61,17 @@ fun BottomTabsHeader(
             },
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 16.dp),
             navigationIcon = {
-                Image(
-                    painter = painterResource(id = R.drawable.user1),
-                    contentDescription = "Profile picture",
-                    contentScale = ContentScale.Crop,
+                ProgressiveImage(
+                    default = R.drawable.ic_default_profile_photo,
                     modifier = Modifier
-                        .size(60.dp)
+                        .size(64.dp)
                         .clip(CircleShape)
+                        .clickable {
+                            scope.launch {
+                                drawerState.open()
+                            }
+                        },
+                    url = user.profilePhoto
                 )
             },
             title = {
@@ -74,29 +83,15 @@ fun BottomTabsHeader(
                     )
 
                     Text(
-                        text = "MARIA MERCEDES",
+                        text = user.firstName ?: "",
                         typography = MaterialTheme.typography.displayLarge
                     )
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Bolt,
-                            contentDescription = null,
-                            tint = Orange510,
-                            modifier = Modifier.size(12.dp)
-                        )
-
-                        Text(
-                            text = stringResource(id = R.string.lite_plan).uppercase(),
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            typography = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
-                    }
+                    LicenseText(license = user.license)
                 }
             }
         )
 
-        children()
+        content()
     }
 }

@@ -1,35 +1,35 @@
 package com.example.logifitappp.ui.screens.home
 
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.Watch
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
-import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.navigation.routes.MainRoutes
-import com.example.logifitappp.ui.components.cards.InformationOptionCard
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
-import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.ui.components.pages.ScrollablePage
+import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.HomeViewModel
 
 @Composable
 fun HomeScreen(
+    appViewModel: AppViewModel,
+    drawerState: DrawerState,
     navigation: NavHostController
 ) {
     //var isSideMenuOpen by remember { mutableStateOf(false) }
@@ -55,36 +55,34 @@ fun HomeScreen(
         homeViewModel.refreshPairedWearables()
     }
 
-    SimplePage(
-        content = {
-            if (homeViewModel.wearables.size == 0) {
-                InformationOptionCard(
-                    buttonIcon = Icons.Filled.Add,
-                    icon = Icons.Outlined.Watch,
-                    modifier = Modifier.padding(horizontal = 6.dp),
-                    onClick = { navigation.navigate(MainRoutes.WearableDetection) },
-                    paragraph = stringResource(id = R.string.reminder_message),
-                    title =  stringResource(id = R.string.my_device)
-                )
-            } else {
-                HomeWearable(
-                    connect = { homeViewModel.connect(it) },
-                    fetchActivities = { homeViewModel.fetchActivities(it) },
-                    sleeps = homeViewModel.sleeps,
-                    wearable = homeViewModel.wearables[0]
-                )
-            }
-        },
+    ScrollablePage(
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
             BottomTabsHeader(
-                children = {
-                    HomeShiftCard()
-                    HomeLocationCard()
-                },
+                appViewModel = appViewModel,
+                drawerState = drawerState,
                 navigation = navigation
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+                    HomeShiftCard()
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    HomeLocationCard()
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+        }
+    ) {
+        item {
+            HomeWearable(
+                connect = { homeViewModel.connect(it) },
+                fetchActivities = { homeViewModel.fetchActivities(it) },
+                navigation = navigation,
+                sleeps = homeViewModel.sleeps,
+                wearable = homeViewModel.wearables.firstOrNull()
             )
         }
-    )
+    }
 
     /*Column(
         modifier = Modifier

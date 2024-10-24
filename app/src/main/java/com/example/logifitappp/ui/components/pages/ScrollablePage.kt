@@ -11,10 +11,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun ScrollablePage(
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
     bottomBar: @Composable () -> Unit = {},
     topBar: @Composable () -> Unit = {},
     content:  LazyListScope.() -> Unit
@@ -33,7 +35,7 @@ fun ScrollablePage(
             ),
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(backgroundColor)
         ) {
             content()
         }
