@@ -2,6 +2,7 @@ package com.example.logifitappp.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.logifitappp.data.dao.CountryDao
 import com.example.logifitappp.data.dao.EvaluationResultDao
 import com.example.logifitappp.data.dao.GroupDao
 import com.example.logifitappp.data.dao.LocationDao
@@ -14,6 +15,7 @@ import com.example.logifitappp.data.dao.WearableDao
 import com.example.logifitappp.data.dao.XiaomiRawActivityDao
 import com.example.logifitappp.data.dao.XiaomiSleepStageDao
 import com.example.logifitappp.data.dao.XiaomiSleepTimeDao
+import com.example.logifitappp.data.models.CountryModel
 import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.GroupModel
 import com.example.logifitappp.data.models.LocationModel
@@ -40,7 +42,8 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
         WearableModel::class,
         XiaomiRawActivityModel::class,
         XiaomiSleepStageModel::class,
-        XiaomiSleepTimeModel::class
+        XiaomiSleepTimeModel::class,
+        CountryModel::class
     ],
 
     version = 1
@@ -58,4 +61,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun xiaomiRawActivityDao(): XiaomiRawActivityDao
     abstract fun xiaomiSleepStageDao(): XiaomiSleepStageDao
     abstract fun xiaomiSleepTimeDao(): XiaomiSleepTimeDao
+    abstract fun countryDao() : CountryDao
 }

@@ -2,22 +2,33 @@ package com.example.logifitappp.di
 
 import android.content.Context
 import com.example.logifitappp.core.App
+import com.example.logifitappp.data.dao.CountryDao
+import com.example.logifitappp.data.dao.UserDao
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
+import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
+import com.example.logifitappp.data.remote.api.LocationApi
 import com.example.logifitappp.data.remote.api.TenantApi
+import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
+import com.example.logifitappp.data.repository.CountryRepositoryImpl
+import com.example.logifitappp.data.repository.DocumentTypeRepositoryImpl
 import com.example.logifitappp.data.repository.EvaluationRepositoryImpl
 import com.example.logifitappp.data.repository.HealthInfoRepositoryImpl
+import com.example.logifitappp.data.repository.LocationRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
+import com.example.logifitappp.domain.repository.CountryRepository
+import com.example.logifitappp.domain.repository.DocumentTypeRepository
 import com.example.logifitappp.domain.repository.EvaluationRepository
 import com.example.logifitappp.domain.repository.HealthInfoRepository
+import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
 import com.example.logifitappp.domain.repository.TenantRepository
@@ -163,9 +174,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository {
-        return userRepositoryImpl
-    }
+    fun providesUserDao(@ApplicationContext context: Context) = App.database.userDao()
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserRepositoryImpl(userDao: UserDao, userApi: UserApi) = UserRepositoryImpl(userDao, userApi)
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository = userRepositoryImpl
+
 
     @Provides
     @Singleton
@@ -257,5 +279,43 @@ object NetworkModule {
     fun provideTrainingDetailViewModel(useCase: GetTrainingLessonsUseCase, useCase2: GetTrainingUseCase): TrainingDetailViewModel {
         return TrainingDetailViewModel(useCase2, useCase)
     }
+
+
+    @Singleton
+    @Provides
+    fun provideCountryDao(@ApplicationContext context: Context) = App.database.countryDao()
+
+    @Singleton
+    @Provides
+    fun provideCountryImpl (CountryDao: CountryDao) = CountryRepositoryImpl(CountryDao)
+
+    @Singleton
+    @Provides
+    fun provideCountryRepository (countryRepositoryImpl: CountryRepositoryImpl): CountryRepository = countryRepositoryImpl
+
+
+    @Provides
+    @Singleton
+    fun provideLocationApi(retrofit: Retrofit): LocationApi = retrofit.create(LocationApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideLocationImp (locationApi: LocationApi)= LocationRepositoryImpl(locationApi)
+
+    @Singleton
+    @Provides
+    fun provideLocationRepository (locationRepositoryImpl: LocationRepositoryImpl): LocationRepository = locationRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideDocumentTypeApi(retrofit: Retrofit): DocumentTypeApi = retrofit.create(DocumentTypeApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideDocumentTypeImpl(documentTypeApi: DocumentTypeApi) = DocumentTypeRepositoryImpl(documentTypeApi)
+
+    @Singleton
+    @Provides
+    fun  provideDocumentTypeRepository (documentTypeRepositoryImpl: DocumentTypeRepositoryImpl): DocumentTypeRepository = documentTypeRepositoryImpl
 
 }
