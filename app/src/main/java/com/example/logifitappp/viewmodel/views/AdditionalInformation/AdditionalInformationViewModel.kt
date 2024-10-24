@@ -13,6 +13,8 @@ import com.example.logifitappp.domain.repository.CountryRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.CountryService
 import com.example.logifitappp.domain.service.DocumentTypeService
+import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +32,7 @@ class AdditionalInformationViewModel @Inject constructor(
     private val countryService: CountryService,
     private val documentTypeService: DocumentTypeService,
     private val countryRepository: CountryRepository,
+    private val userService: UserService,
     private val userRepository: UserRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(AdditionalInformationState())
@@ -45,7 +48,6 @@ class AdditionalInformationViewModel @Inject constructor(
                 _state.update { it.copy(isLoading = true) }
 
                 withContext(Dispatchers.IO) {
-
                     launch { countryService.update() }
                     launch {
                         val response = documentTypeService.all()
@@ -63,13 +65,26 @@ class AdditionalInformationViewModel @Inject constructor(
                 }
 
                 val countries = countryRepository.all()
+                val currentUser = userRepository.getLoggedIn()
 
                 _state.update { currentState ->
                     currentState.copy(
                         countries = countries,
+                        documentIdentity = TextFieldValue(currentUser?.identificationDocument ?: ""),
+                        name = TextFieldValue(currentUser?.firstName ?: ""),
+                        mobile = TextFieldValue(currentUser?.phone ?: ""),
+                       // photoUri = currentUser?.profilePhoto,
+                        selectedCountry = countries.find {
+                            it.externalIdentifier == currentUser?.countryId
+                        },
+                        selectedDocumentType = currentState.documentTypes.find {
+                            it.externalIdentifier == currentUser?.documentId
+                        },
+                        lastnames = TextFieldValue(currentUser?.lastName ?: ""),
                         isLoading = false
                     )
                 }
+
             } catch (e: Exception) {
                 _state.update {
                     it.copy(
@@ -206,6 +221,9 @@ class AdditionalInformationViewModel @Inject constructor(
             try {
                 _state.update { it.copy(isLoading = true) }
 
+                val currentUser = userRepository.getLoggedIn()
+                    ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+
                 val request = StorePersonalInformationRequest(
                     country_id = currentState.selectedCountry?.externalIdentifier,
                     date_birth = null,
@@ -220,7 +238,22 @@ class AdditionalInformationViewModel @Inject constructor(
                     province_id = null
                 )
 
-                //  userRepository
+                currentUser.external_identifier?.let {
+                    userService.storePersonalInformation(
+                        userId = it,
+                        request = request
+                    )
+                    userRepository.createOrUpdate(
+                        currentUser.copy(
+                            countryId = request.country_id,
+                            documentId = request.document_type_id,
+                            identificationDocument = request.dni,
+                            firstName = request.first_name,
+                            lastName = request.last_name,
+                            phone = request.phone
+                        )
+                    )
+                }
 
                 _state.update { it.copy(isLoading = false) }
                 onSuccess()
