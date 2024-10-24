@@ -6,59 +6,43 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.BluetoothSearching
-import androidx.compose.material.icons.outlined.ChevronRight
-import androidx.compose.material.icons.outlined.Watch
 import androidx.compose.material.icons.rounded.StopCircle
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
-import com.example.logifitappp.core.App
-import com.example.logifitappp.core.RecordedDataTypesEnum
 import com.example.logifitappp.core.broadcasters.BluetoothBroadcastReceiver
 import com.example.logifitappp.core.bluetooth.ScanEvent
-import com.example.logifitappp.core.utils.DateTimeUtils
-import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableManager
-import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
-import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.ui.components.forms.Button
+import com.example.logifitappp.ui.components.Loader
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 import com.example.logifitappp.viewmodel.views.WearableDetectionViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import java.util.Locale
-import kotlin.math.floor
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -66,7 +50,9 @@ fun WearableDetectionView(
     navigation: NavHostController
 ) {
     val context = LocalContext.current
-    val wearableDetectionViewModel: WearableDetectionViewModel = viewModel()
+    val wearableDetectionViewModel = hiltViewModel<WearableDetectionViewModel, WearableDetectionViewModel.WearableDetectionViewModelFactory>{
+        it.create(navigation)
+    }
     val bluetoothPermissions = rememberMultiplePermissionsState(permissions = wearableDetectionViewModel.getWantedPermissions())
 
     DisposableEffect(context) {
@@ -104,22 +90,16 @@ fun WearableDetectionView(
         val receiver = object: BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent) {
                 when (intent.action) {
-                    App.ACTION_NEW_DATA -> {
-                        val wearable = intent.getParcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
-                        wearableDetectionViewModel.refreshSingleWearable(wearable)
-                    }
-
-                    WearableManager.ACTION_DEVICES_CHANGED -> wearableDetectionViewModel.refreshPairedWearables()
+                    WearableManager.ACTION_DEVICES_CHANGED -> wearableDetectionViewModel.checkWearableConnection()
                 }
             }
         }
 
         val filterLocal = IntentFilter()
-        filterLocal.addAction(App.ACTION_NEW_DATA)
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
-        wearableDetectionViewModel.refreshPairedWearables()
+        wearableDetectionViewModel.fetchUser()
     }
 
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
@@ -130,128 +110,51 @@ fun WearableDetectionView(
         wearableDetectionViewModel.stopDiscovery()
     }
 
-    SimplePage(
+    WearableDetectionAuthenticationBottomSheet(
+        authenticate = { wearableDetectionViewModel.authenticate() },
+        wearableDetectionViewModel = wearableDetectionViewModel
+    )
+
+    ScrollablePage(
         content = {
-            /*IconButton(
-                icon = if (wearableDetectionViewModel.isScanning) Icons.Rounded.StopCircle else Icons.AutoMirrored.Rounded.BluetoothSearching,
-                onClick = { wearableDetectionViewModel.toggleDiscovery() },
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = if (wearableDetectionViewModel.isScanning) R.string.button_stop_detection else R.string.button_start_detection)
-            )*/
+            item {
+                IconButton(
+                    icon = if (wearableDetectionViewModel.isScanning) Icons.Rounded.StopCircle else Icons.AutoMirrored.Rounded.BluetoothSearching,
+                    onClick = { wearableDetectionViewModel.toggleDiscovery() },
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = if (wearableDetectionViewModel.isScanning) R.string.button_stop_detection else R.string.button_start_detection)
+                )
+            }
 
-           /*WearableDetectionList(candidates = wearableDetectionViewModel.candidates) {
-                wearableDetectionViewModel.handleCandidatePressed(it)
-            }*/
+            items(wearableDetectionViewModel.candidates) { candidate ->
+               WearableDetectionListItem(
+                   candidate = candidate,
+                   onCandidatePressed = { wearableDetectionViewModel.handleCandidatePressed(it) }
+               )
+            }
 
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(wearableDetectionViewModel.wearables) { wearable ->
-                    Column {
-                        Text(text = wearable.getAliasOrName())
-
-                        if (!wearable.isConnected() && !wearable.isInitialized()) {
-                            Button(
-                                onClick = {
-                                    if (!wearable.getWearableCoordinator().isConnectable()) {
-                                        wearable.setState(Wearable.State.WAITING_FOR_SCAN)
-                                        wearable.sendDeviceUpdateIntent(App.context, WearableUpdateSubjectEnum.CONNECTION_STATE)
-
-                                        return@Button
-                                    }
-
-                                    App.getWearableServiceTo(wearable).connect()
-                                },
-                                text = "Conectar"
-                            )
-                        } else if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching()) {
-                            Button(
-                                onClick = {
-                                    App.getWearableServiceTo(wearable).onFetchRecordedData(RecordedDataTypesEnum.TYPE_SYNC)
-                                },
-                                text = "Extraer"
-                            )
-                        }
-
-                        wearableDetectionViewModel.sleeps.forEach {
-                            Column {
-                                Text(text = "start: ${DateTimeUtils.formatDateTime(it.startDate)}")
-                                Text(text = "end: ${DateTimeUtils.formatDateTime(it.endDate)}")
-                                Text(text = "time: ${String.format(Locale.ROOT, "%d:%02d", floor(it.totalMinutes / 60f).toInt(), (it.totalMinutes % 60f).toInt())}")
-                                Text(text = "type: ${it.activityType.name}")
-                            }
-                        }
-                    }
-                }
-
-                item {
-                    IconButton(
-                        icon = if (wearableDetectionViewModel.isScanning) Icons.Rounded.StopCircle else Icons.AutoMirrored.Rounded.BluetoothSearching,
-                        onClick = { wearableDetectionViewModel.toggleDiscovery() },
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(id = if (wearableDetectionViewModel.isScanning) R.string.button_stop_detection else R.string.button_start_detection)
-                    )
-                }
-
-                items(wearableDetectionViewModel.candidates) {candidate ->
-                    Row(
-                        modifier = Modifier.clickable { wearableDetectionViewModel.handleCandidatePressed(candidate) },
-                        verticalAlignment = Alignment.CenterVertically
+            item {
+                if (wearableDetectionViewModel.isScanning) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Watch,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-
-                        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                            Text(
-                                color = MaterialTheme.colorScheme.surfaceTint,
-                                text = candidate.getName(),
-                                typography = MaterialTheme.typography.titleLarge
-                            )
-
-                            Text(
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                text = candidate.getMacAddress(),
-                                typography = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(1f))
-
-                        Icon(
-                            imageVector = Icons.Outlined.ChevronRight,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                item {
-                    if (wearableDetectionViewModel.isScanning) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(34.dp)
-                            )
-                        }
+//                        CircularProgressIndicator(
+//                            modifier = Modifier.size(34.dp)
+//                        )
+                        Loader()
                     }
                 }
             }
 
-            /*if (wearableDetectionViewModel.isScanning) {
-                CircularProgressIndicator(
-                    modifier = Modifier.width(64.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.surfaceTint
-                )
-            }*/
+
+//            if (wearableDetectionViewModel.isScanning) {
+//                item {
+//                    Loader()
+//                }
+//            }
         },
 
         topBar = {

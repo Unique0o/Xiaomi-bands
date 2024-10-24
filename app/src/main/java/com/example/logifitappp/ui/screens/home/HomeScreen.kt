@@ -1,50 +1,90 @@
 package com.example.logifitappp.ui.screens.home
 
-
-import androidx.compose.foundation.background
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.graphics.CardLayout
-import com.example.logifitappp.ui.components.headers.CardHeader
-import com.example.logifitappp.ui.components.home.CardItemButton
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
-import com.example.logifitappp.ui.components.menu.SideMenu
-import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.theme.Blue690
-import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Lime70
-import com.example.logifitappp.ui.theme.LogifitApppTheme
-import com.example.logifitappp.viewmodel.views.SideMenuViewModel.SideMenuViewModel
-import com.example.logifitappp.viewmodel.views.home.HomeViewModel
+import com.example.logifitappp.core.App
+import com.example.logifitappp.core.wearebles.Wearable
+import com.example.logifitappp.ui.components.headers.BottomTabsHeader
+import com.example.logifitappp.ui.components.pages.ScrollablePage
+import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.views.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel,
-    sideMenuViewModel: SideMenuViewModel,
-    navController: NavHostController
+    appViewModel: AppViewModel,
+    drawerState: DrawerState,
+    navigation: NavHostController
 ) {
-    var isSideMenuOpen by remember { mutableStateOf(false) }
-    val menuItems by sideMenuViewModel.menuItems.collectAsState()
-    Column(
+    //var isSideMenuOpen by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val homeViewModel: HomeViewModel = hiltViewModel()
+
+    LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
+        val receiver = object: BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent) {
+                when (intent.action) {
+                    App.ACTION_NEW_DATA -> {
+                        val wearable = intent.getParcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
+                        homeViewModel.refreshSingleWearable(wearable)
+                    }
+                }
+            }
+        }
+
+        val filterLocal = IntentFilter()
+        filterLocal.addAction(App.ACTION_NEW_DATA)
+        LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
+
+        homeViewModel.refreshPairedWearables()
+    }
+
+    ScrollablePage(
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        topBar = {
+            BottomTabsHeader(
+                appViewModel = appViewModel,
+                drawerState = drawerState,
+                navigation = navigation
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+                    HomeShiftCard()
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    HomeLocationCard()
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+        }
+    ) {
+        item {
+            HomeWearable(
+                connect = { homeViewModel.connect(it) },
+                fetchActivities = { homeViewModel.fetchActivities(it) },
+                navigation = navigation,
+                sleeps = homeViewModel.sleeps,
+                wearable = homeViewModel.wearables.firstOrNull()
+            )
+        }
+    }
+
+    /*Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
@@ -119,25 +159,13 @@ fun HomeScreen(
         name = "MARIA MERCEDES",
         role = "Operador en LOGIFIT",
         avatarResId = R.drawable.user1,
-        menuItems  = menuItems
-    )
+        menuItems = listOf(
+            MenuItem(Icons.Default.Person, "Información personal") { /* TODO */ },
+            MenuItem(Icons.Default.Work, "Información laboral") { /* TODO */ },
+            MenuItem(Icons.Default.Favorite, "Información de salud") { /* TODO */ },
+            MenuItem(Icons.Default.Help, "Ayuda") { /* TODO */ },
+            MenuItem(Icons.Default.Description, "Términos y condiciones") { /* TODO */ },
+            MenuItem(Icons.Default.ExitToApp, "Cerrar sesión") { /* TODO */ }
+        )
+    )*/
 }
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun HomeScreenPreview() {
-//    LogifitApppTheme {
-//        HomeScreen(HomeViewModel(), SideMenuViewModel(), rememberNavController())
-//
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun HomeScreenDarkModePreview() {
-//    LogifitApppTheme(darkTheme = true) {
-//        HomeScreen(HomeViewModel(), SideMenuViewModel(),rememberNavController())
-//
-//    }
-//}

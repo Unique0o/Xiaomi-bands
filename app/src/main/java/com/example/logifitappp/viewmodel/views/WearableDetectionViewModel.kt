@@ -23,22 +23,40 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.BondingStyleEnum
-import com.example.logifitappp.core.analyzers.ActivityAmount
-import com.example.logifitappp.core.analyzers.ActivityAnalyzer
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.bluetooth.ScanEventProcessor
 import com.example.logifitappp.core.utils.BondingUtils
-import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableCoordinator
 import com.example.logifitappp.core.wearebles.WearableHelper
-import java.util.GregorianCalendar
+import com.example.logifitappp.data.remote.dto.requests.LoginRequest
+import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.domain.service.WearableService
+import com.example.logifitappp.navigation.routes.MainRoutes
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 
-class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
+@HiltViewModel(assistedFactory = WearableDetectionViewModel.WearableDetectionViewModelFactory::class)
+class WearableDetectionViewModel @AssistedInject constructor(
+    @Assisted val navigation: NavHostController,
+    private val authService: AuthService,
+    private val wearableService: WearableService
+): ViewModel(), ScanEventProcessor.Callback {
+    @AssistedFactory
+    interface WearableDetectionViewModelFactory {
+        fun create(navigation: NavHostController): WearableDetectionViewModel
+    }
+
     private var adapter: BluetoothAdapter? = null
+    private var currentCandidate: WearableCandidate? = null
     private val handler = Handler(Looper.getMainLooper())
     private var refreshAt = System.currentTimeMillis()
     private var scanCallback = BleScanCallback()
@@ -59,11 +77,40 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
     var isScanning by mutableStateOf(false)
         private set
 
-    var wearables = mutableStateListOf<Wearable>()
-        private set
+    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
+    fun authenticate() {
+        val wearableType = WearableHelper.getInstance().resolveWearableType(currentCandidate!!)
 
-    var sleeps = mutableStateListOf<ActivityAmount>()
-        private set
+        if (!wearableType.isSupported()) {
+            println("Unsupported device candidate $currentCandidate")
+            return
+        }
+
+        stopDiscovery()
+
+        val coordinator = wearableType.getWearableCoordinator()
+        println("Using device candidate $currentCandidate with coordinator ${coordinator::class.java}")
+
+        if (coordinator.getBondingStyle() == BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
+            val key = authenticationKey.text
+            val sharedPrefers = App.getWearableSpecificSharedPrefs(currentCandidate!!.getMacAddress())
+            val editor = sharedPrefers?.edit()
+
+            editor?.putString("authentication_key", key)
+            editor?.apply()
+        }
+
+        if (coordinator.suggestUnbindBeforePair() && currentCandidate!!.IsBonded()) {
+            AlertDialog.Builder(App.context)
+                .setTitle(R.string.unbind_before_pair_title)
+                .setMessage(R.string.unbind_before_pair_message)
+                .setPositiveButton(R.string.button_ok) { _, _ ->
+                    startPair(currentCandidate!!, coordinator)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
+        } else startPair(currentCandidate!!, coordinator)
+    }
 
     private fun checkBluetoothAvailable(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -115,6 +162,12 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         return true
     }
 
+    fun checkWearableConnection() {
+        val wearables = App.wearableManager.getWearables()
+
+        if (wearables.isNotEmpty() && wearables[0].isInitialized()) navigation.navigate(MainRoutes.Home)
+    }
+
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")
     private fun ensureBluetoothReady(): Boolean {
         if (checkBluetoothAvailable()) {
@@ -123,6 +176,12 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         }
 
         return false
+    }
+
+    fun fetchUser() {
+        viewModelScope.launch {
+            App.database.userDao().store(authService.login(LoginRequest("72980178", "72980178")))
+        }
     }
 
     fun getCandidateByDevice(device: BluetoothDevice): WearableCandidate? {
@@ -178,39 +237,15 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
         } else adapter = null
     }
 
-    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     fun handleCandidatePressed(candidate: WearableCandidate) {
-        val wearableType = WearableHelper.getInstance().resolveWearableType(candidate)
+        viewModelScope.launch {
+            authenticationKey = TextFieldValue(
+                wearableService.fetchAuthenticationKey(candidate.getMacAddress()) ?: ""
+            )
 
-        if (!wearableType.isSupported()) {
-            println("Unsupported device candidate $candidate")
-            return
+            currentCandidate = candidate
+            isBottomSheetVisible = true
         }
-
-        stopDiscovery()
-
-        val coordinator = wearableType.getWearableCoordinator()
-        println("Using device candidate $candidate with coordinator ${coordinator::class.java}")
-
-        if (coordinator.getBondingStyle() == BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
-            val key = "2db23445563c8ba96ebe74a0dd1e4253"
-            val sharedPrefers = App.getWearableSpecificSharedPrefs(candidate.getMacAddress())
-            val editor = sharedPrefers?.edit()
-
-            editor?.putString("authentication_key", key)
-            editor?.apply()
-        }
-
-        if (coordinator.suggestUnbindBeforePair() && candidate.IsBonded()) {
-            AlertDialog.Builder(App.context)
-                .setTitle(R.string.unbind_before_pair_title)
-                .setMessage(R.string.unbind_before_pair_message)
-                .setPositiveButton(R.string.button_ok) { _, _ ->
-                    startPair(candidate, coordinator)
-                }
-                .setNegativeButton(R.string.button_cancel, null)
-                .show()
-        } else startPair(candidate, coordinator)
     }
 
     fun handleWearableFound(event: ScanEvent) {
@@ -219,30 +254,6 @@ class WearableDetectionViewModel: ViewModel(), ScanEventProcessor.Callback {
 
     override fun onWearableChanged() {
         refreshWearableList(true)
-    }
-
-    fun refreshPairedWearables() {
-        wearables.clear()
-        wearables.addAll(App.wearableManager.getWearables())
-
-        if (wearables.isNotEmpty()) {
-            val now = GregorianCalendar.getInstance()
-            val endTs = (now.timeInMillis / 1000).toInt()
-            val startTs = endTs - 3 * 24 * 60 * 60 - 1
-
-            val analyzer = ActivityAnalyzer()
-            val activities = wearables[0].getWearableCoordinator().getActivityProvider(wearables[0]).getRawActivitiesBetween(startTs, endTs)
-
-            sleeps.clear()
-            sleeps.addAll(analyzer.calculateSleepAmounts(activities))
-        }
-    }
-
-    fun refreshSingleWearable(wearable: Wearable) {
-        val index = wearables.indexOf(wearable)
-
-        if (index > 0) wearables[index].copyFromDevice(wearable)
-        else refreshPairedWearables()
     }
 
     private fun refreshWearableList(throttle: Boolean) {

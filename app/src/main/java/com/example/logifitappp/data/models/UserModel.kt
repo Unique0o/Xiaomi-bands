@@ -47,6 +47,14 @@ data class UserModel(
 ) {
     fun isAdmin() = role == 1 || role == 3
 
+    @Composable
+    fun getRole() = when (role) {
+        1 -> stringResource(R.string.administrator)
+        2 -> stringResource(R.string.operator)
+        3 -> stringResource(R.string.main_administrator)
+        else -> stringResource(R.string.without_role)
+    }
+
     val shiftDescription: String
         @Composable
         get() = when (shiftId) {

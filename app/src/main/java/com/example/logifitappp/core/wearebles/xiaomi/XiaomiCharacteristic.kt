@@ -1,6 +1,8 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
 import android.bluetooth.BluetoothGattCharacteristic
+import android.os.Handler
+import android.os.Looper
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiAuthService
@@ -11,6 +13,7 @@ import java.nio.ByteOrder
 import java.util.LinkedList
 import java.util.UUID
 import kotlin.math.ceil
+import kotlin.math.min
 
 class XiaomiCharacteristic(
     private val support: XiaomiBleConnectionSupport,
@@ -120,7 +123,7 @@ class XiaomiCharacteristic(
                         5.toByte() -> {
                             val invalidChunks = ShortArray(remaining.size / 2)
 
-                            if (remaining.size > 0) {
+                            if (remaining.isNotEmpty()) {
                                 val remainingBuffer = ByteBuffer.wrap(remaining).order(ByteOrder.LITTLE_ENDIAN)
 
                                 for (i in 0 .. remaining.size / 2) invalidChunks[i] = remainingBuffer.getShort()
@@ -187,7 +190,6 @@ class XiaomiCharacteristic(
         numChunks = 0
         currentChunk = 0
         encryptedIndex = 1
-        chunkBuffer.reset()
         payloadQueue.clear()
         waitingAck = false
         sendingChunked = false

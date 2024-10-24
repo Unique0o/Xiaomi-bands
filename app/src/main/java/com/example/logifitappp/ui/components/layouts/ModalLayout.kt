@@ -44,7 +44,7 @@ fun ModalLayout(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.99f)
+                    .fillMaxWidth(0.95f)
                     .wrapContentHeight()
             ) {
                 Column(
