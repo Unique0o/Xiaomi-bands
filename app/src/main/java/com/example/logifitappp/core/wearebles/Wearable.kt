@@ -118,6 +118,8 @@ class Wearable(): Parcelable {
         return state == State.CONNECTING
     }
 
+    fun isDisconnected() = state == State.NOT_CONNECTED
+
     fun isInitialized(): Boolean {
         return state == State.SCANNED || state.equalsOrHigherThan(State.INITIALIZED)
     }
@@ -130,7 +132,7 @@ class Wearable(): Parcelable {
         val wearableUpdateIntent = Intent(ACTION_DEVICE_CHANGED)
         wearableUpdateIntent.putExtra(EXTRA_DEVICE, this)
         wearableUpdateIntent.putExtra(EXTRA_UPDATE_SUBJECT, subject)
-        LocalBroadcastManager.getInstance(context).sendBroadcast(wearableUpdateIntent)
+        context.sendBroadcast(wearableUpdateIntent)
     }
 
     fun setBatteryLevel(batteryLevel: Int, index: Int) {

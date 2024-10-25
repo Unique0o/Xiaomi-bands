@@ -20,6 +20,7 @@ import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.RestParameterModel
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.SleepConditionModel
+import com.example.logifitappp.data.models.SleepModel
 import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.models.WearableModel
@@ -34,6 +35,7 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
         LocationModel::class,
         RestParameterModel::class,
         ShiftModel::class,
+        SleepModel::class,
         SleepConditionModel::class,
         TenantModel::class,
         UserModel::class,

@@ -33,7 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.navigation.routes.BottomTabRoutes
 import com.example.logifitappp.ui.components.SideBarContent
-import com.example.logifitappp.ui.screens.home.HomeScreen
+import com.example.logifitappp.ui.screens.home.HomeView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.viewmodel.BottomTabScreenViewModel
@@ -133,7 +133,7 @@ fun BottomTabScreen(
             }
         ) { _ ->
             NavHost(bottomTabNavigation, startDestination = BottomTabRoutes.Home) {
-                composable<BottomTabRoutes.Home> { HomeScreen(appViewModel, drawerState, navigation) }
+                composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation) }
                 composable<BottomTabRoutes.Graphics> { PasswordRecoveryView(navigation) }
             }
         }

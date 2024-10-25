@@ -43,8 +43,7 @@ data class UserModel(
     @ColumnInfo(name = "tenant_id") val tenantId: Int,
     val weight: Float? = null,
     @ColumnInfo(name = "work_position") val workPosition: String? = null,
-    @ColumnInfo(name = "workload_value") val workloadValue: Int? = null,
-    @ColumnInfo(name = "external_identifier") val external_identifier: Int? = null
+    @ColumnInfo(name = "workload_value") val workloadValue: Int? = null
 ) {
     fun isAdmin() = role == 1 || role == 3
 

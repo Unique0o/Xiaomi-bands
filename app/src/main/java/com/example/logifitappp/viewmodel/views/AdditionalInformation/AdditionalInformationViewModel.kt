@@ -238,7 +238,7 @@ class AdditionalInformationViewModel @Inject constructor(
                     province_id = null
                 )
 
-                currentUser.external_identifier?.let {
+                /*currentUser.external_identifier?.let {
                     userService.storePersonalInformation(
                         userId = it,
                         request = request
@@ -253,7 +253,7 @@ class AdditionalInformationViewModel @Inject constructor(
                             phone = request.phone
                         )
                     )
-                }
+                }*/
 
                 _state.update { it.copy(isLoading = false) }
                 onSuccess()

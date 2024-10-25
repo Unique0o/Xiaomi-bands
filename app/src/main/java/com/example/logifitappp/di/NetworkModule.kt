@@ -32,7 +32,9 @@ import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
+import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
+import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.domain.usecase.UpdateNotificationToken
 import com.example.logifitappp.domain.usecase.UpdateTenantInformationUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
@@ -123,6 +125,14 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideEvaluationService(evaluationRepository: EvaluationRepository) = EvaluationService(evaluationRepository)
+
+    @Provides
+    @Singleton
+    fun provideProcessSynchronizedWearableDataUseCase() = ProcessSynchronizedWearableDataUseCase()
+
+    @Provides
+    @Singleton
+    fun provideSynchronizeWearableUseCase() = SynchronizeWearableUseCase()
 
     @Provides
     @Singleton

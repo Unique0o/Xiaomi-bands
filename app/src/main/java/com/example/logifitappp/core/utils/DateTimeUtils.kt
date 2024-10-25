@@ -15,6 +15,8 @@ object DateTimeUtils {
         )
     }
 
+    fun formatExtendedIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(date)
+
     fun formatIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US).format(date)
 
     fun formatReducedIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(date)

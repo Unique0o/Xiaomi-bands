@@ -7,6 +7,7 @@ import android.os.IBinder
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.core.bluetooth.BluetoothConnector
+import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.exceptions.WearableNotFoundException
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableService
@@ -54,7 +55,7 @@ class WearableCommunicationService: Service(), SharedPreferences.OnSharedPrefere
 
         println("Service start command: ${intent.action}")
 
-        val wearable = intent.getParcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)
+        val wearable = intent.parcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)
 
         when (intent.action) {
             WearableService.ACTION_CONNECT -> {

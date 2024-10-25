@@ -1,0 +1,97 @@
+package com.example.logifitappp.ui.screens.home
+
+import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.logifitappp.core.App
+import com.example.logifitappp.core.utils.parcelableExtra
+import com.example.logifitappp.core.wearebles.Wearable
+import com.example.logifitappp.core.wearebles.WearableManager
+import com.example.logifitappp.ui.components.headers.BottomTabsHeader
+import com.example.logifitappp.ui.components.pages.ScrollablePage
+import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.views.HomeViewModel
+
+@SuppressLint("InlinedApi")
+@Composable
+fun HomeView(
+    appViewModel: AppViewModel,
+    drawerState: DrawerState,
+    navigation: NavHostController
+) {
+    val context = LocalContext.current
+    val homeViewModel = hiltViewModel<HomeViewModel, HomeViewModel.HomeViewModelFactory>{
+        it.create(appViewModel.user!!)
+    }
+
+    DisposableEffect(Unit) {
+        val receiver = object: BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent) {
+                when (intent.action) {
+                    App.ACTION_NEW_DATA -> {
+                        val wearable = intent.parcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
+                        homeViewModel.refreshSingleWearable(wearable)
+                    }
+
+                    App.AUTHENTICATION_KEY_FAILED -> {
+                        homeViewModel.handleAuthenticationKeyFailed()
+                    }
+
+                    WearableManager.ACTION_DEVICES_CHANGED -> {
+                        homeViewModel.checkWearableConnection()
+                    }
+                }
+            }
+        }
+
+        val filterLocal = IntentFilter()
+        filterLocal.addAction(App.ACTION_NEW_DATA)
+        filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
+        context.registerReceiver(receiver, filterLocal, Context.RECEIVER_NOT_EXPORTED)
+
+        onDispose {
+            context.unregisterReceiver(receiver)
+        }
+    }
+
+    ScrollablePage(
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        topBar = {
+            BottomTabsHeader(
+                appViewModel = appViewModel,
+                drawerState = drawerState,
+                navigation = navigation
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+                    HomeShiftCard()
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    HomeLocationCard()
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+        }
+    ) {
+        item {
+            HomeWearable(
+                homeViewModel = homeViewModel,
+                navigation = navigation
+            )
+        }
+    }
+}

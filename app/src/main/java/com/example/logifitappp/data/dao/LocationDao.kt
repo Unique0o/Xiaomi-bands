@@ -13,6 +13,9 @@ abstract class LocationDao {
     @Query("DELETE FROM locations WHERE tenant_id = :tenantId")
     abstract fun delete(tenantId: Int)
 
+    @Query("SELECT * FROM locations WHERE id = :id LIMIT 1")
+    abstract fun find(id: Int): LocationModel?
+
     @Upsert
     abstract fun store(vararg locations: LocationModel)
 }

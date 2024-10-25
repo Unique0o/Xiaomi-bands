@@ -179,9 +179,9 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
                 val command = handleWatchNonce(cmd.auth.watchNonce)
 
                 if (command == null) {
-                    // TODO AUTHENTICATION FAILED
-
                     println("handleWatchNonce returned null, disconnecting")
+
+                    App.signalAuthenticationKeyFailed()
                     App.getWearableServiceTo(support.getWearable()).disconnect()
                     return
                 }
@@ -203,9 +203,9 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
 
                     support.onAuthSuccess()
                 } else {
-                    // TODO AUTHENTICATION FAILED
-
                     println("Authentication failed, subtype=${cmd.subtype}, status=${cmd.status}")
+
+                    App.signalAuthenticationKeyFailed()
                     App.getWearableServiceTo(support.getWearable()).disconnect()
                 }
             }
