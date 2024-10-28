@@ -6,12 +6,13 @@ import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
 import com.example.logifitappp.data.remote.dto.response.StorePersonalInformationResponse
 import com.example.logifitappp.domain.repository.UserRepository
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
-    private val api: UserApi
+    private val api: UserApi,
 ) : UserRepository {
 
     override suspend fun isUserAdmin(): Boolean {
@@ -30,4 +31,13 @@ class UserRepositoryImpl @Inject constructor(
         return userDao.getLoggedIn()
     }
 
+    override suspend fun uploadProfilePhoto(userId: String, image: MultipartBody.Part): Response<Unit> {
+        val currentUser = userDao.getLoggedIn()
+        return api.updateProfilePhoto(
+            userId = userId,
+            image = image,
+            accept = "application/json",
+            authorization = "Bearer ${currentUser?.accessToken}"
+        )
+    }
 }

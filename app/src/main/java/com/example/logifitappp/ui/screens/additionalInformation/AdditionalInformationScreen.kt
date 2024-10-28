@@ -19,15 +19,12 @@ fun AdditionalInformationScreen(
 
     SimplePage(
         content = {
-
             AdditionalInformationForm(
                 additionalInformationViewModel = additionalInformationViewModel,
-                selectableBottomSheetViewModel = viewModel(),
                 onSubmit = {
                     navigation.navigate(MainRoutes.AdditionalInformationPicture)
                 }
             )
-
         }
     )
 }

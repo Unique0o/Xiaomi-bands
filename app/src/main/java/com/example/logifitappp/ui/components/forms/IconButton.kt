@@ -32,6 +32,7 @@ fun IconButton(
     text: String,
     textColor: Color = MaterialTheme.colorScheme.onPrimary,
     cornerRadius: Dp = 24.dp,
+    enabled : Boolean = true
 ) {
     FloatingActionButton(
         onClick = onClick,
