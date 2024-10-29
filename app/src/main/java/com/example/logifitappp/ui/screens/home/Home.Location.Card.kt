@@ -5,20 +5,23 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.logifitappp.R
+import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.ui.components.Chip
-import com.example.logifitappp.ui.components.layouts.CardLayout
+import com.example.logifitappp.ui.components.cards.InformationCard
 
 @Composable
-fun HomeLocationCard() {
-    CardLayout(
+fun HomeLocationCard(
+    location: LocationModel?
+) {
+    InformationCard(
         icon = Icons.Default.PinDrop,
         label = stringResource(id = R.string.my_location),
 
         suffixComponent = {
             Chip(
-                label = stringResource(id = R.string.select).uppercase(),
-                status = ChipStatusEnum.DANGER
+                label = location?.name?.uppercase() ?: stringResource(id = R.string.select).uppercase(),
+                status = if (location == null) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
             )
         }
     )

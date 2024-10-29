@@ -2,8 +2,6 @@ package com.example.logifitappp.core.analyzers
 
 import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
 import java.util.Date
-import java.util.Locale
-import kotlin.math.floor
 
 class ActivityAmount(val activityType: WearableActivityTypeEnum) {
     lateinit var endDate: Date
@@ -14,12 +12,11 @@ class ActivityAmount(val activityType: WearableActivityTypeEnum) {
         totalMinutes += seconds / 60
     }
 
-    fun getDurationTime(): String {
-        val hours = floor(totalMinutes / 60f).toInt()
-        val minutes = (totalMinutes % 60f).toInt()
+    fun isDeepSleep() = activityType == WearableActivityTypeEnum.DEEP_SLEEP
 
-        return String.format(Locale.ROOT, "%d:%02d", hours, minutes)
-    }
+    fun isLightSleep() = activityType == WearableActivityTypeEnum.LIGHT_SLEEP
+
+    fun isRemSleep() = activityType == WearableActivityTypeEnum.REM_SLEEP
 
     fun isSleep() = when (activityType) {
         WearableActivityTypeEnum.REM_SLEEP,

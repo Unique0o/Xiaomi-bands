@@ -3,12 +3,15 @@ package com.example.logifitappp.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.logifitappp.data.dao.CountryDao
+import com.example.logifitappp.data.dao.DrowsinessDao
 import com.example.logifitappp.data.dao.EvaluationResultDao
+import com.example.logifitappp.data.dao.FatigueDao
 import com.example.logifitappp.data.dao.GroupDao
 import com.example.logifitappp.data.dao.LocationDao
 import com.example.logifitappp.data.dao.RestParameterDao
 import com.example.logifitappp.data.dao.ShiftDao
 import com.example.logifitappp.data.dao.SleepConditionDao
+import com.example.logifitappp.data.dao.SleepDao
 import com.example.logifitappp.data.dao.TenantDao
 import com.example.logifitappp.data.dao.UserDao
 import com.example.logifitappp.data.dao.WearableDao
@@ -16,7 +19,9 @@ import com.example.logifitappp.data.dao.XiaomiRawActivityDao
 import com.example.logifitappp.data.dao.XiaomiSleepStageDao
 import com.example.logifitappp.data.dao.XiaomiSleepTimeDao
 import com.example.logifitappp.data.models.CountryModel
+import com.example.logifitappp.data.models.DrowsinessModel
 import com.example.logifitappp.data.models.EvaluationResultModel
+import com.example.logifitappp.data.models.FatigueModel
 import com.example.logifitappp.data.models.GroupModel
 import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.RestParameterModel
@@ -32,7 +37,9 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
 
 @Database(
     entities = [
+        DrowsinessModel::class,
         EvaluationResultModel::class,
+        FatigueModel::class,
         GroupModel::class,
         LocationModel::class,
         RestParameterModel::class,
@@ -51,11 +58,14 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
     version = 1
 )
 abstract class AppDatabase: RoomDatabase() {
+    abstract fun drowsinessDao(): DrowsinessDao
     abstract fun evaluationResultDao(): EvaluationResultDao
+    abstract fun fatigueDao(): FatigueDao
     abstract fun groupDao(): GroupDao
     abstract fun locationDao(): LocationDao
     abstract fun restParameterDao(): RestParameterDao
     abstract fun shiftDao(): ShiftDao
+    abstract fun sleepDao(): SleepDao
     abstract fun sleepConditionDao(): SleepConditionDao
     abstract fun tenantDao(): TenantDao
     abstract fun userDao(): UserDao

@@ -5,8 +5,8 @@ import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 import java.util.Date
 
 class ActivityAnalyzer {
-    fun calculateSleepAmounts(activities: List<WearableRawActivityModel>): List<ActivityAmount> {
-        val amounts = mutableListOf<ActivityAmount>()
+    fun calculateActivityAmounts(activities: List<WearableRawActivityModel>): ActivityAmountList {
+        val amounts = ActivityAmountList()
         var previousActivity: WearableRawActivityModel? = null
 
         activities.forEach {
@@ -28,18 +28,12 @@ class ActivityAnalyzer {
 
                 val timeDifference = it.timestamp - previousActivity!!.timestamp
 
-                if (previousActivity!!.type == it.type) {
-                    previousAmount.addSeconds(timeDifference)
-                    previousAmount.setEndDate(it.timestamp)
-                } else {
-                    val sharedTimeDifference = (timeDifference / 2.0f).toLong()
+                previousAmount.addSeconds(timeDifference)
+                previousAmount.setEndDate(it.timestamp)
 
-                    previousAmount.addSeconds(sharedTimeDifference)
-                    previousAmount.setEndDate(it.timestamp - sharedTimeDifference)
-
-                    amount.addSeconds(sharedTimeDifference)
-                    amount.setStartDate(it.timestamp + sharedTimeDifference)
-                    amount.setEndDate(it.timestamp + sharedTimeDifference)
+                if (previousActivity!!.type != it.type) {
+                    amount.setStartDate(it.timestamp)
+                    amount.setEndDate(it.timestamp)
                     amounts.add(amount)
                 }
             }
@@ -47,6 +41,8 @@ class ActivityAnalyzer {
             previousActivity = it
         }
 
-        return amounts.filter { it.endDate.time != it.startDate.time }
+        amounts.calculateMinutes()
+
+        return amounts
     }
 }

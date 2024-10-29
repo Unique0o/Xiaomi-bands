@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.screens.home
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,17 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.App.Companion
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
+import com.example.logifitappp.ui.components.layouts.ModalLayout
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.HomeViewModel
 
-@SuppressLint("InlinedApi")
 @Composable
 fun HomeView(
     appViewModel: AppViewModel,
@@ -62,12 +63,19 @@ fun HomeView(
         val filterLocal = IntentFilter()
         filterLocal.addAction(App.ACTION_NEW_DATA)
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
-        context.registerReceiver(receiver, filterLocal, Context.RECEIVER_NOT_EXPORTED)
+        LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
         onDispose {
-            context.unregisterReceiver(receiver)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
         }
     }
+
+    ModalLayout(
+        onClose = { homeViewModel.stopProcessing() },
+        onDismissRequest = { homeViewModel.stopProcessing() },
+        status = homeViewModel.state.status,
+        visible = homeViewModel.state.isLoading
+    )
 
     ScrollablePage(
         backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
@@ -78,17 +86,26 @@ fun HomeView(
                 navigation = navigation
             ) {
                 Column(modifier = Modifier.padding(horizontal = 12.dp)) {
-                    HomeShiftCard()
+                    HomeShiftCard(homeViewModel.state.shift)
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    HomeLocationCard()
-                    Spacer(modifier = Modifier.height(16.dp))
+                    if (homeViewModel.state.tenant?.shouldItShowDrowsinessTest == true) {
+                        HomeLocationCard(homeViewModel.state.location)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
             }
         }
     ) {
         item {
             HomeWearable(
+                homeViewModel = homeViewModel,
+                navigation = navigation
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            HomeDrowsinessTest(
                 homeViewModel = homeViewModel,
                 navigation = navigation
             )

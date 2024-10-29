@@ -4,7 +4,7 @@ import com.example.logifitappp.data.dao.commons.WearableRawActivityDao
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 
 abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
-    open fun getRawActivitiesBetween(from: Int, to: Int): List<T> {
+    open fun getRawActivitiesBetween(from: Long, to: Long): List<T> {
         val activities = getWearableRawActivityDao()?.getRawActivitiesBetween(from, to, getStoredWearable()?.id ?: 0) ?: listOf()
 
         activities.forEach {

@@ -76,6 +76,8 @@ class Wearable(): Parcelable {
         return name ?: "unknown"
     }
 
+    fun getBatteryLevel() = batteryLevel?.get(0) ?: 0
+
     fun getBusyTask(): String? {
         return busyTask
     }
@@ -132,7 +134,7 @@ class Wearable(): Parcelable {
         val wearableUpdateIntent = Intent(ACTION_DEVICE_CHANGED)
         wearableUpdateIntent.putExtra(EXTRA_DEVICE, this)
         wearableUpdateIntent.putExtra(EXTRA_UPDATE_SUBJECT, subject)
-        context.sendBroadcast(wearableUpdateIntent)
+        LocalBroadcastManager.getInstance(context).sendBroadcast(wearableUpdateIntent)
     }
 
     fun setBatteryLevel(batteryLevel: Int, index: Int) {

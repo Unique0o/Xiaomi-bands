@@ -21,10 +21,10 @@ fun Chip(
     status: ChipStatusEnum
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
         modifier = Modifier
             .background(status.backgroundColor, RoundedCornerShape(12.dp))
-            .padding(horizontal = 6.dp, vertical = 0.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(

@@ -8,8 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
-import com.example.logifitappp.data.models.LocationModel
-import com.example.logifitappp.data.models.ShiftModel
+import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
@@ -18,11 +17,11 @@ import com.example.logifitappp.exceptions.SynchronizationProcessingException
 import com.example.logifitappp.viewmodel.states.HomeState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 @HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
-class HomeViewModel @Inject constructor(
+class HomeViewModel @AssistedInject constructor(
     @Assisted val user: UserModel,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
     private val synchronizeWearableUseCase: SynchronizeWearableUseCase
@@ -32,10 +31,7 @@ class HomeViewModel @Inject constructor(
         fun create(user: UserModel): HomeViewModel
     }
 
-    var location by mutableStateOf<LocationModel?>(null)
-        private set
-
-    var shift by mutableStateOf<ShiftModel?>(null)
+    var evaluations = mutableStateListOf<EvaluationResultModel>()
         private set
 
     var state by mutableStateOf(HomeState())
@@ -45,25 +41,29 @@ class HomeViewModel @Inject constructor(
         private set
 
     init {
-        refreshPairedWearables()
+        user.tenantId.let { state = state.copy(tenant = App.database.tenantDao().find(it)) }
 
-        user.shiftId?.let { shift = App.database.shiftDao().find(it) }
-        user.locationId?.let { location = App.database.locationDao().find(it) }
+        refreshPairedWearables()
+        refreshEvaluations()
+
+        user.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it)) }
+        user.locationId?.let { state = state.copy(location = App.database.locationDao().find(it)) }
     }
 
     fun checkWearableConnection() {
-        val wearables = App.wearableManager.getWearables()
-        val wearable = wearables.firstOrNull() ?: return
+        refreshPairedWearables()
 
         if (!state.isLoading) return
 
-        if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching()) fetchActivities(wearables[0])
+        wearables.firstOrNull()?.let { wearable ->
+            if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching()) fetchActivities(wearable)
 
-        if (wearable.isDisconnected()) {
-            state = state.copy(
-                status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_PASSWORD_RECOVERY
+            if (wearable.isDisconnected()) {
+                state = state.copy(
+                    status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_PASSWORD_RECOVERY
                     else AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
-            )
+                )
+            }
         }
     }
 
@@ -85,9 +85,12 @@ class HomeViewModel @Inject constructor(
 
     fun fetchActivities(wearable: Wearable) {
         try {
-            state = state.copy(status = AppStatusCodeEnum.EXTRACTING_WEARABLE_INFORMATION)
+            state = state.copy(
+                isLoading = true,
+                status = AppStatusCodeEnum.EXTRACTING_WEARABLE_INFORMATION
+            )
 
-            synchronizeWearableUseCase(shift, wearable)
+            synchronizeWearableUseCase(state.shift, wearable)
         } catch (e: SynchronizationProcessingException) {
             state = state.copy(status = e.getStatus())
         }
@@ -97,21 +100,51 @@ class HomeViewModel @Inject constructor(
        state = state.copy(status = AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
     }
 
+    private fun refreshEvaluations() {
+        evaluations.clear()
+
+        if (state.tenant?.shouldItShowDrowsinessTest == true) evaluations.addAll(App.database.evaluationResultDao().fetchFromToday(user.id))
+    }
+
     private fun refreshPairedWearables() {
         wearables.clear()
         wearables.addAll(App.wearableManager.getWearables())
+
+        if (wearables.isNotEmpty()) refreshSleepProcessingData(wearables.first())
     }
 
     fun refreshSingleWearable(wearable: Wearable) {
         try {
             val index = wearables.indexOf(wearable)
 
-            if (index > 0) {
+            if (index >= 0) {
                 wearables[index].copyFromDevice(wearable)
-                processSynchronizedWearableDataUseCase(shift, wearable)
+                processSynchronizedWearableDataUseCase(state.shift, wearable)
+                refreshSleepProcessingData(wearable)
             } else refreshPairedWearables()
+
+            state = state.copy(isLoading = false)
         } catch (e: SynchronizationProcessingException) {
             state = state.copy(status = e.getStatus())
         }
+    }
+
+    private fun refreshSleepProcessingData(wearable: Wearable) {
+        val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
+
+        val drowsiness = App.database.drowsinessDao().findFromToday(wearableModel.id)
+        val drowsinessCondition = if (drowsiness == null) null else App.database.sleepConditionDao().findAppropriate(drowsiness.totalSleepSeconds, state.tenant!!)
+
+        state = state.copy(
+            drowsiness = drowsiness,
+            drowsinessCondition = drowsinessCondition,
+            fatigue = App.database.fatigueDao().findFromToday(wearableModel.id),
+            isSleepSynchronizationRequired = drowsiness == null,
+            isSynchronizationWithLogifitRequired = drowsiness?.sentAt == null
+        )
+    }
+
+    fun stopProcessing() {
+        state = state.copy(isLoading = false)
     }
 }

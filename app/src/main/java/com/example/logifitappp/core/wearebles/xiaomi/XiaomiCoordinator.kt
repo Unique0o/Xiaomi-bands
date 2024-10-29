@@ -24,6 +24,10 @@ abstract class XiaomiCoordinator: WearableBLECoordinator() {
                 || AUTH_KEY_PATTERN.matcher(authenticationKey.trim()).matches()
     }
 
+    override fun supportsHeartRateMeasurement() = true
+
+    override fun supportsRemSleep() = true
+
     override fun supportsActivityDataFetching() = true
 
     companion object {

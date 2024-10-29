@@ -76,7 +76,7 @@ class XiaomiHealthService(support: XiaomiSupport) : AbstractXiaomiService(suppor
 
         if (subtype == CMD_ACTIVITY_FETCH_TODAY) {
             println("Fetch recorded data from the past")
-            fetchRecordedDataPast()
+            //fetchRecordedDataPast()
         }
     }
 

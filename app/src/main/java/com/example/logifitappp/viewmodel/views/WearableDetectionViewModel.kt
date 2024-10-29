@@ -165,7 +165,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
     fun checkWearableConnection() {
         val wearables = App.wearableManager.getWearables()
 
-        if (wearables.isNotEmpty() && wearables[0].isInitialized()) navigation.navigate(MainRoutes.Home)
+        if (wearables.isNotEmpty() && wearables[0].isInitialized()) navigation.navigate(MainRoutes.SplashScreen)
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")

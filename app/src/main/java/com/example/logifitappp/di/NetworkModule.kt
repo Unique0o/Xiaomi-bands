@@ -37,11 +37,14 @@ import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.EvaluationService
 import com.example.logifitappp.domain.service.TenantService
+import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
+import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
@@ -115,11 +118,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLoginUseCase(
-        authService: AuthService,
-        updateNotificationToken: UpdateNotificationToken,
-        updateTenantInformationUseCase: UpdateTenantInformationUseCase
-    ) = LoginUseCase(authService, updateNotificationToken, updateTenantInformationUseCase)
+    fun provideCalculateSleepProcessingUseCase() = CalculateSleepProcessingUseCase()
 
     @Provides
     @Singleton
@@ -139,7 +138,25 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideProcessSynchronizedWearableDataUseCase() = ProcessSynchronizedWearableDataUseCase()
+    fun provideLoadAppWhenAnUserIsAuthenticatedUseCase(
+        userService: UserService,
+        updateNotificationToken: UpdateNotificationToken,
+        updateTenantInformationUseCase: UpdateTenantInformationUseCase
+    ) = LoadAppWhenAnUserIsAuthenticatedUseCase(userService, updateNotificationToken, updateTenantInformationUseCase)
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(
+        authService: AuthService,
+        updateNotificationToken: UpdateNotificationToken,
+        updateTenantInformationUseCase: UpdateTenantInformationUseCase
+    ) = LoginUseCase(authService, updateNotificationToken, updateTenantInformationUseCase)
+
+    @Provides
+    @Singleton
+    fun provideProcessSynchronizedWearableDataUseCase(
+        calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase
+    ) = ProcessSynchronizedWearableDataUseCase(calculateSleepProcessingUseCase)
 
     @Provides
     @Singleton
@@ -172,8 +189,17 @@ object NetworkModule {
     @Singleton
     fun provideUpdateNotificationToken(authService: AuthService) = UpdateNotificationToken(authService)
 
+    @Provides
+    @Singleton
+    fun provideUserRepositoryImpl(userApi: UserApi) = UserRepositoryImpl(userApi)
 
+    @Provides
+    @Singleton
+    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository = userRepositoryImpl
 
+    @Provides
+    @Singleton
+    fun provideUserService(userRepository: UserRepository) = UserService(userRepository)
 
 
     @Provides
@@ -189,14 +215,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
-
-    @Provides
-    @Singleton
-    fun provideUserRepositoryImpl(userDao: UserDao, userApi: UserApi) = UserRepositoryImpl(userDao, userApi)
-
-    @Provides
-    @Singleton
-    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository = userRepositoryImpl
 
 
     @Provides

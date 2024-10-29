@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.example.logifitappp.core.wearebles.Wearable
@@ -69,11 +70,11 @@ class App: Application() {
             val intent = Intent(ACTION_NEW_DATA)
             intent.putExtra(Wearable.EXTRA_DEVICE, wearable)
 
-            context.sendBroadcast(intent)
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
         }
 
         fun signalAuthenticationKeyFailed() {
-            context.sendBroadcast(Intent(AUTHENTICATION_KEY_FAILED))
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(AUTHENTICATION_KEY_FAILED))
         }
 
         fun supportsBluetoothLE() = context.packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)

@@ -23,7 +23,7 @@ class OnboardingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _isAdmin.value = userRepository.isUserAdmin()
+            //_isAdmin.value = userRepository.isUserAdmin()
         }
     }
 

@@ -1,14 +1,15 @@
 package com.example.logifitappp.ui.components.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -51,11 +52,20 @@ fun CardTest(modifier: Modifier = Modifier) {
             Row(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(top = 12.dp),
             ) {
-                StatusCard(stringResource(id = R.string.content_description_sleep).uppercase(), true)
-                StatusCard(stringResource(id = R.string.face_status), false)
+                Card(
+                    modifier.weight(1f),
+                ) {
+                    StatusCard(stringResource(id = R.string.content_description_sleep).uppercase(), true)
+                }
+                Spacer(Modifier.width(12.dp))
+
+                Card(
+                    modifier.weight(1f),
+                ) {
+                    StatusCard(stringResource(id = R.string.face_status), false)
+                }
             }
 
         },
