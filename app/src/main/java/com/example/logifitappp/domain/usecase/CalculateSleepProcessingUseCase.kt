@@ -45,7 +45,7 @@ class CalculateSleepProcessingUseCase {
                 if (coordinator.supportsRemSleep()) {
                     it.reemCycles = amounts.remCycles
                     it.totalReemSeconds = amounts.totalRemSleepMinutes * 60
-                    it.withLittleReemSleep = (amounts.totalRemSleepMinutes * 100 / amounts.totalSleepMinutes) < 15
+                    it.withLittleReemSleep = amounts.remSleepPercentage < 15
                 }
 
                 if (coordinator.supportsHeartRateMeasurement()) {
@@ -55,7 +55,7 @@ class CalculateSleepProcessingUseCase {
                 it.totalAwakeSeconds = amounts.totalAwakeningMinutes * 60
                 it.totalSleepSeconds = amounts.totalSleepMinutes * 60
                 it.withAwakeningOvercome = amounts.maxAwakeningMinutes > 20
-                it.withLittleSleep =  amounts.totalSleepMinutes < 60
+                it.withLittleSleep =  amounts.totalSleepMinutes < 60 * 6
                 it.withLongAwake = amounts.totalAwakeningMinutes > 60
 
                 App.database.fatigueDao().store(it)
@@ -68,8 +68,8 @@ class CalculateSleepProcessingUseCase {
                 wearableId = wearableModel.id,
                 withAwakeningOvercome = amounts.maxAwakeningMinutes > 20,
                 withHypertension = if (coordinator.supportsHeartRateMeasurement()) withHypertension else false,
-                withLittleReemSleep = if (coordinator.supportsRemSleep()) (amounts.totalRemSleepMinutes * 100 / amounts.totalSleepMinutes) < 15 else null,
-                withLittleSleep =  amounts.totalSleepMinutes < 60,
+                withLittleReemSleep = if (coordinator.supportsRemSleep()) amounts.remSleepPercentage < 15 else null,
+                withLittleSleep =  amounts.totalSleepMinutes < 60 * 6,
                 withLongAwake = amounts.totalAwakeningMinutes > 60
             ))
     }

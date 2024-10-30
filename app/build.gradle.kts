@@ -115,6 +115,8 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.androidx.material)
+    implementation(libs.richtext.markdown.android)
+    implementation(libs.richtext.commonmark)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

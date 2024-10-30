@@ -18,6 +18,8 @@ logbackClassic = "1.4.7"
 lottieCompose = "4.0.0"
 material = "1.7.4"
 preference = "1.2.1"
+richtextCommonmark = "1.0.0-alpha01"
+richtextMarkdownAndroid = "1.0.0-alpha01"
 roomRuntime = "2.6.1"
 serializationKotlin = "1.9.0"
 materialIcons = "1.7.4"
@@ -82,6 +84,8 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
 androidx-localbroadcastmanager = { group = "androidx.localbroadcastmanager", name = "localbroadcastmanager", version.ref = "localBroadcastManager" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtextCommonmark" }
+richtext-markdown-android = { module = "com.halilibo.compose-richtext:richtext-markdown-android", version.ref = "richtextMarkdownAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -121,8 +121,10 @@ fun HomeWearable(
             Spacer(modifier = Modifier.height(12.dp))
 
             SleepProcessingCard(
+                drowsiness = homeViewModel.state.drowsiness,
                 drowsinessCondition = homeViewModel.state.drowsinessCondition,
-                fatigue = homeViewModel.state.fatigue
+                fatigue = homeViewModel.state.fatigue,
+                tenant = homeViewModel.state.tenant
             )
         }
     }
