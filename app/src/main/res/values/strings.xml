@@ -16,6 +16,9 @@
     <string name="button_send">Send</string>
     <string name="button_start_detection">Start detection</string>
     <string name="button_stop_detection">Stop detection</string>
+    <string name="change_location_modal_message">Remember this is very important for your sleep analysis</string>
+    <string name="change_location_modal_subtitle">Select your location in your company</string>
+    <string name="change_location_modal_title">My location</string>
     <string name="change_shift_modal_message">Remember this is very important for your sleep analysis</string>
     <string name="change_shift_modal_subtitle">Select your working hours in your company</string>
     <string name="change_shift_modal_title">My work schedule</string>

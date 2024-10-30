@@ -16,6 +16,9 @@
     <string name="button_send">Enviar</string>
     <string name="button_start_detection">Empezar detección</string>
     <string name="button_stop_detection">Detener detección</string>
+    <string name="change_location_modal_message">Recuerda que esto es muy importante para su análisis de sueño</string>
+    <string name="change_location_modal_subtitle">Seleccione su localización en su empresa</string>
+    <string name="change_location_modal_title">Mi localización</string>
     <string name="change_shift_modal_message">Recuerda que esto es muy importante para su análisis de sueño</string>
     <string name="change_shift_modal_subtitle">Seleccione su horario de trabajo en su empresa</string>
     <string name="change_shift_modal_title">Mi horario de trabajo</string>

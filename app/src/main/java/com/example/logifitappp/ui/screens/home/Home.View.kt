@@ -93,7 +93,11 @@ fun HomeView(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     if (homeViewModel.state.tenant?.shouldItShowDrowsinessTest == true) {
-                        HomeLocationCard(homeViewModel.state.location)
+                        HomeLocationCard(
+                            onSelectLocation = { homeViewModel.handleChangeLocation(it) },
+                            location = homeViewModel.state.location
+                        )
+
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }

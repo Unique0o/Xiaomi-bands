@@ -10,6 +10,7 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
 import com.example.logifitappp.data.models.EvaluationResultModel
+import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
@@ -122,6 +123,21 @@ class HomeViewModel @AssistedInject constructor(
                 App.signalReloadAuthenticatedUser()
 
                 userService.storeOccupationalInformation(user.id, StoreOccupationalInformationRequest(shift_id = shift.id))
+            } catch (e: Exception) {
+                //TODO: require update user occupational information
+            }
+        }
+    }
+
+    fun handleChangeLocation(location: LocationModel) {
+        viewModelScope.launch {
+            try {
+                App.database.userDao().store(user.copy(locationId = location.id))
+                state = state.copy(location = location)
+
+                App.signalReloadAuthenticatedUser()
+
+                userService.storeOccupationalInformation(user.id, StoreOccupationalInformationRequest(location_aux_id = location.id))
             } catch (e: Exception) {
                 //TODO: require update user occupational information
             }

@@ -23,7 +23,7 @@ class ChangeShiftModalViewModel @AssistedInject constructor(
 
     var shift by mutableStateOf<ShiftModel?>(null)
 
-    var shifts = mutableStateListOf <ShiftModel>()
+    var shifts = mutableStateListOf<ShiftModel>()
         private set
 
     init {

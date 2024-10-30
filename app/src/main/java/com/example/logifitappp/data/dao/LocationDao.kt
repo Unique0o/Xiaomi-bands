@@ -7,8 +7,8 @@ import com.example.logifitappp.data.models.LocationModel
 
 @Dao
 abstract class LocationDao {
-    @Query("SELECT * FROM locations")
-    abstract fun all(): List<LocationModel>
+    @Query("SELECT * FROM locations WHERE tenant_id = :tenantId")
+    abstract fun all(tenantId: Int): List<LocationModel>
 
     @Query("DELETE FROM locations WHERE tenant_id = :tenantId")
     abstract fun delete(tenantId: Int)
