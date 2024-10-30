@@ -38,6 +38,7 @@ class App: Application() {
     companion object {
         const val ACTION_NEW_DATA = "com.info.logifit.pe.action.quit"
         const val AUTHENTICATION_KEY_FAILED = "com.info.logifit.pe.authentication.key.failed"
+        const val RELOAD_AUTHENTICATED_USER = "com.info.logifit.pe.reload.authenticated.user"
 
         lateinit var context: App
             private set
@@ -75,6 +76,10 @@ class App: Application() {
 
         fun signalAuthenticationKeyFailed() {
             LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(AUTHENTICATION_KEY_FAILED))
+        }
+
+        fun signalReloadAuthenticatedUser() {
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(RELOAD_AUTHENTICATED_USER))
         }
 
         fun supportsBluetoothLE() = context.packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)

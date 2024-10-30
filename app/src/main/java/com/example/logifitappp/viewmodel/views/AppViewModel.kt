@@ -44,6 +44,10 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    fun reloadAuthenticatedUser() {
+        user = App.database.userDao().getLoggedIn()
+    }
+
     fun updateUser(user: UserModel) {
         this.user = user
     }

@@ -21,6 +21,7 @@ import com.example.logifitappp.ui.components.layouts.CardLayout
 
 @Composable
 fun InformationCard(
+    modifier: Modifier = Modifier,
     icon: ImageVector,
     iconSize: Dp = 24.dp,
     label: String,
@@ -29,7 +30,7 @@ fun InformationCard(
     suffixComponent: (@Composable () -> Unit)? = null,
     bodyComponent: (@Composable () -> Unit)? = null
 ) {
-    CardLayout {
+    CardLayout(modifier) {
         Column(
             modifier = Modifier.padding(12.dp)
         ) {

@@ -16,6 +16,9 @@
     <string name="button_send">Enviar</string>
     <string name="button_start_detection">Empezar detección</string>
     <string name="button_stop_detection">Detener detección</string>
+    <string name="change_shift_modal_message">Recuerda que esto es muy importante para su análisis de sueño</string>
+    <string name="change_shift_modal_subtitle">Seleccione su horario de trabajo en su empresa</string>
+    <string name="change_shift_modal_title">Mi horario de trabajo</string>
     <string name="companion_pairing_request_message">¿Empareje este dispositivo como complementario? Se recomienda para algunas funciones, como buscar dispositivo, y proporciona una mejor conexión.</string>
     <string name="companion_pairing_request_title">Dispositivo complementario</string>
     <string name="connected">Conectado</string>

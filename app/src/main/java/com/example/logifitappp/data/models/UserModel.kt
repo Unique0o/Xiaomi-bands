@@ -39,7 +39,7 @@ data class UserModel(
     @ColumnInfo(name = "profile_photo") val profilePhoto: String? = null,
     @ColumnInfo(name = "province_id") val provinceId: Int? = null,
     val role: Int,
-    @ColumnInfo(name = "shift_id") val shiftId: Int? = null,
+    @ColumnInfo(name = "shift_id") var shiftId: Int? = null,
     @ColumnInfo(name = "tenant_id") val tenantId: Int,
     val weight: Float? = null,
     @ColumnInfo(name = "work_position") val workPosition: String? = null,

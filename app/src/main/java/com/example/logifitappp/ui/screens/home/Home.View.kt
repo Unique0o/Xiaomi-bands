@@ -19,12 +19,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.App.Companion
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
-import com.example.logifitappp.ui.components.layouts.ModalLayout
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.HomeViewModel
@@ -70,7 +69,7 @@ fun HomeView(
         }
     }
 
-    ModalLayout(
+    MessageModal(
         onClose = { homeViewModel.stopProcessing() },
         onDismissRequest = { homeViewModel.stopProcessing() },
         status = homeViewModel.state.status,
@@ -86,7 +85,11 @@ fun HomeView(
                 navigation = navigation
             ) {
                 Column(modifier = Modifier.padding(horizontal = 12.dp)) {
-                    HomeShiftCard(homeViewModel.state.shift)
+                    HomeShiftCard(
+                        onSelectShift = { homeViewModel.handleChangeShift(it) },
+                        shift = homeViewModel.state.shift
+                    )
+
                     Spacer(modifier = Modifier.height(16.dp))
 
                     if (homeViewModel.state.tenant?.shouldItShowDrowsinessTest == true) {

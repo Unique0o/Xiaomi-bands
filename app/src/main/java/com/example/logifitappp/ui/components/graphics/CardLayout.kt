@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
 
@@ -129,7 +128,7 @@ fun CardTemplatePreview() {
         labelStyle = MaterialTheme.typography.labelMedium,
         style =  Modifier.padding(8.dp),
         suffixComponent = {
-            ConnectedIndicator(text = "10 Steps", color = Green298 , backgroundColor = Lime70, pointColor = Green298)
+            //ConnectedIndicator(text = "10 Steps", color = Green298 , backgroundColor = Lime70, pointColor = Green298)
         }
     )
 }

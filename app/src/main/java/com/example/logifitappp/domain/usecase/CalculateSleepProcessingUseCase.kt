@@ -22,8 +22,6 @@ class CalculateSleepProcessingUseCase {
         val activities = provider.getRawActivitiesBetween(startTs, endTs)
         val amounts = analyzer.calculateActivityAmounts(activities)
 
-        println("CalculateSleepProcessingUseCase: $amounts in $startTs to $endTs")
-
         App.database
             .drowsinessDao()
             .findFromToday(wearableModel.id)
@@ -35,8 +33,6 @@ class CalculateSleepProcessingUseCase {
                 totalSleepSeconds = amounts.totalSleepMinutes * 60,
                 wearableId = wearableModel.id
             ))
-
-        if (amounts.totalSleepMinutes <= 0) return
 
         val withHypertension = activities.any {
             it.isHeartRateValid() && it.isSleep() && (it.heartRate < 40 || it.heartRate > 100)

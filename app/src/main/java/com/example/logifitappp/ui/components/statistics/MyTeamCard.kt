@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 
 
@@ -39,12 +38,7 @@ fun MyTeamCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         textcolor = Color.Gray,
         suffixComponent = {
-            ConnectedIndicator(
-                text = statusIndicator,
-                color = textIndicatorColor,
-                backgroundColor = backgroundIndicatorColor,
-                pointColor = pointIndicatorColor
-            )
+
         },
         titleAlternateText = stringResource(id = R.string.shift) +": ",
         subtitleAlternateText = subtitleAlternateText,

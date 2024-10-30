@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.*
 
 @Composable
@@ -30,12 +29,7 @@ fun StepHomeCard(
             color = Blue690
         ),
         suffixComponent = {
-            ConnectedIndicator(
-                text = "1200 pasos",
-                color = Green298,
-                backgroundColor = Lime70,
-                pointColor = Green298
-            )
+
         },
         bodyComponent = {
             StepHomeChart(steps)

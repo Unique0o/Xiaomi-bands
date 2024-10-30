@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.ui.components.layouts.ModalLayout
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
@@ -29,7 +29,7 @@ fun LoginView(
 ) {
     val loginViewModel: LoginViewModel = hiltViewModel()
 
-    ModalLayout(
+    MessageModal(
         onClose = { loginViewModel.stopProcessing() },
         onDismissRequest = { loginViewModel.stopProcessing() },
         status = loginViewModel.state.status,

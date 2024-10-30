@@ -15,7 +15,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.BackHeader
-import com.example.logifitappp.ui.components.home.StatusCard
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
@@ -45,16 +44,6 @@ fun ResultFatigueSelfAssessmentTestScreen(
                     fontSize = 14.sp,
                     modifier = Modifier.padding(bottom = 16.dp),
                     fontWeight = FontWeight.Bold
-                )
-
-                StatusCard(
-                    title = stringResource(id = R.string.title_test_fatiga),
-                    isApt = isApt,
-                    modifier = Modifier
-                        .width(175.dp)
-                        .height(210.dp),
-                    cardColor = MaterialTheme.colorScheme.surfaceContainer,
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))

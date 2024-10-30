@@ -19,10 +19,7 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.graphics.StepCard
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.titles.IconTitle
-import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Lime70
 import com.example.logifitappp.ui.theme.LogifitApppTheme
 
 @Composable
@@ -54,12 +51,7 @@ fun StepsFocusScreen(navigation: NavHostController) {
                 fontWeight = FontWeight.SemiBold,
                 style = Modifier.padding(2.dp),
                 suffixComponent = {
-                    ConnectedIndicator(
-                        text = "200 KCAL",
-                        color = Green298,
-                        backgroundColor = Lime70,
-                        pointColor = Green298
-                    )
+
                 }
             )
             CardLayout(bodyComponent = { /*TODO*/ },
@@ -70,12 +62,7 @@ fun StepsFocusScreen(navigation: NavHostController) {
                 fontWeight = FontWeight.SemiBold,
                 style = Modifier.padding(2.dp),
                 suffixComponent = {
-                    ConnectedIndicator(
-                        text = "1.5 km",
-                        color = Green298,
-                        backgroundColor = Lime70,
-                        pointColor = Green298
-                    )
+
                 }
             )
         }

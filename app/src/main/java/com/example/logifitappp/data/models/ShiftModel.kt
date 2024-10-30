@@ -40,4 +40,6 @@ data class ShiftModel(
 
         return startTimestamp
     }
+
+    override fun toString() = name
 }

@@ -5,11 +5,16 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
 import com.example.logifitappp.data.models.EvaluationResultModel
+import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
+import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
@@ -19,12 +24,15 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
 class HomeViewModel @AssistedInject constructor(
     @Assisted val user: UserModel,
+    private val calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
-    private val synchronizeWearableUseCase: SynchronizeWearableUseCase
+    private val synchronizeWearableUseCase: SynchronizeWearableUseCase,
+    private val userService: UserService
 ): ViewModel() {
     @AssistedFactory
     interface HomeViewModelFactory {
@@ -100,6 +108,26 @@ class HomeViewModel @AssistedInject constructor(
        state = state.copy(status = AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
     }
 
+    fun handleChangeShift(shift: ShiftModel) {
+        viewModelScope.launch {
+            try {
+                App.database.userDao().store(user.copy(shiftId = shift.id))
+                state = state.copy(shift = shift)
+
+                wearables.firstOrNull()?.let {
+                    calculateSleepProcessingUseCase(shift, it)
+                    refreshSleepProcessingData(it)
+                }
+
+                App.signalReloadAuthenticatedUser()
+
+                userService.storeOccupationalInformation(user.id, StoreOccupationalInformationRequest(shift_id = shift.id))
+            } catch (e: Exception) {
+                //TODO: require update user occupational information
+            }
+        }
+    }
+
     private fun refreshEvaluations() {
         evaluations.clear()
 
@@ -109,8 +137,7 @@ class HomeViewModel @AssistedInject constructor(
     private fun refreshPairedWearables() {
         wearables.clear()
         wearables.addAll(App.wearableManager.getWearables())
-
-        if (wearables.isNotEmpty()) refreshSleepProcessingData(wearables.first())
+        wearables.firstOrNull()?.let { refreshSleepProcessingData(it) }
     }
 
     fun refreshSingleWearable(wearable: Wearable) {
