@@ -14,7 +14,7 @@ import com.example.logifitappp.ui.components.lottie.AnimatedWearableDataExtracti
 
 enum class AppStatusCodeEnum(
     private val code: Int,
-    @StringRes  val message: Int,
+    @StringRes val message: Int,
     val keepOpen: Boolean,
     val component: (@Composable () -> Unit)? = null,
 ) {

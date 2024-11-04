@@ -47,6 +47,8 @@ data class UserModel(
 ) {
     fun isAdmin() = role == 1 || role == 3
 
+    fun getFullname() = "$firstName $lastName"
+
     @Composable
     fun getRole() = when (role) {
         1 -> stringResource(R.string.administrator)

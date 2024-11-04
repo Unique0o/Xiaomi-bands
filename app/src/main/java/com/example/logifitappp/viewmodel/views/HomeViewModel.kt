@@ -1,12 +1,17 @@
 package com.example.logifitappp.viewmodel.views
 
+import android.graphics.Bitmap
+import android.icu.util.GregorianCalendar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logifitappp.R
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.utils.DateTimeUtils
+import com.example.logifitappp.core.utils.SharingUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
 import com.example.logifitappp.data.models.EvaluationResultModel
@@ -26,6 +31,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okio.IOException
 
 @HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
 class HomeViewModel @AssistedInject constructor(
@@ -39,6 +45,8 @@ class HomeViewModel @AssistedInject constructor(
     interface HomeViewModelFactory {
         fun create(user: UserModel): HomeViewModel
     }
+
+    var bitmap by mutableStateOf<Bitmap?>(null)
 
     var evaluations = mutableStateListOf<EvaluationResultModel>()
         private set
@@ -185,6 +193,18 @@ class HomeViewModel @AssistedInject constructor(
             isSleepSynchronizationRequired = drowsiness == null,
             isSynchronizationWithLogifitRequired = drowsiness?.sentAt == null
         )
+    }
+
+    fun shareSleepDetail() {
+        try {
+            bitmap?.let {
+                val filename = "sleep_detail_${DateTimeUtils.format(GregorianCalendar.getInstance().time, "yyyy_MM_dd_HH_mm_ss")}.png"
+
+                SharingUtils.shareByBitmap(App.context, it, filename, R.string.share_sleep_detail_message)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     fun stopProcessing() {

@@ -19,12 +19,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.utils.AndroidUtils
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
+import com.example.logifitappp.ui.components.screenshots.SleepDetailScreenshot
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.HomeViewModel
 
@@ -75,6 +77,17 @@ fun HomeView(
         status = homeViewModel.state.status,
         visible = homeViewModel.state.isLoading
     )
+
+    AndroidUtils.CaptureComposableAsBitmap({ bitmap ->  homeViewModel.bitmap = bitmap }) {
+        SleepDetailScreenshot(
+            drowsiness = homeViewModel.state.drowsiness,
+            drowsinessCondition = homeViewModel.state.drowsinessCondition,
+            fatigue = homeViewModel.state.fatigue,
+            shift = homeViewModel.state.shift,
+            tenant = homeViewModel.state.tenant,
+            user = appViewModel.user!!
+        )
+    }
 
     ScrollablePage(
         backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,

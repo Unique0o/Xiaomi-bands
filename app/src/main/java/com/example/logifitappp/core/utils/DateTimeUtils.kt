@@ -16,11 +16,13 @@ object DateTimeUtils {
         )
     }
 
-    fun formatExtendedIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(date)
+    fun format(date: Date, format: String): String = SimpleDateFormat(format, Locale.US).format(date)
 
-    fun formatIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US).format(date)
+    fun formatExtendedIso8601(date: Date): String = format(date, "yyyy-MM-dd HH:mm:ss")
 
-    fun formatReducedIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(date)
+    fun formatIso8601(date: Date): String = format(date, "yyyy-MM-dd'T'HH:mm:ssXXX")
+
+    fun formatReducedIso8601(date: Date): String = format(date, "yyyy-MM-dd")
 
     fun parse(date: String, format: String): Date? = SimpleDateFormat(format, Locale.US).parse(date)
 

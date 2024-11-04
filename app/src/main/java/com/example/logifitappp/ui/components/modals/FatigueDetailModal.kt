@@ -34,8 +34,6 @@ fun FatigueDetailModal(
         onDismissRequest = onDismissRequest,
         visible = visible
     ) {
-        val condition = fatigue?.calculateStatus() ?: SleepProcessingStatusEnum.PENDING
-
         Text(
             color = MaterialTheme.colorScheme.primary,
             text = stringResource(id = R.string.fatigue_detail_modal_title),
@@ -44,90 +42,98 @@ fun FatigueDetailModal(
         )
 
         Spacer(Modifier.height(12.dp))
+        FatigueDetailScheme(fatigue = fatigue)
+    }
+}
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                color = MaterialTheme.colorScheme.surfaceTint,
-                text = stringResource(R.string.fatigue_detail_modal_subtitle),
-                typography = MaterialTheme.typography.headlineMedium
-            )
+@Composable
+fun FatigueDetailScheme(
+    fatigue: FatigueModel?
+) {
+    val condition = fatigue?.calculateStatus() ?: SleepProcessingStatusEnum.PENDING
 
-            Spacer(Modifier.width(8.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            color = MaterialTheme.colorScheme.surfaceTint,
+            text = stringResource(R.string.fatigue_detail_modal_subtitle),
+            typography = MaterialTheme.typography.headlineMedium
+        )
 
-            Chip(
-                label = stringResource(id = condition.label).uppercase(),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = condition.chipStatus
-            )
-        }
+        Spacer(Modifier.width(8.dp))
 
-        Spacer(Modifier.height(16.dp))
+        Chip(
+            label = stringResource(id = condition.label).uppercase(),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = condition.chipStatus
+        )
+    }
 
-        SleepParameterCard(
-            image = R.drawable.ic_sleep_parameter,
-            label = stringResource(R.string.sleep_time)
-        ) {
-            Chip(
-                label = stringResource(if (fatigue?.withLittleSleep == true) R.string.less_than_6_hours else R.string.greater_than_6_hours),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = if (fatigue?.withLittleSleep == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
-            )
-        }
+    Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(16.dp))
+    SleepParameterCard(
+        image = R.drawable.ic_sleep_parameter,
+        label = stringResource(R.string.sleep_time)
+    ) {
+        Chip(
+            label = stringResource(if (fatigue?.withLittleSleep == true) R.string.less_than_6_hours else R.string.greater_than_6_hours),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = if (fatigue?.withLittleSleep == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
+        )
+    }
 
-        SleepParameterCard(
-            image = R.drawable.ic_awaken_overcome_parameter,
-            label = stringResource(R.string.awaken)
-        ) {
-            Chip(
-                label = stringResource(if (fatigue?.withAwakeningOvercome == true) R.string.greater_than_20_minutes else R.string.less_than_20_minutes),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = if (fatigue?.withAwakeningOvercome == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
-            )
-        }
+    Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(16.dp))
+    SleepParameterCard(
+        image = R.drawable.ic_awaken_overcome_parameter,
+        label = stringResource(R.string.awaken)
+    ) {
+        Chip(
+            label = stringResource(if (fatigue?.withAwakeningOvercome == true) R.string.greater_than_20_minutes else R.string.less_than_20_minutes),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = if (fatigue?.withAwakeningOvercome == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
+        )
+    }
 
-        SleepParameterCard(
-            image = R.drawable.ic_heart_rate_parameter,
-            label = stringResource(R.string.hear_rate)
-        ) {
-            Chip(
-                label = stringResource(if (fatigue?.withHypertension == true) R.string.less_than_40_or_greater_than_100 else R.string.between_40_and_100),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = if (fatigue?.withHypertension == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
-            )
-        }
+    Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(16.dp))
+    SleepParameterCard(
+        image = R.drawable.ic_heart_rate_parameter,
+        label = stringResource(R.string.hear_rate)
+    ) {
+        Chip(
+            label = stringResource(if (fatigue?.withHypertension == true) R.string.less_than_40_or_greater_than_100 else R.string.between_40_and_100),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = if (fatigue?.withHypertension == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
+        )
+    }
 
-        SleepParameterCard(
-            image = R.drawable.ic_rem_sleep_parameter,
-            label = stringResource(R.string.rem_sleep)
-        ) {
-            Chip(
-                label = stringResource(if (fatigue?.withLittleReemSleep == true) R.string.less_than_15_percentage else R.string.greater_than_15_percentage),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = if (fatigue?.withLittleReemSleep == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
-            )
-        }
+    Spacer(Modifier.height(16.dp))
 
-        Spacer(Modifier.height(16.dp))
+    SleepParameterCard(
+        image = R.drawable.ic_rem_sleep_parameter,
+        label = stringResource(R.string.rem_sleep)
+    ) {
+        Chip(
+            label = stringResource(if (fatigue?.withLittleReemSleep == true) R.string.less_than_15_percentage else R.string.greater_than_15_percentage),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = if (fatigue?.withLittleReemSleep == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
+        )
+    }
 
-        SleepParameterCard(
-            image = R.drawable.ic_total_awaken_time_parameter,
-            label = stringResource(R.string.total_awake_time)
-        ) {
-            Chip(
-                label = stringResource(if (fatigue?.withLongAwake == true) R.string.greater_than_1_hour else R.string.less_than_1_hour),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = if (fatigue?.withLongAwake == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
-            )
-        }
+    Spacer(Modifier.height(16.dp))
+
+    SleepParameterCard(
+        image = R.drawable.ic_total_awaken_time_parameter,
+        label = stringResource(R.string.total_awake_time)
+    ) {
+        Chip(
+            label = stringResource(if (fatigue?.withLongAwake == true) R.string.greater_than_1_hour else R.string.less_than_1_hour),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = if (fatigue?.withLongAwake == true) ChipStatusEnum.DANGER else ChipStatusEnum.SUCCESS
+        )
     }
 }

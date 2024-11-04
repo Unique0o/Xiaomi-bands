@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -84,7 +85,7 @@ fun HomeWearable(
                 iconSize = 10.dp,
                 modifier = Modifier.height(24.dp),
                 text = stringResource(id = R.string.share),
-                onClick = { },
+                onClick = { homeViewModel.shareSleepDetail() },
                 verticalPadding = 0.dp,
             )
         }

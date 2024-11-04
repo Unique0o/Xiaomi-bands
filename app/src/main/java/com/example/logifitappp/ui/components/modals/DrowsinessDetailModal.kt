@@ -39,8 +39,6 @@ fun DrowsinessDetailModal(
         onDismissRequest = onDismissRequest,
         visible = visible
     ) {
-        val condition = drowsinessCondition?.calculateStatus() ?: SleepProcessingStatusEnum.PENDING
-
         Text(
             color = MaterialTheme.colorScheme.primary,
             text = stringResource(id = R.string.drowsiness_detail_modal_title),
@@ -50,44 +48,59 @@ fun DrowsinessDetailModal(
 
         Spacer(Modifier.height(12.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                color = MaterialTheme.colorScheme.surfaceTint,
-                text = stringResource(R.string.drowsiness_detail_modal_subtitle),
-                typography = MaterialTheme.typography.headlineMedium
-            )
+        DrowsinessDetailScheme(
+            drowsiness = drowsiness,
+            drowsinessCondition = drowsinessCondition,
+            tenant = tenant
+        )
+    }
+}
 
-            Spacer(Modifier.width(8.dp))
+@Composable
+fun DrowsinessDetailScheme(
+    drowsiness: DrowsinessModel?,
+    drowsinessCondition: SleepConditionModel?,
+    tenant: TenantModel?
+) {
+    val condition = drowsinessCondition?.calculateStatus() ?: SleepProcessingStatusEnum.PENDING
 
-            Chip(
-                label = drowsinessCondition?.name?.uppercase() ?: stringResource(id = condition.label).uppercase(),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = condition.chipStatus
-            )
-        }
-
-        Spacer(Modifier.height(12.dp))
-
-        MarkdownText(
-            text = stringResource(R.string.drowsiness_detail_modal_message, (tenant?.sleepAnalysisHours ?: (6 * 3600)) / 3600),
-            textAlign = TextAlign.Center
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            color = MaterialTheme.colorScheme.surfaceTint,
+            text = stringResource(R.string.drowsiness_detail_modal_subtitle),
+            typography = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.width(8.dp))
 
-        SleepParameterCard(
-            image = R.drawable.ic_sleep_information,
-            label = stringResource(R.string.total_sleep_time)
-        ) {
-            Chip(
-                label = DurationUtils.format(drowsiness?.totalSleepSeconds ?: 0),
-                labelTypography = MaterialTheme.typography.titleSmall,
-                status = condition.chipStatus
-            )
-        }
+        Chip(
+            label = drowsinessCondition?.name?.uppercase() ?: stringResource(id = condition.label).uppercase(),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = condition.chipStatus
+        )
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    MarkdownText(
+        text = stringResource(R.string.drowsiness_detail_modal_message, (tenant?.sleepAnalysisHours ?: (6 * 3600)) / 3600),
+        textAlign = TextAlign.Center
+    )
+
+    Spacer(Modifier.height(16.dp))
+
+    SleepParameterCard(
+        image = R.drawable.ic_sleep_information,
+        label = stringResource(R.string.total_sleep_time)
+    ) {
+        Chip(
+            label = DurationUtils.format(drowsiness?.totalSleepSeconds ?: 0),
+            labelTypography = MaterialTheme.typography.titleSmall,
+            status = condition.chipStatus
+        )
     }
 }

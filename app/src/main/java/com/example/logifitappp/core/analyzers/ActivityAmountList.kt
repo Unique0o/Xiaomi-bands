@@ -18,7 +18,7 @@ class ActivityAmountList {
     var totalSleepMinutes = 0L
 
     var remSleepPercentage: Long = 0
-        get() = totalRemSleepMinutes * 100 / totalSleepMinutes
+        get() = if (totalSleepMinutes == 0L) 0 else totalRemSleepMinutes * 100 / totalSleepMinutes
         private set
 
     fun add(amount: ActivityAmount) {
