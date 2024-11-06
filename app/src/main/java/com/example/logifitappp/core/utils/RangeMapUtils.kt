@@ -1,6 +1,6 @@
 package com.example.logifitappp.core.utils
 
-class RangeMap<K: Comparable<K>, V>(mode: Mode = Mode.LOWER_BOUND) {
+class RangeMapUtils<K: Comparable<K>, V>(mode: Mode = Mode.LOWER_BOUND) {
     private val comparator: Comparator<K> = when (mode) {
         Mode.LOWER_BOUND -> Comparator { k1, k2 -> k1.compareTo(k2) }
         Mode.UPPER_BOUND -> Comparator { k1, k2 -> k2.compareTo(k1) }

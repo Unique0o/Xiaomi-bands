@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.components.cards
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,10 +33,7 @@ fun InformationCard(
         Column(
             modifier = Modifier.padding(12.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 IconText(
                     icon = icon,
                     iconColor = MaterialTheme.colorScheme.primary,
@@ -45,9 +41,8 @@ fun InformationCard(
                     label = label,
                     labelColor = labelColor,
                     labelTypography = labelTypography,
+                    modifier = Modifier.weight(1f)
                 )
-
-                Spacer(modifier = Modifier.weight(1f))
 
                 suffixComponent?.let {
                     Spacer(modifier = Modifier.width(8.dp))

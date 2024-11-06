@@ -3,7 +3,6 @@ package com.example.logifitappp.ui.components.screenshots
 import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,8 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Person
@@ -122,7 +119,7 @@ fun SleepDetailScreenshot(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1.5f),
                     text = drowsiness?.let {
-                        DateTimeUtils.format(DateTimeUtils.parse(it.createdAt, "yyyy-MM-dd HH:mm:ss")!!, "dd.MM.yyyy h:mm a")
+                        DateTimeUtils.parse(it.createdAt, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy h:mm a")
                     } ?: "-",
                     typography = MaterialTheme.typography.bodySmall
                 )
@@ -147,7 +144,7 @@ fun SleepDetailScreenshot(
                     text = drowsiness?.let {
                         if (it.sentAt == null) return@let "-"
 
-                        DateTimeUtils.format(DateTimeUtils.parse(it.sentAt, "yyyy-MM-dd HH:mm:ss")!!, "dd.MM.yyyy h:mm a")
+                        DateTimeUtils.parse(it.sentAt, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy h:mm a")
                     } ?: "-",
                     typography = MaterialTheme.typography.bodySmall
                 )

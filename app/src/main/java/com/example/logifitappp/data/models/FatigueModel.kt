@@ -11,10 +11,10 @@ import com.example.logifitappp.enums.SleepProcessingStatusEnum
 data class FatigueModel(
     @ColumnInfo("created_at") val createdAt: String = DateTimeUtils.formatExtendedIso8601(GregorianCalendar.getInstance().time),
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo("reem_cycles") var reemCycles: Int? = null,
+    @ColumnInfo("rem_cycles") var remCycles: Int? = null,
     @ColumnInfo("sent_at") var sentAt: String? = null,
     @ColumnInfo("total_awake_seconds") var totalAwakeSeconds: Long,
-    @ColumnInfo("total_reem_seconds") var totalReemSeconds: Long? = null,
+    @ColumnInfo("total_rem_seconds") var totalRemSeconds: Long? = null,
     @ColumnInfo("total_sleep_seconds") var totalSleepSeconds: Long,
     @ColumnInfo("wearable_id") val wearableId: Int,
     @ColumnInfo("with_awakening_overcome") var withAwakeningOvercome: Boolean,

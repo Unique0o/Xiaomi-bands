@@ -34,6 +34,7 @@
     <string name="device_unknown_name">(desconocido)</string>
     <string name="discovery_pair_message">Selecciona Emparejar para emparejar tus dispositivos. Si esto falla, prueba de nuevo sin emparejar.</string>
     <string name="discovery_pair_title">¿Emparejar con %1$s?</string>
+    <string name="downloading_evaluation_result_message">Obteniendo el resultado de la evaluación...</string>
     <string name="drowsiness_detail_modal_message">Tu información de sueño debe superar las **%1$s horas** para contar como apto</string>
     <string name="drowsiness_detail_modal_subtitle">Usted se encuentra</string>
     <string name="drowsiness_detail_modal_title">Detalle del sueño</string>
@@ -80,6 +81,7 @@
     <string name="my_drowsiness_tests">Mis tests de somnolencia</string>
     <string name="no_internet_connection_message">Verifique su conexión a Internet</string>
     <string name="no_synchronized_wearable_data_message">Al parecer no tiene datos actuales, realice la extracción e inténtelo nuevamente</string>
+    <string name="no_wearable_sleep_data_message">Al parecer no tienes registro de sueño para enviar. Intente sincronizar nuevamente</string>
     <string name="not_connected">No conectado</string>
     <string name="not_worn">Dispositivo no usado</string>
     <string name="operator">Operador</string>
@@ -98,6 +100,7 @@
     <string name="require_subscription_upgrading_message">El proyecto no cuenta con saldo para realizar el envío de información. Por favor comuníquese con su administrador a la brevedad.</string>
     <string name="scanned">Escaneado</string>
     <string name="select">Seleccionar</string>
+    <string name="share_evaluation_result_message">Compartir resultado de evaluación</string>
     <string name="share_sleep_detail_message">Compartir detalle de sueño</string>
     <string name="shift">Turno</string>
     <string name="sleep_detail_screenshot_copyright_message">Reporte creado en App Logifit</string>
@@ -108,15 +111,19 @@
     <string name="sleep_time">Tiempo de sueño</string>
     <string name="state_to_drive_not_found_message">Al Parecer tienes otro estado diferente, consulte con su administrador.</string>
     <string name="subtitle_login">Ingrese sus credenciales para continuar</string>
+    <string name="successful_wearable_information_synchronizing_message">Se extrajo toda la información de sueño de su Smart Band</string>
+    <string name="successful_wearable_information_transferring_message">Los datos han sido enviados exitosamente</string>
     <string name="successful_password_recovery_message">Se ha notificado a un encargado para que lo pueda ayudar</string>
     <string name="total_awake_time">Total de tiempo despierto</string>
     <string name="total_sleep_time">Tiempo total de sueño</string>
+    <string name="transferring_wearable_information_message">Ahora se está realizando el envío de los datos a la plataforma de Logifit</string>
     <string name="unbind_before_pair_message">Este dispositivo ya está vinculado en los ajustes de Android, lo que puede hacer que el emparejamiento falle en algunos dispositivos. Si no se puede añadir el dispositivo, elimínelo de los ajustes de Android y vuelva a intentarlo.</string>
     <string name="unbind_before_pair_title">Ya vinculado</string>
     <string name="unfit">No apto</string>
     <string name="unfit_to_drive_message">No estás en capacidad de manejo por régimen de sueño incompleto.</string>
     <string name="unknown_activity">Actividad desconocida</string>
     <string name="unprocessable_http_error_message">Falta asociar dispositivo</string>
+    <string name="unprocessable_wearable_information_transfer_message">Los datos fueron extraídos exitosamente pero no se enviaron a Logifit. Verifique su conexión a Internet e inténtelo nuevamente</string>
     <string name="unregistered_user_error_message">Usuario no registrado. Por favor, crear una cuenta para iniciar sesión</string>
     <string name="unselected_shift_message">Por favor seleccione un turno de trabajo antes de extraer datos de sueño o realizar una evaluación</string>
     <string name="username_validation_error_message">Debe ingresar un usuario</string>

@@ -9,17 +9,12 @@ import com.example.logifitappp.data.models.ShiftModel
 
 class CalculateSleepProcessingUseCase {
     operator fun invoke(shift: ShiftModel, wearable: Wearable) {
-        val user = App.database.userDao().getLoggedIn()!!
-        val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
-
-        val startTs = shift.getStartDateTimestamp().timeInMillis / 1000
-        val endTs = shift.getEndDateTimestamp().timeInMillis / 1000
-
         val analyzer = ActivityAnalyzer()
         val coordinator = wearable.getWearableCoordinator()
         val provider = coordinator.getActivityProvider(wearable)
+        val wearableModel = provider.getStoredWearable()!!
 
-        val activities = provider.getRawActivitiesBetween(startTs, endTs)
+        val activities = provider.getRawActivities(shift)
         val amounts = analyzer.calculateActivityAmounts(activities)
 
         App.database
@@ -43,8 +38,8 @@ class CalculateSleepProcessingUseCase {
             .findFromToday(wearableModel.id)
             ?.let {
                 if (coordinator.supportsRemSleep()) {
-                    it.reemCycles = amounts.remCycles
-                    it.totalReemSeconds = amounts.totalRemSleepMinutes * 60
+                    it.remCycles = amounts.remCycles
+                    it.totalRemSeconds = amounts.totalRemSleepMinutes * 60
                     it.withLittleReemSleep = amounts.remSleepPercentage < 15
                 }
 
@@ -61,8 +56,8 @@ class CalculateSleepProcessingUseCase {
                 App.database.fatigueDao().store(it)
             }
             ?: App.database.fatigueDao().store(FatigueModel(
-                reemCycles = if (coordinator.supportsRemSleep()) amounts.remCycles else null,
-                totalReemSeconds = if (coordinator.supportsRemSleep()) amounts.totalRemSleepMinutes * 60 else null,
+                remCycles = if (coordinator.supportsRemSleep()) amounts.remCycles else null,
+                totalRemSeconds = if (coordinator.supportsRemSleep()) amounts.totalRemSleepMinutes * 60 else null,
                 totalAwakeSeconds = amounts.totalAwakeningMinutes * 60,
                 totalSleepSeconds = amounts.totalSleepMinutes * 60,
                 wearableId = wearableModel.id,

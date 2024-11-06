@@ -9,6 +9,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.FormatListNumbered
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,6 +42,8 @@ fun HomeDrowsinessTest(
         )
 
         homeViewModel.evaluations.map { evaluation ->
+            Spacer(Modifier.height(16.dp))
+
             InformationCard(
                 icon = Icons.Default.Edit,
                 label = evaluation.title,
@@ -52,21 +56,26 @@ fun HomeDrowsinessTest(
                     }
                 }
             ) {
-                Column(Modifier.padding(start = 22.dp)) {
+                Column(Modifier.padding(start = 28.dp)) {
                     Text(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         text = stringResource(
                             id = R.string.drowsiness_evaluation_date_label,
                             DateTimeUtils.parse(evaluation.createdAt, "yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy")
-                        )
+                        ),
+                        typography = MaterialTheme.typography.labelMedium
                     )
 
                     Spacer(Modifier.height(24.dp))
 
                     IconButton(
+                        elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
+                        horizontalPadding = 10.dp,
                         icon = Icons.Default.Share,
                         iconSize = 10.dp,
+                        modifier = Modifier.height(24.dp),
                         text = stringResource(id = R.string.share),
-                        onClick = { },
+                        onClick = { homeViewModel.shareEvaluation(evaluation) },
                         verticalPadding = 0.dp,
                     )
                 }

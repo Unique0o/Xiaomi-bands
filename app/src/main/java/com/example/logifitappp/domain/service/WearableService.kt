@@ -18,7 +18,7 @@ class WearableService @Inject constructor(private val wearableRepository: Wearab
                 throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
             }
 
-            val body = response.body() ?:  throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+            val body = response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
 
             return@withContext body.key
         } catch (e: HttpException) {

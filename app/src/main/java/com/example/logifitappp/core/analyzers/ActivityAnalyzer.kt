@@ -1,6 +1,5 @@
 package com.example.logifitappp.core.analyzers
 
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 import java.util.Date
 
@@ -11,7 +10,7 @@ class ActivityAnalyzer {
 
         activities.forEach {
             println("activity ${Date(it.timestamp * 1000)}: $it")
-            val amount = ActivityAmount(it.provider?.normalizeType(it.type) ?: WearableActivityTypeEnum.NOT_WORN)
+            val amount = ActivityAmount(it.getNormalizedType())
 
             val isEmpty = amounts.isEmpty()
             var previousAmount = amounts.lastOrNull()
@@ -29,6 +28,7 @@ class ActivityAnalyzer {
                 val timeDifference = it.timestamp - previousActivity!!.timestamp
 
                 previousAmount.addSeconds(timeDifference)
+                previousAmount.addSteps(it.steps)
                 previousAmount.setEndDate(it.timestamp)
 
                 if (previousActivity!!.type != it.type) {
@@ -41,7 +41,7 @@ class ActivityAnalyzer {
             previousActivity = it
         }
 
-        amounts.calculateMinutes()
+        amounts.calculateInformation()
 
         return amounts
     }

@@ -1,7 +1,7 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.utils.RangeMap
+import com.example.logifitappp.core.utils.RangeMapUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableActivityProvider
 import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
@@ -31,7 +31,7 @@ class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityPr
     override fun normalizeType(type: Int) = WearableActivityTypeEnum.fromCode(type)
 
     private fun overlaySleep(activities: List<XiaomiRawActivityModel>, from: Long, to: Long) {
-        val stagesMap = RangeMap<Long, WearableActivityTypeEnum>()
+        val stagesMap = RangeMapUtils<Long, WearableActivityTypeEnum>()
 
         val sleepTimeSampleProvider = XiaomiSleepTimeProvider(wearable)
         val sleepStageProvider = XiaomiSleepStageProvider(wearable)

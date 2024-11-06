@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -111,7 +110,7 @@ fun HomeWearable(
                     }
                 },
                 buttonIcon = Icons.Filled.Sync,
-                onClick = { homeViewModel.fetchActivities(wearable) },
+                onClick = { homeViewModel.reportSleep(wearable) },
                 paragraph = stringResource(id = when (homeViewModel.state.drowsinessCondition?.name?.lowercase()) {
                     "apto" -> R.string.fit_to_drive_message
                     "no apto" -> R.string.unfit_to_drive_message

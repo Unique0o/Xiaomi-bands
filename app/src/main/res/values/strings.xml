@@ -34,6 +34,7 @@
     <string name="device_unknown_name">(unknown)</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
+    <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
     <string name="drowsiness_detail_modal_message">Your sleep information must exceed **%1$s hours** to count as eligible</string>
     <string name="drowsiness_detail_modal_subtitle">You are</string>
     <string name="drowsiness_detail_modal_title">Sleep detail</string>
@@ -80,6 +81,7 @@
     <string name="my_drowsiness_tests">My drowsiness tests</string>
     <string name="no_internet_connection_message">Check your Internet connection</string>
     <string name="no_synchronized_wearable_data_message">It seems you do not have current data, please perform the extraction and try again</string>
+    <string name="no_wearable_sleep_data_message">It looks like you do not have a sleep log to send. Try to sync again</string>
     <string name="not_connected">Not connected</string>
     <string name="not_worn">Device not worn</string>
     <string name="operator">Operator</string>
@@ -98,6 +100,7 @@
     <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
     <string name="scanned">Scanned</string>
     <string name="select">Select</string>
+    <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
     <string name="shift">Shift</string>
     <string name="sleep_detail_screenshot_copyright_message">Report created in App Logifit</string>
@@ -108,15 +111,19 @@
     <string name="sleep_time">Sleep Time</string>
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
     <string name="subtitle_login">Type your credentials to continue</string>
+    <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
+    <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
     <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
     <string name="total_awake_time">Total awake time</string>
     <string name="total_sleep_time">Total sleep time</string>
+    <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
     <string name="unbind_before_pair_title">Already bound</string>
     <string name="unfit">Unfit</string>
     <string name="unfit_to_drive_message">You are not able to drive due to incomplete sleep regimen.</string>
     <string name="unknown_activity">Unknown activity</string>
     <string name="unprocessable_http_error_message">Missing device paring</string>
+    <string name="unprocessable_wearable_information_transfer_message">The data was successfully extracted but not sent to Logifit. Please check your Internet connection and try again</string>
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
     <string name="unselected_shift_message">Please select a work shift before extracting sleep data or making a test</string>
     <string name="username_validation_error_message">You must insert an user</string>

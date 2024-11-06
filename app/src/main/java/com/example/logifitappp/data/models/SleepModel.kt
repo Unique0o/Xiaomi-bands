@@ -12,7 +12,7 @@ data class SleepModel(
     @ColumnInfo("deep_sleep_seconds") val deepSleepSeconds: Long,
     @ColumnInfo("end_at") val endAt: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val interruptions: Int,
+    var interruptions: Int,
     @ColumnInfo("light_sleep_seconds") val lightSleepSeconds: Long,
     @ColumnInfo("rem_sleep_seconds") val remSleepSeconds: Long,
     @ColumnInfo("start_at") val startAt: String,

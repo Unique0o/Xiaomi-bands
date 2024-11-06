@@ -13,6 +13,7 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.SharingUtils
 import com.example.logifitappp.core.wearebles.Wearable
+import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
 import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
 import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.LocationModel
@@ -22,8 +23,11 @@ import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInforma
 import com.example.logifitappp.domain.service.UserService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
+import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
+import com.example.logifitappp.domain.usecase.ShareEvaluationDetailUseCase
 import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.exceptions.HttpConsumerException
 import com.example.logifitappp.exceptions.SynchronizationProcessingException
 import com.example.logifitappp.viewmodel.states.HomeState
 import dagger.assisted.Assisted
@@ -38,6 +42,8 @@ class HomeViewModel @AssistedInject constructor(
     @Assisted val user: UserModel,
     private val calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
+    private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
+    private val shareEvaluationDetailUseCase: ShareEvaluationDetailUseCase,
     private val synchronizeWearableUseCase: SynchronizeWearableUseCase,
     private val userService: UserService
 ): ViewModel() {
@@ -100,7 +106,7 @@ class HomeViewModel @AssistedInject constructor(
         App.getWearableServiceTo(wearable).connect()
     }
 
-    fun fetchActivities(wearable: Wearable) {
+    private fun fetchActivities(wearable: Wearable) {
         try {
             state = state.copy(
                 isLoading = true,
@@ -172,9 +178,14 @@ class HomeViewModel @AssistedInject constructor(
                 wearables[index].copyFromDevice(wearable)
                 processSynchronizedWearableDataUseCase(state.shift, wearable)
                 refreshSleepProcessingData(wearable)
+
+                if (App.getWearablePreferences(wearable.getAddress()!!).getSendInformationWhenConnect()) {
+                    sendSleep(wearable)
+                    return
+                }
             } else refreshPairedWearables()
 
-            state = state.copy(isLoading = false)
+            state = state.copy(status = AppStatusCodeEnum.SUCCESSFUL_WEARABLE_INFORMATION_SYNCHRONIZING)
         } catch (e: SynchronizationProcessingException) {
             state = state.copy(status = e.getStatus())
         }
@@ -195,12 +206,61 @@ class HomeViewModel @AssistedInject constructor(
         )
     }
 
+    fun reportSleep(wearable: Wearable) {
+        val preferences = App.getWearablePreferences(wearable.getAddress()!!)
+
+        if (preferences.getFirstConnection()) {
+            fetchActivities(wearable)
+
+            preferences.getPreferences()
+                .edit()
+                .remove(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION)
+                .apply()
+        } else sendSleep(wearable)
+    }
+
+    private fun sendSleep(wearable: Wearable) {
+        viewModelScope.launch {
+            try {
+                state = state.copy(
+                    isLoading = true,
+                    status = AppStatusCodeEnum.TRANSFERRING_WEARABLE_INFORMATION
+                )
+
+                sendWearableInformationToLogifitUseCase(state.shift, wearable)
+                refreshSleepProcessingData(wearable)
+
+                state = state.copy(status = AppStatusCodeEnum.SUCCESSFUL_WEARABLE_INFORMATION_TRANSFERRING)
+            } catch (e: SynchronizationProcessingException) {
+                state = state.copy(status = e.getStatus())
+            } catch (e: Exception) {
+                state = state.copy(status = AppStatusCodeEnum.UNPROCESSABLE_WEARABLE_INFORMATION_TRANSFER)
+            }
+        }
+    }
+
+    fun shareEvaluation(evaluation: EvaluationResultModel) {
+        viewModelScope.launch {
+            try {
+                state = state.copy(
+                    isLoading = true,
+                    status = AppStatusCodeEnum.DOWNLOADING_EVALUATION_RESULT
+                )
+
+                shareEvaluationDetailUseCase(App.context, evaluation)
+                state = state.copy(isLoading = false)
+            } catch (e: HttpConsumerException) {
+                state = state.copy(status = e.getStatus())
+            }
+        }
+    }
+
     fun shareSleepDetail() {
         try {
             bitmap?.let {
                 val filename = "sleep_detail_${DateTimeUtils.format(GregorianCalendar.getInstance().time, "yyyy_MM_dd_HH_mm_ss")}.png"
 
-                SharingUtils.shareByBitmap(App.context, it, filename, R.string.share_sleep_detail_message)
+                SharingUtils.share(App.context, it, filename, R.string.share_sleep_detail_message)
             }
         } catch (e: IOException) {
             e.printStackTrace()

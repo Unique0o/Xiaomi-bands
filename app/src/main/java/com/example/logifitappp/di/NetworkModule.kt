@@ -3,13 +3,13 @@ package com.example.logifitappp.di
 import android.content.Context
 import com.example.logifitappp.core.App
 import com.example.logifitappp.data.dao.CountryDao
-import com.example.logifitappp.data.dao.UserDao
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
 import com.example.logifitappp.data.remote.api.LocationApi
+import com.example.logifitappp.data.remote.api.SleepApi
 import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
@@ -20,6 +20,7 @@ import com.example.logifitappp.data.repository.HealthInfoRepositoryImpl
 import com.example.logifitappp.data.repository.LocationRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
+import com.example.logifitappp.data.repository.SleepRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
@@ -31,11 +32,13 @@ import com.example.logifitappp.domain.repository.HealthInfoRepository
 import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
+import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.domain.repository.TenantRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.EvaluationService
+import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
 import com.example.logifitappp.domain.service.UserService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
@@ -48,6 +51,8 @@ import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUs
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
+import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
+import com.example.logifitappp.domain.usecase.ShareEvaluationDetailUseCase
 import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.domain.usecase.UpdateNotificationToken
 import com.example.logifitappp.domain.usecase.UpdateTenantInformationUseCase
@@ -157,6 +162,34 @@ object NetworkModule {
     fun provideProcessSynchronizedWearableDataUseCase(
         calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase
     ) = ProcessSynchronizedWearableDataUseCase(calculateSleepProcessingUseCase)
+
+    @Provides
+    @Singleton
+    fun provideSendWearableInformationToLogifitUseCase(
+        sleepService: SleepService
+    ) = SendWearableInformationToLogifitUseCase(sleepService)
+
+    @Provides
+    @Singleton
+    fun provideShareEvaluationDetailUseCase(
+        evaluationService: EvaluationService
+    ) = ShareEvaluationDetailUseCase(evaluationService)
+
+    @Provides
+    @Singleton
+    fun provideSleepApi(retrofit: Retrofit): SleepApi = retrofit.create(SleepApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSleepRepository(sleepRepositoryImpl: SleepRepositoryImpl): SleepRepository = sleepRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSleepRepositoryImpl(sleepApi: SleepApi) = SleepRepositoryImpl(sleepApi)
+
+    @Provides
+    @Singleton
+    fun provideSleepService(sleepRepository: SleepRepository) = SleepService(sleepRepository)
 
     @Provides
     @Singleton

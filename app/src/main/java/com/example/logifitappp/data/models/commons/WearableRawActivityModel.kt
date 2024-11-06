@@ -13,12 +13,14 @@ open class WearableRawActivityModel(
 
     var provider: WearableActivityProvider<out WearableRawActivityModel>? = null
 ) {
+    fun getNormalizedIntensity() = provider?.normalizeIntensity(intensity) ?: 0f
+
+    fun getNormalizedType() = provider?.normalizeType(type) ?: WearableActivityTypeEnum.NOT_WORN
+
     fun isHeartRateValid() = heartRate in 10..250
 
     fun isSleep(): Boolean {
-        if (provider == null) return false
-
-        return when (provider!!.normalizeType(type)) {
+        return when (getNormalizedType()) {
             WearableActivityTypeEnum.REM_SLEEP,
             WearableActivityTypeEnum.DEEP_SLEEP,
             WearableActivityTypeEnum.LIGHT_SLEEP -> true

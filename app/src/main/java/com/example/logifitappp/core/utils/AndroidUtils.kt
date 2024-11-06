@@ -1,5 +1,7 @@
 package com.example.logifitappp.core.utils
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.ParcelUuid
@@ -10,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.drawToBitmap
+import java.io.File
 
 object AndroidUtils {
     @Composable
@@ -60,6 +62,24 @@ object AndroidUtils {
 
             composeView
         })
+    }
+
+    fun getAppVersion(context: Context): String? {
+        return try {
+            val packageIngo = context.packageManager.getPackageInfo(context.packageName, 0)
+
+            packageIngo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+    }
+
+    fun getFileInCache(context: Context, filename: String): File? {
+        val file = File(context.cacheDir, filename)
+
+        if (file.exists()) return file
+
+        return null
     }
 
     fun toParcelUuids(uuids: Array<out Parcelable>?): Array<ParcelUuid>? {

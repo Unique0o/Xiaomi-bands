@@ -16,6 +16,7 @@ class ActivityAmountList {
     var totalLightSleepMinutes = 0L
     var totalRemSleepMinutes = 0L
     var totalSleepMinutes = 0L
+    var totalSteps = 0L
 
     var remSleepPercentage: Long = 0
         get() = if (totalSleepMinutes == 0L) 0 else totalRemSleepMinutes * 100 / totalSleepMinutes
@@ -25,7 +26,7 @@ class ActivityAmountList {
         amounts.add(amount)
     }
 
-    fun calculateMinutes() {
+    fun calculateInformation() {
         var prevAmount: ActivityAmount? = null
 
         for (amount in amounts) {
@@ -53,17 +54,35 @@ class ActivityAmountList {
                 }
             }
 
+            totalSteps += amount.totalSteps
             prevAmount = amount
         }
     }
 
     fun getSleeps(wearableId: Int): List<SleepModel> {
         val sleeps = mutableListOf<SleepModel>()
+        var sleep: SleepModel? = null
+        var interruptions = 0
 
         for (amount in amounts) {
-            if (!amount.isSleep()) continue
+            if (!amount.isSleep()) {
+                sleep?.let {
+                    sleeps.add(it)
+                    interruptions++
+                }
 
-            sleeps.add(SleepModel(
+                sleep = null
+
+                continue
+            }
+
+            sleep = sleep?.copy(
+                deepSleepSeconds = sleep.deepSleepSeconds + if (amount.isDeepSleep()) amount.totalMinutes * 60 else 0,
+                endAt = DateTimeUtils.formatExtendedIso8601(amount.endDate),
+                lightSleepSeconds =  sleep.lightSleepSeconds + if (amount.isLightSleep()) amount.totalMinutes * 60 else 0,
+                remSleepSeconds =  sleep.remSleepSeconds + if (amount.isRemSleep()) amount.totalMinutes * 60 else 0,
+                totalSleepSeconds = sleep.totalSleepSeconds + totalSleepMinutes * 60,
+            ) ?: SleepModel(
                 deepSleepSeconds = if (amount.isDeepSleep()) amount.totalMinutes * 60 else 0,
                 endAt = DateTimeUtils.formatExtendedIso8601(amount.endDate),
                 interruptions = 0,
@@ -72,7 +91,15 @@ class ActivityAmountList {
                 startAt = DateTimeUtils.formatExtendedIso8601(amount.startDate),
                 totalSleepSeconds = totalSleepMinutes * 60,
                 wearableId = wearableId
-            ))
+            )
+        }
+
+        sleep?.let {
+            sleeps.add(it)
+        }
+
+        sleeps.forEach {
+            it.interruptions = interruptions
         }
 
         return sleeps
