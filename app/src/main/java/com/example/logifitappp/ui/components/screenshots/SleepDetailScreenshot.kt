@@ -76,6 +76,7 @@ fun SleepDetailScreenshot(
         ) {
             Text(
                 color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.sleep_detail_screenshot_title),
                 textAlign = TextAlign.Center,
                 typography = MaterialTheme.typography.displayMedium
@@ -192,6 +193,8 @@ fun SleepDetailScreenshot(
                 )
             }
 
+            Spacer(Modifier.height(16.dp))
+
             Text(
                 color = MaterialTheme.colorScheme.primary,
                 text = stringResource(R.string.sleep_detail_screenshot_result_title),
@@ -221,7 +224,7 @@ fun SleepDetailScreenshot(
                 tenant = tenant
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(24.dp))
 
             Text(
                 color = MaterialTheme.colorScheme.primary,
@@ -239,12 +242,12 @@ fun SleepDetailScreenshot(
             Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
-                .padding(vertical = 8.dp)
+                .padding(vertical = 8.dp),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 color = MaterialTheme.colorScheme.onPrimary,
                 text = stringResource(R.string.sleep_detail_screenshot_copyright_message),
-                textAlign = TextAlign.Center,
                 typography = MaterialTheme.typography.bodySmall
             )
         }

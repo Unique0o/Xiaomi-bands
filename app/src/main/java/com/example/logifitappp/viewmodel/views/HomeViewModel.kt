@@ -79,11 +79,11 @@ class HomeViewModel @AssistedInject constructor(
         if (!state.isLoading) return
 
         wearables.firstOrNull()?.let { wearable ->
-            if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching()) fetchActivities(wearable)
+            if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)
 
             if (wearable.isDisconnected()) {
                 state = state.copy(
-                    status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_PASSWORD_RECOVERY
+                    status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
                     else AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
                 )
             }
