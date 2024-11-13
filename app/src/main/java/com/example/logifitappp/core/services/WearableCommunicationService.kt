@@ -1,6 +1,8 @@
 package com.example.logifitappp.core.services
 
+import android.app.ActivityManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.IBinder
@@ -77,5 +79,17 @@ class WearableCommunicationService: Service(), SharedPreferences.OnSharedPrefere
         }
 
         return START_STICKY
+    }
+
+    companion object {
+        fun isRunning(context: Context): Boolean {
+            val manager = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager? ?: return false
+
+            manager.getRunningServices(Integer.MAX_VALUE).forEach {
+                if (WearableCommunicationService::class.java.name.equals(it.service.className)) return true
+            }
+
+            return false
+        }
     }
 }

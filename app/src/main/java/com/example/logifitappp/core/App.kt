@@ -2,13 +2,16 @@ package com.example.logifitappp.core
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
+import com.example.logifitappp.core.broadcasters.BluetoothStateChangeReceiver
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.core.wearebles.WearablePreferences
@@ -33,6 +36,8 @@ class App: Application() {
         preferences = AppPreferences(PreferenceManager.getDefaultSharedPreferences(context))
         wearableManager = WearableManager(this)
         wearableService = WearableService(this)
+
+        registerReceiver(BluetoothStateChangeReceiver(), IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED))
     }
 
     companion object {
