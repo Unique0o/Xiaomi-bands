@@ -42,6 +42,8 @@ import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
 import com.example.logifitappp.domain.service.UserService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
+import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
@@ -140,6 +142,14 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideEvaluationService(evaluationRepository: EvaluationRepository) = EvaluationService(evaluationRepository)
+
+    @Provides
+    @Singleton
+    fun provideFetchActivityAmountsFromLast24hUseCase() = FetchActivityAmountsBetweenDayUseCase()
+
+    @Provides
+    @Singleton
+    fun provideFetchActivityAmountsByShiftUseCase() = FetchActivityAmountsByShiftUseCase()
 
     @Provides
     @Singleton

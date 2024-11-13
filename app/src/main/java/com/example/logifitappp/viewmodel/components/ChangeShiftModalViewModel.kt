@@ -14,7 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = ChangeShiftModalViewModel.ChangeShiftModalViewModelFactory::class)
 class ChangeShiftModalViewModel @AssistedInject constructor(
-    @Assisted val shiftId: Int?
+    @Assisted private val shiftId: Int?
 ): ViewModel() {
     @AssistedFactory
     interface ChangeShiftModalViewModelFactory {

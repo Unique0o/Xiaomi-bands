@@ -63,6 +63,7 @@ fun HomeView(
 
         val filterLocal = IntentFilter()
         filterLocal.addAction(App.ACTION_NEW_DATA)
+        filterLocal.addAction(App.AUTHENTICATION_KEY_FAILED)
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
@@ -124,7 +125,9 @@ fun HomeView(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
+        }
 
+        item {
             HomeDrowsinessTest(
                 homeViewModel = homeViewModel,
                 navigation = navigation

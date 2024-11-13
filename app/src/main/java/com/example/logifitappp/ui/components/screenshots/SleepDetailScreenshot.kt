@@ -167,7 +167,7 @@ fun SleepDetailScreenshot(
                 Text(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1.5f),
-                    text = user.getFullname(),
+                    text = user.getFullName(),
                     typography = MaterialTheme.typography.bodySmall
                 )
             }

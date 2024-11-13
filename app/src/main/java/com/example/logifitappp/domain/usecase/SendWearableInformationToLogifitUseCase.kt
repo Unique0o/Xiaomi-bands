@@ -142,7 +142,7 @@ class SendWearableInformationToLogifitUseCase @Inject constructor(
         val drowsinessToSend = App.database.drowsinessDao().fetchNotSentAndLast(wearableModel.id)
 
         val activities = provider.getRawActivitiesBetweenDay(GregorianCalendar.getInstance())
-        val amounts = analyzer.calculateActivityAmounts(activities)
+        val amounts = analyzer.calculate(activities)
 
         val distance = StepsUtils.calculateDistance(amounts.totalSteps)
         val kcal = StepsUtils.calculateKcal(amounts.totalSteps)

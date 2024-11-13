@@ -15,7 +15,7 @@ class CalculateSleepProcessingUseCase {
         val wearableModel = provider.getStoredWearable()!!
 
         val activities = provider.getRawActivities(shift)
-        val amounts = analyzer.calculateActivityAmounts(activities)
+        val amounts = analyzer.calculate(activities)
 
         App.database
             .drowsinessDao()

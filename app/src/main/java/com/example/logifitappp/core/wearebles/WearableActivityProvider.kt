@@ -11,9 +11,9 @@ abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: W
         return getWearableRawActivityDao()?.findLastActivity(getStoredWearable()?.id ?: 0)
     }
 
-    fun getRawActivities(shift: ShiftModel): List<T> {
-        val startTs = shift.getStartDateTimestamp().timeInMillis / 1000
-        val endTs = shift.getEndDateTimestamp().timeInMillis / 1000
+    fun getRawActivities(shift: ShiftModel, baseCalendar: Calendar = GregorianCalendar.getInstance()): List<T> {
+        val startTs = shift.getStartDateTimestamp(baseCalendar).timeInMillis / 1000
+        val endTs = shift.getEndDateTimestamp(baseCalendar).timeInMillis / 1000
 
         return getRawActivitiesBetween(startTs, endTs)
     }

@@ -59,6 +59,8 @@ class ActivityAmountList {
         }
     }
 
+    fun getList() = amounts
+
     fun getSleeps(wearableId: Int): List<SleepModel> {
         val sleeps = mutableListOf<SleepModel>()
         var sleep: SleepModel? = null

@@ -1,5 +1,6 @@
 package com.example.logifitappp.data.models
 
+import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -16,13 +17,13 @@ data class ShiftModel(
     @ColumnInfo(name = "start_time") val startTime: String,
     @ColumnInfo(name = "tenant_id") val tenantId: Int
 ) {
-    fun getEndDateTimestamp(): GregorianCalendar {
-        return DateTimeUtils.setTime(GregorianCalendar(), endTime)
+    fun getEndDateTimestamp(baseCalendar: Calendar = GregorianCalendar.getInstance()): Calendar {
+        return DateTimeUtils.setTime(baseCalendar, endTime)
     }
 
-    fun getStartDateTimestamp(baseCalendar: GregorianCalendar = GregorianCalendar()): GregorianCalendar {
-        val startTimestamp = DateTimeUtils.setTime(GregorianCalendar(), startTime)
-        val endTimestamp = getEndDateTimestamp()
+    fun getStartDateTimestamp(baseCalendar: Calendar = GregorianCalendar.getInstance()): Calendar {
+        val startTimestamp = DateTimeUtils.setTime(baseCalendar, startTime)
+        val endTimestamp = getEndDateTimestamp(baseCalendar)
 
         if (daysToApplySleepTimeExtension != null) {
             val dayOfWeek = baseCalendar.get(GregorianCalendar.DAY_OF_WEEK)

@@ -102,7 +102,7 @@ fun FatigueDetailScheme(
 
     SleepParameterCard(
         image = R.drawable.ic_heart_rate_parameter,
-        label = stringResource(R.string.hear_rate)
+        label = stringResource(R.string.heart_rate)
     ) {
         Chip(
             label = stringResource(if (fatigue?.withHypertension == true) R.string.less_than_40_or_greater_than_100 else R.string.between_40_and_100),

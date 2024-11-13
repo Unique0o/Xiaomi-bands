@@ -39,7 +39,7 @@ import okio.IOException
 
 @HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
 class HomeViewModel @AssistedInject constructor(
-    @Assisted val user: UserModel,
+    @Assisted private val user: UserModel,
     private val calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,

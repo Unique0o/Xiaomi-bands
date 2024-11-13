@@ -1,5 +1,9 @@
 package com.example.logifitappp.ui.screens
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -20,21 +24,25 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.BottomTabRoutes
 import com.example.logifitappp.ui.components.SideBarContent
+import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.home.HomeView
-import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.viewmodel.BottomTabScreenViewModel
 import com.example.logifitappp.viewmodel.views.AppViewModel
@@ -44,12 +52,35 @@ fun BottomTabScreen(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val bottomTabNavigation = rememberNavController()
-    val bottomTabScreenViewModel: BottomTabScreenViewModel = viewModel()
-
     val user = appViewModel.user!!
-    val screens = bottomTabScreenViewModel.getScreens(user)
+
+    val bottomTabNavigation = rememberNavController()
+    val bottomTabScreenViewModel = hiltViewModel<BottomTabScreenViewModel, BottomTabScreenViewModel.BottomTabScreenViewModelFactory>{
+        it.create(user)
+    }
+
+    val context = LocalContext.current
     val drawerState = rememberDrawerState(DrawerValue.Closed)
+
+    DisposableEffect(Unit) {
+        val receiver = object: BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent) {
+                when (intent.action) {
+                    WearableManager.ACTION_DEVICES_CHANGED -> {
+                        bottomTabScreenViewModel.refreshPairedWearables()
+                    }
+                }
+            }
+        }
+
+        val filterLocal = IntentFilter()
+        filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
+        LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
+
+        onDispose {
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
+        }
+    }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -73,7 +104,7 @@ fun BottomTabScreen(
                     modifier = Modifier.clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)),
                     tonalElevation = 0.dp
                 ) {
-                    screens.forEachIndexed { index, item ->
+                    bottomTabScreenViewModel.screens.forEachIndexed { index, item ->
                         val iconSize = 25
                         val isSelected = bottomTabScreenViewModel.index == index
                         val duration = tween<Float>(durationMillis = 500)
@@ -134,7 +165,7 @@ fun BottomTabScreen(
         ) { _ ->
             NavHost(bottomTabNavigation, startDestination = BottomTabRoutes.Home) {
                 composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation) }
-                composable<BottomTabRoutes.Graphics> { PasswordRecoveryView(navigation) }
+                composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation) }
             }
         }
     }

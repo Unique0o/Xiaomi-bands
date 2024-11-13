@@ -32,7 +32,7 @@ class ProcessSynchronizedWearableDataUseCase @Inject constructor(
 
         App.database.sleepDao().apply {
             deleteFromDate(wearableModel.id, DateTimeUtils.formatReducedIso8601(GregorianCalendar.getInstance().time))
-            store(*analyzer.calculateActivityAmounts(activities).getSleeps(wearableModel.id).toTypedArray())
+            store(*analyzer.calculate(activities).getSleeps(wearableModel.id).toTypedArray())
         }
     }
 }

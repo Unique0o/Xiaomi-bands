@@ -1,15 +1,13 @@
 package com.example.logifitappp.core.analyzers
 
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
-import java.util.Date
 
 class ActivityAnalyzer {
-    fun calculateActivityAmounts(activities: List<WearableRawActivityModel>): ActivityAmountList {
+    fun calculate(activities: List<WearableRawActivityModel>): ActivityAmountList {
         val amounts = ActivityAmountList()
         var previousActivity: WearableRawActivityModel? = null
 
         activities.forEach {
-            println("activity ${Date(it.timestamp * 1000)}: $it")
             val amount = ActivityAmount(it.getNormalizedType())
 
             val isEmpty = amounts.isEmpty()

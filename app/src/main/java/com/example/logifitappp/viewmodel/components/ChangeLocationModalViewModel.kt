@@ -14,7 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = ChangeLocationModalViewModel.ChangeLocationModalViewModelFactory::class)
 class ChangeLocationModalViewModel @AssistedInject constructor(
-    @Assisted val locationId: Int?
+    @Assisted private val locationId: Int?
 ): ViewModel() {
     @AssistedFactory
     interface ChangeLocationModalViewModelFactory {

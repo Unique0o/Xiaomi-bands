@@ -57,7 +57,9 @@
     <string name="greater_than_20_minutes">Greater than 20 minutes</string>
     <string name="greater_than_6_hours">Greater than 6 hours</string>
     <string name="greeting">Welcome back</string>
-    <string name="hear_rate">Heart rate</string>
+    <string name="heart_rate">Heart rate</string>
+    <string name="heart_rate_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="heart_rate_detail_chart_title">My heart rate</string>
     <string name="help_already_stored_message">A help request has already been made for today</string>
     <string name="initialized">Initialized</string>
     <string name="initializing">Initializing</string>
@@ -79,6 +81,7 @@
     <string name="message_password_recovery">A manager will be notified to assist you</string>
     <string name="message_recover_password">Don`t remember your password?</string>
     <string name="my_drowsiness_tests">My drowsiness tests</string>
+    <string name="no_data">No data</string>
     <string name="no_internet_connection_message">Check your Internet connection</string>
     <string name="no_synchronized_wearable_data_message">It seems you do not have current data, please perform the extraction and try again</string>
     <string name="no_wearable_sleep_data_message">It looks like you do not have a sleep log to send. Try to sync again</string>
@@ -103,6 +106,8 @@
     <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
     <string name="shift">Shift</string>
+    <string name="sleep_detail_chart_subtitle">Information between %1$s - %2$s</string>
+    <string name="sleep_detail_chart_title">My sleep</string>
     <string name="sleep_detail_screenshot_copyright_message">Report created in App Logifit</string>
     <string name="sleep_detail_screenshot_drowsiness_result_title">A. Drowsiness results</string>
     <string name="sleep_detail_screenshot_fatigue_result_title">B. Fatigue results</string>
@@ -110,6 +115,8 @@
     <string name="sleep_detail_screenshot_title">Drowsiness and Fatigue report</string>
     <string name="sleep_time">Sleep Time</string>
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
+    <string name="steps_detail_chart_chip_message">%1$s steps</string>
+    <string name="steps_detail_chart_title">My steps</string>
     <string name="subtitle_login">Type your credentials to continue</string>
     <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
     <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>

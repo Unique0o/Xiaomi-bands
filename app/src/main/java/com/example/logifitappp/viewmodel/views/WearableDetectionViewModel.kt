@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = WearableDetectionViewModel.WearableDetectionViewModelFactory::class)
 class WearableDetectionViewModel @AssistedInject constructor(
-    @Assisted val navigation: NavHostController,
+    @Assisted private val navigation: NavHostController,
     private val wearableService: WearableService
 ): ViewModel(), ScanEventProcessor.Callback {
     @AssistedFactory

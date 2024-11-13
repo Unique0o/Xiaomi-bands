@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.view.doOnPreDraw
 import java.io.File
 
 object AndroidUtils {
@@ -30,19 +29,7 @@ object AndroidUtils {
                 setContent { content() }
             }
 
-            /*composeView.post {
-                /*val width = composeView.width
-                val height = composeView.height
-
-                val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(bitmap)
-
-                composeView.draw(canvas)*/
-                val bitmap = composeView.drawToBitmap()
-                onBitmapReady(bitmap)
-            }*/
-
-            composeView.doOnPreDraw {
+            composeView.viewTreeObserver.addOnGlobalLayoutListener {
                 composeView.measure(
                     View.MeasureSpec.makeMeasureSpec(composeView.width, View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)

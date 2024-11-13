@@ -43,7 +43,7 @@ fun SideBarContent(
             )
 
             Text(
-                text = user.getFullname()
+                text = user.getFullName()
             )
 
             Text(

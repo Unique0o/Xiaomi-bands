@@ -1,5 +1,6 @@
 package com.example.logifitappp.core.utils
 
+import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.text.format.DateUtils
 import com.example.logifitappp.core.App
@@ -35,15 +36,19 @@ object DateTimeUtils {
         return possibleDate?.let { outFormat.format(it) } ?: ""
     }
 
-    fun setTime(calendar: GregorianCalendar, date: String): GregorianCalendar {
-        val outdatedCalendar = GregorianCalendar().apply {
+    fun setTime(calendar: Calendar, date: String): Calendar {
+        val clonedCalendar =  GregorianCalendar.getInstance().apply {
+            timeInMillis = calendar.timeInMillis
+        }
+
+        val outdatedCalendar = GregorianCalendar.getInstance().apply {
             time = parse(date, "HH:mm:ss")
         }
 
-        calendar.set(GregorianCalendar.HOUR_OF_DAY, outdatedCalendar.get(GregorianCalendar.HOUR_OF_DAY))
-        calendar.set(GregorianCalendar.MINUTE, outdatedCalendar.get(GregorianCalendar.MINUTE))
-        calendar.set(GregorianCalendar.SECOND, outdatedCalendar.get(GregorianCalendar.SECOND))
+        clonedCalendar.set(GregorianCalendar.HOUR_OF_DAY, outdatedCalendar.get(GregorianCalendar.HOUR_OF_DAY))
+        clonedCalendar.set(GregorianCalendar.MINUTE, outdatedCalendar.get(GregorianCalendar.MINUTE))
+        clonedCalendar.set(GregorianCalendar.SECOND, outdatedCalendar.get(GregorianCalendar.SECOND))
 
-        return calendar
+        return clonedCalendar
     }
 }

@@ -47,7 +47,7 @@ data class UserModel(
 ) {
     fun isAdmin() = role == 1 || role == 3
 
-    fun getFullname() = "$firstName $lastName"
+    fun getFullName() = "$firstName $lastName"
 
     @Composable
     fun getRole() = when (role) {
