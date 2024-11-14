@@ -24,12 +24,13 @@ import com.example.logifitappp.ui.components.Text
 @Composable
 fun InformationOptionCard(
     modifier: Modifier = Modifier,
-    bodyComponent: @Composable () -> Unit = {},
+    buttonColor: Color = MaterialTheme.colorScheme.primary,
     buttonIcon: ImageVector,
     icon: ImageVector,
     onClick: () -> Unit,
     paragraph: String,
-    title: String
+    title: String,
+    bodyComponent: @Composable () -> Unit = {}
 ) {
     Column(modifier = modifier) {
         IconText(
@@ -42,33 +43,48 @@ fun InformationOptionCard(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.weight(1f),
-                text = paragraph,
-                typography = MaterialTheme.typography.labelMedium
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            IconButton(
-                onClick = onClick,
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary, CircleShape)
-                    .size(40.dp)
-            ) {
-                Icon(
-                    contentDescription = null,
-                    imageVector = buttonIcon,
-                    tint = Color.White
-                )
-            }
-        }
+        InformationOptionCardContent(
+            buttonColor,
+            buttonIcon,
+            onClick,
+            paragraph
+        )
 
         bodyComponent()
+    }
+}
+
+@Composable
+fun InformationOptionCardContent(
+    buttonColor: Color = MaterialTheme.colorScheme.primary,
+    buttonIcon: ImageVector,
+    onClick: () -> Unit,
+    paragraph: String,
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f),
+            text = paragraph,
+            typography = MaterialTheme.typography.labelMedium
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        IconButton(
+            onClick = onClick,
+            modifier = Modifier
+                .background(buttonColor, CircleShape)
+                .size(40.dp)
+        ) {
+            Icon(
+                contentDescription = null,
+                imageVector = buttonIcon,
+                tint = Color.White
+            )
+        }
     }
 }

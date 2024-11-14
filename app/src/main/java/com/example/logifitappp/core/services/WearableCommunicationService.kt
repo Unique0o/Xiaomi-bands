@@ -1,12 +1,15 @@
 package com.example.logifitappp.core.services
 
+import android.app.ActivityManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.IBinder
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.core.bluetooth.BluetoothConnector
+import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.exceptions.WearableNotFoundException
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableService
@@ -54,7 +57,7 @@ class WearableCommunicationService: Service(), SharedPreferences.OnSharedPrefere
 
         println("Service start command: ${intent.action}")
 
-        val wearable = intent.getParcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)
+        val wearable = intent.parcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)
 
         when (intent.action) {
             WearableService.ACTION_CONNECT -> {
@@ -76,5 +79,17 @@ class WearableCommunicationService: Service(), SharedPreferences.OnSharedPrefere
         }
 
         return START_STICKY
+    }
+
+    companion object {
+        fun isRunning(context: Context): Boolean {
+            val manager = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager? ?: return false
+
+            manager.getRunningServices(Integer.MAX_VALUE).forEach {
+                if (WearableCommunicationService::class.java.name.equals(it.service.className)) return true
+            }
+
+            return false
+        }
     }
 }

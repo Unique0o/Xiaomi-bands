@@ -84,7 +84,7 @@ fun WearableDetectionView(
         }
     }
 
-    LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
+    DisposableEffect(Unit) {
         bluetoothPermissions.launchMultiplePermissionRequest()
 
         val receiver = object: BroadcastReceiver() {
@@ -99,7 +99,9 @@ fun WearableDetectionView(
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
-        wearableDetectionViewModel.fetchUser()
+        onDispose {
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
+        }
     }
 
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {

@@ -24,18 +24,16 @@ class AuthService @Inject constructor(private val authRepository: AuthRepository
             if (!response.isSuccessful) {
                 response.errorBody()?.let {
                     val errorResponse = Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
-                    println("error response: $errorResponse")
                     throw HttpConsumerException(AppStatusCodeEnum.fromCode(errorResponse.code))
                 }
             }
 
-            val body = response.body() ?:  throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+            val body = response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
 
             return@withContext body.toUser()
         } catch (e: HttpConsumerException) {
             throw e
         } catch (e: HttpException) {
-            println("login http exception: ${e.code()}")
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
         } catch (e: Exception) {
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)

@@ -1,10 +1,24 @@
 package com.example.logifitappp.core.wearebles
 
+import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import com.example.logifitappp.data.dao.commons.WearableRawActivityDao
+import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 
 abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
-    open fun getRawActivitiesBetween(from: Int, to: Int): List<T> {
+    fun findLastRawActivity(): T? {
+        return getWearableRawActivityDao()?.findLastActivity(getStoredWearable()?.id ?: 0)
+    }
+
+    fun getRawActivities(shift: ShiftModel, baseCalendar: Calendar = GregorianCalendar.getInstance()): List<T> {
+        val startTs = shift.getStartDateTimestamp(baseCalendar).timeInMillis / 1000
+        val endTs = shift.getEndDateTimestamp(baseCalendar).timeInMillis / 1000
+
+        return getRawActivitiesBetween(startTs, endTs)
+    }
+
+    protected open fun getRawActivitiesBetween(from: Long, to: Long): List<T> {
         val activities = getWearableRawActivityDao()?.getRawActivitiesBetween(from, to, getStoredWearable()?.id ?: 0) ?: listOf()
 
         activities.forEach {
@@ -12,6 +26,28 @@ abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: W
         }
 
         return activities
+    }
+
+    fun getRawActivitiesBetweenDay(calendar: Calendar): List<T> {
+        calendar.apply {
+            set(GregorianCalendar.HOUR_OF_DAY, 0)
+            set(GregorianCalendar.MINUTE, 0)
+            set(GregorianCalendar.SECOND, 0)
+            set(GregorianCalendar.MILLISECOND, 0)
+        }
+
+        val startTs = calendar.timeInMillis / 1000
+        val endTs = startTs + 24 * 60 * 60
+
+        return getRawActivitiesBetween(startTs, endTs)
+    }
+
+    fun getRawActivitiesFromLast24h(): List<T> {
+        val now = GregorianCalendar.getInstance()
+        val endTs = now.timeInMillis / 1000
+        val startTs = endTs - 24 * 60 * 60 - 1
+
+        return getRawActivitiesBetween(startTs, endTs)
     }
 
     fun store(vararg samples: T) {

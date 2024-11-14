@@ -119,7 +119,7 @@ fun SynchronizationReportScreen() {
                             showSDTeamCards = false
                         },
                         text = stringResource(id = R.string.status_no_apto),
-                        containerColors = if (showNoFitTeamCards) Blue690 else Color.Transparent,
+                        //containerColors = if (showNoFitTeamCards) Blue690 else Color.Transparent,
                         colorText = if (showNoFitTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
                     )
                 }
@@ -135,7 +135,7 @@ fun SynchronizationReportScreen() {
                             showSDTeamCards = false
                         },
                         text = stringResource(id = R.string.status_person),
-                        containerColors = if (showFitTeamCards) Blue690 else Color.Transparent,
+                        //containerColors = if (showFitTeamCards) Blue690 else Color.Transparent,
                         colorText = if (showFitTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
                     )
                 }
@@ -150,7 +150,7 @@ fun SynchronizationReportScreen() {
                             showSDTeamCards = true
                         },
                         text = "S/D",
-                        containerColors = if (showSDTeamCards) Blue690 else Color.Transparent,
+                        //containerColors = if (showSDTeamCards) Blue690 else Color.Transparent,
                         colorText = if (showSDTeamCards) MaterialTheme.colorScheme.onPrimary else Blue690
                     )
                 }

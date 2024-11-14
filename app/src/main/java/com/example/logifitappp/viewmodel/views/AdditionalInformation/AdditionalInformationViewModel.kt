@@ -65,7 +65,7 @@ class AdditionalInformationViewModel @Inject constructor(
                 }
 
                 val countries = countryRepository.all()
-                val currentUser = userRepository.getLoggedIn()
+                /*val currentUser = userRepository.getLoggedIn()
 
                 _state.update { currentState ->
                     currentState.copy(
@@ -83,7 +83,7 @@ class AdditionalInformationViewModel @Inject constructor(
                         lastnames = TextFieldValue(currentUser?.lastName ?: ""),
                         isLoading = false
                     )
-                }
+                }*/
 
             } catch (e: Exception) {
                 _state.update {
@@ -221,8 +221,8 @@ class AdditionalInformationViewModel @Inject constructor(
             try {
                 _state.update { it.copy(isLoading = true) }
 
-                val currentUser = userRepository.getLoggedIn()
-                    ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+                /*val currentUser = userRepository.getLoggedIn()
+                    ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)*/
 
                 val request = StorePersonalInformationRequest(
                     country_id = currentState.selectedCountry?.externalIdentifier,
@@ -238,7 +238,7 @@ class AdditionalInformationViewModel @Inject constructor(
                     province_id = null
                 )
 
-                currentUser.external_identifier?.let {
+                /*currentUser.external_identifier?.let {
                     userService.storePersonalInformation(
                         userId = it,
                         request = request
@@ -253,7 +253,7 @@ class AdditionalInformationViewModel @Inject constructor(
                             phone = request.phone
                         )
                     )
-                }
+                }*/
 
                 _state.update { it.copy(isLoading = false) }
                 onSuccess()

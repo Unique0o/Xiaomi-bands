@@ -3,10 +3,9 @@ package com.example.logifitappp.ui.components.layouts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -21,19 +20,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.logifitappp.enums.AppStatusCodeEnum
-import com.example.logifitappp.ui.components.Text
 
 @Composable
 fun ModalLayout(
     onClose: () -> Unit,
     onDismissRequest: () -> Unit,
-    status: AppStatusCodeEnum,
-    visible: Boolean
+    keepOpen: Boolean = false,
+    visible: Boolean,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     if (!visible) return
 
@@ -53,26 +49,19 @@ fun ModalLayout(
                         .fillMaxWidth()
                 ) {
                     Column(
+                        content = content,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .background(MaterialTheme.colorScheme.surfaceContainer, RoundedCornerShape(12.dp))
+                            .background(
+                                MaterialTheme.colorScheme.surfaceContainer,
+                                RoundedCornerShape(12.dp)
+                            )
                             .padding(24.dp)
                             .fillMaxWidth()
-                    ) {
-                        status.component?.let {
-                            it()
-                            Spacer(modifier = Modifier.height(16.dp))
-                        }
-
-                        Text(
-                            text = stringResource(id = status.message),
-                            textAlign = TextAlign.Center,
-                            typography = MaterialTheme.typography.bodyMedium
-                        )
-                    }
+                    )
                 }
 
-                if (!status.keepOpen) {
+                if (!keepOpen) {
                     IconButton(
                         onClick = onClose,
                         modifier = Modifier

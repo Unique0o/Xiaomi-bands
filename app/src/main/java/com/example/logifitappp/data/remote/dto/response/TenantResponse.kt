@@ -50,5 +50,5 @@ fun TenantResponse.toTenantModel() = TenantModel(
     name = data.name,
     shouldItShowDrowsinessTest = data.shouldItShowDrowsinessTests == 1,
     shouldItShowLocationComponent = data.shouldItShowLocationComponent == 1,
-    sleepAnalysisHours = data.timeAnalysis ?: (6 * 60)
+    sleepAnalysisHours = data.timeAnalysis ?: (6 * 60 * 60)
 )

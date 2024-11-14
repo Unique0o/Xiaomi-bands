@@ -1,5 +1,7 @@
 package com.example.logifitappp.core.utils
 
+import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import android.text.format.DateUtils
 import com.example.logifitappp.core.App
 import java.text.SimpleDateFormat
@@ -15,7 +17,38 @@ object DateTimeUtils {
         )
     }
 
-    fun formatIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US).format(date)
+    fun format(date: Date, format: String): String = SimpleDateFormat(format, Locale.US).format(date)
 
-    fun formatReducedIso8601(date: Date): String = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(date)
+    fun formatExtendedIso8601(date: Date): String = format(date, "yyyy-MM-dd HH:mm:ss")
+
+    fun formatIso8601(date: Date): String = format(date, "yyyy-MM-dd'T'HH:mm:ssXXX")
+
+    fun formatReducedIso8601(date: Date): String = format(date, "yyyy-MM-dd")
+
+    fun parse(date: String, format: String): Date? = SimpleDateFormat(format, Locale.US).parse(date)
+
+    fun parse(date: String, from: String, to: String): String {
+        val inputFormat = SimpleDateFormat(from, Locale.US)
+        val outFormat = SimpleDateFormat(to, Locale.US)
+
+        val possibleDate = inputFormat.parse(date)
+
+        return possibleDate?.let { outFormat.format(it) } ?: ""
+    }
+
+    fun setTime(calendar: Calendar, date: String): Calendar {
+        val clonedCalendar =  GregorianCalendar.getInstance().apply {
+            timeInMillis = calendar.timeInMillis
+        }
+
+        val outdatedCalendar = GregorianCalendar.getInstance().apply {
+            time = parse(date, "HH:mm:ss")
+        }
+
+        clonedCalendar.set(GregorianCalendar.HOUR_OF_DAY, outdatedCalendar.get(GregorianCalendar.HOUR_OF_DAY))
+        clonedCalendar.set(GregorianCalendar.MINUTE, outdatedCalendar.get(GregorianCalendar.MINUTE))
+        clonedCalendar.set(GregorianCalendar.SECOND, outdatedCalendar.get(GregorianCalendar.SECOND))
+
+        return clonedCalendar
+    }
 }

@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.ui.components.graphics.bars.Bar
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Stone470
@@ -35,12 +34,7 @@ fun StepEmptyGraphCard(
         label = title,
         labelStyle = MaterialTheme.typography.titleMedium.copy(color = titleAccentColor),
         suffixComponent = {
-            ConnectedIndicator(
-                text = indicatorInformation,
-                color = indicatorAccentColor,
-                pointColor = indicatorAccentColor,
-                backgroundColor = indicatorBackgroundColor
-            )
+
         },
         bodyComponent = {
             Column {

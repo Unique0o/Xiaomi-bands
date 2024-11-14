@@ -44,6 +44,10 @@ abstract class WearableCoordinator {
         return pattern.matcher(candidate.getName()).matches()
     }
 
+    open fun supportsHeartRateMeasurement() = false
+
+    open fun supportsRemSleep() = false
+
     open fun supportsActivityDataFetching() = false
 
     abstract fun getActivityProvider(wearable: Wearable): WearableActivityProvider<out WearableRawActivityModel>

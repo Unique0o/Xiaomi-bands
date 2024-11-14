@@ -34,8 +34,7 @@ import com.example.logifitappp.core.utils.BondingUtils
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableCoordinator
 import com.example.logifitappp.core.wearebles.WearableHelper
-import com.example.logifitappp.data.remote.dto.requests.LoginRequest
-import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.navigation.routes.MainRoutes
 import dagger.assisted.Assisted
@@ -46,8 +45,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = WearableDetectionViewModel.WearableDetectionViewModelFactory::class)
 class WearableDetectionViewModel @AssistedInject constructor(
-    @Assisted val navigation: NavHostController,
-    private val authService: AuthService,
+    @Assisted private val navigation: NavHostController,
     private val wearableService: WearableService
 ): ViewModel(), ScanEventProcessor.Callback {
     @AssistedFactory
@@ -93,11 +91,11 @@ class WearableDetectionViewModel @AssistedInject constructor(
 
         if (coordinator.getBondingStyle() == BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
             val key = authenticationKey.text
-            val sharedPrefers = App.getWearableSpecificSharedPrefs(currentCandidate!!.getMacAddress())
-            val editor = sharedPrefers?.edit()
 
-            editor?.putString("authentication_key", key)
-            editor?.apply()
+            App.getWearableSpecificSharedPrefs(currentCandidate!!.getMacAddress())?.edit()?.let {
+                it.putString("authentication_key", key)
+                it.apply()
+            }
         }
 
         if (coordinator.suggestUnbindBeforePair() && currentCandidate!!.IsBonded()) {
@@ -165,7 +163,16 @@ class WearableDetectionViewModel @AssistedInject constructor(
     fun checkWearableConnection() {
         val wearables = App.wearableManager.getWearables()
 
-        if (wearables.isNotEmpty() && wearables[0].isInitialized()) navigation.navigate(MainRoutes.Home)
+        wearables.firstOrNull()?.let {
+            if (it.isInitialized()) {
+                App.getWearablePreferences(it.getAddress()!!).getPreferences()
+                    .edit()
+                    .putBoolean(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION, true)
+                    .apply()
+
+                navigation.navigate(MainRoutes.SplashScreen)
+            }
+        }
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")
@@ -176,12 +183,6 @@ class WearableDetectionViewModel @AssistedInject constructor(
         }
 
         return false
-    }
-
-    fun fetchUser() {
-        viewModelScope.launch {
-            App.database.userDao().store(authService.login(LoginRequest("72980178", "72980178")))
-        }
     }
 
     fun getCandidateByDevice(device: BluetoothDevice): WearableCandidate? {

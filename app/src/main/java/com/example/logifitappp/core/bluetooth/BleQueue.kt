@@ -230,6 +230,7 @@ class BleQueue(
 
                 gatt.disconnect()
                 gatt.close()
+                setWearableConnectionState(Wearable.State.NOT_CONNECTED)
             }
 
             pauseTransaction = false
@@ -254,6 +255,7 @@ class BleQueue(
         dispatchThread = null
     }
 
+    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     private fun handleDisconnected(status: Int) {
         println("handleDisconnected: $status")
 
@@ -266,11 +268,37 @@ class BleQueue(
 
         waitForActionResultLatch?.countDown()
         waitForServerActionResultLatch?.countDown()
+
+        setWearableConnectionState(Wearable.State.NOT_CONNECTED)
+
+        if (bluetoothGatt != null && !maybeReconnect()) disconnect()
     }
 
     private fun isConnected() = when (wearable.isConnected()) {
         true -> true
         false -> false.also { println("isConnected(): current state = ${wearable.getState()}") }
+    }
+
+    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
+    private fun maybeReconnect(): Boolean {
+        if (autoReconnect && bluetoothGatt != null) {
+            if (scanReconnect) {
+                println("Waiting for BLE scan before attempting reconnection...")
+                setWearableConnectionState(Wearable.State.WAITING_FOR_SCAN)
+                return true
+            }
+
+            println("Enabling automatic ble reconnect...")
+
+            val result = bluetoothGatt!!.connect()
+            pauseTransaction = false
+
+            if (result) setWearableConnectionState(Wearable.State.WAITING_FOR_RECONNECT)
+
+            return result
+        }
+
+        return false
     }
 
     fun setAutoReconnect(autoReconnect: Boolean) {

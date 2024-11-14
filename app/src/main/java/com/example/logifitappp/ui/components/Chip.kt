@@ -12,19 +12,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.enums.ChipStatusEnum
 
 @Composable
 fun Chip(
     label: String,
+    labelTypography: TextStyle = MaterialTheme.typography.titleMedium,
     status: ChipStatusEnum
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
         modifier = Modifier
             .background(status.backgroundColor, RoundedCornerShape(12.dp))
-            .padding(horizontal = 6.dp, vertical = 0.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -36,7 +38,7 @@ fun Chip(
         Text(
             color = status.color,
             text = label,
-            typography = MaterialTheme.typography.titleMedium
+            typography = labelTypography
         )
     }
 }

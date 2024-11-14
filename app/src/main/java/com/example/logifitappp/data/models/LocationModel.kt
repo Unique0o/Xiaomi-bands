@@ -9,4 +9,6 @@ data class LocationModel(
     @PrimaryKey val id: Int,
     val name: String,
     @ColumnInfo(name = "tenant_id") val tenantId: Int
-)
+) {
+    override fun toString() = name
+}
