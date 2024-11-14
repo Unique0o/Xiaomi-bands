@@ -19,7 +19,6 @@ import com.example.logifitappp.ui.components.graphics.CardLayout
 import com.example.logifitappp.ui.components.graphics.InfoBarFocusGraph
 import com.example.logifitappp.ui.components.graphics.SleepInfoCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.titles.IconTitle
 import com.example.logifitappp.ui.theme.Green298
@@ -60,13 +59,7 @@ fun SleepDetailFocusScreen(
                 fontWeight = FontWeight.Bold,
                 style = Modifier.padding(2.dp),
                 suffixComponent = {
-                    ConnectedIndicator(
-                        text = stringResource(id = R.string.status_person),
-                        color = Green298,
-                        backgroundColor = Lime70,
-                        pointColor = Green298,
-                        modifier = Modifier.padding(2.dp)
-                    )
+
                }
             )
             CardLayout(
@@ -78,13 +71,7 @@ fun SleepDetailFocusScreen(
                 fontWeight = FontWeight.Bold,
                 style = Modifier.padding(2.dp),
                 suffixComponent = {
-                    ConnectedIndicator(
-                        text = stringResource(id = R.string.status_no_apto),
-                        color = Rose120,
-                        backgroundColor = Orange170,
-                        pointColor = Rose120,
-                        modifier = Modifier.padding(2.dp)
-                    )
+
                 }
             )
             CardLayout(
@@ -96,13 +83,7 @@ fun SleepDetailFocusScreen(
                 fontWeight = FontWeight.Bold,
                 style = Modifier.padding(2.dp),
                 suffixComponent = {
-                    ConnectedIndicator(
-                        text = "70 LPM",
-                        color = Green298,
-                        backgroundColor = Lime70,
-                        pointColor = Green298,
-                        modifier = Modifier.padding(2.dp)
-                    )
+
                 }
             )
         }

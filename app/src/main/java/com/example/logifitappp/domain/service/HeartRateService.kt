@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 class HeartRateService {
-
     suspend fun calculateAverageHeartRate(activities: List<WearableRawActivityModel>): Double {
         var totalMeasuredHeartRate = 0
         var measuredHeartRateCount = 0

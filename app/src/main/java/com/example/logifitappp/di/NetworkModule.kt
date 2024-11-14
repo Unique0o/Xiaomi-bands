@@ -3,13 +3,13 @@ package com.example.logifitappp.di
 import android.content.Context
 import com.example.logifitappp.core.App
 import com.example.logifitappp.data.dao.CountryDao
-import com.example.logifitappp.data.dao.UserDao
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
 import com.example.logifitappp.data.remote.api.LocationApi
+import com.example.logifitappp.data.remote.api.SleepApi
 import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
@@ -20,6 +20,7 @@ import com.example.logifitappp.data.repository.HealthInfoRepositoryImpl
 import com.example.logifitappp.data.repository.LocationRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
+import com.example.logifitappp.data.repository.SleepRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
@@ -31,19 +32,30 @@ import com.example.logifitappp.domain.repository.HealthInfoRepository
 import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
+import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.domain.repository.TenantRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.EvaluationService
+import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
+import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
+import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingLessonsUseCase
 import com.example.logifitappp.domain.usecase.GetTrainingUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
+import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
+import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
+import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
+import com.example.logifitappp.domain.usecase.ShareEvaluationDetailUseCase
+import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.domain.usecase.UpdateNotificationToken
 import com.example.logifitappp.domain.usecase.UpdateTenantInformationUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
@@ -113,11 +125,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLoginUseCase(
-        authService: AuthService,
-        updateNotificationToken: UpdateNotificationToken,
-        updateTenantInformationUseCase: UpdateTenantInformationUseCase
-    ) = LoginUseCase(authService, updateNotificationToken, updateTenantInformationUseCase)
+    fun provideCalculateSleepProcessingUseCase() = CalculateSleepProcessingUseCase()
 
     @Provides
     @Singleton
@@ -134,6 +142,68 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideEvaluationService(evaluationRepository: EvaluationRepository) = EvaluationService(evaluationRepository)
+
+    @Provides
+    @Singleton
+    fun provideFetchActivityAmountsFromLast24hUseCase() = FetchActivityAmountsBetweenDayUseCase()
+
+    @Provides
+    @Singleton
+    fun provideFetchActivityAmountsByShiftUseCase() = FetchActivityAmountsByShiftUseCase()
+
+    @Provides
+    @Singleton
+    fun provideLoadAppWhenAnUserIsAuthenticatedUseCase(
+        userService: UserService,
+        updateNotificationToken: UpdateNotificationToken,
+        updateTenantInformationUseCase: UpdateTenantInformationUseCase
+    ) = LoadAppWhenAnUserIsAuthenticatedUseCase(userService, updateNotificationToken, updateTenantInformationUseCase)
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(
+        authService: AuthService,
+        updateNotificationToken: UpdateNotificationToken,
+        updateTenantInformationUseCase: UpdateTenantInformationUseCase
+    ) = LoginUseCase(authService, updateNotificationToken, updateTenantInformationUseCase)
+
+    @Provides
+    @Singleton
+    fun provideProcessSynchronizedWearableDataUseCase(
+        calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase
+    ) = ProcessSynchronizedWearableDataUseCase(calculateSleepProcessingUseCase)
+
+    @Provides
+    @Singleton
+    fun provideSendWearableInformationToLogifitUseCase(
+        sleepService: SleepService
+    ) = SendWearableInformationToLogifitUseCase(sleepService)
+
+    @Provides
+    @Singleton
+    fun provideShareEvaluationDetailUseCase(
+        evaluationService: EvaluationService
+    ) = ShareEvaluationDetailUseCase(evaluationService)
+
+    @Provides
+    @Singleton
+    fun provideSleepApi(retrofit: Retrofit): SleepApi = retrofit.create(SleepApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSleepRepository(sleepRepositoryImpl: SleepRepositoryImpl): SleepRepository = sleepRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSleepRepositoryImpl(sleepApi: SleepApi) = SleepRepositoryImpl(sleepApi)
+
+    @Provides
+    @Singleton
+    fun provideSleepService(sleepRepository: SleepRepository) = SleepService(sleepRepository)
+
+    @Provides
+    @Singleton
+    fun provideSynchronizeWearableUseCase() = SynchronizeWearableUseCase()
 
     @Provides
     @Singleton
@@ -162,8 +232,17 @@ object NetworkModule {
     @Singleton
     fun provideUpdateNotificationToken(authService: AuthService) = UpdateNotificationToken(authService)
 
+    @Provides
+    @Singleton
+    fun provideUserRepositoryImpl(userApi: UserApi) = UserRepositoryImpl(userApi)
 
+    @Provides
+    @Singleton
+    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository = userRepositoryImpl
 
+    @Provides
+    @Singleton
+    fun provideUserService(userRepository: UserRepository) = UserService(userRepository)
 
 
     @Provides
@@ -179,14 +258,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
-
-    @Provides
-    @Singleton
-    fun provideUserRepositoryImpl(userDao: UserDao, userApi: UserApi) = UserRepositoryImpl(userDao, userApi)
-
-    @Provides
-    @Singleton
-    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository = userRepositoryImpl
 
 
     @Provides

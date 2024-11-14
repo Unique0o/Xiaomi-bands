@@ -8,6 +8,7 @@ import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -21,9 +22,23 @@ class EvaluationService @Inject constructor(private val evaluationRepository: Ev
 
             if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
 
-            val body = response.body() ?:  throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+            val body = response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
 
             return@withContext body.map { it.toEvaluationResultModel(user.id) }
+        } catch (e: HttpException) {
+            throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun fetchSpecificResult(evaluationId: Int): ResponseBody = withContext(Dispatchers.IO) {
+        try {
+            val response = evaluationRepository.fetchSpecificResult(evaluationId)
+
+            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
+
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         } catch (e: HttpException) {
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
         } catch (e: Exception) {

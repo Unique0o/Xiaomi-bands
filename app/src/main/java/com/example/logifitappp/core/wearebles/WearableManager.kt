@@ -60,11 +60,14 @@ class WearableManager(private val context: Context) {
     }
 
     private fun storeWearable(wearable: Wearable) {
+        val user = App.database.userDao().getLoggedIn() ?: return
+
         val model = WearableModel()
         model.firmwareVersion = wearable.getFirmwareVersion()
         model.mac = wearable.getAddress()!!
         model.name = wearable.getName()!!
         model.typeName = wearable.getType().name
+        model.userId = user.id
 
         App.database.wearableDao().store(model)
     }

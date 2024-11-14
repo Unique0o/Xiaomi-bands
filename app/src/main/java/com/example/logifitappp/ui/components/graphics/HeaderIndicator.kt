@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 @Composable
 fun HeaderIndicator(
@@ -51,12 +50,12 @@ fun HeaderIndicator(
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.width(8.dp))
-            ConnectedIndicator(
+            /*ConnectedIndicator(
                 text = textIndicator,
                 color = indicatorAccentColor,
                 backgroundColor = indicatorBackgroundColor,
                 pointColor = indicatorAccentColor
-            )
+            )*/
         }
     }
 }

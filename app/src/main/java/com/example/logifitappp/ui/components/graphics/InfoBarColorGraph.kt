@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 @Composable
 fun InfoBarColorGraph(
@@ -45,12 +44,7 @@ fun InfoBarColorGraph(
         ),
 
         suffixComponent = {
-            ConnectedIndicator(
-                text = "7h 36min",
-                color = Green298,
-                backgroundColor = Lime70,
-                pointColor = Green298
-            )
+
         },
         bodyComponent = {
             BarChart(data = data, colors = barColors)

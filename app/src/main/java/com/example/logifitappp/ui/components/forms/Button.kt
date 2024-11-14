@@ -15,19 +15,23 @@ import com.example.logifitappp.ui.components.Text
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
+    borderColor: Color = MaterialTheme.colorScheme.primary,
+    colorText: Color = MaterialTheme.colorScheme.onPrimary,
+    enabled: Boolean = true,
     onClick: () -> Unit,
     text: String,
-    containerColors: Color = MaterialTheme.colorScheme.primary,
-    colorText: Color = MaterialTheme.colorScheme.onPrimary,
-    borderColor: Color = MaterialTheme.colorScheme.primary,
     shape: RoundedCornerShape = RoundedCornerShape(24.dp)
 ) {
     MaterialButton(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = containerColors),
-        modifier = modifier,
-        shape = shape,
         border = BorderStroke(1.dp, borderColor),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = MaterialTheme.colorScheme.surfaceTint,
+        ),
+        enabled = enabled,
+        modifier = modifier,
+        onClick = onClick,
+        shape = shape,
     ) {
         Text(
             color = colorText,

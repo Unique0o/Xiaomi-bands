@@ -105,7 +105,7 @@ fun AuthenticationModal(
                         onClick = { onAuthenticate(authKey) },
                         text = stringResource(id = R.string.button_authenticate_band),
                         modifier = Modifier.fillMaxWidth(),
-                        containerColors = if (authKey.length > 2) MaterialTheme.colorScheme.primary else Color.Gray
+                        //containerColors = if (authKey.length > 2) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                 }
             }

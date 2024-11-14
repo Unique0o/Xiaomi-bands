@@ -59,7 +59,7 @@ class AdditionalInformationPictureViewModel @Inject constructor(
             try {
                 _state.update { it.copy(isLoading = true, error = null) }
 
-                val currentUser = userRepository.getLoggedIn()
+                /*val currentUser = userRepository.getLoggedIn()
                     ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
 
                 currentUser.external_identifier?.let { userId ->
@@ -80,7 +80,7 @@ class AdditionalInformationPictureViewModel @Inject constructor(
                             throw HttpConsumerException(AppStatusCodeEnum.UNKNOWN_ERROR)
                         }
                     }
-                }
+                }*/
             } catch (e: Exception) {
                 _state.update {
                     it.copy(

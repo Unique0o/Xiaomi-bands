@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.times
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.theme.*
 import com.example.logifitappp.data.HeartRateData
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 
 
 @Composable
@@ -37,12 +36,7 @@ fun MeasurementHeartCard(
         label = stringResource(id = R.string.graph_card_heart_rate),
         labelStyle = MaterialTheme.typography.titleMedium.copy(color = titleAccentColor),
         suffixComponent = {
-            ConnectedIndicator(
-                text = indicatorInformation,
-                color = indicatorAccentColor,
-                pointColor = indicatorAccentColor,
-                backgroundColor = indicatorBackgroundColor
-            )
+
         },
         bodyComponent = {
             Column {

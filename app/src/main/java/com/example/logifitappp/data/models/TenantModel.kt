@@ -12,5 +12,5 @@ data class TenantModel(
     val name: String,
     @ColumnInfo(name = "should_it_show_drowsiness_test") val shouldItShowDrowsinessTest: Boolean = false,
     @ColumnInfo(name = "should_it_show_location_component") val shouldItShowLocationComponent: Boolean = false,
-    @ColumnInfo(name = "sleep_analysis_hours") val sleepAnalysisHours: Long = 6 * 60
+    @ColumnInfo(name = "sleep_analysis_hours") val sleepAnalysisHours: Long = 6 * 60 * 60
 )

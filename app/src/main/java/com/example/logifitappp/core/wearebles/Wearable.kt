@@ -76,6 +76,8 @@ class Wearable(): Parcelable {
         return name ?: "unknown"
     }
 
+    fun getBatteryLevel() = batteryLevel?.get(0) ?: 0
+
     fun getBusyTask(): String? {
         return busyTask
     }
@@ -117,6 +119,8 @@ class Wearable(): Parcelable {
     fun isConnecting(): Boolean {
         return state == State.CONNECTING
     }
+
+    fun isDisconnected() = state == State.NOT_CONNECTED
 
     fun isInitialized(): Boolean {
         return state == State.SCANNED || state.equalsOrHigherThan(State.INITIALIZED)

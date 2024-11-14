@@ -39,14 +39,15 @@ data class UserModel(
     @ColumnInfo(name = "profile_photo") val profilePhoto: String? = null,
     @ColumnInfo(name = "province_id") val provinceId: Int? = null,
     val role: Int,
-    @ColumnInfo(name = "shift_id") val shiftId: Int? = null,
+    @ColumnInfo(name = "shift_id") var shiftId: Int? = null,
     @ColumnInfo(name = "tenant_id") val tenantId: Int,
     val weight: Float? = null,
     @ColumnInfo(name = "work_position") val workPosition: String? = null,
-    @ColumnInfo(name = "workload_value") val workloadValue: Int? = null,
-    @ColumnInfo(name = "external_identifier") val external_identifier: Int? = null
+    @ColumnInfo(name = "workload_value") val workloadValue: Int? = null
 ) {
     fun isAdmin() = role == 1 || role == 3
+
+    fun getFullName() = "$firstName $lastName"
 
     @Composable
     fun getRole() = when (role) {

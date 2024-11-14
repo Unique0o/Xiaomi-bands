@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.bars.ProgressBar
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
@@ -73,12 +72,6 @@ fun SessionHeader() {
                 color = Color(0xFF4285F4)
             )
         }
-        ConnectedIndicator(
-            text = "55min",
-            color = Green298,
-            backgroundColor = Lime70,
-            pointColor = Green298
-        )
     }
 }
 

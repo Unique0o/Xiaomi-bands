@@ -1,7 +1,7 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.utils.RangeMap
+import com.example.logifitappp.core.utils.RangeMapUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableActivityProvider
 import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
@@ -9,7 +9,7 @@ import com.example.logifitappp.data.models.XiaomiRawActivityModel
 import com.example.logifitappp.data.models.XiaomiSleepStageModel
 
 class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityProvider<XiaomiRawActivityModel>(wearable) {
-    override fun getRawActivitiesBetween(from: Int, to: Int): List<XiaomiRawActivityModel> {
+    override fun getRawActivitiesBetween(from: Long, to: Long): List<XiaomiRawActivityModel> {
         val activities = super.getRawActivitiesBetween(from, to)
 
         overlaySleep(activities, from, to)
@@ -30,9 +30,20 @@ class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityPr
 
     override fun normalizeType(type: Int) = WearableActivityTypeEnum.fromCode(type)
 
-    private fun overlaySleep(activities: List<XiaomiRawActivityModel>, from: Int, to: Int) {
-        val stagesMap = RangeMap<Long, WearableActivityTypeEnum>()
+    private fun overlaySleep(activities: List<XiaomiRawActivityModel>, from: Long, to: Long) {
+        val stagesMap = RangeMapUtils<Long, WearableActivityTypeEnum>()
+
+        val sleepTimeSampleProvider = XiaomiSleepTimeProvider(wearable)
         val sleepStageProvider = XiaomiSleepStageProvider(wearable)
+
+        val sleepTimesWithinRange = sleepTimeSampleProvider.getBetween(from * 1000L, to * 1000L)
+        println("Found ${sleepTimesWithinRange.size} sleep samples between $from to $to")
+
+        sleepTimesWithinRange.forEach {
+            stagesMap.put(it.wakeupTime!!, WearableActivityTypeEnum.UNKNOWN)
+            stagesMap.put(it.timestamp, WearableActivityTypeEnum.LIGHT_SLEEP)
+        }
+
         val lastSleepStageBeforeRange = sleepStageProvider.getLastBeforeOf(from * 1000L)
 
         if (lastSleepStageBeforeRange != null) {
@@ -50,28 +61,29 @@ class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityPr
             }
         }
 
-        val sleepTimeSampleProvider = XiaomiSleepTimeProvider(wearable)
         val lastSleepTimesBeforeRange = sleepTimeSampleProvider.getLastBeforeOf(from * 1000L)
 
         if (lastSleepTimesBeforeRange != null) {
-            stagesMap.put(lastSleepTimesBeforeRange.timestamp, WearableActivityTypeEnum.UNKNOWN)
+            println("Last sleep time before range: ts=${lastSleepTimesBeforeRange.timestamp}, stage=$lastSleepTimesBeforeRange")
+
+            stagesMap.put(lastSleepTimesBeforeRange.wakeupTime!!, WearableActivityTypeEnum.UNKNOWN)
             stagesMap.put(lastSleepTimesBeforeRange.timestamp, WearableActivityTypeEnum.LIGHT_SLEEP)
         }
 
         val sleepTimesInRange = sleepTimeSampleProvider.getBetween(from * 1000L, to * 1000L)
 
         if (sleepTimesInRange.isNotEmpty()) {
-            println("Found ${sleepStagesInRange.size} sleep samples between $from and $to")
+            println("Found ${sleepTimesInRange.size} sleep samples between $from and $to")
 
             sleepTimesInRange.forEach {
                 if (sleepStagesInRange.isEmpty()) stagesMap.put(it.timestamp, WearableActivityTypeEnum.LIGHT_SLEEP)
 
-                stagesMap.put(it.wakeupTime!!.toLong(), WearableActivityTypeEnum.UNKNOWN)
+                stagesMap.put(it.wakeupTime!!, WearableActivityTypeEnum.UNKNOWN)
             }
         }
 
         if (!stagesMap.isEmpty()) {
-            println("Found ${stagesMap.size()} sleep samples between $from and $to")
+            println("Found ${stagesMap.size()} sleep stage samples between $from and $to")
 
             activities.forEach {
                 val ts = it.timestamp * 1000L

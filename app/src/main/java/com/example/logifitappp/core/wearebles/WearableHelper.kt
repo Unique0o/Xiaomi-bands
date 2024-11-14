@@ -14,9 +14,9 @@ class WearableHelper {
 
     private fun getStoredWearables(): List<Wearable> {
         val result = mutableListOf<Wearable>()
+        val user = App.database.userDao().getLoggedIn() ?: return result
 
-        //FIXME: change to specific user
-        App.database.wearableDao().all(0).forEach {
+        App.database.wearableDao().all(user.id).forEach {
             val wearable = toSupportedDevice(it)
 
             if (wearable.getType().isSupported()) result.add(wearable)

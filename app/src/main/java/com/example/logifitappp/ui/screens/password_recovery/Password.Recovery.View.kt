@@ -19,7 +19,7 @@ import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.layouts.ModalLayout
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.PasswordRecoveryViewModel
 
@@ -31,7 +31,7 @@ fun PasswordRecoveryView(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    ModalLayout(
+    MessageModal(
         onClose = {
             if (passwordRecoveryViewModel.state.hasPasswordRecoveryBeenSuccessful) navigation.popBackStack()
 

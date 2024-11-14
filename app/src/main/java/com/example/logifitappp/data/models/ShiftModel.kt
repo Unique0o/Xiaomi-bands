@@ -1,8 +1,11 @@
 package com.example.logifitappp.data.models
 
+import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.logifitappp.core.utils.DateTimeUtils
 
 @Entity(tableName = "shifts")
 data class ShiftModel(
@@ -13,4 +16,31 @@ data class ShiftModel(
     @ColumnInfo(name = "sleep_time_extension_hours") val sleepTimeExtensionHours: Int? = null,
     @ColumnInfo(name = "start_time") val startTime: String,
     @ColumnInfo(name = "tenant_id") val tenantId: Int
-)
+) {
+    fun getEndDateTimestamp(baseCalendar: Calendar = GregorianCalendar.getInstance()): Calendar {
+        return DateTimeUtils.setTime(baseCalendar, endTime)
+    }
+
+    fun getStartDateTimestamp(baseCalendar: Calendar = GregorianCalendar.getInstance()): Calendar {
+        val startTimestamp = DateTimeUtils.setTime(baseCalendar, startTime)
+        val endTimestamp = getEndDateTimestamp(baseCalendar)
+
+        if (daysToApplySleepTimeExtension != null) {
+            val dayOfWeek = baseCalendar.get(GregorianCalendar.DAY_OF_WEEK)
+            val currentDayOfWeek = if (dayOfWeek == 1) 7 else dayOfWeek - 1
+            val mDaysToApply24Hours = daysToApplySleepTimeExtension.split(",")
+
+            if (mDaysToApply24Hours.contains(currentDayOfWeek.toString())) {
+                endTimestamp.add(GregorianCalendar.HOUR_OF_DAY, -(sleepTimeExtensionHours ?: 24))
+
+                return endTimestamp
+            }
+        }
+
+        if (!startTimestamp.before(endTimestamp)) startTimestamp.add(GregorianCalendar.DAY_OF_MONTH, -1)
+
+        return startTimestamp
+    }
+
+    override fun toString() = name
+}

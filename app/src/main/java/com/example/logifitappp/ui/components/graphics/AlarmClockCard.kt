@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.graphics.bars.ProgressBar
-import com.example.logifitappp.ui.components.home.ConnectedIndicator
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Lime70
@@ -53,12 +52,12 @@ fun AlarmClockCard(modifier: Modifier = Modifier) {
                         color = Blue690
                     )
                 }
-                ConnectedIndicator(
+                /*ConnectedIndicator(
                     text = "20 min",
                     color = Green298,
                     backgroundColor = Lime70,
                     pointColor = Green298
-                )
+                )*/
             }
 
             AlarmRow(duration = "5min", startTime = "02:14", endTime = "02:19")
