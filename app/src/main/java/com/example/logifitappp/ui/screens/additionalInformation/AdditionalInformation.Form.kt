@@ -30,20 +30,17 @@ import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.forms.PhoneTextInput
 import com.example.logifitappp.ui.components.forms.SelectableBottomSheetList
 import com.example.logifitappp.ui.components.forms.SelectableItem
+import com.example.logifitappp.viewmodel.views.AdditionalInformation.AdditionalInformationState
 import com.example.logifitappp.viewmodel.views.AdditionalInformation.AdditionalInformationViewModel
-import com.example.logifitappp.viewmodel.views.AdditionalInformation.SelectableBottomSheetViewModel
 
 
 @Composable
 fun AdditionalInformationForm(
     additionalInformationViewModel: AdditionalInformationViewModel,
-    selectableBottomSheetViewModel: SelectableBottomSheetViewModel,
-    modifier: Modifier = Modifier,
     onSubmit: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    //val uiState by selectableBottomSheetViewModel.uiState.collectAsState()
     val state by additionalInformationViewModel.state.collectAsState()
 
     val countryCodes = remember { additionalInformationViewModel.getCountryCodes() }
@@ -122,7 +119,8 @@ fun AdditionalInformationForm(
             icon = Icons.AutoMirrored.Rounded.Send,
             onClick = {additionalInformationViewModel.onSubmitPersonalInformation { onSubmit() } },
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.button_continue)
+            text = stringResource(id = R.string.button_continue),
+            enabled = !state.isLoading
         )
     }
 }

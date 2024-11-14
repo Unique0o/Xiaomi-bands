@@ -7,6 +7,7 @@ import com.example.logifitappp.data.remote.dto.requests.StoreHealthInformationRe
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
 import com.example.logifitappp.data.remote.dto.response.FetchUserInformationResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -31,4 +32,12 @@ interface UserApi {
         @Path("id") userIdentifier: Int,
         @Body storePersonalInformationRequest: StorePersonalInformationRequest
     ): Response<StorePersonalInformationResponse>
+
+    @POST("api/update_profile/{userId}")
+    suspend fun updateProfilePhoto(
+        @Path("userId") userId: String,
+        @Part image: MultipartBody.Part,
+        @Header("Accept") accept: String = "application/json",
+        @Header("Authorization") authorization: String
+    ): Response<Unit>
 }
