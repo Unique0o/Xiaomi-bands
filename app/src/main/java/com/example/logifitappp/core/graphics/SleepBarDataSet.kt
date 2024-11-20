@@ -2,6 +2,7 @@ package com.example.logifitappp.core.graphics
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.example.logifitappp.core.analyzers.ActivityAmount
 import com.example.logifitappp.core.analyzers.ActivityAmountList
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.ui.theme.Zinc680
@@ -25,10 +26,24 @@ class SleepBarDataSet(amounts: ActivityAmountList) {
         private set
 
     init {
-        val values = if (empty) floatArrayOf(1f, 2f, 1f) else amounts.getList().map { it.totalMinutes.toFloat() }.toFloatArray()
+        val sleeps = mutableListOf<ActivityAmount>()
+
+        if (!empty) {
+            amounts.getList().let { list ->
+                val startIndex = list.indexOfFirst { it.isSleep() }
+                val endIndex = list.indexOfLast { it.isSleep() }
+
+                if (startIndex != -1 && endIndex != -1) {
+                    println("${list[startIndex]} - ${list[endIndex]}")
+                    for (i in startIndex .. endIndex) sleeps.add(list[i])
+                }
+            }
+        }
+
+        val values = if (empty) floatArrayOf(1f, 2f, 1f) else sleeps.map { it.totalMinutes.toFloat() }.toFloatArray()
         val entry = BarEntry(0f, values)
 
-        val colors = if (empty) listOf(Zinc680.copy(alpha = 0.1f).toArgb()) else amounts.getList().map { it.activityType.color.toArgb() }
+        val colors = if (empty) listOf(Zinc680.copy(alpha = 0.1f).toArgb()) else sleeps.map { it.activityType.color.toArgb() }
 
         self = BarDataSet(arrayListOf(entry), "Sleep data set").apply {
             setColors(colors)
@@ -45,12 +60,12 @@ class SleepBarDataSet(amounts: ActivityAmountList) {
             }
 
             else -> {
-                endTime = amounts.lastOrNull()?.let {
-                    DateTimeUtils.format(it.startDate, "HH:mm")
+                endTime = sleeps.lastOrNull()?.let {
+                    DateTimeUtils.format(it.endDate, "HH:mm")
                 } ?: "-"
 
-                startTime = amounts.lastOrNull()?.let {
-                    DateTimeUtils.format(it.endDate, "HH:mm")
+                startTime = sleeps.firstOrNull()?.let {
+                    DateTimeUtils.format(it.startDate, "HH:mm")
                 } ?: "-"
             }
         }

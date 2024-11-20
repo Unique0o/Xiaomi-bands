@@ -171,7 +171,7 @@ class SendWearableInformationToLogifitUseCase @Inject constructor(
                     lightSleepValue = it.lightSleepSeconds.toString(),
                     location_id = "1",
                     reemSleepText = DurationUtils.format(it.remSleepSeconds),
-                    realSleepIntervalValue = it.remSleepSeconds.toString(),
+                    reemSleepValue = it.remSleepSeconds.toString(),
                     referenceAppId = 0,
                     sleepIni = it.startAt,
                     sleepEnd = it.endAt,

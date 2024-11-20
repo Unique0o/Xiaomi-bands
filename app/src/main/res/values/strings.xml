@@ -1,6 +1,7 @@
 <resources>
     <string name="activity">Activity</string>
     <string name="administrator">Administrator</string>
+    <string name="and">and</string>
     <string name="app_name">Logifit</string>
     <string name="authenticating">Authenticating</string>
     <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
@@ -32,6 +33,7 @@
     <string name="date">Date</string>
     <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="device_unknown_name">(unknown)</string>
+    <string name="disconnected">Disconnected</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
     <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
@@ -65,6 +67,8 @@
     <string name="initializing">Initializing</string>
     <string name="interrupted_synchronization_message">Interrupted synchronization. It is recommended to keep the Smart Band close to the phone until the information extraction process is finished</string>
     <string name="invalid_wearable_authentication_key_message">It seems the security key is not correct, try again or contact the support area</string>
+    <string name="lack_of_sleep_synchronization_message">Lack of sleep synchronization</string>
+    <string name="lack_of_sleep_synchronization_with_logifit_message">Lack of sleep synchronization with Logifit</string>
     <string name="last_extraction_data">Last extraction</string>
     <string name="last_sending_to_logifit">Last sending to Logifit</string>
     <string name="less_than_1_hour">Less than 1 hour</string>
@@ -101,6 +105,7 @@
     <string name="rem_sleep">REM Sleep</string>
     <string name="reminder_message">Remember to activate your Bluetooth and keep your Smart Band close to your cell phone to facilitate the connection</string>
     <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
+    <string name="running">Running</string>
     <string name="scanned">Scanned</string>
     <string name="select">Select</string>
     <string name="share_evaluation_result_message">Share evaluation result</string>
@@ -113,6 +118,8 @@
     <string name="sleep_detail_screenshot_fatigue_result_title">B. Fatigue results</string>
     <string name="sleep_detail_screenshot_result_title">My results</string>
     <string name="sleep_detail_screenshot_title">Drowsiness and Fatigue report</string>
+    <string name="sleep_hours_message">%1$s completed hour sleep</string>
+    <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
     <string name="sleep_time">Sleep Time</string>
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
     <string name="steps_detail_chart_chip_message">%1$s steps</string>
@@ -137,6 +144,21 @@
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
     <string name="without_role">Without role</string>
+
+    <plurals name="day_label">
+        <item quantity="one">Day</item>
+        <item quantity="many">Days</item>
+    </plurals>
+
+    <plurals name="hour_label">
+        <item quantity="one">Hour</item>
+        <item quantity="many">Hours</item>
+    </plurals>
+
+    <plurals name="minute_label">
+        <item quantity="one">Minute</item>
+        <item quantity="many">Minutes</item>
+    </plurals>
 
     <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>
     <string name="face_status">FATIGUE</string>

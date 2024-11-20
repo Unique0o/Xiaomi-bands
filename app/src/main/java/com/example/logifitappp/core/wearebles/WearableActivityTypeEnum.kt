@@ -18,6 +18,7 @@ enum class WearableActivityTypeEnum(
     LIGHT_SLEEP(0x00000002, R.string.light_sleep, Sky320),
     NOT_WORN(0x00000008, R.string.not_worn, Orange390),
     REM_SLEEP(0x01000000, R.string.rem_sleep, Violet500),
+    RUNNING(0x00000010, R.string.running, Orange390),
     UNKNOWN(0x00000000, R.string.unknown_activity, Orange390);
 
     fun getCode() = code

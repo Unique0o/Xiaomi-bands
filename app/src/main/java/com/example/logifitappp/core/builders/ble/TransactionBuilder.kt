@@ -4,12 +4,15 @@ import android.bluetooth.BluetoothGattCharacteristic
 import com.example.logifitappp.core.bluetooth.BleQueue
 import com.example.logifitappp.core.builders.ble.actions.Action
 import com.example.logifitappp.core.builders.ble.actions.NotifyAction
+import com.example.logifitappp.core.builders.ble.actions.ReadAction
 import com.example.logifitappp.core.builders.ble.actions.RequestMtuAction
 import com.example.logifitappp.core.builders.ble.actions.WriteAction
 import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
 
 class TransactionBuilder(taskName: String) {
-    private val transaction = Transaction(taskName)
+    var transaction = Transaction(taskName)
+        private set
+
     private var queued = false
 
     fun add(action: Action) {
@@ -36,6 +39,15 @@ class TransactionBuilder(taskName: String) {
 
         queued = true
         queue.add(transaction)
+    }
+
+    fun read(characteristic: BluetoothGattCharacteristic?) {
+        if (characteristic == null) {
+            println("Unable to read characteristic: null")
+            return
+        }
+
+        add(ReadAction(characteristic))
     }
 
     fun requestMtu(mtu: Int) {

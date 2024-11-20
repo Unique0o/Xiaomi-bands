@@ -83,7 +83,7 @@ class ActivityAmountList {
                 endAt = DateTimeUtils.formatExtendedIso8601(amount.endDate),
                 lightSleepSeconds =  sleep.lightSleepSeconds + if (amount.isLightSleep()) amount.totalMinutes * 60 else 0,
                 remSleepSeconds =  sleep.remSleepSeconds + if (amount.isRemSleep()) amount.totalMinutes * 60 else 0,
-                totalSleepSeconds = sleep.totalSleepSeconds + totalSleepMinutes * 60,
+                totalSleepSeconds = sleep.totalSleepSeconds + amount.totalMinutes * 60,
             ) ?: SleepModel(
                 deepSleepSeconds = if (amount.isDeepSleep()) amount.totalMinutes * 60 else 0,
                 endAt = DateTimeUtils.formatExtendedIso8601(amount.endDate),
@@ -91,7 +91,7 @@ class ActivityAmountList {
                 lightSleepSeconds = if (amount.isLightSleep()) amount.totalMinutes * 60 else 0,
                 remSleepSeconds = if (amount.isRemSleep()) amount.totalMinutes * 60 else 0,
                 startAt = DateTimeUtils.formatExtendedIso8601(amount.startDate),
-                totalSleepSeconds = totalSleepMinutes * 60,
+                totalSleepSeconds = amount.totalMinutes * 60,
                 wearableId = wearableId
             )
         }

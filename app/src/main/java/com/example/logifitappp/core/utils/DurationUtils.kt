@@ -1,5 +1,7 @@
 package com.example.logifitappp.core.utils
 
+import android.content.Context
+import com.example.logifitappp.R
 import java.time.Duration
 
 object DurationUtils {
@@ -28,5 +30,28 @@ object DurationUtils {
         if (values.size < totalValues) values.add("${seconds % SECONDS_PER_MINUTE}s")
 
         return values.joinToString(separator = " ")
+    }
+
+    fun formatExtended(context: Context, seconds: Long): String {
+        val duration = Duration.ofSeconds(seconds)
+
+        val values = mutableListOf<String>()
+        val totalValues = 2
+
+        (seconds / SECONDS_PER_DAY).let {
+            if (it > 0) values.add("$it ${context.resources.getQuantityString(R.plurals.day_label, it.toInt())}")
+        }
+
+        (duration.toHours() % HOURS_PER_DAY).let {
+            if (it > 0) values.add("$it ${context.resources.getQuantityString(R.plurals.hour_label, it.toInt())}")
+        }
+
+        if (values.size < totalValues) {
+            (duration.toMinutes() % MINUTES_PER_HOUR).let {
+                values.add("$it ${context.resources.getQuantityString(R.plurals.minute_label, it.toInt())}")
+            }
+        }
+
+        return values.joinToString(separator = " ${context.getString(R.string.and)} ")
     }
 }
