@@ -7,7 +7,7 @@ import java.util.EnumSet
 import java.util.regex.Pattern
 
 abstract class WearableCoordinator {
-    fun createDevice(candidate: WearableCandidate, wearableType: WearableTypeEnum): Wearable {
+    fun createWearable(candidate: WearableCandidate, wearableType: WearableTypeEnum): Wearable {
         return Wearable(candidate.getDevice().address, candidate.getName(), null, wearableType)
     }
 
@@ -29,7 +29,7 @@ abstract class WearableCoordinator {
         return true
     }
 
-    fun suggestUnbindBeforePair(): Boolean {
+    open fun suggestUnbindBeforePair(): Boolean {
         return true
     }
 

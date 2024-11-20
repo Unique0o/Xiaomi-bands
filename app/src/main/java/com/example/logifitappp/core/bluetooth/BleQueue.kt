@@ -274,6 +274,18 @@ class BleQueue(
         if (bluetoothGatt != null && !maybeReconnect()) disconnect()
     }
 
+    fun insert(transaction: Transaction) {
+        println("about to insert: $transaction")
+
+        if (transaction.isEmpty()) return
+
+        val tail = ArrayList<AbstractTransaction>(transactions.size + 2)
+        tail.addAll(transactions)
+        transactions.clear()
+        transactions.add(transaction)
+        transactions.addAll(tail)
+    }
+
     private fun isConnected() = when (wearable.isConnected()) {
         true -> true
         false -> false.also { println("isConnected(): current state = ${wearable.getState()}") }

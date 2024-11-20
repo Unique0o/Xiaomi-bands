@@ -48,7 +48,9 @@ abstract class AbstractWearableSupport: WearableSupport {
         return wearable
     }
 
-    private fun handleBatteryInfoEvent(batteryInfoEvent: WearableBatteryInfoEvent) {
+    fun getWearablePrefs() = App.getWearablePreferences(wearable.getAddress()!!)
+
+    protected fun handleBatteryInfoEvent(batteryInfoEvent: WearableBatteryInfoEvent) {
         println("Got BATTERY_INFO device event")
 
         wearable.apply {
@@ -62,7 +64,7 @@ abstract class AbstractWearableSupport: WearableSupport {
         wearable.sendDeviceUpdateIntent(getContext())
     }
 
-    private fun handleVersionInfoEvent(infoEvent: WearableVersionInfoEvent) {
+    protected fun handleVersionInfoEvent(infoEvent: WearableVersionInfoEvent) {
         wearable.apply {
             setFirmwareVersion(infoEvent.firmwareVersion)
             setModel(infoEvent.model)

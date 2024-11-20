@@ -6,8 +6,7 @@ import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothStatusCodes
 import android.os.Build
 import androidx.annotation.RequiresPermission
-import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
-import java.util.UUID
+import com.example.logifitappp.core.utils.GattDescriptor
 
 class NotifyAction(characteristic: BluetoothGattCharacteristic?, private val enable: Boolean) : Action(characteristic) {
     private var hasWrittenDescriptor = false
@@ -21,7 +20,7 @@ class NotifyAction(characteristic: BluetoothGattCharacteristic?, private val ena
         var result = gatt.setCharacteristicNotification(getCharacteristic(), enable)
 
         if (result) {
-            val clientGattDescriptor = getCharacteristic()!!.getDescriptor(UUID.fromString((String.format(AbstractBleWearableSupport.BASE_UUID, "2902"))))
+            val clientGattDescriptor = getCharacteristic()!!.getDescriptor(GattDescriptor.UUID_DESCRIPTOR_GATT_CLIENT_CHARACTERISTIC_CONFIGURATION)
 
             if (clientGattDescriptor != null) {
                 val properties = getCharacteristic()!!.properties

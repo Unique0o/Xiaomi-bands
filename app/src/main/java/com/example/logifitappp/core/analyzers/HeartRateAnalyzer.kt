@@ -38,8 +38,6 @@ class HeartRateAnalyzer {
                 }
 
                 if (maxHeartRate == 0L) minHeartRate = 0L
-
-                println("hear rate amount: $this")
             })
         }
 
