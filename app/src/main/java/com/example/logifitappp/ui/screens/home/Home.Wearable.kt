@@ -1,5 +1,6 @@
 package com.example.logifitappp.ui.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -72,7 +73,8 @@ fun HomeWearable(
                 iconColor = MaterialTheme.colorScheme.onSurface,
                 iconSize = 30.dp,
                 label = wearable.getAliasOrName(),
-                labelTypography = MaterialTheme.typography.displayMedium
+                labelTypography = MaterialTheme.typography.displayMedium,
+                modifier = Modifier.clickable { navigation.navigate(MainRoutes.WearableProfile(wearable.getAddress()!!)) }
             )
 
             Spacer(modifier = Modifier.weight(1f))

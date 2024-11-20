@@ -1,7 +1,7 @@
 package com.example.logifitappp.core
 
 object RecordedDataTypesEnum {
-    private const val TYPE_ACTIVITY = 0x00000001
+    const val TYPE_ACTIVITY = 0x00000001
     private const val TYPE_GPS_TRACKS = 0x00000004
     private const val TYPE_HEART_RATE = 0x00000080
     private const val TYPE_PAI = 0x00000100

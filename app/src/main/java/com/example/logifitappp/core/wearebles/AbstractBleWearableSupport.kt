@@ -23,6 +23,14 @@ abstract class AbstractBleWearableSupport: AbstractWearableSupport(), BluetoothG
     private val supportedServices = HashSet<UUID>(4)
     private val supportedServerServices = HashSet<BluetoothGattService>(4)
 
+    protected fun addSupportedProfile(profile: AbstractBleProfile<*>) {
+        supportedProfile.add(profile)
+    }
+
+    protected fun addSupportedService(service: UUID) {
+        supportedServices.add(service)
+    }
+
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
     override fun connect(): Boolean {
         if (queue == null) {
@@ -189,6 +197,12 @@ abstract class AbstractBleWearableSupport: AbstractWearableSupport(), BluetoothG
         }
 
         initializeDevice(createTransactionBuilder("Initializing device")).queue(queue!!)
+    }
+
+    fun performImmediately(builder: TransactionBuilder) {
+        if (!isConnected()) throw IOException("Not connected to device: ${getWearable()}")
+
+        getQueue()?.insert(builder.transaction)
     }
 
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])

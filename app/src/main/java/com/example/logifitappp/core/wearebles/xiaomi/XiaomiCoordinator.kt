@@ -2,10 +2,10 @@ package com.example.logifitappp.core.wearebles.xiaomi
 
 import com.example.logifitappp.core.BondingStyleEnum
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableBLECoordinator
+import com.example.logifitappp.core.wearebles.AbstractBleWearableCoordinator
 import java.util.regex.Pattern
 
-abstract class XiaomiCoordinator: WearableBLECoordinator() {
+abstract class XiaomiCoordinator: AbstractBleWearableCoordinator() {
     fun checkDecryptionMac() = true
 
     override fun getActivityProvider(wearable: Wearable) = XiaomiActivityProvider(wearable)

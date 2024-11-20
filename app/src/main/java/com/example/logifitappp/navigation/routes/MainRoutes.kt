@@ -29,6 +29,9 @@ sealed class MainRoutes {
     data object WearableDetection: MainRoutes()
 
     @Serializable
+    data class WearableProfile(val mac: String): MainRoutes()
+
+    @Serializable
     data object Home : MainRoutes() //
 
     @Serializable

@@ -40,4 +40,6 @@ class ActivityAmount(val activityType: WearableActivityTypeEnum) {
     fun setStartDate(seconds: Long) {
         this.startDate = Date(seconds * 1000)
     }
+
+    override fun toString() = "activity amount={start: $startDate, end: $endDate, type: $activityType}"
 }

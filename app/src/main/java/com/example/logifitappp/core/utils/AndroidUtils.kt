@@ -37,14 +37,17 @@ object AndroidUtils {
 
                 composeView.layout(0, 0, composeView.measuredWidth, composeView.measuredHeight)
 
-                val bitmap = Bitmap.createBitmap(
-                    composeView.measuredWidth,
-                    composeView.measuredHeight,
-                    Bitmap.Config.ARGB_8888
-                )
+                if (composeView.measuredWidth > 0 &&  composeView.measuredHeight > 0) {
+                    val bitmap = Bitmap.createBitmap(
+                        composeView.measuredWidth,
+                        composeView.measuredHeight,
+                        Bitmap.Config.ARGB_8888
+                    )
 
-                composeView.draw(Canvas(bitmap))
-                onBitmapReady(bitmap)
+                    composeView.draw(Canvas(bitmap))
+                    onBitmapReady(bitmap)
+                }
+
             }
 
             composeView

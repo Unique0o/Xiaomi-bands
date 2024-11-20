@@ -28,7 +28,7 @@ class WearableHelper {
     fun getSupportedWearable(candidate: WearableCandidate): Wearable {
         val wearableType = resolveWearableType(candidate)
 
-        return wearableType.getWearableCoordinator().createDevice(candidate, wearableType)
+        return wearableType.getWearableCoordinator().createWearable(candidate, wearableType)
     }
 
     fun resolveWearableType(candidate: WearableCandidate): WearableTypeEnum {
@@ -62,7 +62,7 @@ class WearableHelper {
 
     fun toSupportedDevice(candidate: WearableCandidate): Wearable {
         val resolvedType = resolveWearableType(candidate)
-        return resolvedType.getWearableCoordinator().createDevice(candidate, resolvedType)
+        return resolvedType.getWearableCoordinator().createWearable(candidate, resolvedType)
     }
 
     companion object {
