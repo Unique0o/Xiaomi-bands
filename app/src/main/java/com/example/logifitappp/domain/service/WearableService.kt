@@ -9,6 +9,22 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class WearableService @Inject constructor(private val wearableRepository: WearableRepository) {
+    suspend fun associate(userId: Int) = withContext(Dispatchers.IO) {
+        try {
+            val response = wearableRepository.associate(userId)
+
+            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        } catch (e: HttpConsumerException) {
+            throw e
+        } catch (e: HttpException) {
+            throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
     suspend fun fetchAuthenticationKey(mac: String): String? = withContext(Dispatchers.IO) {
         try {
             val response = wearableRepository.fetchAuthenticationKey(mac)
@@ -24,7 +40,6 @@ class WearableService @Inject constructor(private val wearableRepository: Wearab
         } catch (e: HttpException) {
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
         } catch (e: Exception) {
-            e.printStackTrace()
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         }
     }

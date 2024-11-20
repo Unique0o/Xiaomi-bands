@@ -12,6 +12,7 @@ import com.example.logifitappp.data.remote.api.LocationApi
 import com.example.logifitappp.data.remote.api.SleepApi
 import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.UserApi
+import com.example.logifitappp.data.remote.api.WearableApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.CountryRepositoryImpl
 import com.example.logifitappp.data.repository.DocumentTypeRepositoryImpl
@@ -24,6 +25,7 @@ import com.example.logifitappp.data.repository.SleepRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
+import com.example.logifitappp.data.repository.WearableRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.CountryRepository
 import com.example.logifitappp.domain.repository.DocumentTypeRepository
@@ -247,12 +249,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideWearableRepository(retrofit: Retrofit): WearableRepository = retrofit.create(
-        WearableRepository::class.java
-    )
-
-    @Provides
-    @Singleton
     fun providesUserDao(@ApplicationContext context: Context) = App.database.userDao()
 
     @Provides
@@ -287,6 +283,18 @@ object NetworkModule {
     fun provideRecoverPasswordUseCase(authService: AuthService): RecoverPasswordUseCase {
         return RecoverPasswordUseCase(authService)
     }
+
+    @Provides
+    @Singleton
+    fun provideWearableApi(retrofit: Retrofit): WearableApi = retrofit.create(WearableApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideWearableRepository(wearableRepositoryImpl: WearableRepositoryImpl): WearableRepository = wearableRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideWearableRepositoryImpl(wearableApi: WearableApi) = WearableRepositoryImpl(wearableApi)
 
     @Provides
     @Singleton

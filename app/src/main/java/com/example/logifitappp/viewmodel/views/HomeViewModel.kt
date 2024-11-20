@@ -21,6 +21,7 @@ import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
@@ -45,7 +46,8 @@ class HomeViewModel @AssistedInject constructor(
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
     private val shareEvaluationDetailUseCase: ShareEvaluationDetailUseCase,
     private val synchronizeWearableUseCase: SynchronizeWearableUseCase,
-    private val userService: UserService
+    private val userService: UserService,
+    private val wearableService: WearableService
 ): ViewModel() {
     @AssistedFactory
     interface HomeViewModelFactory {
@@ -74,18 +76,24 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     fun checkWearableConnection() {
-        refreshPairedWearables()
+        viewModelScope.launch {
+            refreshPairedWearables()
 
-        if (!state.isLoading) return
+            wearables.firstOrNull()?.let { wearable ->
+                wearableService.associate(user.id)
 
-        wearables.firstOrNull()?.let { wearable ->
-            if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)
+                if (!state.isLoading) return@launch
 
-            if (wearable.isDisconnected()) {
-                state = state.copy(
-                    status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
-                    else AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
-                )
+                if (wearable.isInitialized() && wearable.getWearableCoordinator()
+                        .supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE
+                ) fetchActivities(wearable)
+
+                if (wearable.isDisconnected()) {
+                    state = state.copy(
+                        status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
+                        else AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
+                    )
+                }
             }
         }
     }
