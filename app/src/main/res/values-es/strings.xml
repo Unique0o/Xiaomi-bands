@@ -357,4 +357,17 @@
     <string name="how_to_link">¿Cómo vincular mi s…</string>
     <string name="how_to_link_desc">Este módulo de capacitación…</string>
 
+    <!--Add sleep data-->
+    <string name="upload_file">Suba archivo</string>
+    <string name="date_selected">Fecha seleccionada:</string>
+    <string name="register_your_sleep">Registrar sueño</string>
+    <string name="when_fell_asleep">¿Cuándo te dormiste?</string>
+    <string name="when_woke_up">¿Cuándo te despertaste?</string>
+    <string name="remove_media">Eliminar multimedia</string>
+    <string name="save">Guardar</string>
+    <string name="attach">Adjuntar</string>
+    <string name="attach_photo">Adjuntar foto</string>
+    <string name="sleep_period">Periodo de sueño</string>
+    <string name="duration">Duración</string>
+    <string name="add_period">Agregar período de sueño</string>
 </resources>

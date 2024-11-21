@@ -37,7 +37,8 @@ fun GraphicsView(
         item {
             GraphicsSleepChart(
                 dataSet = graphicsViewModel.state.sleepDataSet,
-                shift = graphicsViewModel.state.shift
+                shift = graphicsViewModel.state.shift,
+                navigation = navigation
             )
         }
 
