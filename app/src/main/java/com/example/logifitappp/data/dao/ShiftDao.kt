@@ -13,8 +13,8 @@ abstract class ShiftDao {
     @Query("DELETE FROM shifts WHERE tenant_id = :tenantId")
     abstract fun delete(tenantId: Int)
 
-    @Query("SELECT * FROM shifts WHERE id = :id LIMIT 1")
-    abstract fun find(id: Int): ShiftModel?
+    @Query("SELECT * FROM shifts WHERE id = :id AND tenant_id = :tenantId LIMIT 1")
+    abstract fun find(id: Int, tenantId: Int): ShiftModel?
 
     @Upsert
     abstract fun store(vararg shifts: ShiftModel)

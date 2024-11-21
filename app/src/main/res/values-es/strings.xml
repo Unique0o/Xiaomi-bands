@@ -17,6 +17,7 @@
     <string name="button_get_into">Ingresar</string>
     <string name="button_ok">Aceptar</string>
     <string name="button_send">Enviar</string>
+    <string name="button_share">Compartir</string>
     <string name="button_start_detection">Empezar detección</string>
     <string name="button_stop_detection">Detener detección</string>
     <string name="change_location_modal_message">Recuerda que esto es muy importante para su análisis de sueño</string>
@@ -128,6 +129,8 @@
     <string name="successful_wearable_information_synchronizing_message">Se extrajo toda la información de sueño de su Smart Band</string>
     <string name="successful_wearable_information_transferring_message">Los datos han sido enviados exitosamente</string>
     <string name="successful_password_recovery_message">Se ha notificado a un encargado para que lo pueda ayudar</string>
+    <string name="sync_with_logifit_required_alert">Lo datos extraidos no han sido enviados a la supervisión. Presione aquí para enviar</string>
+    <string name="sync_with_logifit_required_message">No se realizó el envío a Logifit</string>
     <string name="total_awake_time">Total de tiempo despierto</string>
     <string name="total_sleep_time">Tiempo total de sueño</string>
     <string name="transferring_wearable_information_message">Ahora se está realizando el envío de los datos a la plataforma de Logifit</string>
@@ -165,7 +168,6 @@
     <string name="face_dream">SUEÑO</string>
     <string name="battery_status">Batería al 80%</string>
     <string name="title_smart_band" >Mi Smart Band 4</string>
-    <string name="share">Compartir</string>
     <string name="title_tests">Mis tests de somnolencia</string>
     <string name="description_tests">Realiza un test de somnolencia para verificar si estás apto o no para realizar tus labores.</string>
     <string name="title_test_fatiga">Test de autoevaluación de fatiga</string>

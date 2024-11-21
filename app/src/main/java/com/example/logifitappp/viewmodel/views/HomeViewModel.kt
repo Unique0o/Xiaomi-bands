@@ -61,6 +61,11 @@ class HomeViewModel @AssistedInject constructor(
     var evaluations = mutableStateListOf<EvaluationResultModel>()
         private set
 
+    var shift by mutableStateOf<ShiftModel?>(null)
+
+    var shifts = mutableStateListOf<ShiftModel>()
+        private set
+
     var state by mutableStateOf(HomeState())
         private set
 
@@ -68,12 +73,15 @@ class HomeViewModel @AssistedInject constructor(
         private set
 
     init {
-        user.tenantId.let { state = state.copy(tenant = App.database.tenantDao().find(it)) }
+        user.tenantId.let {
+            state = state.copy(tenant = App.database.tenantDao().find(it))
+            shifts.addAll(App.database.shiftDao().all(it))
+        }
 
         refreshPairedWearables()
         refreshEvaluations()
 
-        user.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it)) }
+        user.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it, user.tenantId)) }
         user.locationId?.let { state = state.copy(location = App.database.locationDao().find(it)) }
     }
 
@@ -120,7 +128,7 @@ class HomeViewModel @AssistedInject constructor(
         App.getWearableServiceTo(wearable).connect()
     }
 
-    private fun fetchActivities(wearable: Wearable) {
+    fun fetchActivities(wearable: Wearable) {
         try {
             state = state.copy(
                 isLoading = true,
@@ -233,7 +241,7 @@ class HomeViewModel @AssistedInject constructor(
         } else sendSleep(wearable)
     }
 
-    private fun sendSleep(wearable: Wearable) {
+    fun sendSleep(wearable: Wearable) {
         viewModelScope.launch {
             try {
                 state = state.copy(

@@ -25,6 +25,7 @@ import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
+import com.example.logifitappp.ui.components.cards.AlertCard
 import com.example.logifitappp.ui.components.cards.InformationOptionCard
 import com.example.logifitappp.ui.components.cards.InformationOptionCardContent
 import com.example.logifitappp.ui.components.forms.IconButton
@@ -85,7 +86,7 @@ fun HomeWearable(
                 icon = Icons.Default.Share,
                 iconSize = 10.dp,
                 modifier = Modifier.height(24.dp),
-                text = stringResource(id = R.string.share),
+                text = stringResource(id = R.string.button_share),
                 onClick = { homeViewModel.shareSleepDetail() },
                 verticalPadding = 0.dp,
             )
@@ -121,6 +122,15 @@ fun HomeWearable(
             )
 
             Spacer(modifier = Modifier.height(12.dp))
+
+            if (!homeViewModel.state.isSleepSynchronizationRequired && homeViewModel.state.isSynchronizationWithLogifitRequired) {
+                AlertCard(
+                    message = stringResource(R.string.sync_with_logifit_required_alert),
+                    modifier = Modifier.clickable { homeViewModel.sendSleep(wearable) }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+            }
 
             SleepProcessingCard(
                 drowsiness = homeViewModel.state.drowsiness,

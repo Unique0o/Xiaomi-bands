@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.views.AppViewModel
 import com.example.logifitappp.viewmodel.views.GraphicsViewModel
@@ -24,6 +25,13 @@ fun GraphicsView(
         it.create(appViewModel.user!!)
     }
 
+    MessageModal(
+        onClose = { graphicsViewModel.stopProcessing() },
+        onDismissRequest = { graphicsViewModel.stopProcessing() },
+        status = graphicsViewModel.state.status,
+        visible = graphicsViewModel.state.isLoading
+    )
+
     ScrollablePage(
         backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
@@ -35,6 +43,11 @@ fun GraphicsView(
         }
     ) {
         item {
+            GraphicsSentMessage(graphicsViewModel = graphicsViewModel)
+        }
+
+        item {
+            Spacer(Modifier.height(16.dp))
             GraphicsSleepChart(
                 dataSet = graphicsViewModel.state.sleepDataSet,
                 shift = graphicsViewModel.state.shift

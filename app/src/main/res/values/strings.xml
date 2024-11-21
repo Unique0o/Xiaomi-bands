@@ -17,6 +17,7 @@
     <string name="button_get_into">Get into</string>
     <string name="button_ok">OK</string>
     <string name="button_send">Send</string>
+    <string name="button_share">Share</string>
     <string name="button_start_detection">Start detection</string>
     <string name="button_stop_detection">Stop detection</string>
     <string name="change_location_modal_message">Remember this is very important for your sleep analysis</string>
@@ -128,6 +129,8 @@
     <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
     <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
     <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
+    <string name="sync_with_logifit_required_alert">The extracted data has not been sent to the supervision. Click here to send</string>
+    <string name="sync_with_logifit_required_message">The sending to Logifit was not made</string>
     <string name="total_awake_time">Total awake time</string>
     <string name="total_sleep_time">Total sleep time</string>
     <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
@@ -165,7 +168,6 @@
     <string name="face_dream">DROWSINESS</string>
     <string name="battery_status">Battery at 80%</string>
     <string name="title_smart_band">My Smart Band 4</string>
-    <string name="share">Share</string>
     <string name="title_tests">My Drowsiness Tests</string>
     <string name="description_tests">Take a drowsiness test to check if you are fit to perform your tasks.</string>
     <string name="title_test_fatiga">Fatigue self-assessment test</string>

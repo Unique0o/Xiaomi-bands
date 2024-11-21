@@ -17,7 +17,8 @@ fun MessageModal(
     onClose: () -> Unit,
     onDismissRequest: () -> Unit,
     status: AppStatusCodeEnum,
-    visible: Boolean
+    visible: Boolean,
+    content: (@Composable () -> Unit)? = null
 ) {
     ModalLayout(
         onClose = onClose,
@@ -35,5 +36,9 @@ fun MessageModal(
             textAlign = TextAlign.Center,
             typography = MaterialTheme.typography.bodyMedium
         )
+
+        content?.let {
+            it()
+        }
     }
 }
