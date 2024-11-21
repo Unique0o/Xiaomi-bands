@@ -66,4 +66,7 @@ sealed class MainRoutes {
 
     @Serializable
     data object TermsAndConditions : MainRoutes()
+
+    @Serializable
+    data object AddSleepData : MainRoutes()
 }

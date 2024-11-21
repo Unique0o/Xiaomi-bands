@@ -50,7 +50,8 @@ fun GraphicsView(
             Spacer(Modifier.height(16.dp))
             GraphicsSleepChart(
                 dataSet = graphicsViewModel.state.sleepDataSet,
-                shift = graphicsViewModel.state.shift
+                shift = graphicsViewModel.state.shift,
+                navigation = navigation
             )
         }
 

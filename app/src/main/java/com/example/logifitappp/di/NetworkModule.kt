@@ -10,6 +10,7 @@ import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
 import com.example.logifitappp.data.remote.api.LocationApi
 import com.example.logifitappp.data.remote.api.SleepApi
+import com.example.logifitappp.data.remote.api.SleepWrittenDataApi
 import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.remote.api.WearableApi
@@ -22,6 +23,7 @@ import com.example.logifitappp.data.repository.LocationRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.SleepRepositoryImpl
+import com.example.logifitappp.data.repository.SleepWrittenDataRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
@@ -35,12 +37,14 @@ import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
 import com.example.logifitappp.domain.repository.SleepRepository
+import com.example.logifitappp.domain.repository.SleepWrittenDataRepository
 import com.example.logifitappp.domain.repository.TenantRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.EvaluationService
 import com.example.logifitappp.domain.service.SleepService
+import com.example.logifitappp.domain.service.SleepWrittenDataService
 import com.example.logifitappp.domain.service.TenantService
 import com.example.logifitappp.domain.service.UserService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
@@ -393,5 +397,22 @@ object NetworkModule {
     @Singleton
     @Provides
     fun  provideDocumentTypeRepository (documentTypeRepositoryImpl: DocumentTypeRepositoryImpl): DocumentTypeRepository = documentTypeRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSleepWrittenDataRepositoryImpl(api: SleepWrittenDataApi) = SleepWrittenDataRepositoryImpl(api)
+
+    @Provides
+    @Singleton
+    fun provideSleepWrittenDataRepository(repositoryImpl: SleepWrittenDataRepositoryImpl): SleepWrittenDataRepository = repositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSleepWrittenDataService(repository: SleepWrittenDataRepository) = SleepWrittenDataService(repository)
+
+    @Provides
+    @Singleton
+    fun provideSleepWrittenDataApi(retrofit: Retrofit): SleepWrittenDataApi = retrofit.create(SleepWrittenDataApi::class.java)
+
 
 }

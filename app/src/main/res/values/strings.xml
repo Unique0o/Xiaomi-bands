@@ -384,4 +384,19 @@
     <string name="understanding_use_desc">This training module covers…</string>
     <string name="how_to_link">How to link my s…</string>
     <string name="how_to_link_desc">This training module shows…</string>
+
+
+    <!--add sleep data-->
+    <string name="upload_file">Upload File</string>
+    <string name="date_selected">Date Selected: </string>
+    <string name="register_your_sleep">Register Your Sleep</string>
+    <string name="when_fell_asleep">When did you fell asleep?</string>
+    <string name="when_woke_up">When did you woke up?</string>
+    <string name="remove_media">Remove Media</string>
+    <string name="save">Save</string>
+    <string name="attach">Attach</string>
+    <string name="attach_photo">Attach photo</string>
+    <string name="sleep_period">Sleep Period</string>
+    <string name="duration">Duration</string>
+    <string name="add_period">Add SleepPeriod</string>
 </resources>
