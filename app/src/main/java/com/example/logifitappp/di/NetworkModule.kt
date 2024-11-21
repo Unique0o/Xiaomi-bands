@@ -236,6 +236,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
     fun provideUserRepositoryImpl(userApi: UserApi) = UserRepositoryImpl(userApi)
 
     @Provides
@@ -245,38 +249,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideUserService(userRepository: UserRepository) = UserService(userRepository)
-
-
-    @Provides
-    @Singleton
-    fun providesUserDao(@ApplicationContext context: Context) = App.database.userDao()
-
-    @Provides
-    @Singleton
-    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
-
-
-    @Provides
-    @Singleton
-    fun provideApplicationContext(@ApplicationContext context: Context): Context {
-        return context
-    }
-
-    @Provides
-    @Singleton
-    fun provideOccupationalInfoRepository(context: Context): OccupationalInfoRepository {
-        return OccupationalInfoRepositoryImpl(context)
-    }
-
-    @Provides
-    fun provideGetOccupationalInfoUseCase(repository: OccupationalInfoRepository): GetOccupationalInfoUseCase {
-        return GetOccupationalInfoUseCase(repository)
-    }
-
-    @Provides
-    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInfoViewModel {
-        return OccupationalInfoViewModel(getOccupationalInfoUseCase)
-    }
 
     @Provides
     @Singleton
@@ -301,6 +273,31 @@ object NetworkModule {
     fun provideWearableService(wearableRepository: WearableRepository) = WearableService(wearableRepository)
 
 
+    @Provides
+    @Singleton
+    fun providesUserDao(@ApplicationContext context: Context) = App.database.userDao()
+
+    @Provides
+    @Singleton
+    fun provideApplicationContext(@ApplicationContext context: Context): Context {
+        return context
+    }
+
+    @Provides
+    @Singleton
+    fun provideOccupationalInfoRepository(context: Context): OccupationalInfoRepository {
+        return OccupationalInfoRepositoryImpl(context)
+    }
+
+    @Provides
+    fun provideGetOccupationalInfoUseCase(repository: OccupationalInfoRepository): GetOccupationalInfoUseCase {
+        return GetOccupationalInfoUseCase(repository)
+    }
+
+    @Provides
+    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInfoViewModel {
+        return OccupationalInfoViewModel(getOccupationalInfoUseCase)
+    }
 
     @Provides
     @Singleton
