@@ -1,13 +1,11 @@
-package com.example.logifitappp.ui.screens.AddSleepData
+package com.example.logifitappp.ui.screens.sleep_data_recording
 
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
@@ -21,17 +19,17 @@ import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.addSleepData.PhotoSelectionCard
 import com.example.logifitappp.ui.components.addSleepData.SleepEntryCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
+import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.views.AddSleepData.AddSleepDataEvent
 import com.example.logifitappp.viewmodel.views.AddSleepData.AddSleepDataViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun AddSleepDataView(
+fun SleepDataRecordingView(
     navigation: NavHostController,
 ) {
     val viewModel: AddSleepDataViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
-    val scrollState = rememberLazyListState()
     var showSuccess by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.isSuccess) {
@@ -58,18 +56,14 @@ fun AddSleepDataView(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? -> uri?.let { viewModel.onEvent(AddSleepDataEvent.AttachMedia(it)) } }
 
-    LazyColumn(
-        state = scrollState,
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(bottom = 16.dp)
-    ) {
-        item {
+    ScrollablePage(
+        topBar = {
             ColumnStackHeader(
                 navigation = navigation,
                 title = stringResource(id = R.string.register_your_sleep)
             )
         }
-
+    ) {
         items(state.sleepEntries) { entry ->
             SleepEntryCard(
                 entry = entry,

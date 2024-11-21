@@ -10,9 +10,9 @@ import androidx.navigation.toRoute
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.BottomTabScreen
 import com.example.logifitappp.ui.screens.SplashScreen
-import com.example.logifitappp.ui.screens.AddSleepData.AddSleepDataView
 import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
+import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
 import com.example.logifitappp.viewmodel.views.AppViewModel
@@ -29,6 +29,7 @@ fun MainNavigation(
         composable<MainRoutes.BottomTabsNavigation> { BottomTabScreen(appViewModel, navigation) }
         composable<MainRoutes.Login> { LoginView(appViewModel, navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+        composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
 
         composable<MainRoutes.WearableProfile> { navBackStackEntry ->
@@ -38,6 +39,5 @@ fun MainNavigation(
         }
 
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
-        composable<MainRoutes.AddSleepData> { AddSleepDataView(navigation) }
     }
 }

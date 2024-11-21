@@ -7,18 +7,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.NightsStay
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Update
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -50,7 +48,6 @@ fun GraphicsSleepChart(
     Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconText(
@@ -61,20 +58,22 @@ fun GraphicsSleepChart(
                 labelTypography = MaterialTheme.typography.displayMedium
             )
 
+            Spacer(Modifier.weight(1f))
+
             IconButton(
-                onClick ={navigation.navigate(MainRoutes.AddSleepData)},
+                onClick = { navigation.navigate(MainRoutes.SleepDataRecording) },
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.primary, CircleShape)
-                    .size(20.dp)
+                    .size(24.dp)
             ) {
                 Icon(
                     contentDescription = null,
                     imageVector = Icons.Filled.Add,
+                    modifier = Modifier.size(20.dp),
                     tint = Color.White
                 )
             }
-    }
-
+        }
 
         Spacer(Modifier.height(6.dp))
 

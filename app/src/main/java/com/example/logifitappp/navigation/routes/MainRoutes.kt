@@ -23,6 +23,9 @@ sealed class MainRoutes {
     data object PasswordRecovery: MainRoutes()
 
     @Serializable
+    data object SleepDataRecording : MainRoutes()
+
+    @Serializable
     data object SplashScreen: MainRoutes()
 
     @Serializable
@@ -66,7 +69,4 @@ sealed class MainRoutes {
 
     @Serializable
     data object TermsAndConditions : MainRoutes()
-
-    @Serializable
-    data object AddSleepData : MainRoutes()
 }
