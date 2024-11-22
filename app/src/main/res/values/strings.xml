@@ -375,4 +375,6 @@
     <string name="sleep_period">Sleep Period</string>
     <string name="duration">Duration</string>
     <string name="add_period">Add SleepPeriod</string>
+    <string name="success">Success</string>
+    <string name="select_date_and_time">Select Date and Time</string>
 </resources>

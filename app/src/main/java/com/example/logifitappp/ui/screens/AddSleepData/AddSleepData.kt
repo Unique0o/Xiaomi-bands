@@ -45,7 +45,8 @@ fun AddSleepDataView(
     if (showSuccess) {
         AlertDialog(
             onDismissRequest = { showSuccess = false },
-            title = { Text(stringResource(id = R.string.successful_wearable_information_transferring_message)) },
+            title = { Text(stringResource(id = R.string.success)) },
+            text = { Text(stringResource(id = R.string.successful_wearable_information_transferring_message)) },
             confirmButton = {
                 TextButton(onClick = { showSuccess = false }) {
                     Text("OK")
@@ -73,7 +74,7 @@ fun AddSleepDataView(
         items(state.sleepEntries) { entry ->
             SleepEntryCard(
                 entry = entry,
-                onRemove = { viewModel.onEvent(AddSleepDataEvent.RemoveSleepEntry(entry.id)) },
+                onRemove = { viewModel.onEvent(AddSleepDataEvent.RemoveSleepEntry(entry.id))},
                 onFellAsleepTimeSelected = { time ->
                     viewModel.onEvent(AddSleepDataEvent.SetFellAsleepTime(entry.id, time))
                 },

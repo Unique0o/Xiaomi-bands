@@ -370,4 +370,6 @@
     <string name="sleep_period">Periodo de sueño</string>
     <string name="duration">Duración</string>
     <string name="add_period">Agregar período de sueño</string>
+    <string name="success">Éxito</string>
+    <string name="select_date_and_time">Seleccionar fecha y hora</string>
 </resources>
