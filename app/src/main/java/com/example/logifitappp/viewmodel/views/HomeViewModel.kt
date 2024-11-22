@@ -90,13 +90,17 @@ class HomeViewModel @AssistedInject constructor(
             refreshPairedWearables()
 
             wearables.firstOrNull()?.let { wearable ->
-                wearableService.associate(user.id, AssociateWearableRequest(
-                    device_mac = wearable.getAddress()!!,
-                    oper_system = "Android",
-                    oper_system_version = Build.VERSION.RELEASE,
-                    phone_brand = Build.BRAND,
-                    phone_model = Build.MODEL
-                ))
+                try {
+                    wearableService.associate(user.id, AssociateWearableRequest(
+                        device_mac = wearable.getAddress()!!,
+                        oper_system = "Android",
+                        oper_system_version = Build.VERSION.RELEASE,
+                        phone_brand = Build.BRAND,
+                        phone_model = Build.MODEL
+                    ))
+                } catch (_: Exception) {
+
+                }
 
                 if (!state.isLoading) return@launch
 

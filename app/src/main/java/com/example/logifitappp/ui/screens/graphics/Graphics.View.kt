@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavHostController
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.MessageModal
@@ -23,6 +25,10 @@ fun GraphicsView(
 ) {
     val graphicsViewModel = hiltViewModel<GraphicsViewModel, GraphicsViewModel.GraphicsViewModelFactory>{
         it.create(appViewModel.user!!)
+    }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        graphicsViewModel.refreshGraphics(graphicsViewModel.state.shift, graphicsViewModel.state.wearable)
     }
 
     MessageModal(

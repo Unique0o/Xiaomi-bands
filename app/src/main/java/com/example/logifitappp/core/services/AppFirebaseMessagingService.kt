@@ -63,5 +63,7 @@ class AppFirebaseMessagingService: FirebaseMessagingService() {
 
         manager.createNotificationChannel(channel)
         manager.notify(nextInt(), notificationBuilder.build())
+
+        App.
     }
 }

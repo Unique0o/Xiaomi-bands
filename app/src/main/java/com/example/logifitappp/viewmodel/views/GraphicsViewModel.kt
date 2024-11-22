@@ -47,8 +47,7 @@ class GraphicsViewModel  @AssistedInject constructor(
             val wearable = App.wearableManager.getWearables().first()
             val shift = App.database.shiftDao().find(it, user.tenantId)
 
-            calculate(shift, wearable)
-            refreshSleepProcessingData(wearable)
+            refreshGraphics(shift, wearable)
         }
     }
 
@@ -68,6 +67,13 @@ class GraphicsViewModel  @AssistedInject constructor(
         if (shift == null) return
 
         state = state.copy(sleepDataSet = SleepBarDataSet(fetchActivityAmountsByShiftUseCase(shift, wearable)))
+    }
+
+    fun refreshGraphics(shift: ShiftModel?, wearable: Wearable?) {
+        if (wearable == null) return
+
+        calculate(shift, wearable)
+        refreshSleepProcessingData(wearable)
     }
 
     private fun refreshSleepProcessingData(wearable: Wearable) {
