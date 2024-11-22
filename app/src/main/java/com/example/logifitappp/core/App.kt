@@ -43,6 +43,7 @@ class App: Application() {
     companion object {
         const val ACTION_NEW_DATA = "com.info.logifit.pe.action.quit"
         const val AUTHENTICATION_KEY_FAILED = "com.info.logifit.pe.authentication.key.failed"
+        const val NOTIFICATION = "com.info.logifit.pe.notification"
         const val RELOAD_AUTHENTICATED_USER = "com.info.logifit.pe.reload.authenticated.user"
 
         lateinit var context: App
@@ -70,6 +71,15 @@ class App: Application() {
             if (wearableIdentifier.isNullOrEmpty()) return null
 
             return context.getSharedPreferences("wearable_settings_$wearableIdentifier", Context.MODE_PRIVATE)
+        }
+
+        fun signalNewNotification() {
+            preferences.getPreferences()
+                .edit()
+                .putBoolean(AppPreferences.NEW_NOTIFICATION, true)
+                .apply()
+
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(NOTIFICATION))
         }
 
         fun signalActivityDataFinish(wearable: Wearable) {

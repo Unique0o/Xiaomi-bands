@@ -93,6 +93,7 @@
     <string name="no_wearable_sleep_data_message">Al parecer no tienes registro de sueño para enviar. Intente sincronizar nuevamente</string>
     <string name="not_connected">No conectado</string>
     <string name="not_worn">Dispositivo no usado</string>
+    <string name="notifications_title">Mis notificaciones</string>
     <string name="operator">Operador</string>
     <string name="password_not_validated_error_message">La contraseña ingresada es incorrecta, por favor intente de nuevo</string>
     <string name="password_recovery_title">Recuperar contraseña</string>

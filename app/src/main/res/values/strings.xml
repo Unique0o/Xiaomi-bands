@@ -93,6 +93,7 @@
     <string name="no_wearable_sleep_data_message">It looks like you do not have a sleep log to send. Try to sync again</string>
     <string name="not_connected">Not connected</string>
     <string name="not_worn">Device not worn</string>
+    <string name="notifications_title">My notifications</string>
     <string name="operator">Operator</string>
     <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
     <string name="password_recovery_title">Recover password</string>

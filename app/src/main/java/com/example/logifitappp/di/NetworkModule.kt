@@ -9,6 +9,7 @@ import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
 import com.example.logifitappp.data.remote.api.LocationApi
+import com.example.logifitappp.data.remote.api.NotificationApi
 import com.example.logifitappp.data.remote.api.SleepApi
 import com.example.logifitappp.data.remote.api.SleepWrittenDataApi
 import com.example.logifitappp.data.remote.api.TenantApi
@@ -20,6 +21,7 @@ import com.example.logifitappp.data.repository.DocumentTypeRepositoryImpl
 import com.example.logifitappp.data.repository.EvaluationRepositoryImpl
 import com.example.logifitappp.data.repository.HealthInfoRepositoryImpl
 import com.example.logifitappp.data.repository.LocationRepositoryImpl
+import com.example.logifitappp.data.repository.NotificationRepositoryImpl
 import com.example.logifitappp.data.repository.OccupationalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.PersonalInfoRepositoryImpl
 import com.example.logifitappp.data.repository.SleepRepositoryImpl
@@ -34,6 +36,7 @@ import com.example.logifitappp.domain.repository.DocumentTypeRepository
 import com.example.logifitappp.domain.repository.EvaluationRepository
 import com.example.logifitappp.domain.repository.HealthInfoRepository
 import com.example.logifitappp.domain.repository.LocationRepository
+import com.example.logifitappp.domain.repository.NotificationRepository
 import com.example.logifitappp.domain.repository.OccupationalInfoRepository
 import com.example.logifitappp.domain.repository.PersonalInfoRepository
 import com.example.logifitappp.domain.repository.SleepRepository
@@ -43,6 +46,7 @@ import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.EvaluationService
+import com.example.logifitappp.domain.service.NotificationService
 import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.SleepWrittenDataService
 import com.example.logifitappp.domain.service.TenantService
@@ -172,6 +176,22 @@ object NetworkModule {
         updateNotificationToken: UpdateNotificationToken,
         updateTenantInformationUseCase: UpdateTenantInformationUseCase
     ) = LoginUseCase(authService, updateNotificationToken, updateTenantInformationUseCase)
+
+    @Provides
+    @Singleton
+    fun provideNotificationApi(retrofit: Retrofit): NotificationApi = retrofit.create(NotificationApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideNotificationRepository(notificationRepositoryImpl: NotificationRepositoryImpl): NotificationRepository = notificationRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideNotificationRepositoryImpl(notificationApi: NotificationApi) = NotificationRepositoryImpl(notificationApi)
+
+    @Provides
+    @Singleton
+    fun provideNotificationService(notificationRepository: NotificationRepository) = NotificationService(notificationRepository)
 
     @Provides
     @Singleton

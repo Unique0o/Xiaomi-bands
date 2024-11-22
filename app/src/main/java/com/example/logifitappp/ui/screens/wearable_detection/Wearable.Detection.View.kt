@@ -138,20 +138,10 @@ fun WearableDetectionView(
                             .padding(top = 16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-//                        CircularProgressIndicator(
-//                            modifier = Modifier.size(34.dp)
-//                        )
                         Loader()
                     }
                 }
             }
-
-
-//            if (wearableDetectionViewModel.isScanning) {
-//                item {
-//                    Loader()
-//                }
-//            }
         },
 
         topBar = {

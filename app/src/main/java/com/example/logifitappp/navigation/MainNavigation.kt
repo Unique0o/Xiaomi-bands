@@ -11,6 +11,7 @@ import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.BottomTabScreen
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.login.LoginView
+import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
@@ -28,6 +29,7 @@ fun MainNavigation(
     ) {
         composable<MainRoutes.BottomTabsNavigation> { BottomTabScreen(appViewModel, navigation) }
         composable<MainRoutes.Login> { LoginView(appViewModel, navigation) }
+        composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
