@@ -1,9 +1,10 @@
 package com.example.logifitappp.data.models
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class MenuItem(
     val icon: ImageVector,
-    val title: Int,
+    @StringRes val title: Int,
     val action: () -> Unit
 )

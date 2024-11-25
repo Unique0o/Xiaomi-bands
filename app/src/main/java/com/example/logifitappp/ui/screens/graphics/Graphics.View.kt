@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.GraphicsViewModel
 
 @Composable

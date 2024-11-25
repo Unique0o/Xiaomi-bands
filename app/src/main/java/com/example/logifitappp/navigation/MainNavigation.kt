@@ -13,10 +13,11 @@ import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
+import com.example.logifitappp.ui.screens.roster.RosterView
 import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 
 @Composable
 fun MainNavigation(
@@ -31,6 +32,7 @@ fun MainNavigation(
         composable<MainRoutes.Login> { LoginView(appViewModel, navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+        composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
 

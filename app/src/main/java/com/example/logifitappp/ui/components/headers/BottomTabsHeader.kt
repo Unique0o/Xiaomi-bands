@@ -37,14 +37,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.LicenseText
 import com.example.logifitappp.ui.components.ProgressiveImage
 import com.example.logifitappp.ui.components.Pulse
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.viewmodel.components.BottomTabsHeaderViewModel
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

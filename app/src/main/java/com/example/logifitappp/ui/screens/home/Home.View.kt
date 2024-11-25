@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.widget.Space
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +35,7 @@ import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.ui.components.screenshots.SleepDetailScreenshot
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.HomeViewModel
 
 @Composable

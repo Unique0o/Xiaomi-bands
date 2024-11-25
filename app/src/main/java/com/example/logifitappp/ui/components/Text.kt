@@ -7,12 +7,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.Text as MaterialText
 
 @Composable
 fun Text(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.onSurface,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
     typography: TextStyle = MaterialTheme.typography.bodyLarge,
     text: String,
     textAlign: TextAlign? = null,
@@ -23,7 +26,9 @@ fun Text(
         fontFamily = typography.fontFamily,
         fontSize = typography.fontSize,
         lineHeight = typography.lineHeight,
+        maxLines = maxLines,
         modifier = modifier,
+        overflow = overflow,
         text = text,
         textAlign = textAlign,
         fontWeight = fontWeight

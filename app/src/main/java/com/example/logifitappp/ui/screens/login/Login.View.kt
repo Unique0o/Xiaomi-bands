@@ -19,7 +19,7 @@ import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
 
 @Composable

@@ -30,6 +30,7 @@ import com.example.logifitappp.ui.components.PasswordVisibilityToggleText
 fun OutlinedTextField(
     modifier: Modifier = Modifier,
     asPassword: Boolean = false,
+    enabled: Boolean = true,
     error: String? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOption: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -49,6 +50,12 @@ fun OutlinedTextField(
     MaterialOutlinedTextField(
         colors = TextFieldDefaults.colors().copy(
             cursorColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            disabledContainerColor = Color.Transparent,
+            disabledIndicatorColor = if (hasError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline,
+            disabledLabelColor = if (hasError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surfaceTint,
+            disabledLeadingIconColor = if (hasError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surfaceTint,
+            disabledSupportingTextColor = if (hasError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surfaceTint,
+            disabledTextColor = MaterialTheme.colorScheme.onSurface,
             errorContainerColor = Color.Transparent,
             errorIndicatorColor = MaterialTheme.colorScheme.error,
             errorLabelColor = MaterialTheme.colorScheme.error,
@@ -63,6 +70,7 @@ fun OutlinedTextField(
             unfocusedLabelColor = MaterialTheme.colorScheme.surfaceTint,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.surfaceTint
         ),
+        enabled = enabled,
         isError = hasError,
         keyboardActions = keyboardActions,
         keyboardOptions = if (asPassword) KeyboardOptions(

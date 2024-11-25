@@ -10,6 +10,7 @@ data class TenantModel(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "is_active") val isActive: Boolean,
     val name: String,
+    @ColumnInfo(name = "should_it_show_roster_option") val shouldItShowRosterOption: Boolean = false,
     @ColumnInfo(name = "should_it_show_drowsiness_test") val shouldItShowDrowsinessTest: Boolean = false,
     @ColumnInfo(name = "should_it_show_location_component") val shouldItShowLocationComponent: Boolean = false,
     @ColumnInfo(name = "sleep_analysis_hours") val sleepAnalysisHours: Long = 6 * 60 * 60

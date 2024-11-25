@@ -1,4 +1,4 @@
-package com.example.logifitappp.viewmodel.views
+package com.example.logifitappp.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

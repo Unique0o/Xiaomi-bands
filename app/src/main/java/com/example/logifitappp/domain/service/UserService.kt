@@ -2,6 +2,7 @@ package com.example.logifitappp.domain.service
 
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
+import com.example.logifitappp.data.remote.dto.requests.StoreRosterRequest
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
@@ -48,6 +49,18 @@ class UserService @Inject constructor(private val userRepository: UserRepository
             return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         } catch (e: HttpException) {
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun storeRosterInformation(request: StoreRosterRequest) = withContext(Dispatchers.IO) {
+        try {
+            val response = userRepository.storeRosterInformation(request)
+
+            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         } catch (e: Exception) {
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         }

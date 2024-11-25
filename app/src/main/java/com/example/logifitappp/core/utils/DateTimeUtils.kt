@@ -27,6 +27,14 @@ object DateTimeUtils {
 
     fun parse(date: String, format: String): Date? = SimpleDateFormat(format, Locale.US).parse(date)
 
+    fun parse(time: Long, format: String): String {
+        val date = GregorianCalendar.getInstance().apply {
+            timeInMillis = time
+        }
+
+        return format(date.time, format)
+    }
+
     fun parse(date: String, from: String, to: String): String {
         val inputFormat = SimpleDateFormat(from, Locale.US)
         val outFormat = SimpleDateFormat(to, Locale.US)

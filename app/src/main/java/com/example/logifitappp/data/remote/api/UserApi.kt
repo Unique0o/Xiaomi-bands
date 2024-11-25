@@ -4,7 +4,9 @@ import com.example.logifitappp.data.remote.dto.response.StoreOccupationalInforma
 import com.example.logifitappp.data.remote.dto.response.StorePersonalInformationResponse
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
+import com.example.logifitappp.data.remote.dto.requests.StoreRosterRequest
 import com.example.logifitappp.data.remote.dto.response.FetchUserInformationResponse
+import com.example.logifitappp.data.remote.dto.response.GeneralResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -23,4 +25,7 @@ interface UserApi {
         @Path("id") userIdentifier: Int,
         @Body storePersonalInformationRequest: StorePersonalInformationRequest
     ): Response<StorePersonalInformationResponse>
+
+    @POST("api/users/roster")
+    suspend fun storeRosterInformation(@Body storeRosterRequest: StoreRosterRequest): Response<GeneralResponse>
 }

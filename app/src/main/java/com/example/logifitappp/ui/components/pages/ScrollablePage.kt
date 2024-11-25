@@ -19,7 +19,7 @@ fun ScrollablePage(
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
     bottomBar: @Composable () -> Unit = {},
     topBar: @Composable () -> Unit = {},
-    content:  LazyListScope.() -> Unit
+    content: LazyListScope.() -> Unit
 ) {
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing,

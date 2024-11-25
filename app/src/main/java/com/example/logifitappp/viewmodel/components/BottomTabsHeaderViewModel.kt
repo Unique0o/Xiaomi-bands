@@ -12,7 +12,6 @@ class BottomTabsHeaderViewModel: ViewModel() {
         private set
 
     fun checkForNewNotification() {
-        println("checkForNewNotification ${ App.preferences.getPreferences().getBoolean(AppPreferences.NEW_NOTIFICATION, false)}")
         hasNewNotification = App.preferences.getPreferences().getBoolean(AppPreferences.NEW_NOTIFICATION, false)
     }
 }

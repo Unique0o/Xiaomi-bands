@@ -1,4 +1,4 @@
-package com.example.logifitappp.viewmodel
+package com.example.logifitappp.viewmodel.views
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 @HiltViewModel(assistedFactory = BottomTabScreenViewModel.BottomTabScreenViewModelFactory::class)
 class BottomTabScreenViewModel @AssistedInject constructor(
     @Assisted private val user: UserModel
-) : ViewModel() {
+): ViewModel() {
     @AssistedFactory
     interface BottomTabScreenViewModelFactory {
         fun create(user: UserModel): BottomTabScreenViewModel

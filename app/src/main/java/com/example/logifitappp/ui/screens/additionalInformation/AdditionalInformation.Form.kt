@@ -28,9 +28,7 @@ import com.example.logifitappp.data.models.CountryModel
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.forms.PhoneTextInput
-import com.example.logifitappp.ui.components.forms.SelectableBottomSheetList
 import com.example.logifitappp.ui.components.forms.SelectableItem
-import com.example.logifitappp.viewmodel.views.AdditionalInformation.AdditionalInformationState
 import com.example.logifitappp.viewmodel.views.AdditionalInformation.AdditionalInformationViewModel
 
 
@@ -79,14 +77,14 @@ fun AdditionalInformationForm(
             value = state.lastnames
         )
 
-        SelectableBottomSheetList(
+        /*SelectableBottomSheetList(
             items = state.countries,
             value = state.selectedCountry,
             onSelectItem = { additionalInformationViewModel.selectCountry(it) },
             placeholder = stringResource(R.string.placeholder_type_document),
             title = stringResource(R.string.placeholder_country),
             errorLabel = state.error,
-        )
+        )*/
         OutlinedTextField(
             keyboardActions = KeyboardActions(
                 onDone = {
@@ -99,14 +97,14 @@ fun AdditionalInformationForm(
             placeholder = stringResource(id = R.string.placeholder_document_identity),
             value = state.documentIdentity
         )
-        SelectableBottomSheetList(
+        /*SelectableBottomSheetList(
             items = state.countries,
             value = state.selectedCountry,
             onSelectItem = { additionalInformationViewModel.selectCountry(it) },
             placeholder = stringResource(R.string.placeholder_country),
             title = stringResource(R.string.placeholder_country),
             errorLabel = state.error,
-        )
+        )*/
 
 
         PhoneTextInput(
@@ -125,7 +123,7 @@ fun AdditionalInformationForm(
     }
 }
 
-fun CountryModel.toSelectableItem() = object : SelectableItem {
+/*fun CountryModel.toSelectableItem() = object : SelectableItem {
     override val name: String = this@toSelectableItem.name
-}
+}*/
 

@@ -3,7 +3,9 @@ package com.example.logifitappp.data.repository
 import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
+import com.example.logifitappp.data.remote.dto.requests.StoreRosterRequest
 import com.example.logifitappp.data.remote.dto.response.FetchUserInformationResponse
+import com.example.logifitappp.data.remote.dto.response.GeneralResponse
 import com.example.logifitappp.data.remote.dto.response.StoreOccupationalInformationResponse
 import com.example.logifitappp.data.remote.dto.response.StorePersonalInformationResponse
 import com.example.logifitappp.domain.repository.UserRepository
@@ -23,5 +25,9 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun storePersonalInformation(userId: Int, request: StorePersonalInformationRequest): Response<StorePersonalInformationResponse> {
         return userApi.storePersonalInformation(userId, request)
+    }
+
+    override suspend fun storeRosterInformation(request: StoreRosterRequest): Response<GeneralResponse> {
+        return userApi.storeRosterInformation(request)
     }
 }

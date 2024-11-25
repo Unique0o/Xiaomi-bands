@@ -20,7 +20,7 @@ import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.WearableProfileViewModel
 
 @Composable

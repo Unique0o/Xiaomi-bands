@@ -44,8 +44,8 @@ import com.example.logifitappp.ui.components.SideBarContent
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.home.HomeView
 import com.example.logifitappp.ui.theme.Blue690
-import com.example.logifitappp.viewmodel.BottomTabScreenViewModel
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.views.BottomTabScreenViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 
 @Composable
 fun BottomTabScreen(
@@ -90,6 +90,7 @@ fun BottomTabScreen(
                     .fillMaxHeight()
             ) {
                 SideBarContent(
+                    drawerState = drawerState,
                     navigation = navigation,
                     user = user
                 )
