@@ -416,5 +416,11 @@
     <string name="attach_photo">Attach photo</string>
     <string name="sleep_period">Sleep Period</string>
     <string name="duration">Duration</string>
-    <string name="add_period">Add SleepPeriod</string>
+    <string name="add_period">Add Sleep Period</string>
+    <string name="success">Success</string>
+    <string name="select_date_and_time">Select Date and Time</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="select_duration">Select Duration</string>
+    <string name="confirm">Confirm</string>
 </resources>
