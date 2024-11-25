@@ -1,4 +1,4 @@
-package com.example.logifitappp.ui.components.time
+package com.example.logifitappp.ui.components.addSleepData
 
 import androidx.compose.foundation.BorderStroke
 import com.example.logifitappp.ui.components.Text
@@ -127,7 +127,7 @@ fun TimePicker(
                             value = minutes,
                             onValueChange = { value ->
                                 if (value.isEmpty() || (value.toIntOrNull() in 0..59)) {
-                                    minutes = value.take(2).padStart(2, '0')
+                                    minutes = value.take(2)
                                 }
                             },
                             modifier = Modifier.width(70.dp),

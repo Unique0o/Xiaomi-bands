@@ -6,6 +6,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
@@ -23,37 +24,67 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.max
 
 @HiltViewModel
 class AddSleepDataViewModel @Inject constructor(
     private val saveSleepDataUseCase: SaveSleepDataUseCase,
-    @ApplicationContext private val  context: Context
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AddSleepDataState())
     val state: StateFlow<AddSleepDataState> = _state
 
+    var tempPhotoUri: Uri? = null
+        private set
+
+    fun createTempPhotoUri(context: Context): Uri? {
+        return try {
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val photoFile = File(
+                this.context.cacheDir,
+                "JPEG_${timeStamp}.jpg"
+            )
+            FileProvider.getUriForFile(
+                this.context,
+                "${this.context.packageName}.provider",
+                photoFile
+            ).also { uri ->
+                tempPhotoUri = uri
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     fun onEvent(event: AddSleepDataEvent) {
         when (event) {
-            is AddSleepDataEvent.SetFellAsleepTime -> updateSleepEntry(event.index) { entry ->
+            is AddSleepDataEvent.SetFellAsleepTime -> updateSleepEntry { entry ->
                 entry.copy(fellAsleepTime = event.time)
             }
-            is AddSleepDataEvent.SetWokeUpTime -> updateSleepEntry(event.index) { entry ->
+            is AddSleepDataEvent.SetWokeUpTime -> updateSleepEntry { entry ->
                 entry.copy(wokeUpTime = event.time)
             }
-            AddSleepDataEvent.AddSleepEntry -> addSleepEntry()
-            is AddSleepDataEvent.RemoveSleepEntry -> removeSleepEntry(event.index)
+            is AddSleepDataEvent.SetDuration -> updateSleepEntry { entry ->
+                entry.copy(duration = event.duration)
+            }
             is AddSleepDataEvent.AttachMedia -> handleMediaResult(event.uri)
             AddSleepDataEvent.RemoveMedia -> removeMedia()
             AddSleepDataEvent.SaveSleepData -> saveSleepData()
         }
         validateState()
     }
+
     private fun uriToBase64(uri: Uri): String {
         return try {
             val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
@@ -71,7 +102,6 @@ class AddSleepDataViewModel @Inject constructor(
     private fun resizeBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
-
         val ratio = maxSize.toFloat() / max(width, height)
         return if (ratio < 1) {
             Bitmap.createScaledBitmap(
@@ -83,44 +113,19 @@ class AddSleepDataViewModel @Inject constructor(
         } else bitmap
     }
 
-    private fun updateSleepEntry(index: Int, update: (SleepEntry) -> SleepEntry) {
+    private fun updateSleepEntry(update: (SleepEntry) -> SleepEntry) {
         _state.update { currentState ->
-            val updatedEntries = currentState.sleepEntries.toMutableList()
-            val entryIndex = updatedEntries.indexOfFirst { it.id == index }
-            if (entryIndex != -1) {
-                updatedEntries[entryIndex] = update(updatedEntries[entryIndex])
-            }
-            currentState.copy(sleepEntries = updatedEntries)
-        }
-    }
-
-    private fun addSleepEntry() {
-        _state.update { currentState ->
-            val newId = (currentState.sleepEntries.maxOfOrNull { it.id } ?: -1) + 1
-            val lastEntry = currentState.sleepEntries.maxByOrNull { it.wokeUpTime }
-            val startTime = lastEntry?.wokeUpTime ?: LocalDateTime.now()
-            val newEntry = SleepEntry(newId, startTime, startTime.plusHours(8))
-            currentState.copy(sleepEntries = currentState.sleepEntries + newEntry)
-        }
-    }
-
-    private fun removeSleepEntry(index: Int) {
-        _state.update { currentState ->
-            if (currentState.sleepEntries.size > 1) {
-                currentState.copy(sleepEntries = currentState.sleepEntries.filterNot { it.id == index })
-            } else currentState
+            currentState.copy(sleepEntry = update(currentState.sleepEntry))
         }
     }
 
     private fun handleMediaResult(uri: Uri) {
-        viewModelScope.launch {
-            _state.update { currentState ->
-                currentState.copy(
-                    photoUri = uri,
-                    errorMessage = null,
-                    isValid = validateAllEntries(currentState.sleepEntries, uri)
-                )
-            }
+        _state.update { currentState ->
+            currentState.copy(
+                photoUri = uri,
+                errorMessage = null,
+                isValid = validateEntry(currentState.sleepEntry, uri)
+            )
         }
     }
 
@@ -132,40 +137,27 @@ class AddSleepDataViewModel @Inject constructor(
                 isValid = false
             )
         }
+        tempPhotoUri = null
     }
 
     private fun validateState() {
         _state.update { currentState ->
-            val entriesValid = validateAllEntries(currentState.sleepEntries, currentState.photoUri)
-            val errorMessage = getValidationError(currentState.sleepEntries, currentState.photoUri)
-            currentState.copy(isValid = entriesValid, errorMessage = errorMessage)
+            val entryValid = validateEntry(currentState.sleepEntry, currentState.photoUri)
+            val errorMessage = getValidationError(currentState.sleepEntry, currentState.photoUri)
+            currentState.copy(isValid = entryValid, errorMessage = errorMessage)
         }
     }
 
-    private fun validateAllEntries(entries: List<SleepEntry>, photoUri: Uri?): Boolean {
-        return entries.isNotEmpty() &&
-                photoUri != null &&
-                entries.all { entry ->
-                    entry.wokeUpTime.isAfter(entry.fellAsleepTime)
-                } &&
-                validateSequentialTimes(entries)
+    private fun validateEntry(entry: SleepEntry, photoUri: Uri?): Boolean {
+        return photoUri != null && entry.wokeUpTime.isAfter(entry.fellAsleepTime)
     }
 
-    private fun validateSequentialTimes(entries: List<SleepEntry>): Boolean {
-        return entries.sortedBy { it.fellAsleepTime }
-            .zipWithNext()
-            .all { (current, next) ->
-                next.fellAsleepTime.isAfter(current.wokeUpTime)
-            }
-    }
-
-    private fun getValidationError(entries: List<SleepEntry>, photoUri: Uri?): String? {
+    private fun getValidationError(entry: SleepEntry, photoUri: Uri?): String? {
         return when {
-            entries.isEmpty() -> "Debe agregar al menos un registro de sueño"
-            entries.any { it.wokeUpTime <= it.fellAsleepTime } ->
+            entry.wokeUpTime <= entry.fellAsleepTime ->
                 "La hora de despertar debe ser posterior a la hora de dormir"
-            !validateSequentialTimes(entries) ->
-                "Los períodos de sueño no pueden superponerse"
+            entry.duration.isNullOrEmpty() ->
+                "Debe ingresar la duración del sueño"
             photoUri == null -> "Se requiere una foto"
             else -> null
         }
@@ -179,7 +171,6 @@ class AddSleepDataViewModel @Inject constructor(
             try {
                 _state.update { it.copy(isLoading = true) }
 
-
                 val user = withContext(Dispatchers.IO) {
                     App.database.userDao().getLoggedIn()
                 } ?: throw Exception("Usuario no encontrado")
@@ -188,29 +179,29 @@ class AddSleepDataViewModel @Inject constructor(
                     currentState.photoUri?.let { uriToBase64(it) }
                 } ?: return@launch
 
-                val totalMinutes = currentState.sleepEntries.sumOf { entry ->
-                    ChronoUnit.MINUTES.between(entry.fellAsleepTime, entry.wokeUpTime)
-                }
+                val entry = currentState.sleepEntry
+                val duration = entry.duration ?: throw Exception("Duración no ingresada")
+
+                val durationPattern = "(\\d+)h\\s*(\\d+)m".toRegex()
+                val matchResult = durationPattern.find(duration) ?: throw Exception("Formato de duración inválido")
+                val (hours, minutes) = matchResult.destructured
+                val durationValue = (hours.toInt() * 60 + minutes.toInt()).toString()
 
                 val request = SleepWrittenDataRequest(
                     realSleep = RealSleep(
-                        intervalText = "${totalMinutes / 60}h ${totalMinutes % 60}min",
-                        intervalValue = totalMinutes.toString(),
+                        intervalText = duration,
+                        intervalValue = durationValue,
                         date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                         version = "4.6"
                     ),
-                    sleeps = currentState.sleepEntries.map { entry ->
-                        val sleepMinutes = ChronoUnit.MINUTES.between(
-                            entry.fellAsleepTime,
-                            entry.wokeUpTime
-                        )
+                    sleeps = listOf(
                         Sleep(
                             sleepIni = entry.fellAsleepTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                             sleepEnd = entry.wokeUpTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                            totalSleepText = "${sleepMinutes / 60}h ${sleepMinutes % 60}min",
-                            totalSleepValue = sleepMinutes.toString()
+                            totalSleepText = duration,
+                            totalSleepValue = durationValue
                         )
-                    },
+                    ),
                     userId = user.id,
                     shiftId = user.shiftId,
                     evidence = photoBase64
@@ -234,7 +225,6 @@ class AddSleepDataViewModel @Inject constructor(
                     isLoading = false,
                     isSuccess = false,
                     errorMessage = "Error al guardar: ${e.message}"
-
                 ) }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.logifitappp.ui.components.addSleepData
 
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,16 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.Text
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 
 @Composable
-fun SleepTimeSelector(
+fun DurationSelector(
     title: String,
-    selectedDateTime: LocalDateTime?,
-    onDateTimeSelected: (LocalDateTime) -> Unit
+    selectedDuration: String?,
+    onDurationSelected: (String) -> Unit
 ) {
-    var showTimePickerDialog by remember { mutableStateOf(false) }
+    var showDurationPickerDialog by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -52,27 +52,29 @@ fun SleepTimeSelector(
                     typography = MaterialTheme.typography.titleMedium
                 )
 
-                selectedDateTime?.let { dateTime ->
+                selectedDuration?.let { duration ->
                     Text(
-                        text = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                        text = duration,
                         typography = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
 
-            IconButton(onClick = { showTimePickerDialog = true }) {
+            IconButton(onClick = { showDurationPickerDialog = true }) {
                 Icon(
                     imageVector = Icons.Default.Schedule,
-                    contentDescription = "Select time"
+                    contentDescription = "Select duration"
                 )
             }
         }
     }
 
-    TimePicker(
-        showDialog = showTimePickerDialog,
-        onDismiss = { showTimePickerDialog = false },
-        onDateTimeSelected = onDateTimeSelected
-    )
+    if (showDurationPickerDialog) {
+        DurationPicker(
+            showDialog = showDurationPickerDialog,
+            onDismiss = { showDurationPickerDialog = false },
+            onDurationSelected = onDurationSelected
+        )
+    }
 }

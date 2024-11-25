@@ -1,18 +1,15 @@
 package com.example.logifitappp.ui.screens.AddSleepData
 
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,6 +30,7 @@ fun AddSleepDataView(
     val state by viewModel.state.collectAsState()
     val scrollState = rememberLazyListState()
     var showSuccess by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     LaunchedEffect(state.isSuccess) {
         if (state.isSuccess) {
@@ -55,9 +53,15 @@ fun AddSleepDataView(
         )
     }
 
-    val pickImage = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? -> uri?.let { viewModel.onEvent(AddSleepDataEvent.AttachMedia(it)) } }
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            viewModel.tempPhotoUri?.let { uri ->
+                viewModel.onEvent(AddSleepDataEvent.AttachMedia(uri))
+            }
+        }
+    }
 
     LazyColumn(
         state = scrollState,
@@ -71,39 +75,29 @@ fun AddSleepDataView(
             )
         }
 
-        items(state.sleepEntries) { entry ->
+        item {
             SleepEntryCard(
-                entry = entry,
-                onRemove = { viewModel.onEvent(AddSleepDataEvent.RemoveSleepEntry(entry.id))},
+                entry = state.sleepEntry,
                 onFellAsleepTimeSelected = { time ->
-                    viewModel.onEvent(AddSleepDataEvent.SetFellAsleepTime(entry.id, time))
+                    viewModel.onEvent(AddSleepDataEvent.SetFellAsleepTime(time))
                 },
                 onWokeUpTimeSelected = { time ->
-                    viewModel.onEvent(AddSleepDataEvent.SetWokeUpTime(entry.id, time))
+                    viewModel.onEvent(AddSleepDataEvent.SetWokeUpTime(time))
+                },
+                onDurationSelected = { duration ->
+                    viewModel.onEvent(AddSleepDataEvent.SetDuration(duration))
                 }
             )
-        }
-
-        item {
-            Button(
-                onClick = { viewModel.onEvent(AddSleepDataEvent.AddSleepEntry) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(stringResource(id = R.string.add_period))
-            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             PhotoSelectionCard(
                 photoUri = state.photoUri,
-                onPickImage = { pickImage.launch("image/*") },
+                onTakePhoto = {
+                    viewModel.createTempPhotoUri(context)?.let { uri ->
+                        cameraLauncher.launch(uri)
+                    }
+                },
                 onRemovePhoto = { viewModel.onEvent(AddSleepDataEvent.RemoveMedia) }
             )
 
@@ -136,5 +130,3 @@ fun AddSleepDataView(
         }
     }
 }
-
-
