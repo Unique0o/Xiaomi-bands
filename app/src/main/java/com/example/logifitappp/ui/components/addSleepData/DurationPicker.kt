@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.Text
+import androidx.compose.material3.*
 
 @Composable
 fun DurationPicker(
@@ -71,7 +72,7 @@ fun DurationPicker(
                             modifier = Modifier.width(70.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true,
-                            label = { Text(text = "HH") },
+                            label = { Text( "HH") },
                             colors = OutlinedTextFieldDefaults.colors(
                                 unfocusedBorderColor = MaterialTheme.colorScheme.primary
                             )
@@ -92,7 +93,7 @@ fun DurationPicker(
                             modifier = Modifier.width(70.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true,
-                            label = { Text(text = "MM") },
+                            label = { Text( "MM") },
                             colors = OutlinedTextFieldDefaults.colors(
                                 unfocusedBorderColor = MaterialTheme.colorScheme.primary
                             )
@@ -105,7 +106,7 @@ fun DurationPicker(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         TextButton(onClick = onDismiss) {
-                            Text(text = stringResource(id = R.string.button_cancel))
+                            Text(stringResource(id = R.string.button_cancel))
                         }
 
                         Button(
@@ -117,7 +118,7 @@ fun DurationPicker(
                             enabled = hours.isNotEmpty() && minutes.isNotEmpty(),
                             modifier = Modifier.padding(start = 8.dp)
                         ) {
-                            Text(text = stringResource(id = R.string.confirm))
+                            Text(stringResource(id = R.string.confirm))
                         }
                     }
                 }

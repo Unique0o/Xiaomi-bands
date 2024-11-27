@@ -41,7 +41,7 @@ class AddSleepDataViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AddSleepDataState())
+    private val _state = MutableStateFlow(AddSleepDataState(sleepEntries = listOf(SleepEntry())))
     val state: StateFlow<AddSleepDataState> = _state
 
     var tempPhotoUri: Uri? = null
@@ -69,13 +69,31 @@ class AddSleepDataViewModel @Inject constructor(
 
     fun onEvent(event: AddSleepDataEvent) {
         when (event) {
-            is AddSleepDataEvent.SetFellAsleepTime -> updateSleepEntry { entry ->
+            is AddSleepDataEvent.AddSleepEntry -> {
+                _state.update { currentState ->
+                    currentState.copy(
+                        sleepEntries = currentState.sleepEntries + SleepEntry()
+                    )
+                }
+            }
+            is AddSleepDataEvent.RemoveSleepEntry -> {
+                _state.update { currentState ->
+                    if (currentState.sleepEntries.size > 1) {
+                        currentState.copy(
+                            sleepEntries = currentState.sleepEntries.filterIndexed { index, _ ->
+                                index != event.index
+                            }
+                        )
+                    } else currentState
+                }
+            }
+            is AddSleepDataEvent.SetFellAsleepTime -> updateSleepEntry(event.index) { entry ->
                 entry.copy(fellAsleepTime = event.time)
             }
-            is AddSleepDataEvent.SetWokeUpTime -> updateSleepEntry { entry ->
+            is AddSleepDataEvent.SetWokeUpTime -> updateSleepEntry(event.index) { entry ->
                 entry.copy(wokeUpTime = event.time)
             }
-            is AddSleepDataEvent.SetDuration -> updateSleepEntry { entry ->
+            is AddSleepDataEvent.SetDuration -> updateSleepEntry(event.index) { entry ->
                 entry.copy(duration = event.duration)
             }
             is AddSleepDataEvent.AttachMedia -> handleMediaResult(event.uri)
@@ -83,6 +101,159 @@ class AddSleepDataViewModel @Inject constructor(
             AddSleepDataEvent.SaveSleepData -> saveSleepData()
         }
         validateState()
+    }
+
+    private fun updateSleepEntry(index: Int, update: (SleepEntry) -> SleepEntry) {
+        _state.update { currentState ->
+            val updatedEntries = currentState.sleepEntries.toMutableList()
+            updatedEntries[index] = update(updatedEntries[index])
+            currentState.copy(sleepEntries = updatedEntries)
+        }
+    }
+
+    private fun handleMediaResult(uri: Uri) {
+        _state.update { currentState ->
+            currentState.copy(
+                photoUri = uri,
+                errorMessage = null,
+                isValid = validateEntries(currentState.sleepEntries, uri)
+            )
+        }
+    }
+
+    private fun removeMedia() {
+        _state.update { currentState ->
+            currentState.copy(
+                photoUri = null,
+                errorMessage = null,
+                isValid = false
+            )
+        }
+        tempPhotoUri = null
+    }
+
+    private fun validateState() {
+        _state.update { currentState ->
+            val entriesValid = validateEntries(currentState.sleepEntries, currentState.photoUri)
+            val errorMessage = getValidationError(currentState.sleepEntries, currentState.photoUri)
+            currentState.copy(isValid = entriesValid, errorMessage = errorMessage)
+        }
+    }
+
+    private fun validateEntries(entries: List<SleepEntry>, photoUri: Uri?): Boolean {
+        return photoUri != null && entries.all { entry ->
+            entry.wokeUpTime.isAfter(entry.fellAsleepTime) &&
+                    isDurationValid(entry)
+        }
+    }
+
+    private fun getValidationError(entries: List<SleepEntry>, photoUri: Uri?): String? {
+        return when {
+            entries.any { it.wokeUpTime <= it.fellAsleepTime } ->
+                "La hora de despertar debe ser posterior a la hora de dormir"
+            entries.any { it.duration.isNullOrEmpty() } ->
+                "Debe ingresar la duración del sueño para todas las entradas"
+            entries.any { !isDurationValid(it) } ->
+                "La duración no puede ser mayor al tiempo entre dormir y despertar"
+            photoUri == null -> "Se requiere una foto"
+            else -> null
+        }
+    }
+    private fun isDurationValid(entry: SleepEntry): Boolean {
+        val duration = entry.duration ?: return false
+        val durationPattern = "(\\d+)h\\s*(\\d+)m".toRegex()
+        val matchResult = durationPattern.find(duration) ?: return false
+
+        val (hours, minutes) = matchResult.destructured
+        val durationMinutes = hours.toInt() * 60 + minutes.toInt()
+
+        val actualDurationMinutes = ChronoUnit.MINUTES.between(
+            entry.fellAsleepTime,
+            entry.wokeUpTime
+        )
+
+        return durationMinutes <= actualDurationMinutes
+    }
+
+
+    private fun saveSleepData() {
+        val currentState = _state.value
+        if (!currentState.isValid) return
+
+        viewModelScope.launch {
+            try {
+                _state.update { it.copy(isLoading = true) }
+
+                val user = withContext(Dispatchers.IO) {
+                    App.database.userDao().getLoggedIn()
+                } ?: throw Exception("Usuario no encontrado")
+
+                val photoBase64 = withContext(Dispatchers.IO) {
+                    currentState.photoUri?.let { uriToBase64(it) }
+                } ?: return@launch
+
+
+                val sleepsList = currentState.sleepEntries.map { entry ->
+                    val duration = entry.duration ?: throw Exception("Duración no ingresada")
+                    val durationPattern = "(\\d+)h\\s*(\\d+)m".toRegex()
+                    val matchResult = durationPattern.find(duration)
+                        ?: throw Exception("Formato de duración inválido")
+                    val (hours, minutes) = matchResult.destructured
+                    val durationValue = (hours.toInt() * 60 + minutes.toInt()).toString()
+
+                    Sleep(
+                        sleepIni = entry.fellAsleepTime.format(
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                        ),
+                        sleepEnd = entry.wokeUpTime.format(
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                        ),
+                        totalSleepText = duration,
+                        totalSleepValue = durationValue
+                    )
+                }
+
+                val totalDurationMinutes = sleepsList.sumOf {
+                    it.totalSleepValue.toInt()
+                }
+                val totalHours = totalDurationMinutes / 60
+                val totalMinutes = totalDurationMinutes % 60
+                val totalDurationText = "${totalHours}h ${totalMinutes}m"
+
+                val request = SleepWrittenDataRequest(
+                    realSleep = RealSleep(
+                        intervalText = totalDurationText,
+                        intervalValue = totalDurationMinutes.toString(),
+                        date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                        version = "4.6"
+                    ),
+                    sleeps = sleepsList,
+                    userId = user.id,
+                    shiftId = user.shiftId,
+                    evidence = photoBase64
+                )
+
+                saveSleepDataUseCase(request).onSuccess {
+                    _state.update { it.copy(
+                        isLoading = false,
+                        isSuccess = true,
+                        errorMessage = null
+                    ) }
+                }.onFailure { error ->
+                    _state.update { it.copy(
+                        isLoading = false,
+                        isSuccess = false,
+                        errorMessage = "Error al guardar: ${error.message}"
+                    ) }
+                }
+            } catch (e: Exception) {
+                _state.update { it.copy(
+                    isLoading = false,
+                    isSuccess = false,
+                    errorMessage = "Error al guardar: ${e.message}"
+                ) }
+            }
+        }
     }
 
     private fun uriToBase64(uri: Uri): String {
@@ -111,122 +282,5 @@ class AddSleepDataViewModel @Inject constructor(
                 true
             )
         } else bitmap
-    }
-
-    private fun updateSleepEntry(update: (SleepEntry) -> SleepEntry) {
-        _state.update { currentState ->
-            currentState.copy(sleepEntry = update(currentState.sleepEntry))
-        }
-    }
-
-    private fun handleMediaResult(uri: Uri) {
-        _state.update { currentState ->
-            currentState.copy(
-                photoUri = uri,
-                errorMessage = null,
-                isValid = validateEntry(currentState.sleepEntry, uri)
-            )
-        }
-    }
-
-    private fun removeMedia() {
-        _state.update { currentState ->
-            currentState.copy(
-                photoUri = null,
-                errorMessage = null,
-                isValid = false
-            )
-        }
-        tempPhotoUri = null
-    }
-
-    private fun validateState() {
-        _state.update { currentState ->
-            val entryValid = validateEntry(currentState.sleepEntry, currentState.photoUri)
-            val errorMessage = getValidationError(currentState.sleepEntry, currentState.photoUri)
-            currentState.copy(isValid = entryValid, errorMessage = errorMessage)
-        }
-    }
-
-    private fun validateEntry(entry: SleepEntry, photoUri: Uri?): Boolean {
-        return photoUri != null && entry.wokeUpTime.isAfter(entry.fellAsleepTime)
-    }
-
-    private fun getValidationError(entry: SleepEntry, photoUri: Uri?): String? {
-        return when {
-            entry.wokeUpTime <= entry.fellAsleepTime ->
-                "La hora de despertar debe ser posterior a la hora de dormir"
-            entry.duration.isNullOrEmpty() ->
-                "Debe ingresar la duración del sueño"
-            photoUri == null -> "Se requiere una foto"
-            else -> null
-        }
-    }
-
-    private fun saveSleepData() {
-        val currentState = _state.value
-        if (!currentState.isValid) return
-
-        viewModelScope.launch {
-            try {
-                _state.update { it.copy(isLoading = true) }
-
-                val user = withContext(Dispatchers.IO) {
-                    App.database.userDao().getLoggedIn()
-                } ?: throw Exception("Usuario no encontrado")
-
-                val photoBase64 = withContext(Dispatchers.IO) {
-                    currentState.photoUri?.let { uriToBase64(it) }
-                } ?: return@launch
-
-                val entry = currentState.sleepEntry
-                val duration = entry.duration ?: throw Exception("Duración no ingresada")
-
-                val durationPattern = "(\\d+)h\\s*(\\d+)m".toRegex()
-                val matchResult = durationPattern.find(duration) ?: throw Exception("Formato de duración inválido")
-                val (hours, minutes) = matchResult.destructured
-                val durationValue = (hours.toInt() * 60 + minutes.toInt()).toString()
-
-                val request = SleepWrittenDataRequest(
-                    realSleep = RealSleep(
-                        intervalText = duration,
-                        intervalValue = durationValue,
-                        date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                        version = "4.6"
-                    ),
-                    sleeps = listOf(
-                        Sleep(
-                            sleepIni = entry.fellAsleepTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                            sleepEnd = entry.wokeUpTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                            totalSleepText = duration,
-                            totalSleepValue = durationValue
-                        )
-                    ),
-                    userId = user.id,
-                    shiftId = user.shiftId,
-                    evidence = photoBase64
-                )
-
-                saveSleepDataUseCase(request).onSuccess {
-                    _state.update { it.copy(
-                        isLoading = false,
-                        isSuccess = true,
-                        errorMessage = null
-                    ) }
-                }.onFailure { error ->
-                    _state.update { it.copy(
-                        isLoading = false,
-                        isSuccess = false,
-                        errorMessage = "Error al guardar: ${error.message}"
-                    ) }
-                }
-            } catch (e: Exception) {
-                _state.update { it.copy(
-                    isLoading = false,
-                    isSuccess = false,
-                    errorMessage = "Error al guardar: ${e.message}"
-                ) }
-            }
-        }
     }
 }

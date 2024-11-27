@@ -5,10 +5,10 @@ import com.example.logifitappp.data.models.SleepEntry
 import java.time.LocalDateTime
 
 data class AddSleepDataState(
-    val sleepEntry: SleepEntry = SleepEntry(),
+    val sleepEntries: List<SleepEntry> = listOf(SleepEntry()),
+    val photoUri: Uri? = null,
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val errorMessage: String? = null,
-    val photoUri: Uri? = null,
     val isValid: Boolean = false
 )
