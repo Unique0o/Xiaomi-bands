@@ -6,14 +6,12 @@ import com.example.logifitappp.R
 import com.example.logifitappp.core.wearebles.AbstractRepeatingFetchOperation
 import com.example.logifitappp.core.wearebles.huami.HuamiFetchDataTypeEnum
 import com.example.logifitappp.core.wearebles.huami.HuamiSupport
-import com.example.logifitappp.core.wearebles.huami.zeppos.ZeppOsCoordinator
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
-import com.example.logifitappp.data.models.MiBandRawActivityModel
 
 open class HuamiFetchActivityOperation(support: HuamiSupport): AbstractRepeatingFetchOperation(support, HuamiFetchDataTypeEnum.ACTIVITY) {
     private var sampleSize = support.getRawActivitySize()
 
-    private fun createActivity(payload: ByteArray, i: Int) = MiBandRawActivityModel(
+    private fun createActivity(payload: ByteArray, i: Int) = HuamiExtendedRawActivityModel(
         type = payload[i].toInt() and 0xff,
         intensity = payload[i + 1].toInt() and 0xff,
         steps = payload[i + 2].toInt() and 0xff,
@@ -34,15 +32,13 @@ open class HuamiFetchActivityOperation(support: HuamiSupport): AbstractRepeating
     override fun handleActivityData(timestamp: GregorianCalendar, bytes: ByteArray): Boolean {
         val coordinator = getSupport().getCoordinator()
 
-        if (coordinator !is ZeppOsCoordinator) return false.also { println("ZeppOsCoordinator is required") }
-
         if (bytes.size % sampleSize != 0) return false.also { println("Unexpected ${getName()} array size: ${bytes.size}, sample: $sampleSize") }
 
         val samples = mutableListOf<HuamiExtendedRawActivityModel>()
 
         for (i in bytes.indices step sampleSize) {
             val sample = when (sampleSize) {
-                //4 -> createActivity(bytes, i)
+                4 -> createActivity(bytes, i)
                 8 -> createExtendedActivity(bytes, i)
                 else -> throw IllegalStateException("Unsupported sample size $sampleSize")
             }

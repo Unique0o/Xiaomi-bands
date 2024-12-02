@@ -9,7 +9,6 @@ import com.example.logifitappp.data.dao.FatigueDao
 import com.example.logifitappp.data.dao.GroupDao
 import com.example.logifitappp.data.dao.HuamiExtendedRawActivityDao
 import com.example.logifitappp.data.dao.LocationDao
-import com.example.logifitappp.data.dao.MiBandRawActivityDao
 import com.example.logifitappp.data.dao.RestParameterDao
 import com.example.logifitappp.data.dao.RosterLocationDao
 import com.example.logifitappp.data.dao.ShiftDao
@@ -28,7 +27,6 @@ import com.example.logifitappp.data.models.FatigueModel
 import com.example.logifitappp.data.models.GroupModel
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
 import com.example.logifitappp.data.models.LocationModel
-import com.example.logifitappp.data.models.MiBandRawActivityModel
 import com.example.logifitappp.data.models.RestParameterModel
 import com.example.logifitappp.data.models.RosterLocationModel
 import com.example.logifitappp.data.models.ShiftModel
@@ -49,7 +47,6 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
         GroupModel::class,
         HuamiExtendedRawActivityModel::class,
         LocationModel::class,
-        MiBandRawActivityModel::class,
         RestParameterModel::class,
         RosterLocationModel::class,
         ShiftModel::class,
@@ -73,7 +70,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun groupDao(): GroupDao
     abstract fun huamiExtendedRawActivityDao(): HuamiExtendedRawActivityDao
     abstract fun locationDao(): LocationDao
-    abstract fun miBandRawActivityDao(): MiBandRawActivityDao
     abstract fun restParameterDao(): RestParameterDao
     abstract fun rosterLocationDao(): RosterLocationDao
     abstract fun shiftDao(): ShiftDao

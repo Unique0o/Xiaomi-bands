@@ -185,12 +185,12 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
 
         if (payload[0] == 0x10.toByte() && payload[2] == 0x01.toByte()) {
             when (payload[1]) {
-                COMMAND_GPS_VERSION -> {
+                HuamiService.COMMAND_GPS_VERSION -> {
                     val gpsVersion = String(payload, 3, payload.size - 3)
                     println("got gps version = $gpsVersion")
                 }
 
-                COMMAND_ALARMS -> {
+                HuamiService.COMMAND_ALARMS -> {
                     println("got alarms from watch")
                     decodeAndUpdateAlarmStatus(payload, false)
                 }
@@ -223,8 +223,8 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
             println("got full/reassembled configuration data")
 
             when (reassemblyType) {
-                COMMAND_ALARMS_WITH_TIMES -> decodeAndUpdateAlarmStatus(reassemblyBuffer, true)
-                COMMAND_WORKOUT_ACTIVITY_TYPES -> println("got workout activity types, not handled")
+                HuamiService.COMMAND_ALARMS_WITH_TIMES -> decodeAndUpdateAlarmStatus(reassemblyBuffer, true)
+                HuamiService.COMMAND_WORKOUT_ACTIVITY_TYPES -> println("got workout activity types, not handled")
                 else -> println("got unknown chunked configuration response for ${reassemblyBuffer.contentToString()}, not handled")
             }
 
@@ -366,6 +366,13 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         return this
     }
 
+    open fun requestGPSVersion(builder: TransactionBuilder): HuamiSupport {
+        println("Requesting GPS version")
+        writeToConfiguration(builder, HuamiService.COMMAND_REQUEST_GPS_VERSION)
+
+        return this
+    }
+
     fun sendChunkedAck() {
         if (characteristicChunked2021Read ==  null) {
             println("Chunked read characteristic is null, can't send ack")
@@ -437,11 +444,14 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         }
     }
 
+    private fun writeToConfiguration(builder: TransactionBuilder, payload: ByteArray) {
+        if (force2021Protocol()) {
+            val data = ArrayUtils.insert(0, payload, 1)
+            writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_COMPAT, data, true)
+        } else builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), payload)
+    }
+
     companion object {
-        const val COMMAND_ALARMS = 0x0d.toByte()
-        const val COMMAND_ALARMS_WITH_TIMES = 0x01.toByte()
-        const val COMMAND_GPS_VERSION = 0x0e.toByte()
-        const val COMMAND_WORKOUT_ACTIVITY_TYPES = 0x11.toByte()
         const val MIN_MTU = 23
     }
 }

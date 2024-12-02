@@ -11,8 +11,13 @@ object HuamiService {
     const val AUTH_SEND_KEY = 0x01.toByte()
     const val AUTH_SUCCESS = 0x01.toByte()
     const val COMMAND_ACK_ACTIVITY_DATA = 0x03.toByte()
+    const val COMMAND_ALARMS = 0x0d.toByte()
+    const val COMMAND_ALARMS_WITH_TIMES = 0x01.toByte()
     const val COMMAND_ACTIVITY_DATA_START_DATE = 0x01.toByte()
     const val COMMAND_FETCH_DATA = 0x02.toByte()
+    const val COMMAND_GPS_VERSION = 0x0e.toByte()
+    val COMMAND_REQUEST_GPS_VERSION = byteArrayOf(COMMAND_GPS_VERSION)
+    const val COMMAND_WORKOUT_ACTIVITY_TYPES = 0x11.toByte()
     const val RESPONSE = 0x10.toByte()
     const val SUCCESS = 0x01.toByte()
 

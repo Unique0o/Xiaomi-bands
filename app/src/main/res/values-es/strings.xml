@@ -10,6 +10,7 @@
     <string name="awaken">Despertar</string>
     <string name="battery_percentage_label">Batería al %1$s</string>
     <string name="between_40_and_100">Entre 40 y 100</string>
+    <string name="biking">Ciclismo</string>
     <string name="busy_task_fetch_activity_data">Recuperando datos de actividad</string>
     <string name="button_add">Agregar</string>
     <string name="button_authenticate_band">Autenticar banda</string>

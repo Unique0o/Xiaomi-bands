@@ -168,6 +168,11 @@ class ZeppOsSupport: HuamiSupport() {
         writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_CONNECTION, Huami2021Service.CONNECTION_CMD_MTU_REQUEST, false)
     }
 
+    override fun requestGPSVersion(builder: TransactionBuilder): ZeppOsSupport {
+        println("Request GPS version not implemented")
+        return this
+    }
+
     override fun setCurrentTimeWithService(builder: TransactionBuilder): ZeppOsSupport {
         val timestamp = GregorianCalendar()
         val year = BleTypeConversionsUtils.fromUint16(timestamp.get(Calendar.YEAR))
