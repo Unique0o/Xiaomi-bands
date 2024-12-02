@@ -20,9 +20,11 @@ enum class AppStatusCodeEnum(
     val component: (@Composable () -> Unit)? = null,
 ) {
     CONNECTING_WITH_WEARABLE(3, R.string.connecting_whit_wearable_message, true, { AnimatedBluetoothConnection() }),
+    DOWNLOADING_TRAINING_CERTIFICATE(308, R.string.downloading_training_certificate_message, true, { Loader() }),
     DOWNLOADING_EVALUATION_RESULT(305, R.string.downloading_evaluation_result_message, true, { Loader() }),
     EXTRACTING_WEARABLE_INFORMATION(6, R.string.extracting_wearable_information_message, true, { AnimatedWearableDataExtraction() }),
     FAILED_PASSWORD_RECOVERY(16, R.string.failed_password_recovery_message, false, { AnimatedErrorSignal() }),
+    FAILED_ROSTER_INFORMATION_STORAGE(309, R.string.failed_roster_information_storage_message, false, { AnimatedErrorSignal() }),
 
     FAILED_WEARABLE_PAIRING(18, R.string.failed_wearable_pairing_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))

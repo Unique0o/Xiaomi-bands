@@ -1,25 +1,44 @@
 package com.example.logifitappp.ui.screens.roster
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
-import com.example.logifitappp.ui.components.forms.IconButton
-import com.example.logifitappp.ui.components.forms.OutlinedTextField
-import com.example.logifitappp.ui.components.forms.SelectableBottomSheet
+import com.example.logifitappp.core.utils.DateTimeUtils
+import com.example.logifitappp.enums.ChipStatusEnum
+import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.components.Chip
+import com.example.logifitappp.ui.components.IconText
+import com.example.logifitappp.ui.components.Loader
+import com.example.logifitappp.ui.components.Text
+import com.example.logifitappp.ui.components.cards.InformationCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.modals.DateRangePickerModel
-import com.example.logifitappp.ui.components.modals.MessageModal
-import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.RosterViewModel
 
@@ -28,62 +47,123 @@ fun RosterView(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
+    val scrollState = rememberLazyListState()
+
     val rosterViewModel = hiltViewModel<RosterViewModel, RosterViewModel.RosterViewModelFactory>{
         it.create(appViewModel.user!!)
     }
 
-    MessageModal(
-        onClose = {
-            if (rosterViewModel.state.hasRosterInformationStorageBeenSuccessful) navigation.popBackStack()
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        rosterViewModel.checkForNewRoster()
+        rosterViewModel.markAsRefresh()
+    }
 
-            rosterViewModel.stopProcessing()
-        },
-        onDismissRequest = { rosterViewModel.stopProcessing() },
-        status = rosterViewModel.state.status,
-        visible = rosterViewModel.state.isLoading
-    )
-
-    SimplePage(
+    ScrollablePage(
         topBar = {
             ColumnStackHeader(
+                action = {
+                    IconButton(
+                        onClick = { navigation.navigate(MainRoutes.RosterRecording) }
+                    ) {
+                        Icon(
+                            Icons.Default.Add,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                },
                 navigation = navigation,
                 title = stringResource(id = R.string.roster_title)
             )
-        }
+        },
+        state = scrollState
     ) {
-        SelectableBottomSheet(
-            elements = rosterViewModel.locations,
-            error = rosterViewModel.state.locationError,
-            onChange = { rosterViewModel.updateLocation(it) },
-            placeholder = stringResource(R.string.placeholder_location),
-            title = stringResource(R.string.location_title),
-            value = rosterViewModel.state.location
-        )
+        rosterViewModel.state.roster?.data?.let {
+            items(it) { roster ->
+                InformationCard(
+                    icon = Icons.Default.LocationOn,
+                    label = roster.location.name,
+                    suffixComponent = {
+                        Chip(
+                            label = roster.status,
+                            status = if (roster.status == "ACTIVO") ChipStatusEnum.SUCCESS else ChipStatusEnum.DANGER
+                        )
+                    }
+                ) {
+                    Column(Modifier.padding(start = 22.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconText(
+                                icon = Icons.Default.CalendarMonth,
+                                iconColor = MaterialTheme.colorScheme.onSurface,
+                                iconSize = 10.dp,
+                                label = DateTimeUtils.parse(roster.startDate, "yyyy-MM-dd", "dd/MM/yyyy"),
+                                labelTypography = MaterialTheme.typography.bodyMedium,
+                            )
 
-        Spacer(Modifier.height(6.dp))
+                            Text(
+                                text = " - ",
+                                typography = MaterialTheme.typography.bodyMedium
+                            )
 
-        DateRangePickerModel(
-            error = rosterViewModel.state.endDateError,
-            onDateRangeSelected = { start, end -> rosterViewModel.updateRangeDate(start, end) },
-            value = Pair(rosterViewModel.state.startDate?.timeInMillis, rosterViewModel.state.endDate?.timeInMillis)
-        )
+                            IconText(
+                                icon = Icons.Default.CalendarMonth,
+                                iconColor = MaterialTheme.colorScheme.onSurface,
+                                iconSize = 10.dp,
+                                label = DateTimeUtils.parse(roster.endDate, "yyyy-MM-dd", "dd/MM/yyyy"),
+                                labelTypography = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
 
-        Spacer(Modifier.height(6.dp))
+                        roster.comment?.let { comment ->
+                            IconText(
+                                icon = Icons.Default.Edit,
+                                iconColor = MaterialTheme.colorScheme.onSurface,
+                                iconSize = 10.dp,
+                                label = comment,
+                                labelTypography = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
 
-        OutlinedTextField(
-            onValueChange = { rosterViewModel.updateComment(it) },
-            placeholder = stringResource(R.string.placeholder_comment),
-            leadingIcon = Icons.Default.Edit,
-            value = rosterViewModel.state.comment
-        )
+                        Spacer(Modifier.height(12.dp))
 
-        Spacer(Modifier.weight(1f))
+                        Text(
+                            text = DateTimeUtils.parse(roster.createdAt, "yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy HH:mm:ss"),
+                            typography = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                }
 
-        IconButton(
-            icon = Icons.Default.Save,
-            onClick = { rosterViewModel.saveRoster() },
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.button_register)
-        )
+                Spacer(Modifier.height(12.dp))
+            }
+        }
+
+        if (rosterViewModel.state.isLoading) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Loader()
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(scrollState) {
+        snapshotFlow { scrollState.layoutInfo }
+            .collect { info ->
+                val visibleItems = info.visibleItemsInfo
+
+                if (visibleItems.isEmpty()) return@collect
+
+                val lastVisibleItemIndex = visibleItems.last().index
+                val totalItems = info.totalItemsCount
+
+                if (lastVisibleItemIndex != totalItems - 1 || rosterViewModel.state.isLoading) return@collect
+
+                rosterViewModel.fetchRosterPage()
+            }
     }
 }

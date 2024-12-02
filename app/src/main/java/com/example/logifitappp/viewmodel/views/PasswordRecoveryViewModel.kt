@@ -1,6 +1,5 @@
 package com.example.logifitappp.viewmodel.views
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App.Companion.context
-import com.example.logifitappp.domain.usecase.RecoverPasswordUseCase
+import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import com.example.logifitappp.viewmodel.states.PasswordRecoveryState
@@ -19,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordRecoveryViewModel @Inject constructor(
-    private val recoverPasswordUseCase: RecoverPasswordUseCase
+    private val authService: AuthService
 ) : ViewModel() {
     var state by mutableStateOf(PasswordRecoveryState())
         private set
@@ -34,7 +33,7 @@ class PasswordRecoveryViewModel @Inject constructor(
             )
 
             try {
-                recoverPasswordUseCase(state.username.text)
+                authService.recoverPassword(state.username.text)
 
                 state = state.copy(
                     hasPasswordRecoveryBeenSuccessful = true,

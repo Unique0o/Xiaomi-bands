@@ -24,11 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
-import com.example.logifitappp.data.models.CountryModel
 import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.forms.PhoneTextInput
-import com.example.logifitappp.ui.components.forms.SelectableItem
 import com.example.logifitappp.viewmodel.views.AdditionalInformation.AdditionalInformationViewModel
 
 
@@ -117,8 +115,7 @@ fun AdditionalInformationForm(
             icon = Icons.AutoMirrored.Rounded.Send,
             onClick = {additionalInformationViewModel.onSubmitPersonalInformation { onSubmit() } },
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.button_continue),
-            enabled = !state.isLoading
+            text = stringResource(id = R.string.button_continue)
         )
     }
 }

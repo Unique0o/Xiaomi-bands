@@ -31,6 +31,7 @@ open class AppPreferences(prefs: SharedPreferences): Preferences(prefs) {
         const val FIREBASE_NOTIFICATION_TOKEN = "firebase_notification_token"
         const val LAST_DEVICE_ADDRESSES = "last_device_addresses"
         const val NEW_NOTIFICATION = "new_notification"
+        const val NEW_ROSTER = "new_roster"
         const val RECONNECT_ONLY_TO_CONNECTED = "general_reconnectonlytoconnected"
         const val RECONNECT_SCAN_KEY = "prefs_general_key_auto_reconnect_scan"
     }

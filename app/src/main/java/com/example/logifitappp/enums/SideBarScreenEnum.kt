@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Diversity1
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.DrawerState
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
@@ -35,5 +36,10 @@ enum class SideBarScreenEnum(
     ROSTER({ drawerState, navigation ->
         navigation.navigate(MainRoutes.Roster)
         drawerState.close()
-    }, R.string.roster_title, Icons.Default.CalendarMonth);
+    }, R.string.roster_title, Icons.Default.CalendarMonth),
+
+    TRAININGS({ drawerState, navigation ->
+        navigation.navigate(MainRoutes.Trainings)
+        drawerState.close()
+    }, R.string.trainings_title, Icons.Default.School);
 }

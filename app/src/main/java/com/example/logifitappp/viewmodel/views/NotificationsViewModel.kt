@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.logifitappp.core.App.Companion.preferences
+import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.data.remote.dto.response.NotificationStructure
 import com.example.logifitappp.domain.service.NotificationService
@@ -26,14 +26,27 @@ class NotificationsViewModel @Inject constructor(
         private set
 
     init {
+        fetchNotifications()
+    }
+
+    fun fetchNotifications() {
         viewModelScope.launch {
-            notifications.addAll(notificationService.all())
-            state = state.copy(isLoading = false)
+            try {
+                state = state.copy(isLoading = true)
+
+                notifications.addAll(notificationService.all())
+
+                state = state.copy(hasFetchNotificationsFailed = false)
+            } catch (e: Exception) {
+                state = state.copy(hasFetchNotificationsFailed = true)
+            } finally {
+                state = state.copy(isLoading = false)
+            }
         }
     }
 
     fun markAsRead() {
-        preferences.getPreferences()
+        App.preferences.getPreferences()
             .edit()
             .remove(AppPreferences.NEW_NOTIFICATION)
             .apply()

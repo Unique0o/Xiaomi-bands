@@ -3,7 +3,6 @@ package com.example.logifitappp.ui.screens.graphics
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -39,7 +38,6 @@ fun GraphicsView(
     )
 
     ScrollablePage(
-        backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
             BottomTabsHeader(
                 appViewModel = appViewModel,

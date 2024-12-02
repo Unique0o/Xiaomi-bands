@@ -1,6 +1,11 @@
 package com.example.logifitappp.viewmodel.components
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.logifitappp.core.App
+import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.enums.SideBarScreenEnum
 import dagger.assisted.Assisted
@@ -20,7 +25,11 @@ class SideBarViewModel @AssistedInject constructor(
     var options = mutableListOf<SideBarScreenEnum>()
         private set
 
+    var tenant by mutableStateOf<TenantModel?>(null)
+        private set
+
     init {
+        tenant = App.database.tenantDao().find(user.tenantId)
         refreshOptions()
     }
 
@@ -28,12 +37,17 @@ class SideBarViewModel @AssistedInject constructor(
         options.clear()
 
         if (!user.isAdmin()) {
-            options.addAll(listOf(
+            /*options.addAll(listOf(
                 SideBarScreenEnum.PERSONAL_INFORMATION,
                 SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
-                SideBarScreenEnum.HEALTH_INFORMATION,
-                SideBarScreenEnum.ROSTER
-            ))
+                SideBarScreenEnum.HEALTH_INFORMATION
+            ))*/
+
+            if (tenant?.shouldItShowRosterOption == true) options.add(SideBarScreenEnum.ROSTER)
         }
+
+        options.addAll(listOf(
+            SideBarScreenEnum.TRAININGS
+        ))
     }
 }

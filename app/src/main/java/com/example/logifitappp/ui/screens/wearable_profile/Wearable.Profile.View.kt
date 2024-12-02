@@ -54,7 +54,7 @@ fun WearableProfileView(
             IconText(
                 icon = Icons.Default.BatteryFull,
                 iconColor = MaterialTheme.colorScheme.surfaceTint,
-                label = stringResource(R.string.percentage_batter_label, "$it%"),
+                label = stringResource(R.string.battery_percentage_label, "$it%"),
                 labelColor = MaterialTheme.colorScheme.surfaceTint,
                 labelTypography = MaterialTheme.typography.bodyMedium
             )

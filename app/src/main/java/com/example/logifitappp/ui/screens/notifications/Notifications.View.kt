@@ -1,9 +1,7 @@
 package com.example.logifitappp.ui.screens.notifications
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
@@ -11,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,8 +22,8 @@ import com.example.logifitappp.ui.components.Loader
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.cards.InformationCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
+import com.example.logifitappp.ui.components.pages.NoInternetPage
 import com.example.logifitappp.ui.components.pages.ScrollablePage
-import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.NotificationsViewModel
 
 @Composable
@@ -40,16 +37,12 @@ fun NotificationsView(
     }
 
     if (notificationsViewModel.state.isLoading) {
-        SimplePage {
-            Column(
-                Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Loader()
-            }
-        }
+        Loader()
+        return
+    }
 
+    if (notificationsViewModel.state.hasFetchNotificationsFailed) {
+        NoInternetPage { notificationsViewModel.fetchNotifications() }
         return
     }
 

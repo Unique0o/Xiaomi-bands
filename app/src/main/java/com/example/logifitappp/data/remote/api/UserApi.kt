@@ -6,6 +6,7 @@ import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInforma
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreRosterRequest
 import com.example.logifitappp.data.remote.dto.response.FetchUserInformationResponse
+import com.example.logifitappp.data.remote.dto.response.FetchUserViewDetailsResponse
 import com.example.logifitappp.data.remote.dto.response.GeneralResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -13,6 +14,9 @@ import retrofit2.http.*
 interface UserApi {
     @POST("api/auth/me")
     suspend fun fetch(): Response<FetchUserInformationResponse>
+
+    @GET("api/view_user/{id}")
+    suspend fun fetchViewDetails(@Path("id") userIdentifier: Int, @Query("page") page: Int): Response<FetchUserViewDetailsResponse>
 
     @PUT("api/user/update_data_laboral/{id}")
     suspend fun storeOccupationalInformation(

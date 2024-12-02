@@ -8,6 +8,7 @@
     <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
     <string name="authentication_required">Authentication required</string>
     <string name="awaken">Awaken</string>
+    <string name="battery_percentage_label">Battery at %1$s</string>
     <string name="between_40_and_100">Between 40 and 100</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
     <string name="button_add">Add</string>
@@ -15,13 +16,16 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_close">Close</string>
     <string name="button_device_detection">Devices detection</string>
+    <string name="button_download_certificate">Download certificate</string>
     <string name="button_get_into">Get into</string>
+    <string name="button_mark_as_view">Mark as view</string>
     <string name="button_ok">OK</string>
     <string name="button_register">Register</string>
     <string name="button_send">Send</string>
     <string name="button_share">Share</string>
     <string name="button_start_detection">Start detection</string>
     <string name="button_stop_detection">Stop detection</string>
+    <string name="button_try_again">Try again</string>
     <string name="change_location_modal_message">Remember this is very important for your sleep analysis</string>
     <string name="change_location_modal_subtitle">Select your location in your company</string>
     <string name="change_location_modal_title">My location</string>
@@ -30,16 +34,19 @@
     <string name="change_shift_modal_title">My work schedule</string>
     <string name="companion_pairing_request_message">Pair this device as companion?. This is recommended for some functions such as find device, and provides a better connection.</string>
     <string name="companion_pairing_request_title">Companion device</string>
+    <string name="completed">Completed</string>
     <string name="connected">Connected</string>
     <string name="connecting">Connecting</string>
     <string name="connecting_whit_wearable_message">Remember to keep your Smart Band close to facilitate the connection</string>
     <string name="date">Date</string>
     <string name="default_notification_channel_id">Local Push Notification</string>
+    <string name="description">Description</string>
     <string name="device_unknown_name">(unknown)</string>
     <string name="disconnected">Disconnected</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
     <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
+    <string name="downloading_training_certificate_message">Downloading training certificate...</string>
     <string name="drowsiness_detail_modal_message">Your sleep information must exceed **%1$s hours** to count as eligible</string>
     <string name="drowsiness_detail_modal_subtitle">You are</string>
     <string name="drowsiness_detail_modal_title">Sleep detail</string>
@@ -48,6 +55,7 @@
     <string name="drowsiness_label">Sleep</string>
     <string name="extracting_wearable_information_message">Activity and sleep data from your Smart Band is being shared with app</string>
     <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
+    <string name="failed_roster_information_storage_message">Record with date range already exists</string>
     <string name="failed_wearable_pairing_message">To connect successfully, it is necessary to keep the Smart Band close to the cell phone</string>
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
@@ -67,6 +75,7 @@
     <string name="heart_rate_detail_chart_subtitle">Last recorded measurement</string>
     <string name="heart_rate_detail_chart_title">My heart rate</string>
     <string name="help_already_stored_message">A help request has already been made for today</string>
+    <string name="in_progress">In progress</string>
     <string name="initialized">Initialized</string>
     <string name="initializing">Initializing</string>
     <string name="interrupted_synchronization_message">Interrupted synchronization. It is recommended to keep the Smart Band close to the phone until the information extraction process is finished</string>
@@ -80,9 +89,12 @@
     <string name="less_than_20_minutes">Less than 20 minutes</string>
     <string name="less_than_40_or_greater_than_100">Less than 40 or greater than 100</string>
     <string name="less_than_6_hours">Less than 6 hours</string>
+    <string name="lessons">Lessons</string>
     <string name="link_hide">Hide</string>
     <string name="link_recover_password">Get it back here</string>
     <string name="link_show">Show</string>
+    <string name="link_show_less">Show less</string>
+    <string name="link_show_more">Show more</string>
     <string name="lite">Lite</string>
     <string name="location_title">Select a location</string>
     <string name="location_validation_error_message">You must select a location</string>
@@ -93,6 +105,7 @@
     <string name="my_drowsiness_tests">My drowsiness tests</string>
     <string name="no_data">No data</string>
     <string name="no_internet_connection_message">Check your Internet connection</string>
+    <string name="no_internet_connection_page_message">You can consult this section with an Internet connection. Please check and try again.</string>
     <string name="no_synchronized_wearable_data_message">It seems you do not have current data, please perform the extraction and try again</string>
     <string name="no_wearable_sleep_data_message">It looks like you do not have a sleep log to send. Try to sync again</string>
     <string name="not_connected">Not connected</string>
@@ -104,7 +117,6 @@
     <string name="password_recovery_title">Recover password</string>
     <string name="password_validation_error_message">You must insert a password</string>
     <string name="pending">Pending</string>
-    <string name="percentage_batter_label">Battery at %1$s</string>
     <string name="personal_information_title">Personal information</string>
     <string name="placeholder_comment">Comment</string>
     <string name="placeholder_end_date">End date</string>
@@ -120,6 +132,7 @@
     <string name="rem_sleep">REM Sleep</string>
     <string name="reminder_message">Remember to activate your Bluetooth and keep your Smart Band close to your cell phone to facilitate the connection</string>
     <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
+    <string name="roster_recording_title">Create record</string>
     <string name="roster_title">Roster</string>
     <string name="running">Running</string>
     <string name="scanned">Scanned</string>
@@ -127,6 +140,7 @@
     <string name="select_data_range_title">Select date range</string>
     <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
+    <string name="share_training_certificate_message">Share training certificate</string>
     <string name="shift">Shift</string>
     <string name="sleep_detail_chart_subtitle">Information between %1$s - %2$s</string>
     <string name="sleep_detail_chart_title">My sleep</string>
@@ -151,6 +165,8 @@
     <string name="sync_with_logifit_required_message">The sending to Logifit was not made</string>
     <string name="total_awake_time">Total awake time</string>
     <string name="total_sleep_time">Total sleep time</string>
+    <string name="training_progress_label">Progress %1$s</string>
+    <string name="trainings_title">Trainings</string>
     <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
     <string name="unbind_before_pair_title">Already bound</string>
@@ -390,12 +406,10 @@
     <string name="training_manual_title">Procedures Manual</string>
     <string name="training_manual_description">This module provides a guide...</string>
     <string name="smartband_logifit">Smartband Logifit</string>
-    <string name="description">Description</string>
     <string name="smartband_description">Logifit has an intelligent smartband that accompanies you to improve your health quality. It puts the most advanced technology at your fingertips and contributes…</string>
     <string name="show_more">Show more</string>
     <string name="show_less">Show less</string>
     <string name="progress">Progress</string>
-    <string name="lessons">Lessons</string>
     <string name="what_is_smartband">What is a Smartband?</string>
     <string name="what_is_smartband_desc">This training module explains…</string>
     <string name="understanding_use">Understanding the use…</string>

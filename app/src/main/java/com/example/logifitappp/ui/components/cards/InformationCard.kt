@@ -36,7 +36,6 @@ fun InformationCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconText(
                     icon = icon,
-                    iconColor = MaterialTheme.colorScheme.primary,
                     iconSize = iconSize,
                     label = label,
                     labelColor = labelColor,

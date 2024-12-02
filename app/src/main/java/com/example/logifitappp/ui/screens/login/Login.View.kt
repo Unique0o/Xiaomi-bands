@@ -1,7 +1,6 @@
 package com.example.logifitappp.ui.screens.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.ui.components.Link
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.SimplePage
@@ -36,7 +36,7 @@ fun LoginView(
         visible = loginViewModel.state.isLoggedIn || loginViewModel.state.hasLoginProcessFailed
     )
 
-    SimplePage {
+    SimplePage(backgroundColor = MaterialTheme.colorScheme.surface) {
         Spacer(modifier = Modifier.weight(1f))
 
         Image(
@@ -75,16 +75,9 @@ fun LoginView(
                 typography = MaterialTheme.typography.bodySmall,
             )
 
-            Text(
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .clickable {
-                        navigation.navigate(MainRoutes.PasswordRecovery)
-                    },
-                typography = MaterialTheme.typography.bodySmall,
+            Link(
                 text = stringResource(id = R.string.link_recover_password)
-            )
+            ) { navigation.navigate(MainRoutes.PasswordRecovery) }
 
             Spacer(modifier = Modifier.weight(1f))
         }

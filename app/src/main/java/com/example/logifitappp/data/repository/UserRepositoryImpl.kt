@@ -5,6 +5,7 @@ import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInforma
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreRosterRequest
 import com.example.logifitappp.data.remote.dto.response.FetchUserInformationResponse
+import com.example.logifitappp.data.remote.dto.response.FetchUserViewDetailsResponse
 import com.example.logifitappp.data.remote.dto.response.GeneralResponse
 import com.example.logifitappp.data.remote.dto.response.StoreOccupationalInformationResponse
 import com.example.logifitappp.data.remote.dto.response.StorePersonalInformationResponse
@@ -17,6 +18,10 @@ class UserRepositoryImpl @Inject constructor(
 ): UserRepository {
     override suspend fun fetch(): Response<FetchUserInformationResponse> {
         return userApi.fetch()
+    }
+
+    override suspend fun fetchViewDetails(userId: Int, page: Int): Response<FetchUserViewDetailsResponse> {
+        return userApi.fetchViewDetails(userId, page)
     }
 
     override suspend fun storeOccupationalInformation(userId: Int, request: StoreOccupationalInformationRequest): Response<StoreOccupationalInformationResponse> {

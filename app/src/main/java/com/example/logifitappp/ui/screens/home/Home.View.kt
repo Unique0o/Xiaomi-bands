@@ -134,7 +134,6 @@ fun HomeView(
     }
 
     ScrollablePage(
-        backgroundColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
             BottomTabsHeader(
                 appViewModel = appViewModel,

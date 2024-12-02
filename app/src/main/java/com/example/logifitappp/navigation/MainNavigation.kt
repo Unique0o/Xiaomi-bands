@@ -10,11 +10,15 @@ import androidx.navigation.toRoute
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.BottomTabScreen
 import com.example.logifitappp.ui.screens.SplashScreen
+import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.roster.RosterView
+import com.example.logifitappp.ui.screens.roster_recording.RosterRecordingView
 import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
+import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
+import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -33,8 +37,22 @@ fun MainNavigation(
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
+        composable<MainRoutes.RosterRecording> { RosterRecordingView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
+        composable<MainRoutes.Trainings> { TrainingsView(navigation) }
+
+        composable<MainRoutes.LessonDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
+
+            LessonDetailView(appViewModel, navigation, arguments.lessonId)
+        }
+
+        composable<MainRoutes.TrainingsDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.TrainingsDetail>()
+
+            TrainingDetailView(navigation, arguments.trainingId)
+        }
 
         composable<MainRoutes.WearableProfile> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.WearableProfile>()

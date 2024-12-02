@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -15,6 +16,7 @@ fun Text(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.onSurface,
     maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
     overflow: TextOverflow = TextOverflow.Clip,
     typography: TextStyle = MaterialTheme.typography.bodyLarge,
     text: String,
@@ -28,6 +30,7 @@ fun Text(
         lineHeight = typography.lineHeight,
         maxLines = maxLines,
         modifier = modifier,
+        onTextLayout = onTextLayout,
         overflow = overflow,
         text = text,
         textAlign = textAlign,

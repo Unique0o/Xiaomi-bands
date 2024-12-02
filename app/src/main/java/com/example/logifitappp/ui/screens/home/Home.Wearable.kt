@@ -96,7 +96,7 @@ fun HomeWearable(
 
         InformationCard(
             icon = Icons.Default.Battery4Bar,
-            label = stringResource(id = R.string.percentage_batter_label, "${wearable.getBatteryLevel()}%"),
+            label = stringResource(id = R.string.battery_percentage_label, "${wearable.getBatteryLevel()}%"),
             suffixComponent = {
                 Chip(
                     label = stringResource(id = R.string.connected),

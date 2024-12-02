@@ -130,8 +130,8 @@ fun WearableDetectionView(
                )
             }
 
-            item {
-                if (wearableDetectionViewModel.isScanning) {
+            if (wearableDetectionViewModel.isScanning) {
+                item {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

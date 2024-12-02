@@ -11,6 +11,9 @@ sealed class MainRoutes {
     data object HealthInformation: MainRoutes()
 
     @Serializable
+    data class LessonDetail(val lessonId: Int): MainRoutes()
+
+    @Serializable
     data object Login: MainRoutes()
 
     @Serializable
@@ -32,10 +35,19 @@ sealed class MainRoutes {
     data object Roster: MainRoutes()
 
     @Serializable
+    data object RosterRecording: MainRoutes()
+
+    @Serializable
     data object SleepDataRecording: MainRoutes()
 
     @Serializable
     data object SplashScreen: MainRoutes()
+
+    @Serializable
+    data object Trainings: MainRoutes()
+
+    @Serializable
+    data class TrainingsDetail(val trainingId: Int): MainRoutes()
 
     @Serializable
     data object WearableDetection: MainRoutes()
@@ -53,12 +65,6 @@ sealed class MainRoutes {
 
     @Serializable
     data object Profile : MainRoutes()
-
-    @Serializable
-    data object Trainings : MainRoutes()
-
-    @Serializable
-    data object TrainingsDetail : MainRoutes()
 
     @Serializable
     data object AdditionalInformationPicture : MainRoutes()
