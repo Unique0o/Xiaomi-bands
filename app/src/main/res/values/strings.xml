@@ -181,6 +181,8 @@
     <string name="username_validation_error_message">You must insert an user</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
+    <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
+    <string name="wearable_pairing_title">Pairing with %1$s</string>
     <string name="without_role">Without role</string>
 
     <plurals name="day_label">

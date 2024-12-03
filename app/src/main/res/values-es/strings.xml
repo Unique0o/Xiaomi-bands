@@ -181,6 +181,8 @@
     <string name="username_validation_error_message">Debe ingresar un usuario</string>
     <string name="waiting_for_device_scan">Esperando por escaneo de dispositivos</string>
     <string name="waiting_for_reconnect">Esperando por reconexión</string>
+    <string name="wearable_pairing_message">Por favor, mantener cerca la Smart Band para que Logifit complete la conexión.</string>
+    <string name="wearable_pairing_title">Emparejando con %1$s</string>
     <string name="without_role">Sin rol</string>
 
     <plurals name="day_label">

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,16 +59,13 @@ fun LoginView(
             onSubmit = {
                 loginViewModel.login {
                     appViewModel.updateUser(it)
-                    navigation.navigate(MainRoutes.BottomTabsNavigation) {
-                        popUpTo(0)
-                    }
                 }
             }
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.weight(1f))
 
             Text(

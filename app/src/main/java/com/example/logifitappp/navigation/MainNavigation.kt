@@ -8,10 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.logifitappp.navigation.routes.MainRoutes
-import com.example.logifitappp.ui.screens.BottomTabScreen
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
-import com.example.logifitappp.ui.screens.login.LoginView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.roster.RosterView
@@ -32,8 +30,6 @@ fun MainNavigation(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
     ) {
-        composable<MainRoutes.BottomTabsNavigation> { BottomTabScreen(appViewModel, navigation) }
-        composable<MainRoutes.Login> { LoginView(appViewModel, navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
@@ -41,6 +37,7 @@ fun MainNavigation(
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.Trainings> { TrainingsView(navigation) }
+        composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
 
         composable<MainRoutes.LessonDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
@@ -59,7 +56,5 @@ fun MainNavigation(
 
             WearableProfileView(appViewModel, navigation, arguments.mac)
         }
-
-        composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
     }
 }

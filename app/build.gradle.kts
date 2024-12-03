@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId = "com.info.logifit.pe"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 44
         versionName = "4.6.0"
 

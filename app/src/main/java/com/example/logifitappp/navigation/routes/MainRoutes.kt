@@ -5,16 +5,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class MainRoutes {
     @Serializable
-    data object BottomTabsNavigation: MainRoutes()
-
-    @Serializable
     data object HealthInformation: MainRoutes()
 
     @Serializable
     data class LessonDetail(val lessonId: Int): MainRoutes()
-
-    @Serializable
-    data object Login: MainRoutes()
 
     @Serializable
     data object Notifications: MainRoutes()
