@@ -1,4 +1,4 @@
-package com.example.logifitappp.core.wearebles
+package com.example.logifitappp.core.builders.ble.profiles.parcelables
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -5,6 +5,7 @@ import java.util.UUID
 
 object GattService {
     val UUID_SERVICE_ALERT_NOTIFICATION: UUID = UUID.fromString(String.format(AbstractBleWearableSupport.BASE_UUID, "1811"))
+    val UUID_SERVICE_BATTERY_SERVICE: UUID = UUID.fromString(String.format(AbstractBleWearableSupport.BASE_UUID, "180F"))
     val UUID_SERVICE_DEVICE_INFORMATION: UUID = UUID.fromString(String.format(AbstractBleWearableSupport.BASE_UUID, "180A"))
     val UUID_SERVICE_GENERIC_ACCESS: UUID = UUID.fromString(String.format(AbstractBleWearableSupport.BASE_UUID, "1800"))
     val UUID_SERVICE_GENERIC_ATTRIBUTE: UUID = UUID.fromString(String.format(AbstractBleWearableSupport.BASE_UUID, "1801"))

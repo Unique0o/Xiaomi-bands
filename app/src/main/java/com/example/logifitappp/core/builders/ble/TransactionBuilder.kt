@@ -6,10 +6,11 @@ import com.example.logifitappp.core.builders.ble.actions.Action
 import com.example.logifitappp.core.builders.ble.actions.NotifyAction
 import com.example.logifitappp.core.builders.ble.actions.ReadAction
 import com.example.logifitappp.core.builders.ble.actions.RequestMtuAction
+import com.example.logifitappp.core.builders.ble.actions.WaitAction
 import com.example.logifitappp.core.builders.ble.actions.WriteAction
 import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
 
-class TransactionBuilder(taskName: String) {
+open class TransactionBuilder(taskName: String) {
     var transaction = Transaction(taskName)
         private set
 
@@ -19,7 +20,7 @@ class TransactionBuilder(taskName: String) {
         transaction.add(action)
     }
 
-    protected fun createNotifyAction(characteristic: BluetoothGattCharacteristic, enable: Boolean) = NotifyAction(characteristic, enable)
+    private fun createNotifyAction(characteristic: BluetoothGattCharacteristic, enable: Boolean) = NotifyAction(characteristic, enable)
 
     fun notify(characteristic: BluetoothGattCharacteristic?, enable: Boolean) {
         if (characteristic == null) {
@@ -52,6 +53,10 @@ class TransactionBuilder(taskName: String) {
 
     fun requestMtu(mtu: Int) {
         add(RequestMtuAction(mtu))
+    }
+
+    fun wait(millis: Int) {
+        add(WaitAction(millis))
     }
 
     fun write(characteristic: BluetoothGattCharacteristic?, payload: ByteArray) {

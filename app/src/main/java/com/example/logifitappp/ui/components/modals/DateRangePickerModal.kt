@@ -35,6 +35,7 @@ import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.layouts.ModalLayout
+import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +66,7 @@ fun DateRangePickerModel(
             headline = {
                 Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                     Box(Modifier.weight(1f)) {
-                        (if(state.selectedStartDateMillis!=null) state.selectedStartDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy") } else stringResource(R.string.placeholder_start_date))?.let {
+                        (if (state.selectedStartDateMillis != null) state.selectedStartDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } else stringResource(R.string.placeholder_start_date))?.let {
                             Text(
                                 text = it,
                                 typography = MaterialTheme.typography.headlineLarge
@@ -74,7 +75,7 @@ fun DateRangePickerModel(
                     }
 
                     Box(Modifier.weight(1f)) {
-                        (if(state.selectedEndDateMillis!=null) state.selectedEndDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy") } else stringResource(R.string.placeholder_end_date))?.let {
+                        (if (state.selectedEndDateMillis != null) state.selectedEndDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } else stringResource(R.string.placeholder_end_date))?.let {
                             Text(
                                 text = it,
                                 typography = MaterialTheme.typography.headlineLarge
@@ -129,7 +130,7 @@ fun DateRangePickerModel(
                     tint = MaterialTheme.colorScheme.outline
                 )
             },
-            value = TextFieldValue(value?.first?.let { DateTimeUtils.parse(it, "dd/MM/yyyy") } ?: "")
+            value = TextFieldValue(value?.first?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } ?: "")
         )
 
         Spacer(Modifier.width(1.dp))
@@ -156,7 +157,7 @@ fun DateRangePickerModel(
                     tint = MaterialTheme.colorScheme.outline
                 )
             },
-            value = TextFieldValue(value?.second?.let { DateTimeUtils.parse(it, "dd/MM/yyyy") } ?: "")
+            value = TextFieldValue(value?.second?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } ?: "")
         )
     }
 }

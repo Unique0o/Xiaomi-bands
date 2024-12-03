@@ -24,6 +24,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.TimeZone
 
 @HiltViewModel(assistedFactory = RosterRecordingViewModel.RosterRecordingViewModelFactory::class)
 class RosterRecordingViewModel @AssistedInject constructor(
@@ -59,8 +60,8 @@ class RosterRecordingViewModel @AssistedInject constructor(
 
                 userService.storeRosterInformation(StoreRosterRequest(
                     comentario = state.comment.text,
-                    fecha_retorno = DateTimeUtils.format(state.startDate!!.time, "yyyy-MM-dd"),
-                    fecha_salida = DateTimeUtils.format(state.endDate!!.time, "yyyy-MM-dd"),
+                    fecha_retorno = DateTimeUtils.format(state.startDate!!.time, "yyyy-MM-dd", TimeZone.getTimeZone("UTC")),
+                    fecha_salida = DateTimeUtils.format(state.endDate!!.time, "yyyy-MM-dd", TimeZone.getTimeZone("UTC")),
                     location_id = state.location!!.id,
                     user_id = user.id
                 ))

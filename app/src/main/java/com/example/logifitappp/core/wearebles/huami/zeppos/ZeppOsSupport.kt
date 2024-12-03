@@ -50,6 +50,8 @@ class ZeppOsSupport: HuamiSupport() {
 
     override fun getCryptFlags() = 0x80.toByte()
 
+    override fun getImplicitCallbackModify() = false
+
     override fun getRawActivitySize() = 8
 
     fun getService(endpoint: Short) = serviceMap[endpoint]

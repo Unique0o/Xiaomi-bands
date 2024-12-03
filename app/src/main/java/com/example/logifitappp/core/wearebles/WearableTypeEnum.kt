@@ -1,5 +1,6 @@
 package com.example.logifitappp.core.wearebles
 
+import com.example.logifitappp.core.wearebles.fitpro.FitProCoordinator
 import com.example.logifitappp.core.wearebles.huami.miband.miband4.MiBand4Coordinator
 import com.example.logifitappp.core.wearebles.huami.miband.miband5.MiBand5Coordinator
 import com.example.logifitappp.core.wearebles.huami.miband.miband6.MiBand6Coordinator
@@ -15,7 +16,8 @@ enum class WearableTypeEnum(private val coordinatorClass: Class<out WearableCoor
     MIBAND6(MiBand6Coordinator::class.java),
     MIBAND7(MiBand7Coordinator::class.java),
     MIBAND8(MiBand8Coordinator::class.java),
-    MIBAND9(MiBand9Coordinator::class.java);
+    MIBAND9(MiBand9Coordinator::class.java),
+    FITPRO(FitProCoordinator::class.java);
 
     fun getWearableCoordinator(): WearableCoordinator {
         return coordinatorClass.getDeclaredConstructor().newInstance()

@@ -1,12 +1,14 @@
-package com.example.logifitappp.core.wearebles
+package com.example.logifitappp.core.builders.ble.profiles
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Intent
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.builders.ble.profiles.parcelables.WearableInfo
 import com.example.logifitappp.core.utils.GattCharacteristic
+import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
 
-class WearableInfoProfile<T: AbstractBleWearableSupport>(private val support: T): AbstractBleProfile<T>(support) {
+class WearableInfoProfile<T: AbstractBleWearableSupport>(support: T): AbstractBleProfile<T>(support) {
     private val wearableInfo = WearableInfo()
 
     private fun createIntent(wearableInfo: WearableInfo): Intent {

@@ -98,7 +98,7 @@ class XiaomiActivityFileFetcher(private val healthService: XiaomiHealthService) 
             println("Nothing more to fetch")
             isFetching = false
             healthService.support.getWearable().unsetBusyTask()
-            App.signalActivityDataFinish(healthService.support.getWearable())
+            App.signalFetchingActivityDataFinish(healthService.support.getWearable())
             healthService.support.getWearable().sendDeviceUpdateIntent(healthService.support.getContext())
             return
         }

@@ -82,15 +82,15 @@ class App: Application() {
             LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(NOTIFICATION))
         }
 
-        fun signalActivityDataFinish(wearable: Wearable) {
+        fun signalAuthenticationKeyFailed() {
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(AUTHENTICATION_KEY_FAILED))
+        }
+
+        fun signalFetchingActivityDataFinish(wearable: Wearable) {
             val intent = Intent(ACTION_NEW_DATA)
             intent.putExtra(Wearable.EXTRA_DEVICE, wearable)
 
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-        }
-
-        fun signalAuthenticationKeyFailed() {
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(AUTHENTICATION_KEY_FAILED))
         }
 
         fun signalReloadAuthenticatedUser() {

@@ -1,4 +1,4 @@
-package com.example.logifitappp.core.wearebles
+package com.example.logifitappp.core.builders.ble.profiles
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,8 @@ import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.handlers.AbstractBluetoothGattCallbackHandler
 import com.example.logifitappp.core.handlers.IntentListenerHandler
+import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
+import com.example.logifitappp.core.wearebles.Wearable
 import java.io.IOException
 import java.util.UUID
 
@@ -18,9 +20,25 @@ abstract class AbstractBleProfile<T: AbstractBleWearableSupport>(private val sup
         }
     }
 
+    open fun enableNotify(builder: TransactionBuilder, enable: Boolean) {
+    }
+
+    protected fun getCharacteristic(uuid: UUID) = support.getCharacteristic(uuid)
+
+
+    fun getContext(): Context {
+        return support.getContext()
+    }
+
+    protected fun getDevice(): Wearable {
+        return support.getWearable()
+    }
+
     protected fun getListeners(): List<IntentListenerHandler> {
         return listeners.toList()
     }
+
+    protected fun getQueue() = support.getQueue()
 
     protected fun notify(intent: Intent) {
         for (listener in listeners) listener.notify(intent)
@@ -36,20 +54,5 @@ abstract class AbstractBleProfile<T: AbstractBleWearableSupport>(private val sup
         val builder = support.performInitialized(taskName)
         builder.setCallback(this)
         return builder
-    }
-
-    fun getContext(): Context {
-        return support.getContext()
-    }
-
-    protected fun getDevice(): Wearable {
-        return support.getWearable()
-    }
-
-    protected fun getCharacteristic(uuid: UUID) = support.getCharacteristic(uuid)
-
-    protected fun getQueue() = support.getQueue()
-
-    fun enableNotify(builder: TransactionBuilder, enable: Boolean) {
     }
 }

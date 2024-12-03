@@ -9,6 +9,7 @@ import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.bluetooth.BleQueue
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.builders.ble.actions.CheckInitializedAction
+import com.example.logifitappp.core.builders.ble.profiles.AbstractBleProfile
 import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
 import com.example.logifitappp.core.handlers.BluetoothGattServerCallbackHandler
 import okio.IOException
@@ -94,11 +95,11 @@ abstract class AbstractBleWearableSupport: AbstractWearableSupport(), BluetoothG
         }
     }
 
-    fun getImplicitCallbackModify() = false
+    open fun getImplicitCallbackModify() = false
 
     fun getQueue() = queue
 
-    fun getSendWriteRequestResponse() = true
+    open fun getSendWriteRequestResponse() = true
 
     protected open fun getSupportedServices(): Set<UUID> = supportedServices
 
@@ -222,6 +223,11 @@ abstract class AbstractBleWearableSupport: AbstractWearableSupport(), BluetoothG
         }
 
         return createTransactionBuilder(taskName)
+    }
+
+    override fun setAutoReconnect(enabled: Boolean) {
+        super.setAutoReconnect(enabled)
+        queue?.setAutoReconnect(enabled)
     }
 
     companion object {

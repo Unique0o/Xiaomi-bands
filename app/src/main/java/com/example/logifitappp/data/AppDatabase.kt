@@ -6,6 +6,7 @@ import com.example.logifitappp.data.dao.CountryDao
 import com.example.logifitappp.data.dao.DrowsinessDao
 import com.example.logifitappp.data.dao.EvaluationResultDao
 import com.example.logifitappp.data.dao.FatigueDao
+import com.example.logifitappp.data.dao.FitProRawActivityDao
 import com.example.logifitappp.data.dao.GroupDao
 import com.example.logifitappp.data.dao.HuamiExtendedRawActivityDao
 import com.example.logifitappp.data.dao.LocationDao
@@ -24,6 +25,7 @@ import com.example.logifitappp.data.models.CountryModel
 import com.example.logifitappp.data.models.DrowsinessModel
 import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.FatigueModel
+import com.example.logifitappp.data.models.FitProRawActivityModel
 import com.example.logifitappp.data.models.GroupModel
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
 import com.example.logifitappp.data.models.LocationModel
@@ -44,6 +46,7 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
         DrowsinessModel::class,
         EvaluationResultModel::class,
         FatigueModel::class,
+        FitProRawActivityModel::class,
         GroupModel::class,
         HuamiExtendedRawActivityModel::class,
         LocationModel::class,
@@ -67,6 +70,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun drowsinessDao(): DrowsinessDao
     abstract fun evaluationResultDao(): EvaluationResultDao
     abstract fun fatigueDao(): FatigueDao
+    abstract fun fitProRawActivityDao(): FitProRawActivityDao
     abstract fun groupDao(): GroupDao
     abstract fun huamiExtendedRawActivityDao(): HuamiExtendedRawActivityDao
     abstract fun locationDao(): LocationDao

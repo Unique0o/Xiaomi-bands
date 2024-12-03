@@ -19,8 +19,8 @@ import com.example.logifitappp.core.utils.GattService
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableInfo
-import com.example.logifitappp.core.wearebles.WearableInfoProfile
+import com.example.logifitappp.core.builders.ble.profiles.parcelables.WearableInfo
+import com.example.logifitappp.core.builders.ble.profiles.WearableInfoProfile
 import com.example.logifitappp.core.wearebles.huami.miband.MiBandService
 import com.example.logifitappp.core.wearebles.huami.operations.AbstractFetchOperation
 import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchActivityOperation
@@ -47,7 +47,8 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
 
     private val listener = object: IntentListenerHandler {
         override fun notify(intent: Intent) {
-            if (WearableInfoProfile.ACTION_DEVICE_INFO == intent.action) handleDeviceInfo(intent.parcelableExtra<WearableInfo>(WearableInfoProfile.EXTRA_DEVICE_INFO))
+            if (WearableInfoProfile.ACTION_DEVICE_INFO == intent.action) handleDeviceInfo(intent.parcelableExtra<WearableInfo>(
+                WearableInfoProfile.EXTRA_DEVICE_INFO))
         }
     }
 
@@ -119,11 +120,15 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         return if (truncate) TimeUnit.MINUTE else TimeUnit.SECOND
     }
 
+    override fun getImplicitCallbackModify() = true
+
     fun getNextFetchOperation(): AbstractFetchOperation? {
         return fetchOperationQueue.poll()
     }
 
     open fun getRawActivitySize() = rawActivitySize
+
+    override fun getSendWriteRequestResponse() = false
 
     open fun getTimeBytes(calendar: Calendar, precision: TimeUnit): ByteArray {
         val bytes = when (precision) {
