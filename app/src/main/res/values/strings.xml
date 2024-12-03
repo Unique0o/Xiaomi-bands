@@ -54,6 +54,7 @@
     <string name="drowsiness_evaluation_date_label">Result of %1$s</string>
     <string name="drowsiness_evaluation_message">Perform a sleepiness test to verify whether or not you are fit to perform your duties.</string>
     <string name="drowsiness_label">Sleep</string>
+    <string name="exit">Exit</string>
     <string name="extracting_wearable_information_message">Activity and sleep data from your Smart Band is being shared with app</string>
     <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
     <string name="failed_roster_information_storage_message">Record with date range already exists</string>
@@ -100,6 +101,7 @@
     <string name="location_title">Select a location</string>
     <string name="location_validation_error_message">You must select a location</string>
     <string name="logging_in_message">Validating user…</string>
+    <string name="logout">Logout</string>
     <string name="main_administrator">Main administrator</string>
     <string name="message_password_recovery">A manager will be notified to assist you</string>
     <string name="message_recover_password">Don`t remember your password?</string>
@@ -355,11 +357,10 @@
     <string name="not_selected">Not selected</string>
 
     <!-- Side Menu -->
-    <string name="logout">Logout</string>
     <string name="language">App Language</string>
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="help">Help</string>
-    <string name="exit">Exit</string>
+
 
     <!-- App language -->
     <string name="english">English</string>

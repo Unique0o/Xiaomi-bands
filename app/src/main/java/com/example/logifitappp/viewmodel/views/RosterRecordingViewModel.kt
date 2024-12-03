@@ -27,12 +27,12 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = RosterRecordingViewModel.RosterRecordingViewModelFactory::class)
 class RosterRecordingViewModel @AssistedInject constructor(
-    @Assisted private val user: UserModel,
+    @Assisted private val user: UserModel?,
     private val userService: UserService
 ): ViewModel() {
     @AssistedFactory
     interface RosterRecordingViewModelFactory {
-        fun create(user: UserModel): RosterRecordingViewModel
+        fun create(user: UserModel?): RosterRecordingViewModel
     }
 
     var locations = mutableListOf<RosterLocationModel>()
@@ -42,10 +42,12 @@ class RosterRecordingViewModel @AssistedInject constructor(
         private set
 
     init {
-        locations.addAll(App.database.rosterLocationDao().all(user.tenantId))
+        user?.let { locations.addAll(App.database.rosterLocationDao().all(it.tenantId)) }
     }
 
     fun saveRoster() {
+        if (user == null) return
+
         if (!validateInputsNotEmpty()) return
 
         viewModelScope.launch {

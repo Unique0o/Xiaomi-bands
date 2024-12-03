@@ -50,7 +50,7 @@ fun RosterView(
     val scrollState = rememberLazyListState()
 
     val rosterViewModel = hiltViewModel<RosterViewModel, RosterViewModel.RosterViewModelFactory>{
-        it.create(appViewModel.user!!)
+        it.create(appViewModel.user)
     }
 
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {

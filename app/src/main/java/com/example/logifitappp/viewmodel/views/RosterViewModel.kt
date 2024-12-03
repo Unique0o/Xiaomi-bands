@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = RosterViewModel.RosterViewModelFactory::class)
 class RosterViewModel @AssistedInject constructor(
-    @Assisted private val user: UserModel,
+    @Assisted private val user: UserModel?,
     private val userService: UserService
 ): ViewModel() {
     @AssistedFactory
     interface RosterViewModelFactory {
-        fun create(user: UserModel): RosterViewModel
+        fun create(user: UserModel?): RosterViewModel
     }
 
     var state by mutableStateOf(RosterState())
@@ -41,6 +41,8 @@ class RosterViewModel @AssistedInject constructor(
     }
 
     fun fetchRosterPage() {
+        if (user == null) return
+
         if (state.roster != null && state.roster!!.currentPage == state.roster!!.lastPage) return
 
         viewModelScope.launch {

@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = LessonDetailViewModel.LessonDetailViewModelFactory::class)
 class LessonDetailViewModel @AssistedInject constructor(
     @Assisted private val lessonId: Int,
-    @Assisted private val user: UserModel,
+    @Assisted private val user: UserModel?,
     private val lessonService: LessonService
 ): ViewModel() {
     @AssistedFactory
     interface LessonDetailViewModelFactory {
-        fun create(lessonId: Int, user: UserModel): LessonDetailViewModel
+        fun create(lessonId: Int, user: UserModel?): LessonDetailViewModel
     }
 
     var state by mutableStateOf(LessonDetailState())
@@ -51,6 +51,8 @@ class LessonDetailViewModel @AssistedInject constructor(
     }
 
     fun markAsCompleted() {
+        if (user == null) return
+
         viewModelScope.launch {
             try {
                 state = state.copy(isMarkingAsCompleted = true)

@@ -44,6 +44,11 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    fun logout() {
+        App.database.userDao().logout()
+        user = null
+    }
+
     fun reloadAuthenticatedUser() {
         user = App.database.userDao().getLoggedIn()
     }

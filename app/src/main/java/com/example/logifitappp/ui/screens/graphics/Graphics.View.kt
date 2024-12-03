@@ -23,7 +23,7 @@ fun GraphicsView(
     navigation: NavHostController
 ) {
     val graphicsViewModel = hiltViewModel<GraphicsViewModel, GraphicsViewModel.GraphicsViewModelFactory>{
-        it.create(appViewModel.user!!)
+        it.create(appViewModel.user)
     }
 
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {

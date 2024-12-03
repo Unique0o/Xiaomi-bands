@@ -46,7 +46,7 @@ fun SleepDetailScreenshot(
     fatigue: FatigueModel?,
     shift: ShiftModel?,
     tenant: TenantModel?,
-    user: UserModel
+    user: UserModel?
 ) {
     Column(
         Modifier
@@ -167,7 +167,7 @@ fun SleepDetailScreenshot(
                 Text(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1.5f),
-                    text = user.getFullName(),
+                    text = user?.getFullName() ?: "",
                     typography = MaterialTheme.typography.bodySmall
                 )
             }

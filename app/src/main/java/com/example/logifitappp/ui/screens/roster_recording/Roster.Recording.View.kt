@@ -29,7 +29,7 @@ fun RosterRecordingView(
     navigation: NavHostController
 ) {
     val rosterRecordingViewModel = hiltViewModel<RosterRecordingViewModel, RosterRecordingViewModel.RosterRecordingViewModelFactory>{
-        it.create(appViewModel.user!!)
+        it.create(appViewModel.user)
     }
 
     MessageModal(

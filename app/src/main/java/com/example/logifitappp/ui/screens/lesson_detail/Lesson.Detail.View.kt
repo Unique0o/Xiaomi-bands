@@ -29,7 +29,7 @@ fun LessonDetailView(
     lessonId: Int
 ) {
     val lessonDetailViewModel = hiltViewModel<LessonDetailViewModel, LessonDetailViewModel.LessonDetailViewModelFactory>{
-        it.create(lessonId, appViewModel.user!!)
+        it.create(lessonId, appViewModel.user)
     }
 
     val insets = WindowInsets.navigationBars.asPaddingValues()

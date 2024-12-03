@@ -30,7 +30,7 @@ fun WearableProfileView(
     mac: String
 ) {
     val wearableProfileViewModel = hiltViewModel<WearableProfileViewModel, WearableProfileViewModel.WearableProfileViewModelFactory>{
-        it.create(mac, appViewModel.user!!)
+        it.create(mac, appViewModel.user)
     }
 
     SimplePage(

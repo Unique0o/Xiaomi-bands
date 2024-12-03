@@ -15,11 +15,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = SideBarViewModel.SideBarViewModelFactory::class)
 class SideBarViewModel @AssistedInject constructor(
-    @Assisted private val user: UserModel
+    @Assisted private val user: UserModel?
 ): ViewModel() {
     @AssistedFactory
     interface SideBarViewModelFactory {
-        fun create(user: UserModel): SideBarViewModel
+        fun create(user: UserModel?): SideBarViewModel
     }
 
     var options = mutableListOf<SideBarScreenEnum>()
@@ -29,14 +29,14 @@ class SideBarViewModel @AssistedInject constructor(
         private set
 
     init {
-        tenant = App.database.tenantDao().find(user.tenantId)
+        tenant = user?.let { App.database.tenantDao().find(it.tenantId) }
         refreshOptions()
     }
 
     private fun refreshOptions() {
         options.clear()
 
-        if (!user.isAdmin()) {
+        if (user?.isAdmin() == false) {
             /*options.addAll(listOf(
                 SideBarScreenEnum.PERSONAL_INFORMATION,
                 SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
@@ -47,7 +47,9 @@ class SideBarViewModel @AssistedInject constructor(
         }
 
         options.addAll(listOf(
-            SideBarScreenEnum.TRAININGS
+            SideBarScreenEnum.TRAININGS,
+            SideBarScreenEnum.LOGOUT,
+            SideBarScreenEnum.EXIT
         ))
     }
 }

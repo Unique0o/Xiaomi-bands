@@ -54,6 +54,7 @@
     <string name="drowsiness_evaluation_date_label">Resultado de %1$s</string>
     <string name="drowsiness_evaluation_message">Realiza una evaluación de somnolencia para verificar si estás apto o no para realizar tus labores.</string>
     <string name="drowsiness_label">Sueño</string>
+    <string name="exit">Salir</string>
     <string name="extracting_wearable_information_message">Los datos de actividad y sueño de su smart band están siendo compartidos con la aplicación</string>
     <string name="failed_password_recovery_message">No cuenta con un número de telefono configurado, contacte con el encargado del área.</string>
     <string name="failed_roster_information_storage_message">Ya existe registro con intervalo de fecha</string>
@@ -100,6 +101,7 @@
     <string name="location_title">Seleccione una localización</string>
     <string name="location_validation_error_message">Debe seleccionar una ubicación</string>
     <string name="logging_in_message">Validando usuario…</string>
+    <string name="logout">Cerrar sesión</string>
     <string name="main_administrator">Super administrador</string>
     <string name="message_password_recovery">Se notificará a un encargado para que lo pueda ayudar</string>
     <string name="message_recover_password">¿No recuerda su contraseña?</string>
@@ -371,11 +373,9 @@
     <string name="female">Femenino</string>
 
     <!-- Side Menu -->
-    <string name="logout">Cerrar sesión</string>
     <string name="language">Idioma</string>
     <string name="terms_and_conditions">Términos y condiciones</string>
     <string name="help">Ayuda</string>
-    <string name="exit">Salir</string>
 
     <!-- App language -->
     <string name="english">Inglés</string>

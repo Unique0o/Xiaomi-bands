@@ -46,7 +46,7 @@ fun HomeView(
 ) {
     val context = LocalContext.current
     val homeViewModel = hiltViewModel<HomeViewModel, HomeViewModel.HomeViewModelFactory>{
-        it.create(appViewModel.user!!)
+        it.create(appViewModel.user)
     }
 
     DisposableEffect(Unit) {
@@ -129,7 +129,7 @@ fun HomeView(
             fatigue = homeViewModel.state.fatigue,
             shift = homeViewModel.state.shift,
             tenant = homeViewModel.state.tenant,
-            user = appViewModel.user!!
+            user = appViewModel.user
         )
     }
 

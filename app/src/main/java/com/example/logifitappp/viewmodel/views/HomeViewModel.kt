@@ -42,7 +42,7 @@ import okio.IOException
 
 @HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
 class HomeViewModel @AssistedInject constructor(
-    @Assisted private val user: UserModel,
+    @Assisted private val user: UserModel?,
     private val calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
@@ -53,7 +53,7 @@ class HomeViewModel @AssistedInject constructor(
 ): ViewModel() {
     @AssistedFactory
     interface HomeViewModelFactory {
-        fun create(user: UserModel): HomeViewModel
+        fun create(user: UserModel?): HomeViewModel
     }
 
     var bitmap by mutableStateOf<Bitmap?>(null)
@@ -73,7 +73,7 @@ class HomeViewModel @AssistedInject constructor(
         private set
 
     init {
-        user.tenantId.let {
+        user?.tenantId?.let {
             state = state.copy(tenant = App.database.tenantDao().find(it))
             shifts.addAll(App.database.shiftDao().all(it))
         }
@@ -81,11 +81,13 @@ class HomeViewModel @AssistedInject constructor(
         refreshPairedWearables()
         refreshEvaluations()
 
-        user.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it, user.tenantId)) }
-        user.locationId?.let { state = state.copy(location = App.database.locationDao().find(it)) }
+        user?.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it, user.tenantId)) }
+        user?.locationId?.let { state = state.copy(location = App.database.locationDao().find(it)) }
     }
 
     fun checkWearableConnection() {
+        if (user == null) return
+
         viewModelScope.launch {
             refreshPairedWearables()
 
@@ -150,6 +152,8 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     fun handleChangeShift(shift: ShiftModel) {
+        if (user == null) return
+
         viewModelScope.launch {
             try {
                 App.database.userDao().store(user.copy(shiftId = shift.id))
@@ -170,6 +174,8 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     fun handleChangeLocation(location: LocationModel) {
+        if (user == null) return
+
         viewModelScope.launch {
             try {
                 App.database.userDao().store(user.copy(locationId = location.id))
@@ -185,6 +191,8 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private fun refreshEvaluations() {
+        if (user == null) return
+
         evaluations.clear()
 
         if (state.tenant?.shouldItShowDrowsinessTest == true) evaluations.addAll(App.database.evaluationResultDao().fetchFromToday(user.id))
@@ -218,8 +226,9 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private fun refreshSleepProcessingData(wearable: Wearable) {
-        val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
+        if (user == null) return
 
+        val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
         val drowsiness = App.database.drowsinessDao().findFromToday(wearableModel.id)
         val drowsinessCondition = if (drowsiness == null) null else App.database.sleepConditionDao().findAppropriate(drowsiness.totalSleepSeconds, state.tenant!!)
 

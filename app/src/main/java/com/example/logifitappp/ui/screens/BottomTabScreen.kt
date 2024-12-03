@@ -52,7 +52,7 @@ fun BottomTabScreen(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val user = appViewModel.user!!
+    val user = appViewModel.user
 
     val bottomTabNavigation = rememberNavController()
     val bottomTabScreenViewModel = hiltViewModel<BottomTabScreenViewModel, BottomTabScreenViewModel.BottomTabScreenViewModelFactory>{
@@ -90,9 +90,9 @@ fun BottomTabScreen(
                     .fillMaxHeight()
             ) {
                 SideBarContent(
+                    appViewModel = appViewModel,
                     drawerState = drawerState,
-                    navigation = navigation,
-                    user = user
+                    navigation = navigation
                 )
             }
         },

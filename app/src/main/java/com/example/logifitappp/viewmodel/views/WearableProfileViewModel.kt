@@ -18,11 +18,11 @@ import java.util.GregorianCalendar
 
 class WearableProfileViewModel @AssistedInject constructor(
     @Assisted private val mac: String,
-    @Assisted private val user: UserModel
+    @Assisted private val user: UserModel?
 ): ViewModel() {
     @AssistedFactory
     interface WearableProfileViewModelFactory {
-        fun create(mac: String, user: UserModel): WearableProfileViewModel
+        fun create(mac: String, user: UserModel?): WearableProfileViewModel
     }
 
     var state by mutableStateOf(WearableProfileState())
@@ -36,6 +36,8 @@ class WearableProfileViewModel @AssistedInject constructor(
     }
 
     private fun refreshSleepProcessingData(wearable: Wearable) {
+        if (user == null) return
+
         val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
         val drowsiness = App.database.drowsinessDao().findFromToday(wearableModel.id)
 

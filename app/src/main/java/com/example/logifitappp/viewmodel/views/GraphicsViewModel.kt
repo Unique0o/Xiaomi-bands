@@ -29,21 +29,21 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = GraphicsViewModel.GraphicsViewModelFactory::class)
 class GraphicsViewModel  @AssistedInject constructor(
-    @Assisted private val user: UserModel,
+    @Assisted private val user: UserModel?,
     private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase
 ): ViewModel() {
     @AssistedFactory
     interface GraphicsViewModelFactory {
-        fun create(user: UserModel): GraphicsViewModel
+        fun create(user: UserModel?): GraphicsViewModel
     }
 
     var state by mutableStateOf(GraphicsState())
         private set
 
     init {
-        user.shiftId?.let {
+        user?.shiftId?.let {
             val wearable = App.wearableManager.getWearables().first()
             val shift = App.database.shiftDao().find(it, user.tenantId)
 
@@ -77,6 +77,8 @@ class GraphicsViewModel  @AssistedInject constructor(
     }
 
     private fun refreshSleepProcessingData(wearable: Wearable) {
+        if (user == null) return
+
         val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
 
         state = state.copy(

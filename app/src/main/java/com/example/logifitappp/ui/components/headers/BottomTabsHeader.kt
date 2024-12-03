@@ -56,7 +56,7 @@ fun BottomTabsHeader(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val user = appViewModel.user!!
+    val user = appViewModel.user
 
     val bottomTabsHeaderViewModel: BottomTabsHeaderViewModel = viewModel()
 
@@ -117,7 +117,7 @@ fun BottomTabsHeader(
                                 drawerState.open()
                             }
                         },
-                    url = user.profilePhoto
+                    url = user?.profilePhoto
                 )
             },
             title = {
@@ -129,11 +129,11 @@ fun BottomTabsHeader(
                     )
 
                     Text(
-                        text = user.firstName ?: "",
+                        text = user?.firstName ?: "",
                         typography = MaterialTheme.typography.displayLarge
                     )
 
-                    LicenseText(license = user.license)
+                    LicenseText(license = user?.license)
                 }
             }
         )
