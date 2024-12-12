@@ -20,7 +20,7 @@ import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.WearableProfileViewModel
 
 @Composable
@@ -30,7 +30,7 @@ fun WearableProfileView(
     mac: String
 ) {
     val wearableProfileViewModel = hiltViewModel<WearableProfileViewModel, WearableProfileViewModel.WearableProfileViewModelFactory>{
-        it.create(mac, appViewModel.user!!)
+        it.create(mac, appViewModel.user)
     }
 
     SimplePage(
@@ -54,7 +54,7 @@ fun WearableProfileView(
             IconText(
                 icon = Icons.Default.BatteryFull,
                 iconColor = MaterialTheme.colorScheme.surfaceTint,
-                label = stringResource(R.string.percentage_batter_label, "$it%"),
+                label = stringResource(R.string.battery_percentage_label, "$it%"),
                 labelColor = MaterialTheme.colorScheme.surfaceTint,
                 labelTypography = MaterialTheme.typography.bodyMedium
             )

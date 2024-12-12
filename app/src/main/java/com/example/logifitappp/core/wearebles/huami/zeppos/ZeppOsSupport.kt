@@ -7,6 +7,7 @@ import android.icu.util.GregorianCalendar
 import android.icu.util.TimeUnit
 import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.specs.NotificationSpec
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.utils.GattCharacteristic
 import com.example.logifitappp.core.wearebles.huami.Huami2021Service
@@ -49,6 +50,8 @@ class ZeppOsSupport: HuamiSupport() {
     override fun getCoordinator() = getWearable().getWearableCoordinator() as ZeppOsCoordinator
 
     override fun getCryptFlags() = 0x80.toByte()
+
+    override fun getImplicitCallbackModify() = false
 
     override fun getRawActivitySize() = 8
 
@@ -143,6 +146,10 @@ class ZeppOsSupport: HuamiSupport() {
         return super.onCharacteristicChanged(gatt, characteristic)
     }
 
+    override fun onNotification(notificationSpec: NotificationSpec) {
+
+    }
+
     override fun phase2Initialize(builder: TransactionBuilder) {
         println("2021 phase2Initialize...")
         requestMTU(builder)
@@ -166,6 +173,11 @@ class ZeppOsSupport: HuamiSupport() {
 
     private fun requestMTU(builder: TransactionBuilder) {
         writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_CONNECTION, Huami2021Service.CONNECTION_CMD_MTU_REQUEST, false)
+    }
+
+    override fun requestGPSVersion(builder: TransactionBuilder): ZeppOsSupport {
+        println("Request GPS version not implemented")
+        return this
     }
 
     override fun setCurrentTimeWithService(builder: TransactionBuilder): ZeppOsSupport {

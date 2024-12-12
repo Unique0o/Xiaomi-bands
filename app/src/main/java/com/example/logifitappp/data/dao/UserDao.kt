@@ -13,6 +13,9 @@ abstract class UserDao {
     @Query("SELECT * FROM users WHERE has_logged_in = 1 LIMIT 1")
     abstract fun getLoggedIn(): UserModel?
 
+    @Query("UPDATE users SET has_logged_in = 0")
+    abstract fun logout()
+
     @Upsert
     abstract fun store(user: UserModel)
 }

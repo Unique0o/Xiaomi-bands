@@ -12,14 +12,14 @@ import retrofit2.http.POST
 
 interface SleepApi {
     @POST("api/sleeps")
-    fun store(@Body storeSleepRequest: StoreSleepRequest): Response<StoreSleepResponse>
+    suspend fun store(@Body storeSleepRequest: StoreSleepRequest): Response<StoreSleepResponse>
 
     @POST("api/fatigues")
-    fun storeFatigue(@Body storeFatigueRequest: StoreFatigueRequest): Response<GeneralResponse>
+    suspend fun storeFatigue(@Body storeFatigueRequest: StoreFatigueRequest): Response<GeneralResponse>
 
     @POST("api/sleeps_graphic")
-    fun storeGraphics(@Body storeSleepGraphicRequest: StoreSleepGraphicRequest): Response<GeneralResponse>
+    suspend fun storeGraphics(@Body storeSleepGraphicRequest: StoreSleepGraphicRequest): Response<GeneralResponse>
 
     @POST("api/heart_rates")
-    fun storeHeartRates(@Body storeHeartRateRequest: StoreHeartRateRequest): Response<GeneralResponse>
+    suspend fun storeHeartRates(@Body storeHeartRateRequest: StoreHeartRateRequest): Response<GeneralResponse>
 }

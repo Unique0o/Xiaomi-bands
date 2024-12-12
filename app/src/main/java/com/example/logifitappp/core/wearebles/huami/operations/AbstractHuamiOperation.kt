@@ -6,6 +6,6 @@ import com.example.logifitappp.core.wearebles.huami.miband.AbstractMiBandOperati
 
 abstract class AbstractHuamiOperation(huamiSupport: HuamiSupport): AbstractMiBandOperation<HuamiSupport>(huamiSupport) {
     override fun enableOtherNotifications(builder: TransactionBuilder, enable: Boolean) {
-        // TODO: check which notifications we should disable and re-enable here
+        //TODO: check which notifications we should disable and re-enable here
     }
 }

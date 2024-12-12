@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val authService: AuthService,
-    private val updateNotificationToken: UpdateNotificationToken,
+    private val updateNotificationTokenUseCase: UpdateNotificationTokenUseCase,
     private val updateTenantInformationUseCase: UpdateTenantInformationUseCase
 ) {
     suspend operator fun invoke(nick: String, password: String): UserModel {
@@ -19,9 +19,12 @@ class LoginUseCase @Inject constructor(
             try {
                 store(user)
                 updateTenantInformationUseCase()
-                updateNotificationToken(user.id)
+                updateNotificationTokenUseCase(user.id)
             } catch (e: HttpConsumerException) {
+                if (!user.isActive) return user
+
                 deleteLoggedIn()
+                throw e
             }
         }
 

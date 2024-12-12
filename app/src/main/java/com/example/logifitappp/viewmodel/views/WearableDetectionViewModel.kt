@@ -27,7 +27,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.bluetooth.ScanEventProcessor
 import com.example.logifitappp.core.utils.BondingUtils
@@ -36,7 +36,9 @@ import com.example.logifitappp.core.wearebles.WearableCoordinator
 import com.example.logifitappp.core.wearebles.WearableHelper
 import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
 import com.example.logifitappp.domain.service.WearableService
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.navigation.routes.MainRoutes
+import com.example.logifitappp.viewmodel.states.WearableDetectionState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -54,7 +56,6 @@ class WearableDetectionViewModel @AssistedInject constructor(
     }
 
     private var adapter: BluetoothAdapter? = null
-    private var currentCandidate: WearableCandidate? = null
     private val handler = Handler(Looper.getMainLooper())
     private var refreshAt = System.currentTimeMillis()
     private var scanCallback = BleScanCallback()
@@ -65,49 +66,46 @@ class WearableDetectionViewModel @AssistedInject constructor(
         println("Discovery stopped by thread timeout.")
     }
 
-    var authenticationKey by mutableStateOf(TextFieldValue(""))
-
     var candidates = mutableStateListOf<WearableCandidate>()
         private set
 
-    var isBottomSheetVisible by mutableStateOf(false)
-
-    var isScanning by mutableStateOf(false)
+    var state by mutableStateOf(WearableDetectionState())
         private set
 
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     fun authenticate() {
-        val wearableType = WearableHelper.getInstance().resolveWearableType(currentCandidate!!)
+        val wearableType = WearableHelper.getInstance().resolveWearableType(state.currentCandidate!!)
 
         if (!wearableType.isSupported()) {
-            println("Unsupported device candidate $currentCandidate")
+            println("Unsupported device candidate ${state.currentCandidate}")
             return
         }
 
+        state = state.copy(currentPage = 1)
         stopDiscovery()
 
         val coordinator = wearableType.getWearableCoordinator()
-        println("Using device candidate $currentCandidate with coordinator ${coordinator::class.java}")
+        println("Using device candidate ${state.currentCandidate} with coordinator ${coordinator::class.java}")
 
         if (coordinator.getBondingStyle() == BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
-            val key = authenticationKey.text
+            val key = state.authenticationKey.text
 
-            App.getWearableSpecificSharedPrefs(currentCandidate!!.getMacAddress())?.edit()?.let {
+            App.getWearableSpecificSharedPrefs(state.currentCandidate!!.getMacAddress())?.edit()?.let {
                 it.putString("authentication_key", key)
                 it.apply()
             }
         }
 
-        if (coordinator.suggestUnbindBeforePair() && currentCandidate!!.IsBonded()) {
+        if (coordinator.suggestUnbindBeforePair() && state.currentCandidate!!.IsBonded()) {
             AlertDialog.Builder(App.context)
                 .setTitle(R.string.unbind_before_pair_title)
                 .setMessage(R.string.unbind_before_pair_message)
                 .setPositiveButton(R.string.button_ok) { _, _ ->
-                    startPair(currentCandidate!!, coordinator)
+                    startPair(state.currentCandidate!!, coordinator)
                 }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
-        } else startPair(currentCandidate!!, coordinator)
+        } else startPair(state.currentCandidate!!, coordinator)
     }
 
     private fun checkBluetoothAvailable(): Boolean {
@@ -175,6 +173,10 @@ class WearableDetectionViewModel @AssistedInject constructor(
         }
     }
 
+    fun closeBottomSheet() {
+        state = state.copy(isBottomSheetVisible = false)
+    }
+
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")
     private fun ensureBluetoothReady(): Boolean {
         if (checkBluetoothAvailable()) {
@@ -231,6 +233,17 @@ class WearableDetectionViewModel @AssistedInject constructor(
         return permissions
     }
 
+    fun handleFailedConnection(status: AppStatusCodeEnum) {
+        state = when (status) {
+            AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY -> state.copy(
+                currentPage = 0,
+                status = status
+            )
+
+            else -> state.copy(status = status)
+        }
+    }
+
     fun handleBluetoothStateChanged(state: Int) {
         if (state == BluetoothAdapter.STATE_ON) {
             val manager = App.context.getSystemService(BluetoothManager::class.java)
@@ -240,12 +253,13 @@ class WearableDetectionViewModel @AssistedInject constructor(
 
     fun handleCandidatePressed(candidate: WearableCandidate) {
         viewModelScope.launch {
-            authenticationKey = TextFieldValue(
-                wearableService.fetchAuthenticationKey(candidate.getMacAddress()) ?: ""
-            )
-
-            currentCandidate = candidate
-            isBottomSheetVisible = true
+            try {
+                state = state.copy(authenticationKey = TextFieldValue(wearableService.fetchAuthenticationKey(candidate.getMacAddress()) ?: ""))
+            } catch (e: Exception) {
+                state = state.copy(authenticationKey = TextFieldValue(""))
+            } finally {
+                state = state.copy(currentCandidate = candidate, isBottomSheetVisible = true)
+            }
         }
     }
 
@@ -298,7 +312,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
     }
 
     private fun startDiscovery(): Boolean {
-        if (isScanning) {
+        if (state.isScanning) {
             println("Not starting discovery, because already scanning.")
             return false
         }
@@ -327,7 +341,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
             return false
         }
 
-        isScanning = true
+        state = state.copy(isScanning = true)
         return true
     }
 
@@ -389,16 +403,24 @@ class WearableDetectionViewModel @AssistedInject constructor(
             println("SecurityException on stopDiscovery")
         }
 
-        isScanning = false
+        state = state.copy(isScanning = false)
         scanEventProcessor.stop()
         handler.removeMessages(0, stopRunnable)
 
         refreshWearableList(false)
     }
 
+    fun stopProcessing() {
+        state = state.copy(status = null)
+    }
+
     fun toggleDiscovery() {
-        if (isScanning) stopDiscovery()
+        if (state.isScanning) stopDiscovery()
         else startDiscovery()
+    }
+
+    fun updateAuthenticationKey(value: TextFieldValue) {
+        state = state.copy(authenticationKey = value)
     }
 
     companion object {

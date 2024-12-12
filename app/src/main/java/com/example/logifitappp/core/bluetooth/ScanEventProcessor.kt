@@ -53,7 +53,7 @@ class ScanEventProcessor(private val callback: Callback): Runnable {
         if (candidate == null) {
             println("Found $address for the first time")
 
-            val firstEvent = events.removeFirst()
+            val firstEvent = events.removeAt(0)
 
             firstTime = true
             candidate = WearableCandidate(firstEvent.getWearable(), firstEvent.getRssi(), firstEvent.getServices())

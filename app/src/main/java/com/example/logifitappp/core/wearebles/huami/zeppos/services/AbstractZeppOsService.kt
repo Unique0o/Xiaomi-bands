@@ -1,9 +1,14 @@
 package com.example.logifitappp.core.wearebles.huami.zeppos.services
 
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.events.AbstractWearableEvent
 import com.example.logifitappp.core.wearebles.huami.zeppos.ZeppOsSupport
 
 abstract class AbstractZeppOsService(private val support: ZeppOsSupport, private var encrypted: Boolean) {
+    protected fun evaluateWearableEvent(event: AbstractWearableEvent) {
+        support.evaluateWearableEvent(event)
+    }
+
     fun initialize(builder: TransactionBuilder) {
 
     }

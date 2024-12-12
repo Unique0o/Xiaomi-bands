@@ -6,38 +6,34 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.BluetoothSearching
-import androidx.compose.material.icons.rounded.StopCircle
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
-import com.example.logifitappp.R
+import com.example.logifitappp.core.App
 import com.example.logifitappp.core.broadcasters.BluetoothBroadcastReceiver
 import com.example.logifitappp.core.bluetooth.ScanEvent
+import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableManager
-import com.example.logifitappp.ui.components.Loader
-import com.example.logifitappp.ui.components.forms.IconButton
-import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.pages.ScrollablePage
+import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.viewmodel.views.WearableDetectionViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -45,10 +41,15 @@ fun WearableDetectionView(
     navigation: NavHostController
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val wearableDetectionViewModel = hiltViewModel<WearableDetectionViewModel, WearableDetectionViewModel.WearableDetectionViewModelFactory>{
         it.create(navigation)
     }
+
     val bluetoothPermissions = rememberMultiplePermissionsState(permissions = wearableDetectionViewModel.getWantedPermissions())
+    val pagerState = rememberPagerState(pageCount = {
+        2
+    })
 
     DisposableEffect(context) {
         val receiver = object: BluetoothBroadcastReceiver() {
@@ -86,12 +87,18 @@ fun WearableDetectionView(
             override fun onReceive(context: Context?, intent: Intent) {
                 when (intent.action) {
                     WearableManager.ACTION_DEVICES_CHANGED -> wearableDetectionViewModel.checkWearableConnection()
+
+                    App.FAILED_CONNECTION_WITH_WEARABLE -> {
+                        val code = intent.getIntExtra(Wearable.EXTRA_FAILED_CONNECTION_STATUS, -1)
+                        wearableDetectionViewModel.handleFailedConnection(AppStatusCodeEnum.fromCode(code))
+                    }
                 }
             }
         }
 
         val filterLocal = IntentFilter()
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
+        filterLocal.addAction(App.FAILED_CONNECTION_WITH_WEARABLE)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
         onDispose {
@@ -107,58 +114,40 @@ fun WearableDetectionView(
         wearableDetectionViewModel.stopDiscovery()
     }
 
+    BackHandler(enabled = wearableDetectionViewModel.state.currentPage == 1) {  }
+
+    MessageModal(
+        onClose = { wearableDetectionViewModel.stopProcessing() },
+        onDismissRequest = { wearableDetectionViewModel.stopProcessing() },
+        status = wearableDetectionViewModel.state.status ?: AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY,
+        visible = wearableDetectionViewModel.state.status != null
+    )
+
     WearableDetectionAuthenticationBottomSheet(
         authenticate = { wearableDetectionViewModel.authenticate() },
         wearableDetectionViewModel = wearableDetectionViewModel
     )
 
-    ScrollablePage(
-        content = {
-            item {
-                IconButton(
-                    icon = if (wearableDetectionViewModel.isScanning) Icons.Rounded.StopCircle else Icons.AutoMirrored.Rounded.BluetoothSearching,
-                    onClick = { wearableDetectionViewModel.toggleDiscovery() },
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = if (wearableDetectionViewModel.isScanning) R.string.button_stop_detection else R.string.button_start_detection)
-                )
-            }
-
-            items(wearableDetectionViewModel.candidates) { candidate ->
-               WearableDetectionListItem(
-                   candidate = candidate,
-                   onCandidatePressed = { wearableDetectionViewModel.handleCandidatePressed(it) }
-               )
-            }
-
-            item {
-                if (wearableDetectionViewModel.isScanning) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-//                        CircularProgressIndicator(
-//                            modifier = Modifier.size(34.dp)
-//                        )
-                        Loader()
-                    }
-                }
-            }
-
-
-//            if (wearableDetectionViewModel.isScanning) {
-//                item {
-//                    Loader()
-//                }
-//            }
-        },
-
-        topBar = {
-            ColumnStackHeader(
-                navigation = navigation,
-                title = stringResource(id = R.string.button_device_detection)
+    Surface {
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(
+                page = wearableDetectionViewModel.state.currentPage
             )
         }
-    )
+
+        HorizontalPager(
+            modifier = Modifier.fillMaxSize(),
+            state = pagerState,
+            userScrollEnabled = false
+        ) { page ->
+            when (page) {
+                0 -> WearableDetectionStep(
+                    navigation = navigation,
+                    wearableDetectionViewModel = wearableDetectionViewModel
+                )
+
+                1 -> WearableDetectionPairing(wearableDetectionViewModel.state.currentCandidate)
+            }
+        }
+    }
 }

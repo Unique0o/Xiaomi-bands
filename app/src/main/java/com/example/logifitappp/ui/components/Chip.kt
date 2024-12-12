@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -19,6 +20,7 @@ import com.example.logifitappp.enums.ChipStatusEnum
 @Composable
 fun Chip(
     label: String,
+    labelColor: Color? = null,
     labelTypography: TextStyle = MaterialTheme.typography.titleMedium,
     status: ChipStatusEnum
 ) {
@@ -36,7 +38,7 @@ fun Chip(
         )
 
         Text(
-            color = status.color,
+            color = labelColor ?: status.color,
             text = label,
             typography = labelTypography
         )

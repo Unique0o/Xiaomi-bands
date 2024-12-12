@@ -25,6 +25,7 @@ import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
+import com.example.logifitappp.ui.components.cards.AlertCard
 import com.example.logifitappp.ui.components.cards.InformationOptionCard
 import com.example.logifitappp.ui.components.cards.InformationOptionCardContent
 import com.example.logifitappp.ui.components.forms.IconButton
@@ -77,25 +78,27 @@ fun HomeWearable(
                 modifier = Modifier.clickable { navigation.navigate(MainRoutes.WearableProfile(wearable.getAddress()!!)) }
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            if (homeViewModel.state.drowsiness != null) {
+                Spacer(modifier = Modifier.weight(1f))
 
-            IconButton(
-                elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
-                horizontalPadding = 10.dp,
-                icon = Icons.Default.Share,
-                iconSize = 10.dp,
-                modifier = Modifier.height(24.dp),
-                text = stringResource(id = R.string.share),
-                onClick = { homeViewModel.shareSleepDetail() },
-                verticalPadding = 0.dp,
-            )
+                IconButton(
+                    elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
+                    horizontalPadding = 10.dp,
+                    icon = Icons.Default.Share,
+                    iconSize = 10.dp,
+                    modifier = Modifier.height(24.dp),
+                    text = stringResource(id = R.string.button_share),
+                    onClick = { homeViewModel.tryToShareSleep() },
+                    verticalPadding = 0.dp,
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(6.dp))
 
         InformationCard(
             icon = Icons.Default.Battery4Bar,
-            label = stringResource(id = R.string.percentage_batter_label, "${wearable.getBatteryLevel()}%"),
+            label = stringResource(id = R.string.battery_percentage_label, "${wearable.getBatteryLevel()}%"),
             suffixComponent = {
                 Chip(
                     label = stringResource(id = R.string.connected),
@@ -121,6 +124,25 @@ fun HomeWearable(
             )
 
             Spacer(modifier = Modifier.height(12.dp))
+
+            if (!homeViewModel.state.isSleepSynchronizationRequired && homeViewModel.state.isSynchronizationWithLogifitRequired) {
+                AlertCard(
+                    message = stringResource(
+                        when {
+                            homeViewModel.state.isBandTheft -> R.string.band_theft_alert
+                            (homeViewModel.state.drowsiness?.totalSleepSeconds ?: 0L) == 0L -> R.string.sync_without_sleep_data_alert
+                            else -> R.string.sync_with_logifit_required_alert
+                        }
+                    ),
+                    modifier = Modifier.clickable {
+                        if (!homeViewModel.state.isBandTheft && (homeViewModel.state.drowsiness?.totalSleepSeconds ?: 0L) > 0L) {
+                            homeViewModel.sendSleep(wearable)
+                        }
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+            }
 
             SleepProcessingCard(
                 drowsiness = homeViewModel.state.drowsiness,

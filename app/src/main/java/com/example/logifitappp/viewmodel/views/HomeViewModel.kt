@@ -2,6 +2,7 @@ package com.example.logifitappp.viewmodel.views
 
 import android.graphics.Bitmap
 import android.icu.util.GregorianCalendar
+import android.os.Build
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -14,13 +15,15 @@ import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.SharingUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
-import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
 import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.data.remote.dto.requests.AssociateWearableRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
@@ -39,22 +42,28 @@ import okio.IOException
 
 @HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
 class HomeViewModel @AssistedInject constructor(
-    @Assisted private val user: UserModel,
+    @Assisted private val user: UserModel?,
     private val calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
     private val shareEvaluationDetailUseCase: ShareEvaluationDetailUseCase,
     private val synchronizeWearableUseCase: SynchronizeWearableUseCase,
-    private val userService: UserService
+    private val userService: UserService,
+    private val wearableService: WearableService
 ): ViewModel() {
     @AssistedFactory
     interface HomeViewModelFactory {
-        fun create(user: UserModel): HomeViewModel
+        fun create(user: UserModel?): HomeViewModel
     }
 
     var bitmap by mutableStateOf<Bitmap?>(null)
 
     var evaluations = mutableStateListOf<EvaluationResultModel>()
+        private set
+
+    var shift by mutableStateOf<ShiftModel?>(null)
+
+    var shifts = mutableStateListOf<ShiftModel>()
         private set
 
     var state by mutableStateOf(HomeState())
@@ -64,28 +73,52 @@ class HomeViewModel @AssistedInject constructor(
         private set
 
     init {
-        user.tenantId.let { state = state.copy(tenant = App.database.tenantDao().find(it)) }
+        App.refreshWearables()
+
+        user?.tenantId?.let {
+            state = state.copy(tenant = App.database.tenantDao().find(it))
+            shifts.addAll(App.database.shiftDao().all(it))
+        }
 
         refreshPairedWearables()
         refreshEvaluations()
 
-        user.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it)) }
-        user.locationId?.let { state = state.copy(location = App.database.locationDao().find(it)) }
+        user?.shiftId?.let { state = state.copy(shift = App.database.shiftDao().find(it, user.tenantId)) }
+        user?.locationId?.let { state = state.copy(location = App.database.locationDao().find(it)) }
     }
 
     fun checkWearableConnection() {
-        refreshPairedWearables()
+        if (user == null) return
 
-        if (!state.isLoading) return
+        viewModelScope.launch {
+            refreshPairedWearables()
 
-        wearables.firstOrNull()?.let { wearable ->
-            if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)
+            wearables.firstOrNull()?.let { wearable ->
+                try {
+                    wearableService.associate(user.id, AssociateWearableRequest(
+                        device_mac = wearable.getAddress()!!,
+                        oper_system = "Android",
+                        oper_system_version = Build.VERSION.RELEASE,
+                        phone_brand = Build.BRAND,
+                        phone_model = Build.MODEL
+                    ))
+                } catch (_: Exception) {
 
-            if (wearable.isDisconnected()) {
-                state = state.copy(
-                    status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
-                    else AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
-                )
+                }
+
+                if (!state.isLoading) return@launch
+
+                if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)
+
+                if (wearable.isDisconnected()) {
+                    val status = when (state.status) {
+                        AppStatusCodeEnum.CONNECTING_WITH_WEARABLE -> AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
+                        AppStatusCodeEnum.EXTRACTING_WEARABLE_INFORMATION -> AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
+                        else -> state.status
+                    }
+
+                    state = state.copy(status = status)
+                }
             }
         }
     }
@@ -106,7 +139,7 @@ class HomeViewModel @AssistedInject constructor(
         App.getWearableServiceTo(wearable).connect()
     }
 
-    private fun fetchActivities(wearable: Wearable) {
+    fun fetchActivities(wearable: Wearable) {
         try {
             state = state.copy(
                 isLoading = true,
@@ -119,11 +152,13 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    fun handleAuthenticationKeyFailed() {
-       state = state.copy(status = AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
+    fun handleFailedConnection(status: AppStatusCodeEnum) {
+       state = state.copy(status = status)
     }
 
     fun handleChangeShift(shift: ShiftModel) {
+        if (user == null) return
+
         viewModelScope.launch {
             try {
                 App.database.userDao().store(user.copy(shiftId = shift.id))
@@ -144,6 +179,8 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     fun handleChangeLocation(location: LocationModel) {
+        if (user == null) return
+
         viewModelScope.launch {
             try {
                 App.database.userDao().store(user.copy(locationId = location.id))
@@ -159,6 +196,8 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private fun refreshEvaluations() {
+        if (user == null) return
+
         evaluations.clear()
 
         if (state.tenant?.shouldItShowDrowsinessTest == true) evaluations.addAll(App.database.evaluationResultDao().fetchFromToday(user.id))
@@ -192,8 +231,9 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private fun refreshSleepProcessingData(wearable: Wearable) {
-        val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
+        if (user == null) return
 
+        val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
         val drowsiness = App.database.drowsinessDao().findFromToday(wearableModel.id)
         val drowsinessCondition = if (drowsiness == null) null else App.database.sleepConditionDao().findAppropriate(drowsiness.totalSleepSeconds, state.tenant!!)
 
@@ -219,10 +259,11 @@ class HomeViewModel @AssistedInject constructor(
         } else sendSleep(wearable)
     }
 
-    private fun sendSleep(wearable: Wearable) {
+    fun sendSleep(wearable: Wearable) {
         viewModelScope.launch {
             try {
                 state = state.copy(
+                    isBandTheft = false,
                     isLoading = true,
                     status = AppStatusCodeEnum.TRANSFERRING_WEARABLE_INFORMATION
                 )
@@ -233,6 +274,11 @@ class HomeViewModel @AssistedInject constructor(
                 state = state.copy(status = AppStatusCodeEnum.SUCCESSFUL_WEARABLE_INFORMATION_TRANSFERRING)
             } catch (e: SynchronizationProcessingException) {
                 state = state.copy(status = e.getStatus())
+            } catch (e: HttpConsumerException) {
+                state = state.copy(
+                    isBandTheft = e.getStatus() == AppStatusCodeEnum.BAND_THEFT,
+                    status = e.getStatus()
+                )
             } catch (e: Exception) {
                 state = state.copy(status = AppStatusCodeEnum.UNPROCESSABLE_WEARABLE_INFORMATION_TRANSFER)
             }
@@ -269,5 +315,14 @@ class HomeViewModel @AssistedInject constructor(
 
     fun stopProcessing() {
         state = state.copy(isLoading = false)
+    }
+
+    fun tryToShareSleep() {
+        if (state.drowsiness?.sentAt == null) {
+            state = state.copy(
+                isLoading = true,
+                status = AppStatusCodeEnum.SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT
+            )
+        } else shareSleepDetail()
     }
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class LoadAppWhenAnUserIsAuthenticatedUseCase @Inject constructor(
     private val userService: UserService,
-    private val updateNotificationToken: UpdateNotificationToken,
+    private val updateNotificationTokenUseCase: UpdateNotificationTokenUseCase,
     private val updateTenantInformationUseCase: UpdateTenantInformationUseCase
 ) {
     suspend operator fun invoke(accessToken: String): UserModel {
@@ -16,7 +16,7 @@ class LoadAppWhenAnUserIsAuthenticatedUseCase @Inject constructor(
 
         App.database.userDao().store(user)
         updateTenantInformationUseCase()
-        updateNotificationToken(user.id)
+        updateNotificationTokenUseCase(user.id)
 
         return user
     }

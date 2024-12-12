@@ -6,6 +6,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.logifitappp.R
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
 
 class Wearable(): Parcelable {
     private var address: String? = null
@@ -210,6 +211,7 @@ class Wearable(): Parcelable {
         const val ACTION_DEVICE_CHANGED = "com.info.logifit.pe.action.device_changed"
         const val BATTERY_UNKNOWN: Short = -1
         const val EXTRA_DEVICE = "device"
+        const val EXTRA_FAILED_CONNECTION_STATUS = "EXTRA_FAILED_CONNECTION_STATUS"
         const val EXTRA_UPDATE_SUBJECT = "EXTRA_UPDATE_SUBJECT"
         const val RSSI_UNKNOWN: Short = 0
 

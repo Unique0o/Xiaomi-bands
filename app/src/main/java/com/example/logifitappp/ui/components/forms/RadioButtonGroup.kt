@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.Text
 
 @Composable
-fun <T : Any> RadioButtonGroup(
+fun <T: Any> RadioButtonGroup(
     modifier: Modifier = Modifier,
     onChangeValue: (value: T) -> Unit,
     options: List<T>,

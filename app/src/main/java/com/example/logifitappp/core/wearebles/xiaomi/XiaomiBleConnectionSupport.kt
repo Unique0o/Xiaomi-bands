@@ -5,11 +5,13 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Context
 import androidx.annotation.RequiresPermission
+import com.example.logifitappp.core.App
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.builders.ble.actions.PlainAction
 import com.example.logifitappp.core.builders.ble.actions.SetWearableStateAction
 import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
 import com.example.logifitappp.core.wearebles.Wearable
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 
 class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): XiaomiConnectionSupport {
@@ -52,7 +54,8 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
             val uuidSet = getCharacteristicsSet()
 
             if (uuidSet == null) {
-                //TODO UNSUPPORTABLE
+                App.signalFailedConnectionWithWearable(AppStatusCodeEnum.UNSUPPORTED_WEARABLE)
+
                 println("Failed to find known Xiaomi service")
                 builder.add(SetWearableStateAction(getWearable(), Wearable.State.NOT_CONNECTED, getContext()))
                 return builder

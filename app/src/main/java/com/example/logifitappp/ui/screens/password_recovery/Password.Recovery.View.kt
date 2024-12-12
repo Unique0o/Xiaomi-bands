@@ -45,6 +45,7 @@ fun PasswordRecoveryView(
     )
 
     SimplePage(
+        backgroundColor = MaterialTheme.colorScheme.surface,
         topBar = {
             ColumnStackHeader(
                 navigation = navigation,

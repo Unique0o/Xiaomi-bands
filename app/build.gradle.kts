@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.example.logifitappp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.info.logifit.pe"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 44
         versionName = "4.6.0"
 
@@ -92,6 +92,8 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.core.i18n)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.material)
+    implementation(libs.androidx.media3.exoplayer)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -118,6 +120,9 @@ dependencies {
     implementation(libs.richtext.markdown.android)
     implementation(libs.richtext.commonmark)
     implementation(libs.mpandroidchart)
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

@@ -1,8 +1,9 @@
 package com.example.logifitappp.core.wearebles
 
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ConnectionTypeEnum
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
+import com.example.logifitappp.enums.WearableSupportFlagEnum
 import java.util.EnumSet
 import java.util.regex.Pattern
 
@@ -11,7 +12,7 @@ abstract class WearableCoordinator {
         return Wearable(candidate.getDevice().address, candidate.getName(), null, wearableType)
     }
 
-    open fun getBondingStyle(): Int {
+    open fun getBondingStyle(): BondingStyleEnum {
         return BondingStyleEnum.BONDING_STYLE_ASK
     }
 
@@ -19,7 +20,8 @@ abstract class WearableCoordinator {
         return ConnectionTypeEnum.BOTH
     }
 
-    fun getInitialFlags(): EnumSet<WearableSupportFlagEnum> = EnumSet.of(WearableSupportFlagEnum.BUSY_CHECKING)
+    open fun getInitialFlags(): EnumSet<WearableSupportFlagEnum> = EnumSet.of(
+        WearableSupportFlagEnum.BUSY_CHECKING)
 
     open fun isAuthenticationKeyValid(authenticationKey: String): Boolean {
         return !(authenticationKey.toByteArray().size < 34 || !authenticationKey.startsWith("0x"))

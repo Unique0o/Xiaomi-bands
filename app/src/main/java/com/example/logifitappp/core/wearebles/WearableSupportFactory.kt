@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.services.WearableSupportService
+import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.exceptions.SynchronizationProcessingException
 
 class WearableSupportFactory(private val context: Context) {
     private var adapter: BluetoothAdapter? = null
@@ -25,19 +27,18 @@ class WearableSupportFactory(private val context: Context) {
             else ->  createClassNameWearableSupport(wearable)
         }
 
-        return wearableSupport ?: run {
-            checkBluetoothAvailability()
-            return null
-        }
+        checkBluetoothAvailability()
+
+        return wearableSupport
     }
 
     private fun checkBluetoothAvailability() {
         if (adapter == null) {
             println("Bluetooth not supported")
-            // TODO BLUETOOTH NOT SUPPORTED
+            throw SynchronizationProcessingException(AppStatusCodeEnum.FAILED_WEARABLE_PAIRING)
         } else if (!adapter!!.isEnabled) {
             println("Bluetooth is disabled")
-            // TODO BLUETOOTH DISABLED
+            throw SynchronizationProcessingException(AppStatusCodeEnum.DISABLED_BLUETOOTH)
         }
     }
 

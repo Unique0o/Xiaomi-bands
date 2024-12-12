@@ -1,6 +1,11 @@
 package com.example.logifitappp.core
 
 import android.content.SharedPreferences
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.Locale
 
 open class Preferences(prefs: SharedPreferences) {
     init {
@@ -37,6 +42,29 @@ open class Preferences(prefs: SharedPreferences) {
                 return default
             }
         }
+    }
+
+    fun getLocalTime(key: String, defaultValue: String?): LocalTime {
+        val time = getString(key, defaultValue!!)
+
+        val df = SimpleDateFormat("HH:mm", Locale.ROOT)
+
+        try {
+            val parse = df.parse(time)
+            val calendar = GregorianCalendar.getInstance()
+
+            if (parse != null) calendar.time = parse
+
+            return LocalTime.of(
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                0
+            )
+        } catch (e: java.lang.Exception) {
+            println("Error reading localtime preference value: $key; returning default current time $e")
+        }
+
+        return LocalTime.now()
     }
 
     fun getPreferences(): SharedPreferences {

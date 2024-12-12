@@ -24,6 +24,13 @@ class LoginViewModel @Inject constructor(
     var state by mutableStateOf(LoginState())
         private set
 
+    private fun clearForm() {
+        state = state.copy(
+            username = TextFieldValue(""),
+            password = TextFieldValue("")
+        )
+    }
+
     fun login(onLoginSuccess: (UserModel) -> Unit) {
         if (!validateInputsNotEmpty()) {
             return
@@ -37,6 +44,7 @@ class LoginViewModel @Inject constructor(
                 )
 
                 onLoginSuccess(loginUseCase(state.username.text, state.password.text))
+                clearForm()
             } catch (e: HttpConsumerException) {
                 state = state.copy(
                     hasLoginProcessFailed = true,

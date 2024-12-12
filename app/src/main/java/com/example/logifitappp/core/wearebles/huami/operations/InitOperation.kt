@@ -6,12 +6,12 @@ import android.bluetooth.BluetoothGattCharacteristic
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.builders.ble.actions.SetWearableStateAction
-import com.example.logifitappp.core.utils.AppUtils
 import com.example.logifitappp.core.utils.StringUtils
 import com.example.logifitappp.core.wearebles.AbstractBleOperation
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.huami.HuamiService
 import com.example.logifitappp.core.wearebles.huami.HuamiSupport
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import org.apache.commons.lang3.ArrayUtils
 import java.util.Arrays
 import javax.crypto.Cipher
@@ -119,7 +119,7 @@ open class InitOperation(
                     HuamiService.AUTH_FAIL -> {
                         println("Authentication failed, disconnecting")
 
-                        App.signalAuthenticationKeyFailed()
+                        App.signalFailedConnectionWithWearable(AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
                         App.getWearableServiceTo(wearable).disconnect()
                     }
 

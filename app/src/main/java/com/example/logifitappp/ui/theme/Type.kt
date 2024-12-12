@@ -68,6 +68,12 @@ val Typography = Typography(
         lineHeight = 12.sp,
     ),
 
+    labelLarge = TextStyle(
+        fontFamily = FontFamily(Font(R.font.noto_sans_light)),
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+    ),
+
     labelMedium = TextStyle(
         fontFamily = FontFamily(Font(R.font.noto_sans_light)),
         fontSize = 12.sp,

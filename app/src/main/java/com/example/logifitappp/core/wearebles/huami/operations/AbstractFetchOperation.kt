@@ -218,7 +218,7 @@ abstract class AbstractFetchOperation(support: HuamiSupport): AbstractHuamiOpera
 
         println("All operations finished")
 
-        App.signalActivityDataFinish(wearable)
+        App.signalFetchingActivityDataFinish(wearable)
         operationFinished()
         unsetBusy()
     }

@@ -46,7 +46,7 @@ fun SleepDetailScreenshot(
     fatigue: FatigueModel?,
     shift: ShiftModel?,
     tenant: TenantModel?,
-    user: UserModel
+    user: UserModel?
 ) {
     Column(
         Modifier
@@ -116,14 +116,21 @@ fun SleepDetailScreenshot(
 
                 Spacer(Modifier.width(12.dp))
 
-                Text(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1.5f),
-                    text = drowsiness?.let {
-                        DateTimeUtils.parse(it.createdAt, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy h:mm a")
-                    } ?: "-",
-                    typography = MaterialTheme.typography.bodySmall
-                )
+                if (drowsiness != null) {
+                    Text(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1.5f),
+                        text = DateTimeUtils.parse(drowsiness.createdAt, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy h:mm a"),
+                        typography = MaterialTheme.typography.bodySmall
+                    )
+                } else {
+                    Text(
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.weight(1.5f),
+                        text = stringResource(R.string.sleep_sync_message_missing),
+                        typography = MaterialTheme.typography.titleSmall
+                    )
+                }
             }
 
             Spacer(Modifier.height(16.dp))
@@ -139,16 +146,21 @@ fun SleepDetailScreenshot(
 
                 Spacer(Modifier.width(12.dp))
 
-                Text(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1.5f),
-                    text = drowsiness?.let {
-                        if (it.sentAt == null) return@let "-"
-
-                        DateTimeUtils.parse(it.sentAt, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy h:mm a")
-                    } ?: "-",
-                    typography = MaterialTheme.typography.bodySmall
-                )
+                if (drowsiness?.sentAt != null) {
+                    Text(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1.5f),
+                        text = DateTimeUtils.parse(drowsiness.sentAt, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy h:mm a"),
+                        typography = MaterialTheme.typography.bodySmall
+                    )
+                } else {
+                    Text(
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.weight(1.5f),
+                        text = stringResource(R.string.logifit_sync_message_missing),
+                        typography = MaterialTheme.typography.titleSmall
+                    )
+                }
             }
 
             Spacer(Modifier.height(16.dp))
@@ -167,7 +179,7 @@ fun SleepDetailScreenshot(
                 Text(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1.5f),
-                    text = user.getFullName(),
+                    text = user?.getFullName() ?: "",
                     typography = MaterialTheme.typography.bodySmall
                 )
             }
@@ -224,16 +236,18 @@ fun SleepDetailScreenshot(
                 tenant = tenant
             )
 
-            Spacer(Modifier.height(24.dp))
+            if (fatigue != null && fatigue.totalSleepSeconds > 0L) {
+                Spacer(Modifier.height(24.dp))
 
-            Text(
-                color = MaterialTheme.colorScheme.primary,
-                text = stringResource(R.string.sleep_detail_screenshot_fatigue_result_title),
-                typography = MaterialTheme.typography.displayMedium
-            )
+                Text(
+                    color = MaterialTheme.colorScheme.primary,
+                    text = stringResource(R.string.sleep_detail_screenshot_fatigue_result_title),
+                    typography = MaterialTheme.typography.displayMedium
+                )
 
-            Spacer(Modifier.height(12.dp))
-            FatigueDetailScheme(fatigue = fatigue)
+                Spacer(Modifier.height(12.dp))
+                FatigueDetailScheme(fatigue = fatigue)
+            }
         }
 
         Spacer(Modifier.height(32.dp))

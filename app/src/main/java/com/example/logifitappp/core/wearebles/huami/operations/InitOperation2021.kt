@@ -14,6 +14,7 @@ import com.example.logifitappp.core.wearebles.huami.Huami2021Handler
 import com.example.logifitappp.core.wearebles.huami.Huami2021Service
 import com.example.logifitappp.core.wearebles.huami.HuamiService
 import com.example.logifitappp.core.wearebles.huami.HuamiSupport
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import java.util.Random
 
 class InitOperation2021(
@@ -118,7 +119,7 @@ class InitOperation2021(
         } else if (payload[0] == HuamiService.RESPONSE && payload[1] == 0x05.toByte() && payload[2] == 0x25.toByte()) {
             println("Authentication failed, disconnecting")
 
-            App.signalAuthenticationKeyFailed()
+            App.signalFailedConnectionWithWearable(AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
             App.getWearableServiceTo(wearable).disconnect()
         } else {
             println("Unhandled auth payload: ${payload.contentToString()}")

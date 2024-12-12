@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
+    modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     isVisible: Boolean,
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
@@ -43,6 +45,7 @@ fun BottomSheet(
 
     ModalBottomSheet(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        modifier = modifier,
         onDismissRequest = onDismissRequest,
         sheetState = modalBottomSheetState
     ) {
@@ -50,6 +53,8 @@ fun BottomSheet(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     color = MaterialTheme.colorScheme.primary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     text = title,
                     typography = MaterialTheme.typography.displayMedium
                 )

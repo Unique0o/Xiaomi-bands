@@ -74,7 +74,7 @@ fun HomeDrowsinessTest(
                         icon = Icons.Default.Share,
                         iconSize = 10.dp,
                         modifier = Modifier.height(24.dp),
-                        text = stringResource(id = R.string.share),
+                        text = stringResource(id = R.string.button_share),
                         onClick = { homeViewModel.shareEvaluation(evaluation) },
                         verticalPadding = 0.dp,
                     )

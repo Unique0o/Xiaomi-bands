@@ -4,11 +4,9 @@ import com.example.logifitappp.data.remote.dto.requests.StoreFatigueRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreHeartRateRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreSleepGraphicRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreSleepRequest
-import com.example.logifitappp.data.remote.dto.response.GeneralErrorResponse
 import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -22,9 +20,10 @@ class SleepService @Inject constructor(
             val response = sleepRepository.store(storeSleepRequest)
 
             if (!response.isSuccessful) {
-                response.errorBody()?.let {
-                    val errorResponse = Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
-                    throw HttpConsumerException(AppStatusCodeEnum.fromCode(errorResponse.code))
+                when (response.code()) {
+                    422 ->  throw HttpConsumerException(AppStatusCodeEnum.NO_ASSOCIATED_USER)
+                    406 -> throw HttpConsumerException(AppStatusCodeEnum.BAND_THEFT)
+                    else -> throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
                 }
             }
 
@@ -59,9 +58,9 @@ class SleepService @Inject constructor(
             val response = sleepRepository.storeGraphics(storeSleepGraphicRequest)
 
             if (!response.isSuccessful) {
-                response.errorBody()?.let {
-                    val errorResponse = Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
-                    throw HttpConsumerException(AppStatusCodeEnum.fromCode(errorResponse.code))
+                when (response.code()) {
+                    422 -> throw HttpConsumerException(AppStatusCodeEnum.NO_ASSOCIATED_USER)
+                    else -> throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
                 }
             }
 

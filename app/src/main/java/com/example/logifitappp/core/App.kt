@@ -8,15 +8,19 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Build.VERSION
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.example.logifitappp.core.broadcasters.BluetoothStateChangeReceiver
+import com.example.logifitappp.core.utils.LimitedQueue
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.core.wearebles.WearablePreferences
 import com.example.logifitappp.core.wearebles.WearableService
 import com.example.logifitappp.data.AppDatabase
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -41,14 +45,19 @@ class App: Application() {
     }
 
     companion object {
-        const val ACTION_NEW_DATA = "com.info.logifit.pe.action.quit"
-        const val AUTHENTICATION_KEY_FAILED = "com.info.logifit.pe.authentication.key.failed"
+        const val ACTION_NEW_DATA = "com.info.logifit.pe.action.new_data"
+        const val ACTION_QUIT = "com.info.logifit.pe.action.quit"
+        const val FAILED_CONNECTION_WITH_WEARABLE = "com.info.logifit.pe.failed.connection.with.wearable"
+        const val NOTIFICATION = "com.info.logifit.pe.notification"
         const val RELOAD_AUTHENTICATED_USER = "com.info.logifit.pe.reload.authenticated.user"
 
         lateinit var context: App
             private set
 
         lateinit var database: AppDatabase
+            private set
+
+        var mIDSenderLookup = LimitedQueue<Int, String>(16)
             private set
 
         lateinit var preferences: AppPreferences
@@ -72,15 +81,31 @@ class App: Application() {
             return context.getSharedPreferences("wearable_settings_$wearableIdentifier", Context.MODE_PRIVATE)
         }
 
-        fun signalActivityDataFinish(wearable: Wearable) {
-            val intent = Intent(ACTION_NEW_DATA)
-            intent.putExtra(Wearable.EXTRA_DEVICE, wearable)
+        fun isRunningPieOrLater() = VERSION.SDK_INT >= Build.VERSION_CODES.P
+
+        fun refreshWearables() = wearableManager.refreshPairedWearables()
+
+        fun signalNewNotification() {
+            preferences.getPreferences()
+                .edit()
+                .putBoolean(AppPreferences.NEW_NOTIFICATION, true)
+                .apply()
+
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(NOTIFICATION))
+        }
+
+        fun signalFailedConnectionWithWearable(status: AppStatusCodeEnum) {
+            val intent = Intent(FAILED_CONNECTION_WITH_WEARABLE)
+            intent.putExtra(Wearable.EXTRA_FAILED_CONNECTION_STATUS, status.code())
 
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
         }
 
-        fun signalAuthenticationKeyFailed() {
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(AUTHENTICATION_KEY_FAILED))
+        fun signalFetchingActivityDataFinish(wearable: Wearable) {
+            val intent = Intent(ACTION_NEW_DATA)
+            intent.putExtra(Wearable.EXTRA_DEVICE, wearable)
+
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
         }
 
         fun signalReloadAuthenticatedUser() {

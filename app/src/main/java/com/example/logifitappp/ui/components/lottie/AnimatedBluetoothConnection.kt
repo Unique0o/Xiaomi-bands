@@ -13,6 +13,6 @@ fun AnimatedBluetoothConnection() {
     LottieLayout(
         iterations = LottieConstants.IterateForever,
         modifier = Modifier.size(136.dp),
-        resource = R.raw.bluetooth_conecction
+        resource = R.raw.bluetooth_connection
     )
 }

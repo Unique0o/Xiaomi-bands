@@ -14,6 +14,7 @@ enum class WearableActivityTypeEnum(
     val color: Color
 ) {
     ACTIVITY(0x00000001, R.string.activity, Orange390),
+    CYCLING(0x00000080, R.string.biking, Orange390),
     DEEP_SLEEP(0x00000004, R.string.deep_sleep, Blue690),
     LIGHT_SLEEP(0x00000002, R.string.light_sleep, Sky320),
     NOT_WORN(0x00000008, R.string.not_worn, Orange390),

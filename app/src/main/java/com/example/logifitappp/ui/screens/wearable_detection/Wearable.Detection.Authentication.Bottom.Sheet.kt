@@ -49,14 +49,14 @@ fun WearableDetectionAuthenticationBottomSheet(
         coroutineScope.launch {
             authenticate()
             bottomSheetState.hide()
-        }.invokeOnCompletion { wearableDetectionViewModel.isBottomSheetVisible = false }
+        }.invokeOnCompletion { wearableDetectionViewModel.closeBottomSheet() }
     }
 
     BottomSheet (
         coroutineScope = coroutineScope,
-        isVisible = wearableDetectionViewModel.isBottomSheetVisible,
+        isVisible = wearableDetectionViewModel.state.isBottomSheetVisible,
         modalBottomSheetState = bottomSheetState,
-        onDismissRequest = { wearableDetectionViewModel.isBottomSheetVisible = false },
+        onDismissRequest = { wearableDetectionViewModel.closeBottomSheet() },
         title = stringResource(id = R.string.authentication_key_bottom_sheet_title)
     ) {
         Text(
@@ -105,9 +105,9 @@ fun WearableDetectionAuthenticationBottomSheet(
                         doAuthentication()
                     }
                 ),
-                onValueChange = { wearableDetectionViewModel.authenticationKey = it },
+                onValueChange = { wearableDetectionViewModel.updateAuthenticationKey(it) },
                 placeholder =  stringResource(id = R.string.enter_key),
-                value = wearableDetectionViewModel.authenticationKey
+                value = wearableDetectionViewModel.state.authenticationKey
             )
         }
 

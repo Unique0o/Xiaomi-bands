@@ -7,6 +7,7 @@ import com.example.logifitappp.core.App
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 object DateTimeUtils {
     fun formatDateTime(date: Date): String {
@@ -17,6 +18,10 @@ object DateTimeUtils {
         )
     }
 
+    fun format(date: Date, format: String, timeZone: TimeZone): String = SimpleDateFormat(format, Locale.US).apply {
+        this.timeZone = timeZone
+    }.format(date)
+
     fun format(date: Date, format: String): String = SimpleDateFormat(format, Locale.US).format(date)
 
     fun formatExtendedIso8601(date: Date): String = format(date, "yyyy-MM-dd HH:mm:ss")
@@ -26,6 +31,14 @@ object DateTimeUtils {
     fun formatReducedIso8601(date: Date): String = format(date, "yyyy-MM-dd")
 
     fun parse(date: String, format: String): Date? = SimpleDateFormat(format, Locale.US).parse(date)
+
+    fun parse(time: Long, format: String, timeZone: TimeZone): String {
+        val date = GregorianCalendar.getInstance().apply {
+            timeInMillis = time
+        }
+
+        return format(date.time, format, timeZone)
+    }
 
     fun parse(date: String, from: String, to: String): String {
         val inputFormat = SimpleDateFormat(from, Locale.US)

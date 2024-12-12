@@ -44,15 +44,15 @@ import com.example.logifitappp.ui.components.SideBarContent
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.home.HomeView
 import com.example.logifitappp.ui.theme.Blue690
-import com.example.logifitappp.viewmodel.BottomTabScreenViewModel
-import com.example.logifitappp.viewmodel.views.AppViewModel
+import com.example.logifitappp.viewmodel.views.BottomTabScreenViewModel
+import com.example.logifitappp.viewmodel.AppViewModel
 
 @Composable
 fun BottomTabScreen(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val user = appViewModel.user!!
+    val user = appViewModel.user
 
     val bottomTabNavigation = rememberNavController()
     val bottomTabScreenViewModel = hiltViewModel<BottomTabScreenViewModel, BottomTabScreenViewModel.BottomTabScreenViewModelFactory>{
@@ -90,8 +90,9 @@ fun BottomTabScreen(
                     .fillMaxHeight()
             ) {
                 SideBarContent(
-                    navigation = navigation,
-                    user = user
+                    appViewModel = appViewModel,
+                    drawerState = drawerState,
+                    navigation = navigation
                 )
             }
         },

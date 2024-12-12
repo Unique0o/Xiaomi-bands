@@ -26,6 +26,8 @@ class AuthService @Inject constructor(private val authRepository: AuthRepository
                     val errorResponse = Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
                     throw HttpConsumerException(AppStatusCodeEnum.fromCode(errorResponse.code))
                 }
+
+                throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
             }
 
             val body = response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)

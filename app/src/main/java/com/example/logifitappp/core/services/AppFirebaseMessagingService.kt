@@ -28,6 +28,7 @@ class AppFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification?.let {
+            App.signalNewNotification()
             sendNotification(it)
         }
     }

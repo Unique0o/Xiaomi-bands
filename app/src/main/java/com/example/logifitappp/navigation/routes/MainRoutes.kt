@@ -5,16 +5,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class MainRoutes {
     @Serializable
-    data object BottomTabsNavigation : MainRoutes()
+    data object HealthInformation: MainRoutes()
 
     @Serializable
-    data object Graphics : MainRoutes() //
-
-    @Serializable
-    data object Login: MainRoutes()
+    data class LessonDetail(val lessonId: Int, val serializedLessonIds: String): MainRoutes()
 
     @Serializable
     data object Notifications: MainRoutes()
+
+    @Serializable
+    data object OccupationalInformation: MainRoutes()
 
     @Serializable
     data object Onboarding: MainRoutes()
@@ -23,7 +23,25 @@ sealed class MainRoutes {
     data object PasswordRecovery: MainRoutes()
 
     @Serializable
+    data object PersonalInformation: MainRoutes()
+
+    @Serializable
+    data object Roster: MainRoutes()
+
+    @Serializable
+    data object RosterRecording: MainRoutes()
+
+    @Serializable
+    data object SleepDataRecording: MainRoutes()
+
+    @Serializable
     data object SplashScreen: MainRoutes()
+
+    @Serializable
+    data object Trainings: MainRoutes()
+
+    @Serializable
+    data class TrainingsDetail(val trainingId: Int): MainRoutes()
 
     @Serializable
     data object WearableDetection: MainRoutes()
@@ -31,29 +49,16 @@ sealed class MainRoutes {
     @Serializable
     data class WearableProfile(val mac: String): MainRoutes()
 
+
+
+    @Serializable
+    data object Graphics : MainRoutes() //
+
     @Serializable
     data object Home : MainRoutes() //
 
     @Serializable
-    data object HomeWearable : MainRoutes()
-
-    @Serializable
     data object Profile : MainRoutes()
-
-    @Serializable
-    data object OccupationalInformation : MainRoutes()
-
-    @Serializable
-    data object HealthInformation : MainRoutes()
-
-    @Serializable
-    data object PersonalInformation : MainRoutes()
-
-    @Serializable
-    data object Trainings : MainRoutes()
-
-    @Serializable
-    data object TrainingsDetail : MainRoutes()
 
     @Serializable
     data object AdditionalInformationPicture : MainRoutes()

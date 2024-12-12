@@ -38,8 +38,6 @@ class WearableManager(private val context: Context) {
         val filter = IntentFilter()
         filter.addAction(Wearable.ACTION_DEVICE_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filter)
-
-        refreshPairedWearables()
     }
 
     fun getWearables(): List<Wearable> = Collections.unmodifiableList(wearables)
@@ -48,7 +46,7 @@ class WearableManager(private val context: Context) {
         LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ACTION_DEVICES_CHANGED))
     }
 
-    private fun refreshPairedWearables() {
+    fun refreshPairedWearables() {
         val availableWearables = WearableHelper.getInstance().getAvailableWearables()
         wearables.retainAll(availableWearables)
 
