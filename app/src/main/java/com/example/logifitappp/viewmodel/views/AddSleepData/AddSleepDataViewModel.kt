@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.data.models.SleepEntry
 import com.example.logifitappp.data.remote.dto.requests.RealSleep
 import com.example.logifitappp.data.remote.dto.requests.Sleep
@@ -200,7 +201,7 @@ class AddSleepDataViewModel @Inject constructor(
                     val matchResult = durationPattern.find(duration)
                         ?: throw Exception("Formato de duración inválido")
                     val (hours, minutes) = matchResult.destructured
-                    val durationValue = (hours.toInt() * 60 + minutes.toInt()).toString()
+                    val durationValue = hours.toInt() * 60 * 60 + minutes.toInt() * 60L
 
                     Sleep(
                         sleepIni = entry.fellAsleepTime.format(
@@ -209,8 +210,8 @@ class AddSleepDataViewModel @Inject constructor(
                         sleepEnd = entry.wokeUpTime.format(
                             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                         ),
-                        totalSleepText = duration,
-                        totalSleepValue = durationValue
+                        totalSleepText = DurationUtils.format(durationValue),
+                        totalSleepValue = durationValue.toString()
                     )
                 }
 
@@ -219,12 +220,12 @@ class AddSleepDataViewModel @Inject constructor(
                 }
                 val totalHours = totalDurationMinutes / 60
                 val totalMinutes = totalDurationMinutes % 60
-                val totalDurationText = "${totalHours}h ${totalMinutes}m"
+                val totalSeconds = totalHours * 60 * 60 + totalMinutes * 60L
 
                 val request = SleepWrittenDataRequest(
                     realSleep = RealSleep(
-                        intervalText = totalDurationText,
-                        intervalValue = totalDurationMinutes.toString(),
+                        intervalText = DurationUtils.format(totalSeconds),
+                        intervalValue = totalSeconds.toString(),
                         date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                         version = Build.VERSION.RELEASE
                     ),
