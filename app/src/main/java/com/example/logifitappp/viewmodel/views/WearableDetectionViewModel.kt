@@ -27,7 +27,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.bluetooth.ScanEventProcessor
 import com.example.logifitappp.core.utils.BondingUtils
@@ -233,11 +233,15 @@ class WearableDetectionViewModel @AssistedInject constructor(
         return permissions
     }
 
-    fun handleAuthenticationKeyFailed() {
-        state = state.copy(
-            currentPage = 0,
-            status = AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY
-        )
+    fun handleFailedConnection(status: AppStatusCodeEnum) {
+        state = when (status) {
+            AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY -> state.copy(
+                currentPage = 0,
+                status = status
+            )
+
+            else -> state.copy(status = status)
+        }
     }
 
     fun handleBluetoothStateChanged(state: Int) {

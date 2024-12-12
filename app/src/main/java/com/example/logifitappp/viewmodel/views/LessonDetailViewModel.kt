@@ -18,18 +18,27 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = LessonDetailViewModel.LessonDetailViewModelFactory::class)
 class LessonDetailViewModel @AssistedInject constructor(
     @Assisted private val lessonId: Int,
+    @Assisted private val lessonIds: Array<Int>,
     @Assisted private val user: UserModel?,
     private val lessonService: LessonService
 ): ViewModel() {
     @AssistedFactory
     interface LessonDetailViewModelFactory {
-        fun create(lessonId: Int, user: UserModel?): LessonDetailViewModel
+        fun create(lessonId: Int, lessonIds: Array<Int>, user: UserModel?): LessonDetailViewModel
     }
 
     var state by mutableStateOf(LessonDetailState())
         private set
 
     init {
+        val currentIndex = lessonIds.indexOf(lessonId)
+
+        state = state.copy(
+            canGoToNext = currentIndex != lessonIds.lastIndex,
+            canGoToPrev = currentIndex > 0,
+            currentLessonId = lessonId
+        )
+
         fetchInformation()
     }
 
@@ -40,7 +49,7 @@ class LessonDetailViewModel @AssistedInject constructor(
 
                 state = state.copy(
                     hasFetchLessonInformationFailed = false,
-                    lesson = lessonService.find(lessonId)
+                    lesson = lessonService.find(state.currentLessonId)
                 )
             } catch (e: Exception) {
                 state = state.copy(hasFetchLessonInformationFailed = true)
@@ -71,5 +80,37 @@ class LessonDetailViewModel @AssistedInject constructor(
                 state = state.copy(isMarkingAsCompleted = false)
             }
         }
+    }
+
+    fun nextLesson() {
+        val currentIndex = lessonIds.indexOf(state.currentLessonId)
+
+        if (currentIndex == lessonIds.lastIndex) return
+
+        val nextLessonId = lessonIds[currentIndex + 1]
+
+        state = state.copy(
+            canGoToNext = currentIndex + 1 != lessonIds.lastIndex,
+            canGoToPrev = true,
+            currentLessonId = nextLessonId
+        )
+
+        fetchInformation()
+    }
+
+    fun prevLesson() {
+        val currentIndex = lessonIds.indexOf(state.currentLessonId)
+
+        if (currentIndex == 0) return
+
+        val prevLessonId = lessonIds[currentIndex - 1]
+
+        state = state.copy(
+            canGoToNext = true,
+            canGoToPrev = currentIndex - 1 > 0,
+            currentLessonId = prevLessonId
+        )
+
+        fetchInformation()
     }
 }

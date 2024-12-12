@@ -21,7 +21,10 @@ class LoginUseCase @Inject constructor(
                 updateTenantInformationUseCase()
                 updateNotificationTokenUseCase(user.id)
             } catch (e: HttpConsumerException) {
+                if (!user.isActive) return user
+
                 deleteLoggedIn()
+                throw e
             }
         }
 

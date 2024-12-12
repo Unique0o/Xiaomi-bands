@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.broadcasters.BluetoothBroadcastReceiver
 import com.example.logifitappp.core.bluetooth.ScanEvent
+import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.enums.AppStatusCodeEnum
@@ -87,8 +88,9 @@ fun WearableDetectionView(
                 when (intent.action) {
                     WearableManager.ACTION_DEVICES_CHANGED -> wearableDetectionViewModel.checkWearableConnection()
 
-                    App.AUTHENTICATION_KEY_FAILED -> {
-                        wearableDetectionViewModel.handleAuthenticationKeyFailed()
+                    App.FAILED_CONNECTION_WITH_WEARABLE -> {
+                        val code = intent.getIntExtra(Wearable.EXTRA_FAILED_CONNECTION_STATUS, -1)
+                        wearableDetectionViewModel.handleFailedConnection(AppStatusCodeEnum.fromCode(code))
                     }
                 }
             }
@@ -96,7 +98,7 @@ fun WearableDetectionView(
 
         val filterLocal = IntentFilter()
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
-        filterLocal.addAction(App.AUTHENTICATION_KEY_FAILED)
+        filterLocal.addAction(App.FAILED_CONNECTION_WITH_WEARABLE)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
         onDispose {

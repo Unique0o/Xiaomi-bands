@@ -3,7 +3,7 @@ package com.example.logifitappp.core.wearebles.xiaomi
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.CallSpec
+import com.example.logifitappp.core.specs.CallSpec
 import com.example.logifitappp.core.bluetooth.ConnectionTypeEnum
 import com.example.logifitappp.core.wearebles.AbstractWearableSupport
 import com.example.logifitappp.core.wearebles.Wearable
@@ -37,7 +37,7 @@ class XiaomiSupport: AbstractWearableSupport() {
             ConnectionTypeEnum.BLE -> XiaomiBleConnectionSupport(this)
 
             ConnectionTypeEnum.BT_CLASSIC -> {
-                // TODO WHEN IS REQUIRED
+                //TODO WHEN IS REQUIRED
                 null
             }
         }

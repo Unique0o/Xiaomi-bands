@@ -87,12 +87,12 @@ fun SleepProcessingCard(
             modifier = Modifier
                 .weight(1f)
                 .clickable {
-                    if (fatigue != null) isFatigueDetailModalVisible = true
+                    if (fatigue != null && fatigue.totalSleepSeconds > 0L) isFatigueDetailModalVisible = true
                 }
         ) {
             SleepProcessingComponent(
                 label = stringResource(id = R.string.fatigue_label),
-                sleepProcessingStatusEnum = fatigue?.calculateStatus() ?: SleepProcessingStatusEnum.PENDING
+                sleepProcessingStatusEnum =  if (fatigue != null && fatigue.totalSleepSeconds > 0L) fatigue.calculateStatus() else SleepProcessingStatusEnum.PENDING
             )
         }
     }

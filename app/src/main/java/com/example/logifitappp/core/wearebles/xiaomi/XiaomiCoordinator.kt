@@ -1,6 +1,6 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.AbstractBleWearableCoordinator
 import java.util.regex.Pattern
@@ -10,9 +10,7 @@ abstract class XiaomiCoordinator: AbstractBleWearableCoordinator() {
 
     override fun getActivityProvider(wearable: Wearable) = XiaomiActivityProvider(wearable)
 
-    override fun getBondingStyle(): Int {
-        return BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY
-    }
+    override fun getBondingStyle() = BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY
 
     override fun getWearableSupportClass() = XiaomiSupport::class.java
 

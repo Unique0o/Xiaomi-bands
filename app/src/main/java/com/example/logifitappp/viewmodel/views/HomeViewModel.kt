@@ -15,7 +15,7 @@ import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.SharingUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
-import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
 import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.ShiftModel
@@ -73,6 +73,8 @@ class HomeViewModel @AssistedInject constructor(
         private set
 
     init {
+        App.refreshWearables()
+
         user?.tenantId?.let {
             state = state.copy(tenant = App.database.tenantDao().find(it))
             shifts.addAll(App.database.shiftDao().all(it))
@@ -109,10 +111,13 @@ class HomeViewModel @AssistedInject constructor(
                 if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)
 
                 if (wearable.isDisconnected()) {
-                    state = state.copy(
-                        status = if (state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
-                        else AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
-                    )
+                    val status = when (state.status) {
+                        AppStatusCodeEnum.CONNECTING_WITH_WEARABLE -> AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
+                        AppStatusCodeEnum.EXTRACTING_WEARABLE_INFORMATION -> AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
+                        else -> state.status
+                    }
+
+                    state = state.copy(status = status)
                 }
             }
         }
@@ -147,8 +152,8 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    fun handleAuthenticationKeyFailed() {
-       state = state.copy(status = AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
+    fun handleFailedConnection(status: AppStatusCodeEnum) {
+       state = state.copy(status = status)
     }
 
     fun handleChangeShift(shift: ShiftModel) {
@@ -258,6 +263,7 @@ class HomeViewModel @AssistedInject constructor(
         viewModelScope.launch {
             try {
                 state = state.copy(
+                    isBandTheft = false,
                     isLoading = true,
                     status = AppStatusCodeEnum.TRANSFERRING_WEARABLE_INFORMATION
                 )
@@ -268,6 +274,11 @@ class HomeViewModel @AssistedInject constructor(
                 state = state.copy(status = AppStatusCodeEnum.SUCCESSFUL_WEARABLE_INFORMATION_TRANSFERRING)
             } catch (e: SynchronizationProcessingException) {
                 state = state.copy(status = e.getStatus())
+            } catch (e: HttpConsumerException) {
+                state = state.copy(
+                    isBandTheft = e.getStatus() == AppStatusCodeEnum.BAND_THEFT,
+                    status = e.getStatus()
+                )
             } catch (e: Exception) {
                 state = state.copy(status = AppStatusCodeEnum.UNPROCESSABLE_WEARABLE_INFORMATION_TRANSFER)
             }
@@ -304,5 +315,14 @@ class HomeViewModel @AssistedInject constructor(
 
     fun stopProcessing() {
         state = state.copy(isLoading = false)
+    }
+
+    fun tryToShareSleep() {
+        if (state.drowsiness?.sentAt == null) {
+            state = state.copy(
+                isLoading = true,
+                status = AppStatusCodeEnum.SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT
+            )
+        } else shareSleepDetail()
     }
 }

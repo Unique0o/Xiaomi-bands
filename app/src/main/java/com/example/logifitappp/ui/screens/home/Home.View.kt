@@ -58,8 +58,9 @@ fun HomeView(
                         homeViewModel.refreshSingleWearable(wearable)
                     }
 
-                    App.AUTHENTICATION_KEY_FAILED -> {
-                        homeViewModel.handleAuthenticationKeyFailed()
+                    App.FAILED_CONNECTION_WITH_WEARABLE -> {
+                        val code = intent.getIntExtra(Wearable.EXTRA_FAILED_CONNECTION_STATUS, -1)
+                        homeViewModel.handleFailedConnection(AppStatusCodeEnum.fromCode(code))
                     }
 
                     WearableManager.ACTION_DEVICES_CHANGED -> {
@@ -71,7 +72,7 @@ fun HomeView(
 
         val filterLocal = IntentFilter()
         filterLocal.addAction(App.ACTION_NEW_DATA)
-        filterLocal.addAction(App.AUTHENTICATION_KEY_FAILED)
+        filterLocal.addAction(App.FAILED_CONNECTION_WITH_WEARABLE)
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
@@ -86,39 +87,56 @@ fun HomeView(
         status = homeViewModel.state.status,
         visible = homeViewModel.state.isLoading
     ) {
-        if (homeViewModel.state.status == AppStatusCodeEnum.UNSELECTED_SHIFT) {
-            Column {
-                Spacer(Modifier.height(16.dp))
+        when (homeViewModel.state.status) {
+            AppStatusCodeEnum.UNSELECTED_SHIFT -> {
+                Column {
+                    Spacer(Modifier.height(16.dp))
 
-                RadioButtonGroup(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    onChangeValue = { homeViewModel.shift = it },
-                    options = homeViewModel.shifts,
-                    value = homeViewModel.shift
-                )
+                    RadioButtonGroup(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        onChangeValue = { homeViewModel.shift = it },
+                        options = homeViewModel.shifts,
+                        value = homeViewModel.shift
+                    )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = stringResource(id = R.string.change_shift_modal_message),
-                    textAlign = TextAlign.Center,
-                    typography = MaterialTheme.typography.bodyMedium
-                )
+                    Text(
+                        text = stringResource(id = R.string.change_shift_modal_message),
+                        textAlign = TextAlign.Center,
+                        typography = MaterialTheme.typography.bodyMedium
+                    )
 
+                    Spacer(Modifier.height(16.dp))
+
+                    Button(
+                        enabled = homeViewModel.shift != null,
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            homeViewModel.handleChangeShift(homeViewModel.shift!!)
+                            homeViewModel.fetchActivities(homeViewModel.wearables.first())
+                        },
+                        text = stringResource(id = R.string.button_continue)
+                    )
+                }
+            }
+
+            AppStatusCodeEnum.SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT -> {
                 Spacer(Modifier.height(16.dp))
 
                 Button(
-                    enabled = homeViewModel.shift != null,
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        homeViewModel.handleChangeShift(homeViewModel.shift!!)
-                        homeViewModel.fetchActivities(homeViewModel.wearables.first())
+                        homeViewModel.shareSleepDetail()
+                        homeViewModel.stopProcessing()
                     },
                     text = stringResource(id = R.string.button_continue)
                 )
             }
+
+            else -> {}
         }
     }
 
@@ -148,7 +166,7 @@ fun HomeView(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    if (homeViewModel.state.tenant?.shouldItShowDrowsinessTest == true) {
+                    if (homeViewModel.state.tenant?.shouldItShowLocationComponent == true) {
                         HomeLocationCard(
                             onSelectLocation = { homeViewModel.handleChangeLocation(it) },
                             location = homeViewModel.state.location

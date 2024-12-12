@@ -8,6 +8,8 @@
     <string name="authentication_key_bottom_sheet_message">Escribe o copia la clave de autorización que te brindaron para realizar la autenticación.</string>
     <string name="authentication_key_bottom_sheet_title">Autentica tu banda</string>
     <string name="awaken">Despertar</string>
+    <string name="band_theft_alert"> Se ha detectado que esta intentando  sincronizar su reporte de sueño usando un dispositivo ya usado por  otro usuario, lo cual constituye una grave irregularidad. Esto incumple las normas de la empresa. Le Recordamos Cualquier intento de fraude será sancionado por la supervisión.</string>
+    <string name="band_theft_message">Los datos de esta banda ya fueron registrado por otro usuario</string>
     <string name="battery_percentage_label">Batería al %1$s</string>
     <string name="between_40_and_100">Entre 40 y 100</string>
     <string name="biking">Ciclismo</string>
@@ -43,6 +45,7 @@
     <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="description">Descripción</string>
     <string name="device_unknown_name">(desconocido)</string>
+    <string name="disabled_bluetooth_message">El Bluetooth está desactivado</string>
     <string name="disconnected">Desconectado</string>
     <string name="discovery_pair_message">Selecciona Emparejar para emparejar tus dispositivos. Si esto falla, prueba de nuevo sin emparejar.</string>
     <string name="discovery_pair_title">¿Emparejar con %1$s?</string>
@@ -78,6 +81,8 @@
     <string name="heart_rate_detail_chart_title">Mi ritmo cardiaco</string>
     <string name="help_already_stored_message">Ya se realizó una solicitud de ayuda para el día de hoy</string>
     <string name="in_progress">En progreso</string>
+    <string name="inactive_tenant_message">El proyecto está inactivo, contacte con el administrador</string>
+    <string name="inactive_user_message">Su usuario está inactivo, contacte con el administrador</string>
     <string name="initialized">Iniciado</string>
     <string name="initializing">Inicializando</string>
     <string name="interrupted_synchronization_message">Sincronización interrumpida. Se recomienda mantener la Smart Band cerca del celular hasta que finalice el proceso de extracción de información</string>
@@ -101,10 +106,12 @@
     <string name="location_title">Seleccione una localización</string>
     <string name="location_validation_error_message">Debe seleccionar una ubicación</string>
     <string name="logging_in_message">Validando usuario…</string>
+    <string name="logifit_sync_message_missing">La información de su sueño aun no se ha enviado a Logifit</string>
     <string name="logout">Cerrar sesión</string>
     <string name="main_administrator">Super administrador</string>
     <string name="message_password_recovery">Se notificará a un encargado para que lo pueda ayudar</string>
     <string name="message_recover_password">¿No recuerda su contraseña?</string>
+    <string name="mute">Silenciar</string>
     <string name="my_drowsiness_tests">Mis tests de somnolencia</string>
     <string name="no_data">Sin datos</string>
     <string name="no_internet_connection_message">Verifique su conexión a Internet</string>
@@ -115,6 +122,7 @@
     <string name="not_worn">Dispositivo no usado</string>
     <string name="notifications_title">Mis notificaciones</string>
     <string name="occupational_information_title">Información laboral</string>
+    <string name="open_on_phone">Abrir en el dispositivo Android</string>
     <string name="operator">Operador</string>
     <string name="password_not_validated_error_message">La contraseña ingresada es incorrecta, por favor intente de nuevo</string>
     <string name="password_recovery_title">Recuperar contraseña</string>
@@ -144,6 +152,7 @@
     <string name="share_evaluation_result_message">Compartir resultado de evaluación</string>
     <string name="share_sleep_detail_message">Compartir detalle de sueño</string>
     <string name="share_training_certificate_message">Compartir certificado de capacitación</string>
+    <string name="sharing_without_synchronization_to_logifit_message">Aún falta enviar los datos a Logifit, ¿desea compartir sus datos de todas formas?</string>
     <string name="shift">Turno</string>
     <string name="sleep_detail_chart_subtitle">Información entre %1$s - %2$s</string>
     <string name="sleep_detail_chart_title">Mi sueño</string>
@@ -154,6 +163,7 @@
     <string name="sleep_detail_screenshot_title">Reporte de Fatiga y Somnolencia</string>
     <string name="sleep_hours_message">%1$s horas de sueño completadas</string>
     <string name="sleep_synchronization_message">%1$s Reporte realizado hace %2$s</string>
+    <string name="sleep_sync_message_missing">La información de su sueño aun no se ha extraido del Smart Band</string>
     <string name="sleep_time">Tiempo de sueño</string>
     <string name="state_to_drive_not_found_message">Al Parecer tienes otro estado diferente, consulte con su administrador.</string>
     <string name="steps_detail_chart_chip_message">%1$s pasos</string>
@@ -164,13 +174,16 @@
     <string name="successful_roster_information_storage_message">EL registro de la información se realizó con éxito</string>
     <string name="successful_wearable_information_synchronizing_message">Se extrajo toda la información de sueño de su Smart Band</string>
     <string name="successful_wearable_information_transferring_message">Los datos han sido enviados exitosamente</string>
-    <string name="sync_with_logifit_required_alert">Lo datos extraidos no han sido enviados a la supervisión. Presione aquí para enviar</string>
+    <string name="sync_with_logifit_required_alert">Los datos extraidos no han sido enviados a la supervisión. Por favor, verifica si el dispositivo tiene señal, datos móviles o está conectado a una red Wi-Fi estable. Si en este momento no cuenta con conexión a internet, se agradece enviar la información a la brevedad posible una vez restablecida la conexión.</string>
     <string name="sync_with_logifit_required_message">No se realizó el envío a Logifit</string>
+    <string name="sync_without_sleep_data_alert">No cuenta con registros de sueño para enviar</string>
     <string name="total_awake_time">Total de tiempo despierto</string>
     <string name="total_sleep_time">Tiempo total de sueño</string>
     <string name="training_progress_label">Progreso %1$s</string>
     <string name="trainings_title">Capacitaciones</string>
     <string name="transferring_wearable_information_message">Ahora se está realizando el envío de los datos a la plataforma de Logifit</string>
+    <string name="unauthorized_screen_message">Actualmente no puede utilizar las funciones de Logifit. Favor de contactarse con el administrador.</string>
+    <string name="unauthorized_screen_title">Usuario no authorizado</string>
     <string name="unbind_before_pair_message">Este dispositivo ya está vinculado en los ajustes de Android, lo que puede hacer que el emparejamiento falle en algunos dispositivos. Si no se puede añadir el dispositivo, elimínelo de los ajustes de Android y vuelva a intentarlo.</string>
     <string name="unbind_before_pair_title">Ya vinculado</string>
     <string name="unfit">No apto</string>
@@ -180,6 +193,7 @@
     <string name="unprocessable_wearable_information_transfer_message">Los datos fueron extraídos exitosamente pero no se enviaron a Logifit. Verifique su conexión a Internet e inténtelo nuevamente</string>
     <string name="unregistered_user_error_message">Usuario no registrado. Por favor, crear una cuenta para iniciar sesión</string>
     <string name="unselected_shift_message">Por favor seleccione un turno de trabajo antes de extraer datos de sueño o realizar una evaluación</string>
+    <string name="unsupported_wearable_message">No existe soporte para este dispositivo. Por favor contactarse con el servicio de soporte</string>
     <string name="username_validation_error_message">Debe ingresar un usuario</string>
     <string name="waiting_for_device_scan">Esperando por escaneo de dispositivos</string>
     <string name="waiting_for_reconnect">Esperando por reconexión</string>

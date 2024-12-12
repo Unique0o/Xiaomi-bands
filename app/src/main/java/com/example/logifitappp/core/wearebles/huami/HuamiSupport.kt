@@ -8,40 +8,56 @@ import android.icu.util.GregorianCalendar
 import android.icu.util.TimeUnit
 import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.RecordedDataTypesEnum
+import com.example.logifitappp.core.RecordedDataType
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.builders.ble.actions.SetWearableStateAction
+import com.example.logifitappp.core.builders.ble.profiles.AlertNotificationProfile
+import com.example.logifitappp.core.builders.ble.profiles.WearableInfoProfile
+import com.example.logifitappp.core.builders.ble.profiles.parcelables.NewAlert
+import com.example.logifitappp.core.builders.ble.profiles.parcelables.WearableInfo
 import com.example.logifitappp.core.events.WearableVersionInfoEvent
 import com.example.logifitappp.core.handlers.IntentListenerHandler
+import com.example.logifitappp.core.specs.CallSpec
+import com.example.logifitappp.core.specs.NotificationSpec
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.utils.GattCharacteristic
 import com.example.logifitappp.core.utils.GattService
+import com.example.logifitappp.core.utils.StringUtils
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.builders.ble.profiles.parcelables.WearableInfo
-import com.example.logifitappp.core.builders.ble.profiles.WearableInfoProfile
 import com.example.logifitappp.core.wearebles.huami.miband.MiBandService
 import com.example.logifitappp.core.wearebles.huami.operations.AbstractFetchOperation
 import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchActivityOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation2021
+import com.example.logifitappp.enums.AlertCategoryEnum
+import com.example.logifitappp.enums.CallSpecTypeEnum
+import com.example.logifitappp.enums.NotificationSpecTypeEnum
 import okio.IOException
 import org.apache.commons.lang3.ArrayUtils
 import java.util.LinkedList
+import kotlin.math.min
 
 abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
     private var rawActivitySize = 4
+
+    private var characteristicChunked: BluetoothGattCharacteristic? = null
     private var characteristicChunked2021Read: BluetoothGattCharacteristic? = null
     private var characteristicChunked2021Write: BluetoothGattCharacteristic? = null
+
     private val fetchOperationQueue = LinkedList<AbstractFetchOperation>()
+
     private var huami2021ChunkedDecoder: Huami2021ChunkedDecoder? = null
     protected var huami2021ChunkedEncoder: Huami2021ChunkedEncoder? = null
+
     private var mtu = MIN_MTU
     private var needsAuth = false
     private var prevMtu = -1
     private var reassemblyBuffer: ByteArray? = null
     private var reassemblyType = 0x00.toByte()
+    private var telephoneRinging = false
+
     private val wearableInfoProfile: WearableInfoProfile<HuamiSupport>
     private val wearableVersionInfo = WearableVersionInfoEvent()
 
@@ -124,6 +140,18 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
 
     fun getNextFetchOperation(): AbstractFetchOperation? {
         return fetchOperationQueue.poll()
+    }
+
+    private fun getNotificationBody(notificationSpec: NotificationSpec): String {
+        val senderOrTitle = StringUtils.getFirstOf(notificationSpec.sender, notificationSpec.title)
+        var message = StringUtils.truncate(senderOrTitle, 32) + "\u0000"
+
+        notificationSpec.subject?.let { message += StringUtils.truncate(it, 128) + "\n\n" }
+        notificationSpec.body?.let { message += StringUtils.truncate(it, 512) }
+
+        if (notificationSpec.subject == null && notificationSpec.body == null) message += " "
+
+        return message
     }
 
     open fun getRawActivitySize() = rawActivitySize
@@ -269,12 +297,18 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
                     builder.add(SetWearableStateAction(getWearable(), Wearable.State.WAITING_FOR_RECONNECT, getContext()))
                 }
             } else InitOperation(this, authenticate, authFlags, cryptFlags, builder).perform()
+
+            characteristicChunked = getCharacteristic(HuamiService.UUID_CHARACTERISTIC_CHUNKEDTRANSFER)
         } catch (e: IOException) {
             println("Initializing Huami device failed")
         }
 
         return builder
     }
+
+    protected fun notificationMaxLength() = 230
+
+    protected open fun notificationHasExtraHeader() = false
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic): Boolean {
         if (super.onCharacteristicChanged(gatt, characteristic)) return true
@@ -328,7 +362,7 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
     }
 
     override fun onFetchRecordedData(dataTypes: Int) {
-        if ((dataTypes and RecordedDataTypesEnum.TYPE_ACTIVITY) != 0) {
+        if ((dataTypes and RecordedDataType.TYPE_ACTIVITY) != 0) {
             println("operation: HuamiFetchActivityOperation")
             fetchOperationQueue.add(HuamiFetchActivityOperation(this))
         }
@@ -339,6 +373,90 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
             } catch (e: IOException) {
                 println("Unable to fetch recorded data: $e")
             }
+        }
+    }
+
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+    override fun onNotification(notificationSpec: NotificationSpec) {
+        val hasExtraHeader = notificationHasExtraHeader()
+        val maxLength = notificationMaxLength()
+        val message = getNotificationBody(notificationSpec)
+
+        try {
+            val builder = performInitialized("new notification")
+            val customIconId = HuamiIcon.mapToIconId(notificationSpec.type)
+
+            var alertCategory = when {
+                notificationSpec.type == NotificationSpecTypeEnum.GENERIC_SMS -> AlertCategoryEnum.SMS
+                customIconId == HuamiIcon.EMAIL -> AlertCategoryEnum.EMAIL
+                else -> AlertCategoryEnum.CUSTOM_HUAMI
+            }
+
+            if (characteristicChunked != null) {
+                var prefixLength = 2
+                var appSuffix = "\u0000 \u0000".toByteArray()
+                var suffixLength = appSuffix.size
+
+                if (alertCategory == AlertCategoryEnum.CUSTOM_HUAMI) {
+                    val appName = "\u0000${StringUtils.getFirstOf(notificationSpec.sourceName, "UNKNOWN")}\u0000"
+
+                    prefixLength = 3
+                    appSuffix = appName.toByteArray()
+                    suffixLength = appName.length
+                }
+
+                if (hasExtraHeader) prefixLength += 4
+
+                val rawMessage = message.toByteArray()
+                var length = min(rawMessage.size, maxLength - prefixLength)
+
+                if (length < rawMessage.size) length = StringUtils.utf8ByteLength(message, length)
+
+                val command = ByteArray(length + prefixLength + suffixLength)
+                var position = 0
+                command[position++] = alertCategory.id.toByte()
+
+                if (hasExtraHeader) {
+                    command[position++] = 0
+                    command[position++] = 0
+                    command[position++] = 0
+                    command[position++] = 0
+                }
+
+                command[position++] = 1
+
+                if (alertCategory == AlertCategoryEnum.CUSTOM_HUAMI) command[position] = customIconId
+
+                System.arraycopy(rawMessage, 0, command, prefixLength, length)
+                System.arraycopy(appSuffix, 0, command, prefixLength + length, appSuffix.size)
+
+                writeToChunked(builder, 0, command)
+            } else {
+                AlertNotificationProfile(this).apply {
+                    this.maxLength = maxLength
+                    newAlert(builder, NewAlert(alertCategory, 1, message, customIconId))
+                }
+            }
+
+            getQueue()?.let { builder.queue(it) }
+        } catch (e: IOException) {
+            println("Unable to send notification to device")
+        }
+    }
+
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+    override fun onSetCallState(callSpec: CallSpec) {
+        when (callSpec.command) {
+            CallSpecTypeEnum.CALL_INCOMING -> {
+                telephoneRinging = true
+            }
+
+            CallSpecTypeEnum.CALL_START, CallSpecTypeEnum.CALL_END -> {
+                telephoneRinging = false
+                stopCurrentCallNotification()
+            }
+
+            else -> {}
         }
     }
 
@@ -423,7 +541,29 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         huami2021ChunkedEncoder?.setMtu(mtu)
     }
 
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+    private fun stopCurrentCallNotification() {
+        try {
+            val builder = performInitialized("stop notification")
+
+        } catch (e: IOException) {
+            println("Error stopping call notification")
+        }
+    }
+
     override fun useAutoConnect() = true
+
+    protected fun writeToChunked(builder: TransactionBuilder, type: Int, payload: ByteArray) {
+        if (force2021Protocol() && type > 0) {
+            val encrypt = when {
+                type == 1 && payload[1] == 2.toByte() -> false
+                else -> true
+            }
+
+            val command = ArrayUtils.addAll(byteArrayOf(0x00, 0x00, (0xc0 or type).toByte(), 0x00), *payload)
+            writeToChunked2021(builder, Huami2021Service.CHUNKED2021_ENDPOINT_COMPAT, command, encrypt)
+        } else writeToChunkedOld(builder, type, payload)
+    }
 
     fun writeToChunked2021(builder: TransactionBuilder, type: Short, byte: Byte, encrypt: Boolean) {
         writeToChunked2021(builder, type, byteArrayOf(byte), encrypt)
@@ -446,6 +586,32 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
             getQueue()?.let { builder.queue(it) }
         } catch (e: Exception) {
             println("Failed to $e")
+        }
+    }
+
+    protected fun writeToChunkedOld(builder: TransactionBuilder, type: Int, payload: ByteArray) {
+        val maxChunkLength = mtu - 6
+        var remaining = payload.size
+        var count = 0
+
+        while (remaining > 0) {
+            val copyBytes = min(remaining, maxChunkLength)
+            val chunk = ByteArray(copyBytes + 3)
+            var flag = 0
+
+            if (remaining <= maxChunkLength) {
+                flag = flag or 0x80
+
+                if (count == 0) flag = flag or 0x40
+            } else if (count > 0) flag = flag or 0x40
+
+            chunk[0] = 0
+            chunk[1] = (flag or type).toByte()
+            chunk[2] = (count and 0xff).toByte()
+
+            System.arraycopy(payload, count++ * maxChunkLength, chunk, 3, copyBytes)
+            builder.write(characteristicChunked, chunk)
+            remaining -= copyBytes
         }
     }
 

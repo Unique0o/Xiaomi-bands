@@ -4,4 +4,6 @@ import com.example.logifitappp.core.wearebles.huami.miband.miband3.MiBand3Suppor
 
 open class MiBand4Support: MiBand3Support() {
     override fun getCryptFlags() = 0x80.toByte()
+
+    override fun notificationHasExtraHeader() = true
 }

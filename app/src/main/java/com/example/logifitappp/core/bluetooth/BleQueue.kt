@@ -24,7 +24,7 @@ import com.example.logifitappp.core.builders.ble.actions.WriteAction
 import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
 import com.example.logifitappp.core.handlers.BluetoothGattServerCallbackHandler
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
 

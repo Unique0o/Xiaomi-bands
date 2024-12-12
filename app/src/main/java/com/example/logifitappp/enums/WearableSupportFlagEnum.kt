@@ -1,4 +1,4 @@
-package com.example.logifitappp.core.wearebles
+package com.example.logifitappp.enums
 
 enum class WearableSupportFlagEnum {
     THROTTLING,

@@ -3,6 +3,7 @@ package com.example.logifitappp.viewmodel.views.AddSleepData
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.data.models.SleepEntry
 import com.example.logifitappp.data.remote.dto.requests.RealSleep
 import com.example.logifitappp.data.remote.dto.requests.Sleep
@@ -185,21 +187,21 @@ class AddSleepDataViewModel @Inject constructor(
                 val durationPattern = "(\\d+)h\\s*(\\d+)m".toRegex()
                 val matchResult = durationPattern.find(duration) ?: throw Exception("Formato de duración inválido")
                 val (hours, minutes) = matchResult.destructured
-                val durationValue = (hours.toInt() * 60 + minutes.toInt()).toString()
+                val durationValue = hours.toInt() * 60 * 60 + minutes.toInt() * 60L
 
                 val request = SleepWrittenDataRequest(
                     realSleep = RealSleep(
-                        intervalText = duration,
-                        intervalValue = durationValue,
+                        intervalText = DurationUtils.format(durationValue),
+                        intervalValue = durationValue.toString(),
                         date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                        version = "4.6"
+                        version = Build.VERSION.RELEASE
                     ),
                     sleeps = listOf(
                         Sleep(
                             sleepIni = entry.fellAsleepTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                             sleepEnd = entry.wokeUpTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                            totalSleepText = duration,
-                            totalSleepValue = durationValue
+                            totalSleepText = DurationUtils.format(durationValue),
+                            totalSleepValue = durationValue.toString()
                         )
                     ),
                     userId = user.id,

@@ -6,8 +6,9 @@ import android.os.Build
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.StringUtils
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableUpdateSubjectEnum
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
 import com.example.logifitappp.core.wearebles.xiaomi.XiaomiSupport
+import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.google.protobuf.ByteString
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 import org.bouncycastle.crypto.engines.AESEngine
@@ -181,7 +182,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
                 if (command == null) {
                     println("handleWatchNonce returned null, disconnecting")
 
-                    App.signalAuthenticationKeyFailed()
+                    App.signalFailedConnectionWithWearable(AppStatusCodeEnum.UNSUPPORTED_WEARABLE)
                     App.getWearableServiceTo(support.getWearable()).disconnect()
                     return
                 }
@@ -205,7 +206,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
                 } else {
                     println("Authentication failed, subtype=${cmd.subtype}, status=${cmd.status}")
 
-                    App.signalAuthenticationKeyFailed()
+                    App.signalFailedConnectionWithWearable(AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY)
                     App.getWearableServiceTo(support.getWearable()).disconnect()
                 }
             }

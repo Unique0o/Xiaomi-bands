@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
     var state by mutableStateOf(LoginState())
         private set
 
-    fun clearForm() {
+    private fun clearForm() {
         state = state.copy(
             username = TextFieldValue(""),
             password = TextFieldValue("")

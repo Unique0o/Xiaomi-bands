@@ -9,13 +9,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.Text
 
 @Composable
 fun AlertCard(
     modifier: Modifier = Modifier,
-    message: String
+    message: String,
+    messageTypography: TextStyle = MaterialTheme.typography.headlineMedium
 ) {
     Box(
         Modifier.fillMaxWidth().then(modifier),
@@ -29,7 +32,8 @@ fun AlertCard(
             Text(
                 color = MaterialTheme.colorScheme.onPrimary,
                 text = message,
-                typography = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                typography = messageTypography,
             )
         }
     }

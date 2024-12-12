@@ -26,10 +26,11 @@ import com.example.logifitappp.viewmodel.views.LessonDetailViewModel
 fun LessonDetailView(
     appViewModel: AppViewModel,
     navigation: NavHostController,
-    lessonId: Int
+    currentLessonId: Int,
+    lessonIds: Array<Int>
 ) {
     val lessonDetailViewModel = hiltViewModel<LessonDetailViewModel, LessonDetailViewModel.LessonDetailViewModelFactory>{
-        it.create(lessonId, appViewModel.user)
+        it.create(currentLessonId, lessonIds, appViewModel.user)
     }
 
     val insets = WindowInsets.navigationBars.asPaddingValues()
@@ -72,7 +73,7 @@ fun LessonDetailView(
         }
 
         LessonDetailFooter(
-            lesson = lessonDetailViewModel.state.lesson,
+            lessonDetailViewModel = lessonDetailViewModel,
             markAsCompleted = { lessonDetailViewModel.markAsCompleted() },
             modifier = Modifier
                 .padding(bottom = insets.calculateBottomPadding() + 16.dp)

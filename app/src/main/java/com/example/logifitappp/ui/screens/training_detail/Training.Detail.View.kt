@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -39,12 +41,15 @@ import com.example.logifitappp.ui.components.pages.NoInternetPage
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.viewmodel.views.TrainingDetailViewModel
+import com.google.gson.Gson
 
 @Composable
 fun TrainingDetailView(
+    backStackEntry: NavBackStackEntry,
     navigation: NavHostController,
     trainingId: Int
 ) {
+    val gson = Gson()
     val trainingDetailViewModel = hiltViewModel<TrainingDetailViewModel, TrainingDetailViewModel.TrainingDetailViewModelFactory>{
         it.create(trainingId)
     }
@@ -83,18 +88,23 @@ fun TrainingDetailView(
     ) {
         item { TrainingDetailHeader(trainingDetailViewModel) }
 
-        items(trainingDetailViewModel.lessons) {
+        items(trainingDetailViewModel.lessons) { lesson ->
             Row(
                 Modifier
                     .height(100.dp)
                     .padding(horizontal = 16.dp)
-                    .clickable { navigation.navigate(MainRoutes.LessonDetail(it.id)) }
+                    .clickable {
+                        navigation.navigate(MainRoutes.LessonDetail(
+                            lesson.id,
+                            gson.toJson(trainingDetailViewModel.lessons.map { it.id }.toTypedArray())
+                        ))
+                    }
             ) {
                 ProgressiveImage(
                     modifier = Modifier.width(130.dp)
                         .fillMaxHeight()
                         .defaultMinSize(minHeight = 70.dp),
-                    url = it.image
+                    url = lesson.image
                 )
 
                 Spacer(Modifier.width(8.dp))
@@ -108,11 +118,11 @@ fun TrainingDetailView(
                     Text(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        text = it.name,
+                        text = lesson.name,
                         typography = MaterialTheme.typography.displayMedium
                     )
 
-                    it.description?.let { description ->
+                    lesson.description?.let { description ->
                         Text(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -128,7 +138,7 @@ fun TrainingDetailView(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Chip(
-                            label = DurationUtils.format(it.duration, true),
+                            label = DurationUtils.format(lesson.duration, true),
                             labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             labelTypography = MaterialTheme.typography.titleSmall,
                             status = ChipStatusEnum.NORMAL
@@ -136,7 +146,7 @@ fun TrainingDetailView(
 
                         Spacer(Modifier.weight(1f))
 
-                        if (it.isCompleted) {
+                        if (lesson.isCompleted) {
                             Icon(
                                 imageVector = Icons.Default.CheckCircle,
                                 contentDescription = null,

@@ -1,6 +1,6 @@
 package com.example.logifitappp.core.wearebles.huami.miband.miband5
 
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.wearebles.huami.HuamiConst
 import com.example.logifitappp.core.wearebles.huami.HuamiCoordinator
 import java.util.regex.Pattern

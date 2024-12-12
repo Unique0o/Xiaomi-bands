@@ -14,7 +14,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableCoordinator

@@ -12,6 +12,7 @@ data class HomeState(
     val drowsiness: DrowsinessModel? = null,
     val drowsinessCondition: SleepConditionModel? = null,
     val fatigue: FatigueModel? = null,
+    val isBandTheft: Boolean = false,
     val isLoading: Boolean = false,
     val isSleepSynchronizationRequired: Boolean = true,
     val isSynchronizationWithLogifitRequired: Boolean = true,

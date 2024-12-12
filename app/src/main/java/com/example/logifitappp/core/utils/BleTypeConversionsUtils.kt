@@ -3,6 +3,7 @@ package com.example.logifitappp.core.utils
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.icu.util.TimeZone
+import java.nio.charset.StandardCharsets
 
 object BleTypeConversionsUtils {
     const val TZ_FLAG_INCLUDE_DST_IN_TZ = 1
@@ -118,6 +119,10 @@ object BleTypeConversionsUtils {
 
     fun toUint32(vararg bytes: Byte): Int {
         return (bytes[0].toInt() and 0xff) or ((bytes[1].toInt() and 0xff) shl 8) or ((bytes[2].toInt() and 0xff) shl 16) or ((bytes[3].toInt() and 0xff) shl 24)
+    }
+
+    fun toUtf8s(message: String): ByteArray {
+        return message.toByteArray(StandardCharsets.UTF_8)
     }
 
     fun writeUint16(bytes: ByteArray, offset: Int, value: Int) {

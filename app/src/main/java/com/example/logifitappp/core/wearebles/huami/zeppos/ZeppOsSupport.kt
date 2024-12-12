@@ -7,6 +7,7 @@ import android.icu.util.GregorianCalendar
 import android.icu.util.TimeUnit
 import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.specs.NotificationSpec
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.utils.GattCharacteristic
 import com.example.logifitappp.core.wearebles.huami.Huami2021Service
@@ -143,6 +144,10 @@ class ZeppOsSupport: HuamiSupport() {
         if (characteristic.uuid == HuamiService.UUID_CHARACTERISTIC_ZEPP_OS_FILE_TRANSFER_V3) return true
 
         return super.onCharacteristicChanged(gatt, characteristic)
+    }
+
+    override fun onNotification(notificationSpec: NotificationSpec) {
+
     }
 
     override fun phase2Initialize(builder: TransactionBuilder) {

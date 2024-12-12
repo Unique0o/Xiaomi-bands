@@ -18,16 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
-import com.example.logifitappp.data.remote.dto.response.FetchLessonResponse
 import com.example.logifitappp.ui.components.IconText
 import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.theme.Gray615
 import com.example.logifitappp.ui.theme.Green298
+import com.example.logifitappp.ui.theme.Zinc680
+import com.example.logifitappp.viewmodel.views.LessonDetailViewModel
 
 @Composable
 fun LessonDetailFooter(
     modifier: Modifier = Modifier,
-    lesson: FetchLessonResponse?,
+    lessonDetailViewModel: LessonDetailViewModel,
     markAsCompleted: () -> Unit
 ) {
     Row(
@@ -36,19 +37,20 @@ fun LessonDetailFooter(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = {  }
+            enabled = lessonDetailViewModel.state.canGoToPrev,
+            onClick = { lessonDetailViewModel.prevLesson() }
         ) {
             Icon(
                 contentDescription = "prev lesson",
                 imageVector = Icons.Default.ChevronLeft,
                 modifier = Modifier.size(24.dp),
-                tint = Gray615
+                tint = if (lessonDetailViewModel.state.canGoToPrev) Gray615 else Zinc680.copy(alpha = 0.5f)
             )
         }
 
         Spacer(Modifier.width(2.dp))
 
-        if (lesson?.isCompleted == true) {
+        if (lessonDetailViewModel.state.lesson?.isCompleted == true) {
             Spacer(Modifier.weight(1f))
 
             IconText(
@@ -71,13 +73,14 @@ fun LessonDetailFooter(
         Spacer(Modifier.width(2.dp))
 
         IconButton(
-            onClick = {  }
+            enabled = lessonDetailViewModel.state.canGoToNext,
+            onClick = { lessonDetailViewModel.nextLesson() }
         ) {
             Icon(
                 contentDescription = "next lesson",
                 imageVector = Icons.Default.ChevronRight,
                 modifier = Modifier.size(24.dp),
-                tint = Gray615
+                tint = if (lessonDetailViewModel.state.canGoToNext) Gray615 else Zinc680.copy(alpha = 0.5f)
             )
         }
     }

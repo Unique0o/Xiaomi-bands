@@ -3,6 +3,7 @@ package com.example.logifitappp.ui.screens
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.logifitappp.ui.screens.login.LoginView
+import com.example.logifitappp.ui.screens.unauthorized.UnauthorizedView
 import com.example.logifitappp.viewmodel.AppViewModel
 
 @Composable
@@ -10,7 +11,9 @@ fun SplashScreen(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    if (appViewModel.user == null) {
-        LoginView(appViewModel, navigation)
-    } else BottomTabScreen(appViewModel, navigation)
+    when {
+        appViewModel.user == null -> LoginView(appViewModel, navigation)
+        appViewModel.user?.isActive == false || appViewModel.tenant?.isActive == false -> UnauthorizedView()
+        else -> BottomTabScreen(appViewModel, navigation)
+    }
 }

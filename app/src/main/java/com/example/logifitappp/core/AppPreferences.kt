@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.text.format.DateFormat
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
+import java.time.LocalTime
 
 open class AppPreferences(prefs: SharedPreferences): Preferences(prefs) {
     fun getAutoReconnect(wearable: Wearable): Boolean {
@@ -12,6 +13,18 @@ open class AppPreferences(prefs: SharedPreferences): Preferences(prefs) {
 
     fun getAutoReconnectByScan(): Boolean {
         return getBoolean(RECONNECT_SCAN_KEY, false)
+    }
+
+    fun getNotificationTimesEnabled(): Boolean {
+        return getBoolean("notification_times_enabled", false)
+    }
+
+    fun getNotificationTimesEnd(): LocalTime {
+        return getLocalTime("notification_times_end", "22:00")
+    }
+
+    fun getNotificationTimesStart(): LocalTime {
+        return getLocalTime("notification_times_start", "08:00")
     }
 
     fun getTimeFormat(): String {

@@ -1,6 +1,6 @@
 package com.example.logifitappp.core.wearebles.huami.zeppos
 
-import com.example.logifitappp.core.BondingStyleEnum
+import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.huami.HuamiCoordinator
 import com.example.logifitappp.core.wearebles.huami.HuamiExtendedActivityProvider

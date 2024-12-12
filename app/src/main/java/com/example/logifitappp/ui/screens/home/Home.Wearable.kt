@@ -78,18 +78,20 @@ fun HomeWearable(
                 modifier = Modifier.clickable { navigation.navigate(MainRoutes.WearableProfile(wearable.getAddress()!!)) }
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            if (homeViewModel.state.drowsiness != null) {
+                Spacer(modifier = Modifier.weight(1f))
 
-            IconButton(
-                elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
-                horizontalPadding = 10.dp,
-                icon = Icons.Default.Share,
-                iconSize = 10.dp,
-                modifier = Modifier.height(24.dp),
-                text = stringResource(id = R.string.button_share),
-                onClick = { homeViewModel.shareSleepDetail() },
-                verticalPadding = 0.dp,
-            )
+                IconButton(
+                    elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
+                    horizontalPadding = 10.dp,
+                    icon = Icons.Default.Share,
+                    iconSize = 10.dp,
+                    modifier = Modifier.height(24.dp),
+                    text = stringResource(id = R.string.button_share),
+                    onClick = { homeViewModel.tryToShareSleep() },
+                    verticalPadding = 0.dp,
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(6.dp))
@@ -125,8 +127,18 @@ fun HomeWearable(
 
             if (!homeViewModel.state.isSleepSynchronizationRequired && homeViewModel.state.isSynchronizationWithLogifitRequired) {
                 AlertCard(
-                    message = stringResource(R.string.sync_with_logifit_required_alert),
-                    modifier = Modifier.clickable { homeViewModel.sendSleep(wearable) }
+                    message = stringResource(
+                        when {
+                            homeViewModel.state.isBandTheft -> R.string.band_theft_alert
+                            (homeViewModel.state.drowsiness?.totalSleepSeconds ?: 0L) == 0L -> R.string.sync_without_sleep_data_alert
+                            else -> R.string.sync_with_logifit_required_alert
+                        }
+                    ),
+                    modifier = Modifier.clickable {
+                        if (!homeViewModel.state.isBandTheft && (homeViewModel.state.drowsiness?.totalSleepSeconds ?: 0L) > 0L) {
+                            homeViewModel.sendSleep(wearable)
+                        }
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))

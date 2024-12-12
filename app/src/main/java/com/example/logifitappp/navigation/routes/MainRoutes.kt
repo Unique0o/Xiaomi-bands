@@ -8,7 +8,7 @@ sealed class MainRoutes {
     data object HealthInformation: MainRoutes()
 
     @Serializable
-    data class LessonDetail(val lessonId: Int): MainRoutes()
+    data class LessonDetail(val lessonId: Int, val serializedLessonIds: String): MainRoutes()
 
     @Serializable
     data object Notifications: MainRoutes()

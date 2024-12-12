@@ -20,12 +20,15 @@ import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
 import com.example.logifitappp.viewmodel.AppViewModel
+import com.google.gson.Gson
 
 @Composable
 fun MainNavigation(
     appViewModel: AppViewModel,
     navigation: NavHostController = rememberNavController()
 ) {
+    val gson = Gson()
+
     NavHost(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
@@ -42,13 +45,13 @@ fun MainNavigation(
         composable<MainRoutes.LessonDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
 
-            LessonDetailView(appViewModel, navigation, arguments.lessonId)
+            LessonDetailView(appViewModel, navigation, arguments.lessonId, gson.fromJson(arguments.serializedLessonIds, Array<Int>::class.java))
         }
 
         composable<MainRoutes.TrainingsDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.TrainingsDetail>()
 
-            TrainingDetailView(navigation, arguments.trainingId)
+            TrainingDetailView(navBackStackEntry, navigation, arguments.trainingId)
         }
 
         composable<MainRoutes.WearableProfile> { navBackStackEntry ->

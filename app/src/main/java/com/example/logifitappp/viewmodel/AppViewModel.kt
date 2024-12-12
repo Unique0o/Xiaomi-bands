@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
+import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,9 @@ class AppViewModel @Inject constructor(
     private val loadAppWhenAnUserIsAuthenticatedUseCase: LoadAppWhenAnUserIsAuthenticatedUseCase
 ): ViewModel() {
     var isLoading by mutableStateOf(true)
+        private set
+
+    var tenant by mutableStateOf<TenantModel?>(null)
         private set
 
     var user by mutableStateOf<UserModel?>(null)
@@ -38,6 +42,8 @@ class AppViewModel @Inject constructor(
                 } catch (e: Exception) {
                     authenticatedUser
                 }
+
+                tenant = user?.tenantId?.let { App.database.tenantDao().find(it) }
             }
 
             isLoading = false
@@ -47,6 +53,7 @@ class AppViewModel @Inject constructor(
     fun logout() {
         App.database.userDao().logout()
         user = null
+        tenant = null
     }
 
     fun reloadAuthenticatedUser() {
@@ -55,5 +62,6 @@ class AppViewModel @Inject constructor(
 
     fun updateUser(user: UserModel) {
         this.user = user
+        this.tenant = App.database.tenantDao().find(user.tenantId)
     }
 }
