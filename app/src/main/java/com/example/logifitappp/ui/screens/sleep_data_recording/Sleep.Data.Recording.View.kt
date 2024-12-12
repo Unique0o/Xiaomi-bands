@@ -69,21 +69,42 @@ fun SleepDataRecordingView(
             )
         }
     ) {
-        item {
+        items(state.sleepEntries.size) { index ->
             SleepEntryCard(
-                entry = state.sleepEntry,
+                entry = state.sleepEntries[index],
+                index = index,
                 onFellAsleepTimeSelected = { time ->
-                    viewModel.onEvent(AddSleepDataEvent.SetFellAsleepTime(time))
+                    viewModel.onEvent(AddSleepDataEvent.SetFellAsleepTime(index, time))
                 },
                 onWokeUpTimeSelected = { time ->
-                    viewModel.onEvent(AddSleepDataEvent.SetWokeUpTime(time))
+                    viewModel.onEvent(AddSleepDataEvent.SetWokeUpTime(index, time))
                 },
                 onDurationSelected = { duration ->
-                    viewModel.onEvent(AddSleepDataEvent.SetDuration(duration))
-                }
+                    viewModel.onEvent(AddSleepDataEvent.SetDuration(index, duration))
+                },
+                onRemove = if (index > 0) {
+                    { viewModel.onEvent(AddSleepDataEvent.RemoveSleepEntry(index)) }
+                } else null
             )
+        }
+        item {
 
-            Spacer(modifier = Modifier.height(24.dp))
+            OutlinedButton(
+                onClick = { viewModel.onEvent(AddSleepDataEvent.AddSleepEntry) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(stringResource(id = R.string.add_period))
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             PhotoSelectionCard(
                 photoUri = state.photoUri,
