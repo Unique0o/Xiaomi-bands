@@ -18,9 +18,18 @@ class UserService @Inject constructor(private val userRepository: UserRepository
         try {
             val response = userRepository.fetch()
 
-            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.fromCode(response.code()))
+            if (!response.isSuccessful) {
+                response.errorBody()?.let {
+                    val errorResponse = Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
+                    throw HttpConsumerException(AppStatusCodeEnum.fromCode(errorResponse.code))
+                }
+
+                throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+            }
 
             return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        } catch (e: HttpConsumerException) {
+            throw e
         } catch (e: HttpException) {
             throw HttpConsumerException(AppStatusCodeEnum.fromCode(e.code()))
         } catch (e: Exception) {

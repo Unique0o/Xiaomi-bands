@@ -1,5 +1,6 @@
 package com.example.logifitappp.ui.screens.graphics
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.DrawerState
@@ -10,6 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavHostController
+import com.example.logifitappp.core.utils.avoidBottom
+import com.example.logifitappp.core.utils.plus
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
@@ -20,7 +23,8 @@ import com.example.logifitappp.viewmodel.views.GraphicsViewModel
 fun GraphicsView(
     appViewModel: AppViewModel,
     drawerState: DrawerState,
-    navigation: NavHostController
+    navigation: NavHostController,
+    contentPadding: PaddingValues? = null
 ) {
     val graphicsViewModel = hiltViewModel<GraphicsViewModel, GraphicsViewModel.GraphicsViewModelFactory>{
         it.create(appViewModel.user)
@@ -38,6 +42,7 @@ fun GraphicsView(
     )
 
     ScrollablePage(
+        contentPadding = PaddingValues(16.dp).avoidBottom() + contentPadding,
         topBar = {
             BottomTabsHeader(
                 appViewModel = appViewModel,

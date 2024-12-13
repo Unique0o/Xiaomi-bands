@@ -10,6 +10,9 @@ abstract class TenantDao {
     @Query("SELECT * FROM tenants WHERE id = :id LIMIT 1")
     abstract fun find(id: Int): TenantModel?
 
+    @Query("UPDATE tenants SET is_active = 0 WHERE id = :tenantId")
+    abstract fun inactive(tenantId: Int)
+
     @Upsert
     abstract fun store(tenant: TenantModel)
 }

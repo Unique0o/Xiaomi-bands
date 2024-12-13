@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.logifitappp.core.utils.avoidTop
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.BottomTabRoutes
 import com.example.logifitappp.ui.components.SideBarContent
@@ -163,10 +164,10 @@ fun BottomTabScreen(
                     }
                 }
             }
-        ) { _ ->
+        ) { innerPadding ->
             NavHost(bottomTabNavigation, startDestination = BottomTabRoutes.Home) {
-                composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation) }
-                composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation) }
+                composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
+                composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
             }
         }
     }

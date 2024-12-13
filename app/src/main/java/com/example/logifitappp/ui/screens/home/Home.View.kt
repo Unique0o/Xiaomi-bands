@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,7 +25,9 @@ import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.AndroidUtils
+import com.example.logifitappp.core.utils.avoidBottom
 import com.example.logifitappp.core.utils.parcelableExtra
+import com.example.logifitappp.core.utils.plus
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.enums.AppStatusCodeEnum
@@ -42,7 +45,8 @@ import com.example.logifitappp.viewmodel.views.HomeViewModel
 fun HomeView(
     appViewModel: AppViewModel,
     drawerState: DrawerState,
-    navigation: NavHostController
+    navigation: NavHostController,
+    contentPadding: PaddingValues? = null
 ) {
     val context = LocalContext.current
     val homeViewModel = hiltViewModel<HomeViewModel, HomeViewModel.HomeViewModelFactory>{
@@ -152,6 +156,7 @@ fun HomeView(
     }
 
     ScrollablePage(
+        contentPadding = PaddingValues(16.dp).avoidBottom() + contentPadding,
         topBar = {
             BottomTabsHeader(
                 appViewModel = appViewModel,

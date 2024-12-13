@@ -9,6 +9,8 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
+import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.exceptions.HttpConsumerException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
@@ -39,6 +41,24 @@ class AppViewModel @Inject constructor(
             if (authenticatedUser != null) {
                 user = try {
                     loadAppWhenAnUserIsAuthenticatedUseCase(authenticatedUser.accessToken)
+                } catch (e: HttpConsumerException) {
+                    e.printStackTrace()
+
+                    when (e.getStatus()) {
+                        AppStatusCodeEnum.INACTIVE_USER -> run inactiveUser@ {
+                            val inactiveUser = authenticatedUser.copy(isActive = false)
+                            App.database.userDao().store(inactiveUser)
+
+                            return@inactiveUser inactiveUser
+                        }
+
+                        AppStatusCodeEnum.INACTIVE_TENANT -> run inactiveTenant@{
+                            App.database.tenantDao().inactive(authenticatedUser.tenantId)
+                            return@inactiveTenant authenticatedUser
+                        }
+
+                        else -> authenticatedUser
+                    }
                 } catch (e: Exception) {
                     authenticatedUser
                 }

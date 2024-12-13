@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.NoAccounts
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -18,10 +20,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.Text
+import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.viewmodel.AppViewModel
 
 @Composable
-fun UnauthorizedView() {
+fun UnauthorizedView(
+    appViewModel: AppViewModel
+) {
     SimplePage {
         Column(
             Modifier.fillMaxSize(),
@@ -51,6 +57,19 @@ fun UnauthorizedView() {
                 text = stringResource(R.string.unauthorized_screen_message),
                 textAlign = TextAlign.Center,
                 typography = MaterialTheme.typography.labelMedium
+            )
+
+            Spacer(Modifier.height(10.dp))
+
+            IconButton(
+                elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
+                horizontalPadding = 10.dp,
+                icon = Icons.AutoMirrored.Default.Logout,
+                iconSize = 10.dp,
+                modifier = Modifier.height(24.dp),
+                text = stringResource(id = R.string.logout),
+                onClick = { appViewModel.logout() },
+                verticalPadding = 0.dp,
             )
         }
     }

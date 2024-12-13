@@ -13,7 +13,7 @@ fun SplashScreen(
 ) {
     when {
         appViewModel.user == null -> LoginView(appViewModel, navigation)
-        appViewModel.user?.isActive == false || appViewModel.tenant?.isActive == false -> UnauthorizedView()
+        appViewModel.user?.isActive == false || appViewModel.tenant?.isActive == false -> UnauthorizedView(appViewModel)
         else -> BottomTabScreen(appViewModel, navigation)
     }
 }

@@ -2,7 +2,7 @@
     <string name="activity">Activity</string>
     <string name="administrator">Administrator</string>
     <string name="and">and</string>
-    <string name="app_name">Logifit</string>
+    <string name="app_name">Logifit Plus</string>
     <string name="authenticating">Authenticating</string>
     <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
