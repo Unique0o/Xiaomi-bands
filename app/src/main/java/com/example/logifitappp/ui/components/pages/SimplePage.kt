@@ -3,8 +3,10 @@ package com.example.logifitappp.ui.components.pages
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,7 +21,11 @@ fun SimplePage(
     bottomBar: @Composable () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Scaffold(topBar = topBar, bottomBar = bottomBar) { innerPadding ->
+    Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing,
+        topBar = topBar,
+        bottomBar = bottomBar
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

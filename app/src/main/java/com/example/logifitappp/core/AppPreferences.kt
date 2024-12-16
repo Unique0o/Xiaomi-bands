@@ -45,7 +45,8 @@ open class AppPreferences(prefs: SharedPreferences): Preferences(prefs) {
         const val LAST_DEVICE_ADDRESSES = "last_device_addresses"
         const val NEW_NOTIFICATION = "new_notification"
         const val NEW_ROSTER = "new_roster"
-        const val RECONNECT_ONLY_TO_CONNECTED = "general_reconnectonlytoconnected"
+        const val OMIT_ONBOARDING = "omit_onboarding"
+        const val RECONNECT_ONLY_TO_CONNECTED = "general_reconnect_only_to_connected"
         const val RECONNECT_SCAN_KEY = "prefs_general_key_auto_reconnect_scan"
     }
 }

@@ -28,7 +28,7 @@ class ZeppOsSupport: HuamiSupport() {
         servicesService.getEndpoint() to servicesService
     )
 
-    fun addSupoortedService(endpoint: Short, encrypted: Boolean) {
+    fun addSupportedService(endpoint: Short, encrypted: Boolean) {
         supportedServices.add(endpoint)
 
         if (encrypted) isEncryptedSet.add(endpoint)

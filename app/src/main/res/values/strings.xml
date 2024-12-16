@@ -14,6 +14,7 @@
     <string name="between_40_and_100">Between 40 and 100</string>
     <string name="biking">Biking</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
+    <string name="button_active_bluetooth">Activate Bluetooth</string>
     <string name="button_add">Add</string>
     <string name="button_authenticate_band">Authenticate band</string>
     <string name="button_cancel">Cancel</string>
@@ -98,6 +99,7 @@
     <string name="less_than_6_hours">Less than 6 hours</string>
     <string name="lessons">Lessons</string>
     <string name="link_hide">Hide</string>
+    <string name="link_omit">Omit</string>
     <string name="link_recover_password">Get it back here</string>
     <string name="link_show">Show</string>
     <string name="link_show_less">Show less</string>
@@ -200,6 +202,17 @@
     <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
     <string name="wearable_pairing_title">Pairing with %1$s</string>
     <string name="without_role">Without role</string>
+
+    <string-array name="operator_onboarding_subtitle">
+        <item>Sync your sleep daily\nwhen you wake up from sleep.</item>
+        <item>The application will evaluate your SmartBand\'s\nsleep data and you can easily share it.</item>
+    </string-array>
+
+    <string-array name="operator_onboarding_title">
+        <item>Connect and sync your sleep\n**with a single button.**</item>
+        <item>Logifit will calculate\n**sleep and fatigue conditions.**</item>
+        <item>Turn on your Bluetooth and\n**connect with Logifit.**</item>
+    </string-array>
 
     <plurals name="day_label">
         <item quantity="one">Day</item>

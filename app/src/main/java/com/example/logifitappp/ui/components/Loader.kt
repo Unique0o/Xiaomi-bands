@@ -31,7 +31,7 @@ fun Loader() {
     )
 
     Icon(
-        painter = painterResource(id = R.drawable.circle_progress_indicator),
+        painter = painterResource(id = R.drawable.ic_circle_progress_indicator),
         contentDescription = "Loading",
         modifier = Modifier.size(48.dp).rotate(angle),
         tint = Blue690

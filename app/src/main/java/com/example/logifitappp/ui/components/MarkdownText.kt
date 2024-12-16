@@ -14,25 +14,16 @@ import com.halilibo.richtext.ui.string.RichTextStringStyle
 
 @Composable
 fun MarkdownText(
-    boldTextTypography: TextStyle = MaterialTheme.typography.titleMedium,
-    normalTextTypography: TextStyle = MaterialTheme.typography.headlineMedium,
+    boldTextTypography: TextStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary),
+    normalTextTypography: TextStyle = MaterialTheme.typography.headlineMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
     text: String,
     textAlign: TextAlign = TextAlign.Unspecified
 ) {
     RichTextThemeProvider(
-        textStyleProvider = {
-            normalTextTypography.copy(
-                color = MaterialTheme.colorScheme.surfaceTint,
-                textAlign = textAlign
-            )
-        }
+        textStyleProvider = { normalTextTypography.copy(textAlign = textAlign) }
     ) {
         BasicRichText(style = RichTextStyle(
-            stringStyle = RichTextStringStyle(
-                boldStyle = boldTextTypography.toSpanStyle().copy(
-                    color = MaterialTheme.colorScheme.primary
-                )
-            )
+            stringStyle = RichTextStringStyle(boldStyle = boldTextTypography.toSpanStyle())
         )) {
             val parser = remember { CommonmarkAstNodeParser() }
             val astNode = remember(parser) { parser.parse(text) }

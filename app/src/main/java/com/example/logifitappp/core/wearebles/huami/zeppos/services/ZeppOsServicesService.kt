@@ -30,7 +30,7 @@ class ZeppOsServicesService(private val support: ZeppOsSupport): AbstractZeppOsS
 
             if (service != null && encrypted != null) service.setEncrypted(encrypted)
 
-            support.addSupoortedService(endpoint, encrypted != null && encrypted)
+            support.addSupportedService(endpoint, encrypted != null && encrypted)
         }
 
         support.initializeServices()

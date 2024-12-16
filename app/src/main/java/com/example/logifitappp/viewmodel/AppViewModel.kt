@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
@@ -21,6 +22,9 @@ class AppViewModel @Inject constructor(
     private val loadAppWhenAnUserIsAuthenticatedUseCase: LoadAppWhenAnUserIsAuthenticatedUseCase
 ): ViewModel() {
     var isLoading by mutableStateOf(true)
+        private set
+
+    var shouldItOmitOnboarding by mutableStateOf(false)
         private set
 
     var tenant by mutableStateOf<TenantModel?>(null)
@@ -63,11 +67,16 @@ class AppViewModel @Inject constructor(
                     authenticatedUser
                 }
 
-                tenant = user?.tenantId?.let { App.database.tenantDao().find(it) }
+                load()
             }
 
             isLoading = false
         }
+    }
+
+    private fun load() {
+        tenant = user?.tenantId?.let { App.database.tenantDao().find(it) }
+        shouldItOmitOnboarding = App.preferences.getBoolean(AppPreferences.OMIT_ONBOARDING, false)
     }
 
     fun logout() {
@@ -78,6 +87,16 @@ class AppViewModel @Inject constructor(
 
     fun reloadAuthenticatedUser() {
         user = App.database.userDao().getLoggedIn()
+    }
+
+    fun omitOnboarding() {
+        App.preferences
+            .getPreferences()
+            .edit()
+            .putBoolean(AppPreferences.OMIT_ONBOARDING, true)
+            .apply()
+
+        shouldItOmitOnboarding = true
     }
 
     fun updateUser(user: UserModel) {

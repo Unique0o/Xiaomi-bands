@@ -25,6 +25,8 @@ open class InitOperation(
     private val cryptFlags: Byte,
     private val builder: TransactionBuilder
 ): AbstractBleOperation<HuamiSupport>(support) {
+    protected var encryptedKeyAlreadySent: Boolean = false
+
     init {
         builder.setCallback(this)
     }
@@ -73,6 +75,8 @@ open class InitOperation(
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic): Boolean {
         val uuid = characteristic.uuid
 
+        println("characteristic response from ($uuid): ${characteristic.value.contentToString()}")
+
         if (HuamiService.UUID_CHARACTERISTIC_AUTH != uuid) {
             println("Unhandled characteristic changed: $uuid")
             return super.onCharacteristicChanged(gatt, characteristic)
@@ -82,7 +86,7 @@ open class InitOperation(
             val value = characteristic.value
 
             if (value[0] != HuamiService.AUTH_RESPONSE) {
-                println("ot a non-response: ${value.contentToString()}")
+                println("Got a non-response: ${value.contentToString()}")
                 return super.onCharacteristicChanged(gatt, characteristic)
             }
 
@@ -91,22 +95,23 @@ open class InitOperation(
                 builder.write(characteristic, requestAuthNumber())
                 support.performImmediately(builder)
             } else if ((value[1].toInt() and 0x0f).toByte() == HuamiService.AUTH_REQUEST_RANDOM_AUTH_NUMBER && value[2] == HuamiService.AUTH_SUCCESS) {
+                if (encryptedKeyAlreadySent) return super.onCharacteristicChanged(gatt, characteristic)
+
                 val aes = handleAesAuthentication(value, getSecretKey())
-                val response = ArrayUtils.addAll(
-                    byteArrayOf((HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER.toInt() or cryptFlags.toInt()).toByte(), authFlags),
-                    *aes
-                )
+                val response = byteArrayOf((HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER.toInt() or cryptFlags.toInt()).toByte(), authFlags) + aes
 
                 val builder = createTransactionBuilder("Sending the encrypted random key to the device")
                 builder.write(characteristic, response)
                 support.setCurrentTimeWithService(builder)
                 support.performImmediately(builder)
+
+                encryptedKeyAlreadySent = true
             } else if ((value[1].toInt() and 0x0f).toByte() == HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER) {
                 when (value[2]) {
                     HuamiService.AUTH_SUCCESS -> {
                         val builder = createTransactionBuilder("Authenticated, now initialize phase 2")
                         builder.add(SetWearableStateAction(wearable, Wearable.State.INITIALIZING, context))
-                        builder.setCallback(this)
+                        builder.setCallback(null)
 
                         support.enableFurtherNotification(builder, true)
                         support.requestDeviceInfo(builder)
