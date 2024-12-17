@@ -15,6 +15,7 @@ import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.roster.RosterView
 import com.example.logifitappp.ui.screens.roster_recording.RosterRecordingView
 import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
+import com.example.logifitappp.ui.screens.sleep_detail.SleepDetailView
 import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
 import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
@@ -46,6 +47,12 @@ fun MainNavigation(
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
 
             LessonDetailView(appViewModel, navigation, arguments.lessonId, gson.fromJson(arguments.serializedLessonIds, Array<Int>::class.java))
+        }
+
+        composable<MainRoutes.SleepDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.SleepDetail>()
+
+            SleepDetailView(appViewModel, navigation, arguments.mac)
         }
 
         composable<MainRoutes.TrainingsDetail> { navBackStackEntry ->

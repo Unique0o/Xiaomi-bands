@@ -17,7 +17,7 @@ import com.example.logifitappp.ui.components.forms.IconButton
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.forms.SelectableBottomSheet
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.modals.DateRangePickerModel
+import com.example.logifitappp.ui.components.forms.DateRangePicker
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -62,7 +62,7 @@ fun RosterRecordingView(
 
         Spacer(Modifier.height(6.dp))
 
-        DateRangePickerModel(
+        DateRangePicker(
             error = rosterRecordingViewModel.state.endDateError,
             onDateRangeSelected = { start, end -> rosterRecordingViewModel.updateRangeDate(start, end) },
             value = Pair(rosterRecordingViewModel.state.startDate?.timeInMillis, rosterRecordingViewModel.state.endDate?.timeInMillis)

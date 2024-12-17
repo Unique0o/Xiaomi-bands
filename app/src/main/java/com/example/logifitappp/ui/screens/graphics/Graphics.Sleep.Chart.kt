@@ -1,21 +1,18 @@
 package com.example.logifitappp.ui.screens.graphics
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.NightsStay
 import androidx.compose.material.icons.filled.Update
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,16 +33,24 @@ import com.example.logifitappp.ui.components.graphics.SimpleHorizontalStackBar
 import androidx.compose.material3.Icon
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import com.example.logifitappp.core.wearebles.Wearable
 
 @Composable
 fun GraphicsSleepChart(
     dataSet: SleepBarDataSet,
     shift: ShiftModel?,
-    navigation: NavHostController
+    navigation: NavHostController,
+    wearable: Wearable?
 ) {
     val containsSleepData = !dataSet.empty
 
-    Column {
+    Column(
+        Modifier.clickable {
+            wearable?.getAddress()?.let {
+                navigation.navigate(MainRoutes.SleepDetail(it))
+            }
+        }
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -86,15 +91,12 @@ fun GraphicsSleepChart(
             ),
             suffixComponent = {
                 Chip(
-                    label = if (!containsSleepData) stringResource(id = R.string.no_data) else DurationUtils.format(dataSet.totalTime),
+                    label = if (!containsSleepData) stringResource(id = R.string.no_data) else DurationUtils.format(dataSet.amounts.totalSleepMinutes * 60),
                     status = if (!containsSleepData) ChipStatusEnum.NORMAL else ChipStatusEnum.SUCCESS
                 )
             }
         ) {
-            SimpleHorizontalStackBar(
-                Modifier.fillMaxWidth().height(40.dp),
-                dataSet = dataSet
-            )
+            SimpleHorizontalStackBar(dataSet = dataSet)
         }
     }
 }

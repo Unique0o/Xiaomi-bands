@@ -9,7 +9,7 @@ import com.example.logifitappp.ui.theme.Zinc680
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
-class SleepBarDataSet(amounts: ActivityAmountList) {
+class SleepBarDataSet(var amounts: ActivityAmountList) {
     var empty = amounts.totalSleepMinutes == 0L
         private set
 
@@ -26,6 +26,7 @@ class SleepBarDataSet(amounts: ActivityAmountList) {
         private set
 
     init {
+        var time = 0L
         val sleeps = mutableListOf<ActivityAmount>()
 
         if (!empty) {
@@ -35,10 +36,13 @@ class SleepBarDataSet(amounts: ActivityAmountList) {
 
                 if (startIndex != -1 && endIndex != -1) {
                     println("${list[startIndex]} - ${list[endIndex]}")
-                    for (i in startIndex .. endIndex) sleeps.add(list[i])
+                    for (i in startIndex .. endIndex) {
+                        time += list[i].totalMinutes
+                        sleeps.add(list[i])
+                    }
                 }
             }
-        }
+        } else time = 4L
 
         val values = if (empty) floatArrayOf(1f, 2f, 1f) else sleeps.map { it.totalMinutes.toFloat() }.toFloatArray()
         val entry = BarEntry(0f, values)
@@ -51,7 +55,7 @@ class SleepBarDataSet(amounts: ActivityAmountList) {
             barBorderColor = Color.Transparent.toArgb()
         }
 
-        totalTime = (if (empty) 4 else amounts.totalSleepMinutes) * 60
+        totalTime = time
 
         when {
             empty -> {

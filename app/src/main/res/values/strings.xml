@@ -43,6 +43,7 @@
     <string name="connecting">Connecting</string>
     <string name="connecting_whit_wearable_message">Remember to keep your Smart Band close to facilitate the connection</string>
     <string name="date">Date</string>
+    <string name="deep_sleep">Deep Sleep</string>
     <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="description">Description</string>
     <string name="device_unknown_name">(unknown)</string>
@@ -98,6 +99,7 @@
     <string name="less_than_40_or_greater_than_100">Less than 40 or greater than 100</string>
     <string name="less_than_6_hours">Less than 6 hours</string>
     <string name="lessons">Lessons</string>
+    <string name="light_sleep">Light Sleep</string>
     <string name="link_hide">Hide</string>
     <string name="link_omit">Omit</string>
     <string name="link_recover_password">Get it back here</string>
@@ -132,6 +134,7 @@
     <string name="pending">Pending</string>
     <string name="personal_information_title">Personal information</string>
     <string name="placeholder_comment">Comment</string>
+    <string name="placeholder_date">Date</string>
     <string name="placeholder_end_date">End date</string>
     <string name="placeholder_location">Location</string>
     <string name="placeholder_password">Password</string>
@@ -150,7 +153,8 @@
     <string name="running">Running</string>
     <string name="scanned">Scanned</string>
     <string name="select">Select</string>
-    <string name="select_data_range_title">Select date range</string>
+    <string name="select_date_range_title">Select date range</string>
+    <string name="select_date_title">Select date</string>
     <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
     <string name="share_training_certificate_message">Share training certificate</string>
@@ -163,7 +167,10 @@
     <string name="sleep_detail_screenshot_fatigue_result_title">B. Fatigue results</string>
     <string name="sleep_detail_screenshot_result_title">My results</string>
     <string name="sleep_detail_screenshot_title">Drowsiness and Fatigue report</string>
+    <string name="sleep_detail_summary">Information between %1$s - %2$s</string>
+    <string name="sleep_detail_title">My sleep</string>
     <string name="sleep_hours_message">%1$s completed hour sleep</string>
+    <string name="sleep_information">Sleep information</string>
     <string name="sleep_sync_message_missing">Sleep information has not yet been extracted from the Smart Band</string>
     <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
     <string name="sleep_time">Sleep Time</string>
@@ -176,6 +183,7 @@
     <string name="successful_roster_information_storage_message">The registration of the information was carried out successfully</string>
     <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
     <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
+    <string name="summary">Summary</string>
     <string name="sync_with_logifit_required_alert">The extracted data has not been sent to the supervision. Please check if the device has a signal, mobile data or is connected to a stable Wi-Fi network. If there is no internet connection at the moment, please send the information as soon as possible once the connection is reestablished.</string>
     <string name="sync_with_logifit_required_message">The sending to Logifit was not made</string>
     <string name="sync_without_sleep_data_alert">You do not have sleep records to send</string>
@@ -263,14 +271,13 @@
     <string name="wake_up">Wake Up</string>
     <string name="content_description_alarm">Alarm</string>
     <string name="information_sleep">Sleep Information</string>
-    <string name="light_sleep">Light Sleep</string>
-    <string name="deep_sleep">Deep Sleep</string>
+
     <string name="my_heart_rate">My heart rate</string>
     <string name="my_sleep">My sleep</string>
     <string name="information_between">Information between:</string>
     <string name="my_steps">My steps</string>
     <string name="steps_taken">Steps taken</string>
-    <string name="summary">Summary</string>
+
     <string name="average_heart_rate">Average heart rate</string>
     <string name="sleep_condition">Sleep Condition</string>
     <string name="naps">Naps</string>

@@ -43,6 +43,7 @@
     <string name="connecting">Conectando</string>
     <string name="connecting_whit_wearable_message">Recuerda mantener cerca su smart band para facilitar la conexión</string>
     <string name="date">Fecha</string>
+    <string name="deep_sleep">Sueño profundo</string>
     <string name="default_notification_channel_id">Local Push Notification</string>
     <string name="description">Descripción</string>
     <string name="device_unknown_name">(desconocido)</string>
@@ -98,6 +99,7 @@
     <string name="less_than_40_or_greater_than_100">Menor que 40 o mayor a 100</string>
     <string name="less_than_6_hours">Menor a 6 horas</string>
     <string name="lessons">Lecciones</string>
+    <string name="light_sleep">Sueño ligero</string>
     <string name="link_hide">Ocultar</string>
     <string name="link_omit">Omitir</string>
     <string name="link_recover_password">Recupérala aquí</string>
@@ -133,6 +135,7 @@
     <string name="personal_information_title">Información personal</string>
     <string name="placeholder_comment">Comentario</string>
     <string name="placeholder_end_date">Fecha fin</string>
+    <string name="placeholder_date">Fecha</string>
     <string name="placeholder_location">Ubicación</string>
     <string name="placeholder_password">Contraseña</string>
     <string name="placeholder_search">Buscar</string>
@@ -150,7 +153,8 @@
     <string name="running">Corriendo</string>
     <string name="scanned">Escaneado</string>
     <string name="select">Seleccionar</string>
-    <string name="select_data_range_title">Seleccione el rango de fecha</string>
+    <string name="select_date_range_title">Seleccione el rango de fecha</string>
+    <string name="select_date_title">Seleccione la fecha</string>
     <string name="share_evaluation_result_message">Compartir resultado de evaluación</string>
     <string name="share_sleep_detail_message">Compartir detalle de sueño</string>
     <string name="share_training_certificate_message">Compartir certificado de capacitación</string>
@@ -163,7 +167,10 @@
     <string name="sleep_detail_screenshot_fatigue_result_title">B. Resultados de fatiga</string>
     <string name="sleep_detail_screenshot_result_title">Mis resultados</string>
     <string name="sleep_detail_screenshot_title">Reporte de Fatiga y Somnolencia</string>
+    <string name="sleep_detail_summary">Información ente %1$s - %2$s</string>
+    <string name="sleep_detail_title">Mi sueño</string>
     <string name="sleep_hours_message">%1$s horas de sueño completadas</string>
+    <string name="sleep_information">Información del sueño</string>
     <string name="sleep_synchronization_message">%1$s Reporte realizado hace %2$s</string>
     <string name="sleep_sync_message_missing">La información de su sueño aun no se ha extraido del Smart Band</string>
     <string name="sleep_time">Tiempo de sueño</string>
@@ -176,6 +183,7 @@
     <string name="successful_roster_information_storage_message">EL registro de la información se realizó con éxito</string>
     <string name="successful_wearable_information_synchronizing_message">Se extrajo toda la información de sueño de su Smart Band</string>
     <string name="successful_wearable_information_transferring_message">Los datos han sido enviados exitosamente</string>
+    <string name="summary">Resumen</string>
     <string name="sync_with_logifit_required_alert">Los datos extraidos no han sido enviados a la supervisión. Por favor, verifica si el dispositivo tiene señal, datos móviles o está conectado a una red Wi-Fi estable. Si en este momento no cuenta con conexión a internet, se agradece enviar la información a la brevedad posible una vez restablecida la conexión.</string>
     <string name="sync_with_logifit_required_message">No se realizó el envío a Logifit</string>
     <string name="sync_without_sleep_data_alert">No cuenta con registros de sueño para enviar</string>
@@ -263,14 +271,11 @@
     <string name="wake_up" >Despertar</string>
     <string name="content_description_alarm">Alarma</string>
     <string name="information_sleep">Información del sueño</string>
-    <string name="light_sleep">Sueño ligero</string>
-    <string name="deep_sleep">Sueño profundo</string>
     <string name="my_heart_rate">Mi ritmo cardíaco</string>
     <string name="my_sleep">Mi sueño</string>
     <string name="information_between">Información entre:</string>
     <string name="my_steps">Mis pasos"</string>
     <string name="steps_taken">Pasos realizados</string>
-    <string name="summary">Resumen</string>
     <string name="average_heart_rate">Ritmo cardiaco promedio</string>
     <string name="sleep_condition">Condición de sueño</string>
     <string name="naps">Siestas</string>

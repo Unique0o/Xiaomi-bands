@@ -40,6 +40,14 @@ class WearableManager(private val context: Context) {
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filter)
     }
 
+    fun getWearableByMac(mac: String): Wearable? {
+        wearables.forEach {
+            if (it.getAddress()?.equals(mac, ignoreCase = true) == true) return it
+        }
+
+        return null
+    }
+
     fun getWearables(): List<Wearable> = Collections.unmodifiableList(wearables)
 
     private fun notifyWearablesChanged() {

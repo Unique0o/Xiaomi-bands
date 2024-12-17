@@ -1,6 +1,7 @@
 package com.example.logifitappp.ui.components.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +30,11 @@ fun ScrollablePage(
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing,
         bottomBar = bottomBar,
-        topBar = topBar
+        topBar = {
+            Box(Modifier.background(backgroundColor)) {
+                topBar()
+            }
+        }
     ) { innerPadding ->
         LazyColumn(
             contentPadding = innerPadding + contentPadding,

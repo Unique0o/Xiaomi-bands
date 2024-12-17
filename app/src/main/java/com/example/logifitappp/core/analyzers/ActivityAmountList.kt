@@ -74,7 +74,6 @@ class ActivityAmountList {
                 }
 
                 sleep = null
-
                 continue
             }
 

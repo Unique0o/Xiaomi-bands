@@ -1,4 +1,4 @@
-package com.example.logifitappp.ui.components.modals
+package com.example.logifitappp.ui.components.forms
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,14 +32,12 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.ui.components.forms.Button
-import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import com.example.logifitappp.ui.components.layouts.ModalLayout
 import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DateRangePickerModel(
+fun DateRangePicker(
     error: String? = null,
     onDateRangeSelected: (Long?, Long?) -> Unit,
     value: Pair<Long?, Long?>? = null
@@ -82,7 +80,6 @@ fun DateRangePickerModel(
                             )
                         }
                     }
-
                 }
             },
             modifier = Modifier.fillMaxWidth().height(470.dp),
@@ -91,7 +88,7 @@ fun DateRangePickerModel(
             title = {
                 Text(
                     color = MaterialTheme.colorScheme.primary,
-                    text = stringResource(R.string.select_data_range_title),
+                    text = stringResource(R.string.select_date_range_title),
                     typography = MaterialTheme.typography.displayMedium
                 )
             }

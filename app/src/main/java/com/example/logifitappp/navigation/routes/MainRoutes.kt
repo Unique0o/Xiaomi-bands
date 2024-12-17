@@ -17,9 +17,6 @@ sealed class MainRoutes {
     data object OccupationalInformation: MainRoutes()
 
     @Serializable
-    data object Onboarding: MainRoutes()
-
-    @Serializable
     data object PasswordRecovery: MainRoutes()
 
     @Serializable
@@ -33,6 +30,9 @@ sealed class MainRoutes {
 
     @Serializable
     data object SleepDataRecording: MainRoutes()
+
+    @Serializable
+    data class SleepDetail(val mac: String): MainRoutes()
 
     @Serializable
     data object SplashScreen: MainRoutes()

@@ -3,7 +3,6 @@ package com.example.logifitappp.domain.service
 
 import com.example.logifitappp.data.models.HeartRateFragmentGroupType
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
-import com.example.logifitappp.enums.ActivityTypeEnum
 import com.example.logifitappp.enums.HeartRateTypeEnum
 import java.time.LocalDateTime
 import java.time.ZoneOffset

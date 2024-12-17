@@ -60,7 +60,8 @@ fun GraphicsView(
             GraphicsSleepChart(
                 dataSet = graphicsViewModel.state.sleepDataSet,
                 shift = graphicsViewModel.state.shift,
-                navigation = navigation
+                navigation = navigation,
+                wearable = graphicsViewModel.state.wearable
             )
         }
 

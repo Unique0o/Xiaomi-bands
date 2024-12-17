@@ -3,6 +3,7 @@ package com.example.logifitappp.ui.components.graphics
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,7 +18,7 @@ import com.github.mikephil.charting.data.BarData
 
 @Composable
 fun SimpleHorizontalStackBar(
-    modifier: Modifier = Modifier,
+    modifier: Modifier =  Modifier.fillMaxWidth().height(40.dp),
     dataSet: SleepBarDataSet
 ) {
     Column {
@@ -43,7 +44,7 @@ fun SimpleHorizontalStackBar(
                     axisLeft.apply {
                         isEnabled = false
                         axisMinimum = 0f
-                        axisMaximum = dataSet.totalTime / 60f
+                        axisMaximum = dataSet.totalTime * 1f
                         setDrawLabels(false)
                         setDrawGridLines(false)
                         setDrawAxisLine(false)
@@ -56,6 +57,19 @@ fun SimpleHorizontalStackBar(
 
                     invalidate()
                 }
+            },
+
+            update = { chart ->
+                chart.axisLeft.apply {
+                    axisMaximum = dataSet.totalTime * 1f
+                }
+
+                chart.data = BarData(dataSet.self).apply {
+                    barWidth = 50.dp.value
+                    setDrawValues(false)
+                }
+
+                chart.invalidate()
             },
 
             modifier = modifier
