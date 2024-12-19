@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.data.models.DrowsinessModel
@@ -75,7 +76,7 @@ fun SleepProcessingCard(
         ) {
             SleepProcessingComponent(
                 chipLabel = drowsinessCondition?.name,
-                label = stringResource(id = R.string.drowsiness_label),
+                label = stringResource(id = R.string.drowsiness_label).uppercase(),
                 sleepProcessingStatusEnum = drowsinessCondition?.calculateStatus() ?: SleepProcessingStatusEnum.PENDING
             )
         }
@@ -91,7 +92,7 @@ fun SleepProcessingCard(
                 }
         ) {
             SleepProcessingComponent(
-                label = stringResource(id = R.string.fatigue_label),
+                label = stringResource(id = R.string.fatigue_label).uppercase(),
                 sleepProcessingStatusEnum =  if (fatigue != null && fatigue.totalSleepSeconds > 0L) fatigue.calculateStatus() else SleepProcessingStatusEnum.PENDING
             )
         }
@@ -101,6 +102,7 @@ fun SleepProcessingCard(
 @Composable
 fun SleepProcessingComponent(
     chipLabel: String? = null,
+    iconSize: Dp = 10.dp,
     label: String,
     sleepProcessingStatusEnum: SleepProcessingStatusEnum
 ) {
@@ -110,7 +112,7 @@ fun SleepProcessingComponent(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = label.uppercase(),
+            text = label,
             textAlign = TextAlign.Center,
             typography = MaterialTheme.typography.titleLarge
         )
@@ -120,6 +122,7 @@ fun SleepProcessingComponent(
         Icon(
             contentDescription = null,
             imageVector = sleepProcessingStatusEnum.icon,
+            modifier = Modifier.size(iconSize),
             tint = sleepProcessingStatusEnum.color
         )
 

@@ -21,6 +21,7 @@
     <string name="button_close">Cerrar</string>
     <string name="button_device_detection">Detección de dispositivos</string>
     <string name="button_download_certificate">Descargar certificado</string>
+    <string name="button_erase">Borrar</string>
     <string name="button_get_into">Ingresar</string>
     <string name="button_mark_as_view">Marcar como visto</string>
     <string name="button_ok">Aceptar</string>
@@ -61,6 +62,7 @@
     <string name="drowsiness_label">Sueño</string>
     <string name="exit">Salir</string>
     <string name="extracting_wearable_information_message">Los datos de actividad y sueño de su smart band están siendo compartidos con la aplicación</string>
+    <string name="failed_evaluation_store_message">Ha ocurrido un problema al procesar su test. Inténtelo nuevamente</string>
     <string name="failed_password_recovery_message">No cuenta con un número de telefono configurado, contacte con el encargado del área.</string>
     <string name="failed_roster_information_storage_message">Ya existe registro con intervalo de fecha</string>
     <string name="failed_wearable_pairing_message">Para conectarse exitosamente, es necesario mantener la Smart Band cerca del celular</string>
@@ -117,6 +119,7 @@
     <string name="message_recover_password">¿No recuerda su contraseña?</string>
     <string name="mute">Silenciar</string>
     <string name="my_drowsiness_tests">Mis tests de somnolencia</string>
+    <string name="no">No</string>
     <string name="no_data">Sin datos</string>
     <string name="no_internet_connection_message">Verifique su conexión a Internet</string>
     <string name="no_internet_connection_page_message">Esta sección la puede consultar con conexión a Internet. Favor de verificar e inténtelo nuevamente.</string>
@@ -134,6 +137,7 @@
     <string name="pending">Pendiente</string>
     <string name="personal_information_title">Información personal</string>
     <string name="placeholder_comment">Comentario</string>
+    <string name="placeholder_detail">Detalle</string>
     <string name="placeholder_end_date">Fecha fin</string>
     <string name="placeholder_date">Fecha</string>
     <string name="placeholder_location">Ubicación</string>
@@ -177,6 +181,7 @@
     <string name="state_to_drive_not_found_message">Al Parecer tienes otro estado diferente, consulte con su administrador.</string>
     <string name="steps_detail_chart_chip_message">%1$s pasos</string>
     <string name="steps_detail_chart_title">Mis pasos</string>
+    <string name="storing_evaluation_message">El test está siendo procesado para generar su condición de somnolencia...</string>
     <string name="storing_roster_information_message">Se está registrando la información en el Roster</string>
     <string name="subtitle_login">Ingrese sus credenciales para continuar</string>
     <string name="successful_password_recovery_message">Se ha notificado a un encargado para que lo pueda ayudar</string>
@@ -210,6 +215,7 @@
     <string name="wearable_pairing_message">Por favor, mantener cerca la Smart Band para que Logifit complete la conexión.</string>
     <string name="wearable_pairing_title">Emparejando con %1$s</string>
     <string name="without_role">Sin rol</string>
+    <string name="yes">Sí</string>
 
     <string-array name="operator_onboarding_subtitle">
         <item>Sincroniza diariamente tu sueño\nal levantarte de dormir.</item>
@@ -317,7 +323,6 @@
     <string name="test_description">Descripción  del test</string>
     <string name="description_fatigue_test">Este cuestionario de autoevaluación debe ser llenado previamente por personas que vayan a conducir algún tipo de vehiculo. </string>
     <string name="detail">Detallar </string>
-    <string name="yes">Sì </string>
     <string name="finish">Finalizar </string>
     <string name="result">Resultado </string>
     <string name="test_question_1">"1. ¿Has descansado 07 horas consecutivas antes de tu jornada laboral?"</string>

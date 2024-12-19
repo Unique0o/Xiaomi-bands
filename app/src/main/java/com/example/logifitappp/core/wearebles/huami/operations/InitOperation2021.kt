@@ -66,8 +66,6 @@ class InitOperation2021(
         }
 
         if (payload[0] == HuamiService.RESPONSE && payload[1] == 0x04.toByte() && payload[2] == HuamiService.SUCCESS) {
-            if (encryptedKeyAlreadySent) return
-
             println("Got remote random + public key")
 
             System.arraycopy(payload, 3, remoteRandom, 0, 16)
@@ -96,8 +94,6 @@ class InitOperation2021(
                     val builder = createTransactionBuilder("Sending double encryted random to device")
                     huami2021ChunkedEncoder?.write(builder, Huami2021Service.CHUNKED2021_ENDPOINT_AUTH, command, true, false)
                     support.performImmediately(builder)
-
-                    encryptedKeyAlreadySent = true
                 }
             } catch (e: Exception) {
                 println("AES encryption failed $e")

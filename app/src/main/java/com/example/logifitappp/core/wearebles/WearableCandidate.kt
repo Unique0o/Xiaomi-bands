@@ -78,7 +78,7 @@ class WearableCandidate() : Parcelable, Cloneable {
         return wearable!!.address.hashCode() xor 37
     }
 
-    fun IsBonded(): Boolean {
+    fun isBonded(): Boolean {
         if (isBonded == null) {
             isBonded = try {
                 wearable!!.bondState == BluetoothDevice.BOND_BONDING

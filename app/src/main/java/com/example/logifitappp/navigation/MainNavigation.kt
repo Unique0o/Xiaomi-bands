@@ -9,6 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
+import com.example.logifitappp.ui.screens.drowsiness_test_detail.DrowsinessTestDetailView
+import com.example.logifitappp.ui.screens.drowsiness_tests.DrowsinessTestsView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
@@ -34,6 +36,7 @@ fun MainNavigation(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
     ) {
+        composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
@@ -42,6 +45,12 @@ fun MainNavigation(
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.Trainings> { TrainingsView(navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
+
+        composable<MainRoutes.DrowsinessTestDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.DrowsinessTestDetail>()
+
+            DrowsinessTestDetailView(appViewModel, navigation, arguments.drowsinessTestId)
+        }
 
         composable<MainRoutes.LessonDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()

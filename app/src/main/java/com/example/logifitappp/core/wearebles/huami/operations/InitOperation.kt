@@ -25,8 +25,6 @@ open class InitOperation(
     private val cryptFlags: Byte,
     private val builder: TransactionBuilder
 ): AbstractBleOperation<HuamiSupport>(support) {
-    protected var encryptedKeyAlreadySent: Boolean = false
-
     init {
         builder.setCallback(this)
     }
@@ -95,8 +93,6 @@ open class InitOperation(
                 builder.write(characteristic, requestAuthNumber())
                 support.performImmediately(builder)
             } else if ((value[1].toInt() and 0x0f).toByte() == HuamiService.AUTH_REQUEST_RANDOM_AUTH_NUMBER && value[2] == HuamiService.AUTH_SUCCESS) {
-                if (encryptedKeyAlreadySent) return super.onCharacteristicChanged(gatt, characteristic)
-
                 val aes = handleAesAuthentication(value, getSecretKey())
                 val response = byteArrayOf((HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER.toInt() or cryptFlags.toInt()).toByte(), authFlags) + aes
 
@@ -104,8 +100,6 @@ open class InitOperation(
                 builder.write(characteristic, response)
                 support.setCurrentTimeWithService(builder)
                 support.performImmediately(builder)
-
-                encryptedKeyAlreadySent = true
             } else if ((value[1].toInt() and 0x0f).toByte() == HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER) {
                 when (value[2]) {
                     HuamiService.AUTH_SUCCESS -> {

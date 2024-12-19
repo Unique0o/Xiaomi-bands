@@ -21,6 +21,7 @@
     <string name="button_close">Close</string>
     <string name="button_device_detection">Devices detection</string>
     <string name="button_download_certificate">Download certificate</string>
+    <string name="button_erase">Erase</string>
     <string name="button_get_into">Get into</string>
     <string name="button_mark_as_view">Mark as view</string>
     <string name="button_ok">OK</string>
@@ -61,6 +62,7 @@
     <string name="drowsiness_label">Sleep</string>
     <string name="exit">Exit</string>
     <string name="extracting_wearable_information_message">Activity and sleep data from your Smart Band is being shared with app</string>
+    <string name="failed_evaluation_store_message">There was a problem processing your test. Please try again.</string>
     <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
     <string name="failed_roster_information_storage_message">Record with date range already exists</string>
     <string name="failed_wearable_pairing_message">To connect successfully, it is necessary to keep the Smart Band close to the cell phone</string>
@@ -117,6 +119,7 @@
     <string name="message_recover_password">Don`t remember your password?</string>
     <string name="mute">Mute</string>
     <string name="my_drowsiness_tests">My drowsiness tests</string>
+    <string name="no">No</string>
     <string name="no_data">No data</string>
     <string name="no_internet_connection_message">Check your Internet connection</string>
     <string name="no_internet_connection_page_message">You can consult this section with an Internet connection. Please check and try again.</string>
@@ -135,6 +138,7 @@
     <string name="personal_information_title">Personal information</string>
     <string name="placeholder_comment">Comment</string>
     <string name="placeholder_date">Date</string>
+    <string name="placeholder_detail">Detail</string>
     <string name="placeholder_end_date">End date</string>
     <string name="placeholder_location">Location</string>
     <string name="placeholder_password">Password</string>
@@ -177,6 +181,7 @@
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
     <string name="steps_detail_chart_chip_message">%1$s steps</string>
     <string name="steps_detail_chart_title">My steps</string>
+    <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_roster_information_message">Roster information is being storing</string>
     <string name="subtitle_login">Type your credentials to continue</string>
     <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
@@ -210,6 +215,7 @@
     <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
     <string name="wearable_pairing_title">Pairing with %1$s</string>
     <string name="without_role">Without role</string>
+    <string name="yes">Yes </string>
 
     <string-array name="operator_onboarding_subtitle">
         <item>Sync your sleep daily\nwhen you wake up from sleep.</item>
@@ -320,7 +326,6 @@
     <string name="test_description">Test description</string>
     <string name="description_fatigue_test">This self-assessment test must be completed in advance by people who are going to drive some type of vehicle. </string>
     <string name="detail">Detail: </string>
-    <string name="yes">Yes </string>
     <string name="finish">Finish</string>
     <string name="result">Result</string>
     <string name="test_question_1">"1. Have you rested 7 consecutive hours before your work day?"</string>

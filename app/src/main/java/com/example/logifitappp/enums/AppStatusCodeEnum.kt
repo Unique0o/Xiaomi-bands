@@ -29,6 +29,7 @@ enum class AppStatusCodeEnum(
     DOWNLOADING_TRAINING_CERTIFICATE(308, R.string.downloading_training_certificate_message, true, { Loader() }),
     DOWNLOADING_EVALUATION_RESULT(305, R.string.downloading_evaluation_result_message, true, { Loader() }),
     EXTRACTING_WEARABLE_INFORMATION(6, R.string.extracting_wearable_information_message, true, { AnimatedWearableDataExtraction() }),
+    FAILED_EVALUATION_STORE(313, R.string.failed_evaluation_store_message, false, { AnimatedErrorSignal() }),
     FAILED_PASSWORD_RECOVERY(16, R.string.failed_password_recovery_message, false, { AnimatedErrorSignal() }),
     FAILED_ROSTER_INFORMATION_STORAGE(309, R.string.failed_roster_information_storage_message, false, { AnimatedErrorSignal() }),
 
@@ -70,7 +71,8 @@ enum class AppStatusCodeEnum(
     RECOVERING_PASSWORD(109, R.string.recovering_password_message, true, { Loader() }),
     REQUIRE_SUBSCRIPTION_UPGRADING(402, R.string.require_subscription_upgrading_message, false, { AnimatedWarningSignal() }),
     SERVER_ERROR(500, R.string.server_error_message, false),
-    SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT(310, R.string.sharing_without_synchronization_to_logifit_message, false, { com.example.logifitappp.ui.components.lottie.AnimatedWarningSignal() }),
+    SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT(310, R.string.sharing_without_synchronization_to_logifit_message, false, { AnimatedWarningSignal() }),
+    STORING_EVALUATION(312, R.string.storing_evaluation_message, true, { Loader() }),
     STORING_ROSTER_INFORMATION(306, R.string.storing_roster_information_message, true, { Loader() }),
     SUCCESSFUL_PASSWORD_RECOVERY(119, R.string.successful_password_recovery_message, false, { AnimatedSuccessSignal() }),
     SUCCESSFUL_ROSTER_INFORMATION_STORAGE(307, R.string.successful_roster_information_storage_message, false, { AnimatedSuccessSignal() }),

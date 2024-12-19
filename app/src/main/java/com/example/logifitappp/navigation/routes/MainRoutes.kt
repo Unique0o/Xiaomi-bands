@@ -5,6 +5,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class MainRoutes {
     @Serializable
+    data class DrowsinessTestDetail(val drowsinessTestId: Int): MainRoutes()
+
+    @Serializable
+    data object DrowsinessTests: MainRoutes()
+
+    @Serializable
     data object HealthInformation: MainRoutes()
 
     @Serializable

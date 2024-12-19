@@ -19,6 +19,10 @@ abstract class EvaluationResultDao {
         return fetchFromDate(DateTimeUtils.formatReducedIso8601(GregorianCalendar.getInstance().time), userId)
     }
 
+    fun findFromToday(evaluationId: Int, userId: Int): EvaluationResultModel? {
+        return findBy(DateTimeUtils.formatReducedIso8601(GregorianCalendar.getInstance().time), evaluationId, userId)
+    }
+
     @Query("SELECT * FROM evaluation_results WHERE created_at LIKE :date || '%' AND user_id = :userId AND evaluation_id = :evaluationId LIMIT 1")
     abstract fun findBy(date: String, evaluationId: Int, userId: Int): EvaluationResultModel?
 

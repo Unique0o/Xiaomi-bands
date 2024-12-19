@@ -23,7 +23,7 @@ fun Button(
     shape: RoundedCornerShape = RoundedCornerShape(24.dp)
 ) {
     MaterialButton(
-        border = BorderStroke(1.dp, backgroundColor),
+        border = BorderStroke(1.dp, if (enabled) backgroundColor else MaterialTheme.colorScheme.surfaceTint),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
             disabledContainerColor = MaterialTheme.colorScheme.surfaceTint,

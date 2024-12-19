@@ -195,7 +195,7 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    private fun refreshEvaluations() {
+    fun refreshEvaluations() {
         if (user == null) return
 
         evaluations.clear()

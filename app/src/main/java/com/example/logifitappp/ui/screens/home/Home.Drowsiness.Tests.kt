@@ -3,6 +3,7 @@ package com.example.logifitappp.ui.screens.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -36,7 +37,7 @@ fun HomeDrowsinessTest(
             buttonIcon = Icons.Filled.Add,
             icon = Icons.Outlined.FormatListNumbered,
             modifier = Modifier.padding(horizontal = 6.dp),
-            onClick = { navigation.navigate(MainRoutes.WearableDetection) },
+            onClick = { navigation.navigate(MainRoutes.DrowsinessTests) },
             paragraph = stringResource(id = R.string.drowsiness_evaluation_message),
             title =  stringResource(id = R.string.my_drowsiness_tests)
         )
@@ -56,7 +57,7 @@ fun HomeDrowsinessTest(
                     }
                 }
             ) {
-                Column(Modifier.padding(start = 28.dp)) {
+                Column(Modifier.padding(start = 28.dp).offset(y = (-12).dp)) {
                     Text(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         text = stringResource(

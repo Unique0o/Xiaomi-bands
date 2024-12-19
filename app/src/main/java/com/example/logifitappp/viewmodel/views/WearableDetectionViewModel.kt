@@ -96,7 +96,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
             }
         }
 
-        if (coordinator.suggestUnbindBeforePair() && state.currentCandidate!!.IsBonded()) {
+        if (coordinator.suggestUnbindBeforePair() && state.currentCandidate!!.isBonded()) {
             AlertDialog.Builder(App.context)
                 .setTitle(R.string.unbind_before_pair_title)
                 .setMessage(R.string.unbind_before_pair_message)
@@ -251,7 +251,24 @@ class WearableDetectionViewModel @AssistedInject constructor(
         } else adapter = null
     }
 
+    @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     fun handleCandidatePressed(candidate: WearableCandidate) {
+        val wearableType = WearableHelper.getInstance().resolveWearableType(candidate)
+
+        if (!wearableType.isSupported()) {
+            println("Unsupported device candidate $candidate")
+            return
+        }
+
+        val coordinator = wearableType.getWearableCoordinator()
+
+        if (coordinator.getBondingStyle() != BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY) {
+            state = state.copy(currentCandidate = candidate)
+            authenticate()
+
+            return
+        }
+
         viewModelScope.launch {
             try {
                 state = state.copy(authenticationKey = TextFieldValue(wearableService.fetchAuthenticationKey(candidate.getMacAddress()) ?: ""))

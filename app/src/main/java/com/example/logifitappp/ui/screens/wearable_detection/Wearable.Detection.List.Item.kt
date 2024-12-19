@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronRight
@@ -27,8 +28,9 @@ fun WearableDetectionListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Outlined.Watch,
             contentDescription = null,
+            imageVector = Icons.Outlined.Watch,
+            modifier = Modifier.size(24.dp),
             tint = MaterialTheme.colorScheme.primary
         )
 
