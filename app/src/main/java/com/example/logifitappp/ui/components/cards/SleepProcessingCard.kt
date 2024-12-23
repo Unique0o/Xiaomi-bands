@@ -102,7 +102,7 @@ fun SleepProcessingCard(
 @Composable
 fun SleepProcessingComponent(
     chipLabel: String? = null,
-    iconSize: Dp = 10.dp,
+    iconSize: Dp = 50.dp,
     label: String,
     sleepProcessingStatusEnum: SleepProcessingStatusEnum
 ) {

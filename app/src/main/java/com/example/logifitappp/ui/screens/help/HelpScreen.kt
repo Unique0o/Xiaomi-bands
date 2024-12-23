@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.ui.components.tests.RadioButton
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -67,11 +66,6 @@ fun HelpScreen(
                         },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    RadioButton(
-                        selectedOption = selectedOption.value == option,
-                        onOptionSelected = { selectedOption.value = option },
-                        text =option
-                    )
                 }
             }
 

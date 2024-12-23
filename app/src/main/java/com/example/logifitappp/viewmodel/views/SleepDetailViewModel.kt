@@ -11,7 +11,10 @@ import com.example.logifitappp.core.graphics.SleepBarDataSet
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.domain.usecase.CalculateFatigueUseCase
+import com.example.logifitappp.domain.usecase.FetchActivitiesByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.viewmodel.states.SleepDetailState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -24,7 +27,10 @@ import java.time.ZoneId
 class SleepDetailViewModel @AssistedInject constructor(
     @Assisted private val mac: String,
     @Assisted private val user: UserModel?,
-    private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase
+    private val calculateFatigueUseCase: CalculateFatigueUseCase,
+    private val fetchActivitiesByShiftUseCase: FetchActivitiesByShiftUseCase,
+    private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
+    private val findAppropriateSleepConditionUseCase: FindAppropriateSleepConditionUseCase
 ): ViewModel() {
     @AssistedFactory
     interface SleepDetailViewModelFactory {
@@ -40,7 +46,8 @@ class SleepDetailViewModel @AssistedInject constructor(
 
             state = state.copy(
                 shift = shift,
-                summary = App.context.getString(R.string.sleep_detail_summary, shift?.startTime ?: "N/A", shift?.endTime ?: "N/A")
+                summary = App.context.getString(R.string.sleep_detail_summary, shift?.startTime ?: "N/A", shift?.endTime ?: "N/A"),
+                tenant = App.database.tenantDao().find(user.tenantId)
             )
         }
 
@@ -49,12 +56,20 @@ class SleepDetailViewModel @AssistedInject constructor(
         fetchInformation()
     }
 
+    private fun checkIfCanGoToNext(calendar: Calendar): Boolean {
+        return DateTimeUtils.format(calendar.time, "dd/MM/yyyy") != DateTimeUtils.format(Calendar.getInstance().time, "dd/MM/yyyy")
+    }
+
     private fun fetchInformation() {
         if (state.shift == null || state.wearable == null) return
 
+        val activities = fetchActivitiesByShiftUseCase(state.shift!!, state.wearable!!, state.date)
         val dataset = SleepBarDataSet(fetchActivityAmountsByShiftUseCase(state.shift!!, state.wearable!!, state.date))
+        val sleepCondition = findAppropriateSleepConditionUseCase(dataset.amounts.totalSleepMinutes * 60, state.tenant!!)
 
         state = state.copy(
+            fatigue = calculateFatigueUseCase(state.wearable!!, activities, dataset.amounts),
+            sleepCondition = sleepCondition,
             sleepDataSet = dataset,
             subtitle = DurationUtils.format(dataset.amounts.totalSleepMinutes * 60)
         )
@@ -75,7 +90,7 @@ class SleepDetailViewModel @AssistedInject constructor(
         }
 
         state = state.copy(
-            canGoToNextDay = DateTimeUtils.format(calendar.time, "dd/MM/yyyy") != DateTimeUtils.format(Calendar.getInstance().time, "dd/MM/yyyy"),
+            canGoToNextDay = checkIfCanGoToNext(calendar),
             date = calendar
         )
 
@@ -89,7 +104,7 @@ class SleepDetailViewModel @AssistedInject constructor(
         calendar.add(Calendar.DAY_OF_MONTH, 1)
 
         state = state.copy(
-            canGoToNextDay = DateTimeUtils.format(calendar.time, "dd/MM/yyyy") != DateTimeUtils.format(Calendar.getInstance().time, "dd/MM/yyyy"),
+            canGoToNextDay = checkIfCanGoToNext(calendar),
             date = calendar
         )
 

@@ -4,10 +4,9 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.core.analyzers.ActivityAnalyzer
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.DrowsinessModel
-import com.example.logifitappp.data.models.FatigueModel
 import com.example.logifitappp.data.models.ShiftModel
 
-class CalculateSleepProcessingUseCase {
+class CalculateSleepProcessingUseCase(private val calculateFatigueUseCase: CalculateFatigueUseCase) {
     operator fun invoke(shift: ShiftModel, wearable: Wearable) {
         val analyzer = ActivityAnalyzer()
         val coordinator = wearable.getWearableCoordinator()
@@ -29,43 +28,11 @@ class CalculateSleepProcessingUseCase {
                 wearableId = wearableModel.id
             ))
 
-        val withHypertension = activities.any {
-            it.isHeartRateValid() && it.isSleep() && (it.heartRate < 40 || it.heartRate > 100)
-        }
+        val calculatedFatigue = calculateFatigueUseCase(wearable, activities, amounts)
+        val storedFatigue = App.database.fatigueDao().findFromToday(wearableModel.id)
 
-        App.database
-            .fatigueDao()
-            .findFromToday(wearableModel.id)
-            ?.let {
-                if (coordinator.supportsRemSleep()) {
-                    it.remCycles = amounts.remCycles
-                    it.totalRemSeconds = amounts.totalRemSleepMinutes * 60
-                    it.withLittleReemSleep = amounts.remSleepPercentage < 15
-                }
+        if (storedFatigue != null) calculatedFatigue.id = storedFatigue.id
 
-                if (coordinator.supportsHeartRateMeasurement()) {
-                    it.withHypertension = withHypertension
-                }
-
-                it.totalAwakeSeconds = amounts.totalAwakeningMinutes * 60
-                it.totalSleepSeconds = amounts.totalSleepMinutes * 60
-                it.withAwakeningOvercome = amounts.maxAwakeningMinutes > 20
-                it.withLittleSleep =  amounts.totalSleepMinutes < 60 * 6
-                it.withLongAwake = amounts.totalAwakeningMinutes > 60
-
-                App.database.fatigueDao().store(it)
-            }
-            ?: App.database.fatigueDao().store(FatigueModel(
-                remCycles = if (coordinator.supportsRemSleep()) amounts.remCycles else null,
-                totalRemSeconds = if (coordinator.supportsRemSleep()) amounts.totalRemSleepMinutes * 60 else null,
-                totalAwakeSeconds = amounts.totalAwakeningMinutes * 60,
-                totalSleepSeconds = amounts.totalSleepMinutes * 60,
-                wearableId = wearableModel.id,
-                withAwakeningOvercome = amounts.maxAwakeningMinutes > 20,
-                withHypertension = if (coordinator.supportsHeartRateMeasurement()) withHypertension else false,
-                withLittleReemSleep = if (coordinator.supportsRemSleep()) amounts.remSleepPercentage < 15 else null,
-                withLittleSleep =  amounts.totalSleepMinutes < 60 * 6,
-                withLongAwake = amounts.totalAwakeningMinutes > 60
-            ))
+        App.database.fatigueDao().store(calculatedFatigue)
     }
 }

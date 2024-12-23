@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
@@ -73,7 +72,7 @@ fun ModalLayout(
                             contentDescription = null,
                             imageVector = Icons.Filled.Close,
                             modifier = Modifier.size(22.dp),
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.surfaceContainer
                         )
                     }
                 }

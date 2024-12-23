@@ -3,6 +3,7 @@ package com.example.logifitappp.core.analyzers
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.SleepModel
+import kotlin.math.abs
 import kotlin.math.max
 
 class ActivityAmountList {
@@ -59,6 +60,30 @@ class ActivityAmountList {
         }
     }
 
+    fun getAwakenings(): List<Awakening> {
+        val sleeps = getSleeps(0)
+        var prevSleep: SleepModel? = null
+
+        val awakenings = mutableListOf<Awakening>()
+
+        for (sleep in sleeps) {
+            if (prevSleep != null) {
+                val startAt = DateTimeUtils.parse(prevSleep.endAt, "yyyy-MM-dd HH:mm:ss")!!
+                val endAt = DateTimeUtils.parse(sleep.startAt, "yyyy-MM-dd HH:mm:ss")!!
+
+                awakenings.add(Awakening(
+                    duration = abs(endAt.time - startAt.time) / 1000,
+                    endAt = sleep.startAt,
+                    startAt = prevSleep.endAt
+                ))
+            }
+
+            prevSleep = sleep
+        }
+
+        return awakenings
+    }
+
     fun getList() = amounts
 
     fun getSleeps(wearableId: Int): List<SleepModel> {
@@ -109,4 +134,6 @@ class ActivityAmountList {
     fun isEmpty() = amounts.isEmpty()
 
     fun lastOrNull() = amounts.lastOrNull()
+
+    inner class Awakening(val duration: Long, val endAt: String, val startAt: String) { }
 }

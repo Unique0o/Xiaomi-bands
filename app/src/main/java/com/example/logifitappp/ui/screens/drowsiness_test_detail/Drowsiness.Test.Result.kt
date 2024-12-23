@@ -46,7 +46,6 @@ fun DrowsinessTestResult(
 
         CardLayout(Modifier.fillMaxWidth()) {
             SleepProcessingComponent(
-                iconSize = 50.dp,
                 label = result.title,
                 sleepProcessingStatusEnum = result.calculateStatus()
             )

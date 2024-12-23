@@ -6,9 +6,12 @@ import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
 import com.example.logifitappp.domain.service.TrainingService
 import com.example.logifitappp.domain.service.UserService
+import com.example.logifitappp.domain.usecase.CalculateFatigueUseCase
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
+import com.example.logifitappp.domain.usecase.FetchActivitiesByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
@@ -29,7 +32,17 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun provideCalculateSleepProcessingUseCase() = CalculateSleepProcessingUseCase()
+    fun provideCalculateFatigueUseCase() = CalculateFatigueUseCase()
+
+    @Provides
+    @Singleton
+    fun provideCalculateSleepProcessingUseCase(
+        calculateFatigueUseCase: CalculateFatigueUseCase
+    ) = CalculateSleepProcessingUseCase(calculateFatigueUseCase)
+
+    @Provides
+    @Singleton
+    fun provideFetchActivitiesByShiftUseCase() = FetchActivitiesByShiftUseCase()
 
     @Provides
     @Singleton
@@ -37,7 +50,13 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideFetchActivityAmountsByShiftUseCase() = FetchActivityAmountsByShiftUseCase()
+    fun provideFetchActivityAmountsByShiftUseCase(
+        fetchActivitiesByShiftUseCase: FetchActivitiesByShiftUseCase
+    ) = FetchActivityAmountsByShiftUseCase(fetchActivitiesByShiftUseCase)
+
+    @Provides
+    @Singleton
+    fun provideFindAppropriateSleepConditionUseCase() = FindAppropriateSleepConditionUseCase()
 
     @Provides
     @Singleton

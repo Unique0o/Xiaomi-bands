@@ -7,14 +7,10 @@ import com.example.logifitappp.core.analyzers.ActivityAnalyzer
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.ShiftModel
 
-class FetchActivityAmountsByShiftUseCase {
+class FetchActivityAmountsByShiftUseCase(private val fetchActivitiesByShiftUseCase: FetchActivitiesByShiftUseCase) {
     operator fun invoke(shift: ShiftModel, wearable: Wearable, baseCalendar: Calendar = GregorianCalendar.getInstance()): ActivityAmountList {
         val analyzer = ActivityAnalyzer()
-        val coordinator = wearable.getWearableCoordinator()
 
-        val provider = coordinator.getActivityProvider(wearable)
-        val activities = provider.getRawActivities(shift, baseCalendar)
-
-        return analyzer.calculate(activities)
+        return analyzer.calculate(fetchActivitiesByShiftUseCase(shift, wearable, baseCalendar))
     }
 }

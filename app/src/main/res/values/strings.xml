@@ -66,6 +66,7 @@
     <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
     <string name="failed_roster_information_storage_message">Record with date range already exists</string>
     <string name="failed_wearable_pairing_message">To connect successfully, it is necessary to keep the Smart Band close to the cell phone</string>
+    <string name="fatigue">Fatigue</string>
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
@@ -164,6 +165,7 @@
     <string name="share_training_certificate_message">Share training certificate</string>
     <string name="sharing_without_synchronization_to_logifit_message">Data still needs to be sent to Logifit, do you still want to share your data?</string>
     <string name="shift">Shift</string>
+    <string name="sleep_condition">Sleep Condition</string>
     <string name="sleep_detail_chart_subtitle">Information between %1$s - %2$s</string>
     <string name="sleep_detail_chart_title">My sleep</string>
     <string name="sleep_detail_screenshot_copyright_message">Report created in App Logifit</string>
@@ -285,7 +287,6 @@
     <string name="steps_taken">Steps taken</string>
 
     <string name="average_heart_rate">Average heart rate</string>
-    <string name="sleep_condition">Sleep Condition</string>
     <string name="naps">Naps</string>
 
     <!-- CardSleepSession -->

@@ -25,6 +25,7 @@ import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInforma
 import com.example.logifitappp.domain.service.UserService
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
+import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
 import com.example.logifitappp.domain.usecase.ShareEvaluationDetailUseCase
@@ -44,6 +45,7 @@ import okio.IOException
 class HomeViewModel @AssistedInject constructor(
     @Assisted private val user: UserModel?,
     private val calculateSleepProcessingUseCase: CalculateSleepProcessingUseCase,
+    private val findAppropriateSleepConditionUseCase: FindAppropriateSleepConditionUseCase,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
     private val shareEvaluationDetailUseCase: ShareEvaluationDetailUseCase,
@@ -235,7 +237,7 @@ class HomeViewModel @AssistedInject constructor(
 
         val wearableModel = App.database.wearableDao().find(wearable.getAddress()!!, user.id)!!
         val drowsiness = App.database.drowsinessDao().findFromToday(wearableModel.id)
-        val drowsinessCondition = if (drowsiness == null) null else App.database.sleepConditionDao().findAppropriate(drowsiness.totalSleepSeconds, state.tenant!!)
+        val drowsinessCondition = if (drowsiness == null) null else findAppropriateSleepConditionUseCase(drowsiness.totalSleepSeconds, state.tenant!!)
 
         state = state.copy(
             drowsiness = drowsiness,
