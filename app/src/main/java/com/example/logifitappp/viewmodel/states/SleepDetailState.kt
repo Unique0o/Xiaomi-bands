@@ -17,6 +17,7 @@ data class SleepDetailState(
     var canGoToNextDay: Boolean = false,
     var date: Calendar = GregorianCalendar.getInstance(),
     val fatigue: FatigueModel? = null,
+    val nap: ActivityAmountList = ActivityAmountList(),
     var shift: ShiftModel? = null,
     val sleepCondition: SleepConditionModel? = null,
     val sleepDataSet: SleepBarDataSet = SleepBarDataSet(ActivityAmountList()),

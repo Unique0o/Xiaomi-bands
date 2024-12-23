@@ -120,6 +120,7 @@
     <string name="message_recover_password">Don`t remember your password?</string>
     <string name="mute">Mute</string>
     <string name="my_drowsiness_tests">My drowsiness tests</string>
+    <string name="naps">Naps</string>
     <string name="no">No</string>
     <string name="no_data">No data</string>
     <string name="no_internet_connection_message">Check your Internet connection</string>
@@ -287,7 +288,6 @@
     <string name="steps_taken">Steps taken</string>
 
     <string name="average_heart_rate">Average heart rate</string>
-    <string name="naps">Naps</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>

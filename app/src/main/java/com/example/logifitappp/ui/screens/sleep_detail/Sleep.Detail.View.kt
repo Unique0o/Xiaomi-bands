@@ -38,6 +38,8 @@ fun SleepDetailView(
         it.create(mac, appViewModel.user)
     }
 
+    val supportsRemSleep = sleepDetailViewModel.state.wearable?.getWearableCoordinator()?.supportsRemSleep()
+
     ScrollablePage(
         contentPadding = PaddingValues(0.dp),
         topBar = {
@@ -70,7 +72,7 @@ fun SleepDetailView(
 
                     SleepDetailSummary(
                         amounts = sleepDetailViewModel.state.sleepDataSet.amounts,
-                        supportsRemSleep = sleepDetailViewModel.state.wearable?.getWearableCoordinator()?.supportsRemSleep()
+                        supportsRemSleep = supportsRemSleep
                     )
 
                     Spacer(Modifier.height(8.dp))
@@ -108,6 +110,15 @@ fun SleepDetailView(
                             }
                         }
                     )
+
+                    if (!sleepDetailViewModel.state.nap.isEmpty()) {
+                        Spacer(Modifier.height(16.dp))
+
+                        SleepDetailNaps(
+                            naps = sleepDetailViewModel.state.nap,
+                            supportsRemSleep = supportsRemSleep
+                        )
+                    }
                 }
             }
         }

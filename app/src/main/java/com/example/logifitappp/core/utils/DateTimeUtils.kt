@@ -30,6 +30,14 @@ object DateTimeUtils {
 
     fun formatReducedIso8601(date: Date): String = format(date, "yyyy-MM-dd")
 
+    fun getSecondsOfDay(calendar: Calendar): Int {
+        val hours = calendar.get(Calendar.HOUR_OF_DAY)
+        val minutes = calendar.get(Calendar.MINUTE)
+        val seconds = calendar.get(Calendar.SECOND)
+
+        return (hours * 3600) + (minutes * 60) + seconds
+    }
+
     fun parse(date: String, format: String): Date? = SimpleDateFormat(format, Locale.US).parse(date)
 
     fun parse(time: Long, format: String, timeZone: TimeZone): String {

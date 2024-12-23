@@ -18,7 +18,9 @@ abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: W
         return getRawActivitiesBetween(startTs, endTs)
     }
 
-    protected open fun getRawActivitiesBetween(from: Long, to: Long): List<T> {
+    open fun getRawActivitiesBetween(from: Long, to: Long): List<T> {
+        println("fetch activities between $from - $to")
+
         val activities = getWearableRawActivityDao()?.getRawActivitiesBetween(from, to, getStoredWearable()?.id ?: 0) ?: listOf()
 
         activities.forEach {

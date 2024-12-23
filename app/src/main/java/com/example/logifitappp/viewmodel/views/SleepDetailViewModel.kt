@@ -14,6 +14,7 @@ import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.CalculateFatigueUseCase
 import com.example.logifitappp.domain.usecase.FetchActivitiesByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FetchNapAmountsByShiftUseCase
 import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.viewmodel.states.SleepDetailState
 import dagger.assisted.Assisted
@@ -30,6 +31,7 @@ class SleepDetailViewModel @AssistedInject constructor(
     private val calculateFatigueUseCase: CalculateFatigueUseCase,
     private val fetchActivitiesByShiftUseCase: FetchActivitiesByShiftUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
+    private val fetchNapAmountsByShiftUseCase: FetchNapAmountsByShiftUseCase,
     private val findAppropriateSleepConditionUseCase: FindAppropriateSleepConditionUseCase
 ): ViewModel() {
     @AssistedFactory
@@ -69,6 +71,7 @@ class SleepDetailViewModel @AssistedInject constructor(
 
         state = state.copy(
             fatigue = calculateFatigueUseCase(state.wearable!!, activities, dataset.amounts),
+            nap = fetchNapAmountsByShiftUseCase(state.shift!!, state.wearable!!, state.date),
             sleepCondition = sleepCondition,
             sleepDataSet = dataset,
             subtitle = DurationUtils.format(dataset.amounts.totalSleepMinutes * 60)

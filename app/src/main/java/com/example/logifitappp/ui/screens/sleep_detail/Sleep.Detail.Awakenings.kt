@@ -22,17 +22,19 @@ import com.example.logifitappp.ui.components.graphics.TimedProgressBar
 fun SleepDetailAwakenings(
     amounts: ActivityAmountList
 ) {
+    val awakenings = amounts.getAwakenings()
+
     InformationCard(
         icon = Icons.Default.Lightbulb,
         label = stringResource(R.string.awaken),
         suffixComponent = {
             Chip(
-                label = DurationUtils.format(amounts.totalAwakeningMinutes * 60),
+                label = DurationUtils.format(awakenings.sumOf { it.duration }),
                 status = ChipStatusEnum.SUCCESS
             )
         }
     ) {
-        amounts.getAwakenings().forEachIndexed { index, awakening ->
+        awakenings.forEachIndexed { index, awakening ->
             if (index != 0) Spacer(Modifier.height(16.dp))
 
             TimedProgressBar(

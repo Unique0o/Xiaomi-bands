@@ -11,6 +11,7 @@ import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.FetchActivitiesByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FetchNapAmountsByShiftUseCase
 import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
@@ -53,6 +54,10 @@ object UseCaseModule {
     fun provideFetchActivityAmountsByShiftUseCase(
         fetchActivitiesByShiftUseCase: FetchActivitiesByShiftUseCase
     ) = FetchActivityAmountsByShiftUseCase(fetchActivitiesByShiftUseCase)
+
+    @Provides
+    @Singleton
+    fun provideFetchNapAmountsByShiftUseCase() = FetchNapAmountsByShiftUseCase()
 
     @Provides
     @Singleton
