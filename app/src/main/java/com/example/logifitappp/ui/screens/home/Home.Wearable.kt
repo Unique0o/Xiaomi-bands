@@ -61,6 +61,7 @@ fun HomeWearable(
             icon = Icons.Outlined.Watch,
             modifier = Modifier.padding(horizontal = 6.dp),
             onClick = { homeViewModel.connect(wearable) },
+            onTitleClick = { navigation.navigate(MainRoutes.WearableProfile(wearable.getAddress()!!)) },
             paragraph = stringResource(id = R.string.reminder_message),
             title = wearable.getAliasOrName()
         )

@@ -34,14 +34,14 @@ class NotificationSpec(tmpId: Int = -1) {
         var type = TYPE_UNDEFINED
 
         companion object {
-            const val TYPE_SYNTECTIC_DISMISS_ALL = -1
-            const val TYPE_SYNTECTIC_DISMISS = -1
-            const val TYPE_SYNTECTIC_MUTE = -1
-            const val TYPE_SYNTECTIC_OPEN = -1
-            const val TYPE_SYNTECTIC_REPLY_PHONENR = -1
+            const val TYPE_SYNTECTIC_DISMISS_ALL = 4
+            const val TYPE_SYNTECTIC_DISMISS = 3
+            const val TYPE_SYNTECTIC_MUTE = 5
+            const val TYPE_SYNTECTIC_OPEN = 6
+            const val TYPE_SYNTECTIC_REPLY_PHONENR = 2
             const val TYPE_UNDEFINED = -1
-            const val TYPE_WEARABLE_REPLY = -1
-            const val TYPE_WEARABLE_SIMPLE = -1
+            const val TYPE_WEARABLE_REPLY = 1
+            const val TYPE_WEARABLE_SIMPLE = 0
         }
     }
 }

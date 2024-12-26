@@ -8,9 +8,12 @@ import android.icu.util.GregorianCalendar
 import android.icu.util.TimeUnit
 import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.Preferences
 import com.example.logifitappp.core.RecordedDataType
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.builders.ble.actions.Action
 import com.example.logifitappp.core.builders.ble.actions.SetWearableStateAction
+import com.example.logifitappp.core.builders.ble.actions.StopNotificationAction
 import com.example.logifitappp.core.builders.ble.profiles.AlertNotificationProfile
 import com.example.logifitappp.core.builders.ble.profiles.WearableInfoProfile
 import com.example.logifitappp.core.builders.ble.profiles.parcelables.NewAlert
@@ -22,11 +25,19 @@ import com.example.logifitappp.core.specs.NotificationSpec
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.utils.GattCharacteristic
 import com.example.logifitappp.core.utils.GattService
+import com.example.logifitappp.core.utils.NotificationUtils
 import com.example.logifitappp.core.utils.StringUtils
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
+import com.example.logifitappp.core.wearebles.SimpleNotification
 import com.example.logifitappp.core.wearebles.Wearable
+import com.example.logifitappp.core.wearebles.WearableVersion
+import com.example.logifitappp.core.wearebles.huami.miband.MiBandConst
 import com.example.logifitappp.core.wearebles.huami.miband.MiBandService
+import com.example.logifitappp.core.wearebles.huami.miband.NotificationStrategy
+import com.example.logifitappp.core.wearebles.huami.miband.VibrationProfile
+import com.example.logifitappp.core.wearebles.huami.miband.miband2.Mi2NotificationStrategy
+import com.example.logifitappp.core.wearebles.huami.miband.miband2.Mi2TextNotificationStrategy
 import com.example.logifitappp.core.wearebles.huami.operations.AbstractFetchOperation
 import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchActivityOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation
@@ -152,6 +163,31 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         if (notificationSpec.subject == null && notificationSpec.body == null) message += " "
 
         return message
+    }
+
+    open fun getNotificationStrategy(): NotificationStrategy {
+        val firmware = getWearable().getFirmwareVersion()
+
+        if (firmware != null) {
+            val version = WearableVersion(firmware)
+
+            if (MiBandConst.MI2_FW_VERSION_MIN_TEXT_NOTIFICATIONS > version) return Mi2NotificationStrategy(this)
+        }
+
+        if (App.getWearableSpecificSharedPrefs(getWearable().getAddress())?.getBoolean(MiBandConst.PREF_MI2_ENABLE_TEXT_NOTIFICATIONS, true) == true) {
+            return Mi2TextNotificationStrategy(this)
+        }
+
+        return Mi2NotificationStrategy(this)
+    }
+
+    private fun getPreferredVibrateCount(notificationOrigin: String, prefs: Preferences): Short {
+        return min(Short.MAX_VALUE.toInt(), MiBandConst.getNotificationPrefIntValue(MiBandConst.VIBRATION_COUNT, notificationOrigin, prefs, MiBandConst.DEFAULT_VALUE_VIBRATION_COUNT)).toShort()
+    }
+
+    private fun getPreferredVibrateProfile(notificationOrigin: String, prefs: Preferences, repeat: Short): VibrationProfile {
+        val profileId = MiBandConst.getNotificationPrefStringValue(MiBandConst.VIBRATION_PROFILE, notificationOrigin, prefs, MiBandConst.DEFAULT_VALUE_VIBRATION_PROFILE)
+        return VibrationProfile.getProfile(profileId, repeat)
     }
 
     open fun getRawActivitySize() = rawActivitySize
@@ -306,6 +342,8 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         return builder
     }
 
+    private fun isTelephoneRinging() = telephoneRinging
+
     protected fun notificationMaxLength() = 230
 
     protected open fun notificationHasExtraHeader() = false
@@ -386,7 +424,7 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
             val builder = performInitialized("new notification")
             val customIconId = HuamiIcon.mapToIconId(notificationSpec.type)
 
-            var alertCategory = when {
+            val alertCategory = when {
                 notificationSpec.type == NotificationSpecTypeEnum.GENERIC_SMS -> AlertCategoryEnum.SMS
                 customIconId == HuamiIcon.EMAIL -> AlertCategoryEnum.EMAIL
                 else -> AlertCategoryEnum.CUSTOM_HUAMI
@@ -449,6 +487,17 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         when (callSpec.command) {
             CallSpecTypeEnum.CALL_INCOMING -> {
                 telephoneRinging = true
+
+                val abortAction = object: StopNotificationAction(getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL)) {
+                    override fun shouldAbort(): Boolean {
+                        return !isTelephoneRinging()
+                    }
+                }
+
+                val message = NotificationUtils.getPreferredTextFor(callSpec)
+                val simpleNotification = SimpleNotification(message, AlertCategoryEnum.INCOMING_CALL, null)
+
+                performPreferredNotification("incoming call", MiBandConst.ORIGIN_INCOMING_CALL, simpleNotification, HuamiService.ALERT_LEVEL_PHONE_CALL, abortAction)
             }
 
             CallSpecTypeEnum.CALL_START, CallSpecTypeEnum.CALL_END -> {
@@ -457,6 +506,23 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
             }
 
             else -> {}
+        }
+    }
+
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+    private fun performPreferredNotification(task: String, notificationOrigin: String, simpleNotification: SimpleNotification, alertLevel: Int, action: Action) {
+        try {
+            val builder = performInitialized(task)
+            val prefs = getWearablePrefs()
+            val vibrateTimes = getPreferredVibrateCount(notificationOrigin, prefs)
+
+            val profile = getPreferredVibrateProfile(notificationOrigin, prefs, vibrateTimes)
+            profile.alertLevel = alertLevel
+
+            getNotificationStrategy().sendCustomNotification(profile, simpleNotification, 0, 0, 0, 0, action, builder)
+            getQueue()?.let { builder.queue(it) }
+        } catch (e: IOException) {
+            println("Unable to send notification to device $e")
         }
     }
 
@@ -545,7 +611,8 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
     private fun stopCurrentCallNotification() {
         try {
             val builder = performInitialized("stop notification")
-
+            getNotificationStrategy().stopCurrentNotification(builder)
+            getQueue()?.let { builder.queue(it) }
         } catch (e: IOException) {
             println("Error stopping call notification")
         }

@@ -22,6 +22,7 @@
     <string name="button_device_detection">Devices detection</string>
     <string name="button_download_certificate">Download certificate</string>
     <string name="button_erase">Erase</string>
+    <string name="button_find_my_band">Encontrar mi Smart Band</string>
     <string name="button_get_into">Get into</string>
     <string name="button_mark_as_view">Mark as view</string>
     <string name="button_ok">OK</string>
@@ -70,6 +71,7 @@
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
+    <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
     <string name="fit">Fit</string>
     <string name="fit_to_drive_message">You are able to drive your work vehicle.</string>
     <string name="fit_with_observations">With obs.</string>
@@ -232,18 +234,18 @@
     </string-array>
 
     <plurals name="day_label">
-        <item quantity="one">Day</item>
-        <item quantity="many">Days</item>
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
     </plurals>
 
     <plurals name="hour_label">
-        <item quantity="one">Hour</item>
-        <item quantity="many">Hours</item>
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
     </plurals>
 
     <plurals name="minute_label">
-        <item quantity="one">Minute</item>
-        <item quantity="many">Minutes</item>
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
     </plurals>
 
     <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>

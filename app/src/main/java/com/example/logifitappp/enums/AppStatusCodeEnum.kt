@@ -37,6 +37,10 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))
     }),
 
+    FINDING_SMART_BAND(26, R.string.finding_smart_band_message, false, {
+        Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_find_smart_band))
+    }),
+
     HELP_ALREADY_STORED(406, R.string.help_already_stored_message, false, { AnimatedWarningSignal() }),
     INACTIVE_TENANT(106, R.string.inactive_tenant_message, false, { AnimatedErrorSignal() }),
     INACTIVE_USER(107, R.string.inactive_user_message, false, { AnimatedErrorSignal() }),

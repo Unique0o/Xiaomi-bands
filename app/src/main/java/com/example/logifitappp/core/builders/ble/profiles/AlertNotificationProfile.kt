@@ -35,7 +35,7 @@ class AlertNotificationProfile<T: AbstractBleWearableSupport>(support: T): Abstr
         newAlert(builder, alert, OverflowStrategyEnum.TRUNCATE)
     }
 
-    private fun newAlert(builder: TransactionBuilder, alert: NewAlert, strategy: OverflowStrategyEnum) {
+    fun newAlert(builder: TransactionBuilder, alert: NewAlert, strategy: OverflowStrategyEnum) {
         getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_NEW_ALERT)?.let {
             var message = alert.message ?: ""
 

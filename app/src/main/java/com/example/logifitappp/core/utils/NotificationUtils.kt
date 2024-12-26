@@ -5,6 +5,7 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.os.UserManager
+import com.example.logifitappp.core.specs.CallSpec
 
 object NotificationUtils {
     fun getApplicationLabel(context: Context, packageName: String): String? {
@@ -43,4 +44,6 @@ object NotificationUtils {
 
         return null
     }
+
+    fun getPreferredTextFor(callSpec: CallSpec) = StringUtils.getFirstOf(callSpec.name, callSpec.number)
 }

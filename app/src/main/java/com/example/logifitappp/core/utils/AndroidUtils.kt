@@ -54,11 +54,15 @@ object AndroidUtils {
         })
     }
 
+    fun getAppName(context: Context): String {
+        return context.packageManager.getApplicationLabel(context.applicationInfo).toString()
+    }
+
     fun getAppVersion(context: Context): String? {
         return try {
-            val packageIngo = context.packageManager.getPackageInfo(context.packageName, 0)
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
 
-            packageIngo.versionName
+            packageInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             null
         }

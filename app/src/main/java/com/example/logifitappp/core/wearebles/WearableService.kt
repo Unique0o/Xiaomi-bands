@@ -128,7 +128,7 @@ open class WearableService(private val context: Context, private val wearable: W
             putExtra(EXTRA_CALL_DISPLAY_NAME, callSpec.name)
             putExtra(EXTRA_CALL_SOURCE_NAME, callSpec.sourceName)
             putExtra(EXTRA_CALL_SOURCE_APP_ID, callSpec.sourceAppId)
-            putExtra(EXTRA_CALL_COMMAND, callSpec.command)
+            putExtra(EXTRA_CALL_COMMAND, callSpec.command.ordinal)
             putExtra(EXTRA_CALL_DND_SUPPRESSED, callSpec.dndSuppressed)
 
             invokeService(this)

@@ -39,6 +39,15 @@ object BleTypeConversionsUtils {
         )
     }
 
+    fun fromUint32(value: Int): ByteArray {
+        return byteArrayOf(
+            (value and 0xff).toByte(),
+            ((value shr 8) and 0xff).toByte(),
+            ((value shr 16) and 0xff).toByte(),
+            ((value shr 24) and 0xff).toByte(),
+        )
+    }
+
     fun fromUint8(value: Int): Byte {
         return (value and 0xff).toByte()
     }

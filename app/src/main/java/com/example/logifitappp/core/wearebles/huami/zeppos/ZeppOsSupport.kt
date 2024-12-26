@@ -7,6 +7,7 @@ import android.icu.util.GregorianCalendar
 import android.icu.util.TimeUnit
 import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
+import com.example.logifitappp.core.specs.CallSpec
 import com.example.logifitappp.core.specs.NotificationSpec
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.utils.GattCharacteristic
@@ -15,17 +16,20 @@ import com.example.logifitappp.core.wearebles.huami.HuamiBatteryInfo
 import com.example.logifitappp.core.wearebles.huami.HuamiService
 import com.example.logifitappp.core.wearebles.huami.HuamiSupport
 import com.example.logifitappp.core.wearebles.huami.zeppos.services.AbstractZeppOsService
+import com.example.logifitappp.core.wearebles.huami.zeppos.services.ZeppOsNotificationService
 import com.example.logifitappp.core.wearebles.huami.zeppos.services.ZeppOsServicesService
 import org.apache.commons.lang3.ArrayUtils
 
 class ZeppOsSupport: HuamiSupport() {
+    private val notificationService = ZeppOsNotificationService(this)
     private val servicesService = ZeppOsServicesService(this)
 
     private val supportedServices = HashSet<Short>()
     private val isEncryptedSet = HashSet<Short>()
 
     private val serviceMap = linkedMapOf<Short, AbstractZeppOsService>(
-        servicesService.getEndpoint() to servicesService
+        servicesService.getEndpoint() to servicesService,
+        notificationService.getEndpoint() to notificationService
     )
 
     fun addSupportedService(endpoint: Short, encrypted: Boolean) {
@@ -147,7 +151,11 @@ class ZeppOsSupport: HuamiSupport() {
     }
 
     override fun onNotification(notificationSpec: NotificationSpec) {
+        notificationService.sendNotification(notificationSpec)
+    }
 
+    override fun onSetCallState(callSpec: CallSpec) {
+        notificationService.setCallState(callSpec)
     }
 
     override fun phase2Initialize(builder: TransactionBuilder) {

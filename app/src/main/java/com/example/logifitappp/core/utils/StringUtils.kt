@@ -1,5 +1,6 @@
 package com.example.logifitappp.core.utils
 
+import org.apache.commons.lang3.ArrayUtils
 import java.nio.ByteBuffer
 import java.nio.CharBuffer
 import java.nio.charset.StandardCharsets
@@ -33,6 +34,16 @@ object StringUtils {
         if (length < 0) return ""
 
         return s.substring(0, length)
+    }
+
+    fun untilNullTerminator(bytes: ByteArray, startOffset: Int): String? {
+        for (i in startOffset until bytes.size) {
+            if (bytes[i].toInt() == 0) {
+                return String(ArrayUtils.subarray(bytes, startOffset, i))
+            }
+        }
+
+        return null
     }
 
     fun utf8ByteLength(string: String?, length: Int): Int {

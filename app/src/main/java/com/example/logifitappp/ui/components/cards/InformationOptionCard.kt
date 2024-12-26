@@ -1,6 +1,7 @@
 package com.example.logifitappp.ui.components.cards
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ fun InformationOptionCard(
     buttonIcon: ImageVector,
     icon: ImageVector,
     onClick: () -> Unit,
+    onTitleClick: (() -> Unit)? = null,
     paragraph: String,
     title: String,
     bodyComponent: @Composable () -> Unit = {}
@@ -38,7 +40,8 @@ fun InformationOptionCard(
             iconColor = MaterialTheme.colorScheme.onSurface,
             iconSize = 30.dp,
             label = title,
-            labelTypography = MaterialTheme.typography.displayMedium
+            labelTypography = MaterialTheme.typography.displayMedium,
+            modifier = if (onTitleClick == null) Modifier else Modifier.clickable { onTitleClick() }
         )
 
         Spacer(modifier = Modifier.height(6.dp))

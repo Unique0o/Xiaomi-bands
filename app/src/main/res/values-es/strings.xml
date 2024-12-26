@@ -22,6 +22,7 @@
     <string name="button_device_detection">Detección de dispositivos</string>
     <string name="button_download_certificate">Descargar certificado</string>
     <string name="button_erase">Borrar</string>
+    <string name="button_find_my_band">Find my band</string>
     <string name="button_get_into">Ingresar</string>
     <string name="button_mark_as_view">Marcar como visto</string>
     <string name="button_ok">Aceptar</string>
@@ -70,6 +71,7 @@
     <string name="fatigue_detail_modal_subtitle">Usted se encuentra</string>
     <string name="fatigue_detail_modal_title">Detalle de fatiga</string>
     <string name="fatigue_label">Fatiga</string>
+    <string name="finding_smart_band_message">Para que puedas localizar tu banda\nesta comenzará a vibrar</string>
     <string name="fit">Apto</string>
     <string name="fit_to_drive_message">Estás en capacidad de manejar tu vehículo de trabajo.</string>
     <string name="fit_with_observations">Con obs.</string>
@@ -232,18 +234,18 @@
     </string-array>
 
     <plurals name="day_label">
-        <item quantity="one">Día</item>
-        <item quantity="many">Días</item>
+        <item quantity="one">día</item>
+        <item quantity="other">días</item>
     </plurals>
 
     <plurals name="hour_label">
-        <item quantity="one">Hora</item>
-        <item quantity="many">Horas</item>
+        <item quantity="one">hora</item>
+        <item quantity="other">horas</item>
     </plurals>
 
     <plurals name="minute_label">
-        <item quantity="one">Minuto</item>
-        <item quantity="many">Minutos</item>
+        <item quantity="one">minuto</item>
+        <item quantity="other">minutos</item>
     </plurals>
 
     <string name="warning_title">Cuidado!!: No te encuentras apto para conducir con las condiciones actuales.</string>

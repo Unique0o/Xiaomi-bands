@@ -1,6 +1,6 @@
 package com.example.logifitappp.core.events
 
-class WearableCallControlEvent(val event: Event = Event.UNKNOWN): AbstractWearableEvent() {
+class WearableCallControlEvent(var event: Event = Event.UNKNOWN): AbstractWearableEvent() {
     enum class Event {
         ACCEPT,
         END,

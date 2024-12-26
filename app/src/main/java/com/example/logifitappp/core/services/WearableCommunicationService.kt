@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.core.broadcasters.PhoneCallBroadcastReceiver
+import com.example.logifitappp.core.specs.CallSpec
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.exceptions.WearableNotFoundException
 import com.example.logifitappp.core.wearebles.Wearable
@@ -19,6 +20,7 @@ import com.example.logifitappp.core.wearebles.WearableService
 import com.example.logifitappp.core.wearebles.WearableSupport
 import com.example.logifitappp.core.wearebles.WearableSupportFactory
 import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.enums.CallSpecTypeEnum
 import com.example.logifitappp.exceptions.SynchronizationProcessingException
 import java.util.Collections
 
@@ -149,6 +151,17 @@ class WearableCommunicationService: Service(), SharedPreferences.OnSharedPrefere
             WearableService.ACTION_FETCH_RECORDED_DATA -> {
                 val dataTypes = intent.getIntExtra(WearableService.EXTRA_RECORDED_DATA_TYPES, 0)
                 support.onFetchRecordedData(dataTypes)
+            }
+
+            WearableService.ACTION_CALL_STATE -> {
+                val callSpec = CallSpec(CallSpecTypeEnum.entries[intent.getIntExtra(WearableService.EXTRA_CALL_COMMAND, CallSpecTypeEnum.CALL_UNDEFINED.ordinal)])
+                callSpec.number = intent.getStringExtra(WearableService.EXTRA_CALL_PHONE_NUMBER)
+                callSpec.name = intent.getStringExtra(WearableService.EXTRA_CALL_DISPLAY_NAME)
+                callSpec.sourceName = intent.getStringExtra(WearableService.EXTRA_CALL_SOURCE_NAME)
+                callSpec.sourceAppId = intent.getStringExtra(WearableService.EXTRA_CALL_SOURCE_APP_ID)
+                callSpec.dndSuppressed = intent.getIntExtra(WearableService.EXTRA_CALL_DND_SUPPRESSED, 0)
+
+                support.onSetCallState(callSpec)
             }
         }
     }

@@ -5,7 +5,7 @@ import com.example.logifitappp.core.wearebles.huami.zeppos.ZeppOsSupport
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-class ZeppOsServicesService(private val support: ZeppOsSupport): AbstractZeppOsService(support, false) {
+class ZeppOsServicesService(support: ZeppOsSupport): AbstractZeppOsService(support, false) {
     override fun getEndpoint() = ENDPOINT
 
     override fun handlePayload(payload: ByteArray) {

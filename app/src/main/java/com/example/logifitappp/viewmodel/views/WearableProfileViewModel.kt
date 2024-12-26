@@ -6,16 +6,22 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.specs.CallSpec
+import com.example.logifitappp.core.utils.AndroidUtils
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.enums.CallSpecTypeEnum
 import com.example.logifitappp.viewmodel.states.WearableProfileState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.GregorianCalendar
 
+@HiltViewModel(assistedFactory = WearableProfileViewModel.WearableProfileViewModelFactory::class)
 class WearableProfileViewModel @AssistedInject constructor(
     @Assisted private val mac: String,
     @Assisted private val user: UserModel?
@@ -29,10 +35,26 @@ class WearableProfileViewModel @AssistedInject constructor(
         private set
 
     init {
-        App.wearableManager.getWearables().find { it.getAddress() == mac }?.let {
+        App.wearableManager.getWearableByMac(mac)?.let {
             state = state.copy(wearable = it)
             refreshSleepProcessingData(it)
         }
+    }
+
+    private fun endCallToSmartBand() {
+        App.wearableService.onSetCallState(CallSpec(CallSpecTypeEnum.CALL_END))
+    }
+
+    fun findSmartBand() {
+        state = state.copy(
+            isLoading = true,
+            status = AppStatusCodeEnum.FINDING_SMART_BAND
+        )
+
+        val callSpec = CallSpec(CallSpecTypeEnum.CALL_INCOMING)
+        callSpec.number = AndroidUtils.getAppName(App.context)
+
+        App.wearableService.onSetCallState(callSpec)
     }
 
     private fun refreshSleepProcessingData(wearable: Wearable) {
@@ -74,5 +96,11 @@ class WearableProfileViewModel @AssistedInject constructor(
                 )
             }
         }
+    }
+
+    fun stopProcessing() {
+        if (state.status == AppStatusCodeEnum.FINDING_SMART_BAND) endCallToSmartBand()
+
+        state = state.copy(isLoading = false)
     }
 }

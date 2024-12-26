@@ -1,10 +1,11 @@
 package com.example.logifitappp.core.wearebles.huami.zeppos.services
 
+import androidx.annotation.RequiresPermission
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.events.AbstractWearableEvent
 import com.example.logifitappp.core.wearebles.huami.zeppos.ZeppOsSupport
 
-abstract class AbstractZeppOsService(private val support: ZeppOsSupport, private var encrypted: Boolean) {
+abstract class AbstractZeppOsService(protected val support: ZeppOsSupport, private var encrypted: Boolean) {
     protected fun evaluateWearableEvent(event: AbstractWearableEvent) {
         support.evaluateWearableEvent(event)
     }
@@ -21,6 +22,11 @@ abstract class AbstractZeppOsService(private val support: ZeppOsSupport, private
 
     protected fun write(builder: TransactionBuilder, byte: Byte) {
         write(builder, byteArrayOf(byte))
+    }
+
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+    protected fun write(taskName: String, payload: ByteArray) {
+        support.writeToChunked2021(taskName, getEndpoint(), payload, encrypted)
     }
 
     protected fun write(builder: TransactionBuilder, payload: ByteArray) {
