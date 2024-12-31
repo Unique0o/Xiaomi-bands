@@ -1,5 +1,8 @@
 package com.example.logifitappp.ui.screens.onboarding
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -31,20 +34,37 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.logifitappp.R
+import com.example.logifitappp.core.App
 import com.example.logifitappp.ui.components.Link
 import com.example.logifitappp.ui.components.MarkdownText
 import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.theme.Sky320
 import com.example.logifitappp.viewmodel.AppViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun OnboardingView(
    appViewModel: AppViewModel
 ) {
+    val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
+    } else null
+
     val pagerState = rememberPagerState(pageCount = {
         3
     })
+
+    LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
+        if (ContextCompat.checkSelfPermission(App.context.applicationContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+            notificationPermission?.launchPermissionRequest()
+        }
+    }
 
     Scaffold(contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
         Box(Modifier.fillMaxSize()) {

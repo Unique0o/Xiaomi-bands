@@ -12,7 +12,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.core.analyzers.ActivityAmountList
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.DurationUtils
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.cards.InformationCard

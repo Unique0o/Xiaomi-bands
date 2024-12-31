@@ -29,7 +29,7 @@ import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
 import com.example.logifitappp.ui.components.cards.InformationCard
 import androidx.compose.material3.IconButton
-import com.example.logifitappp.ui.components.graphics.SimpleHorizontalStackBar
+import com.example.logifitappp.ui.components.graphics.SimpleHorizontalStackBarChart
 import androidx.compose.material3.Icon
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -96,7 +96,7 @@ fun GraphicsSleepChart(
                 )
             }
         ) {
-            SimpleHorizontalStackBar(dataSet = dataSet)
+            SimpleHorizontalStackBarChart(dataSet = dataSet)
         }
     }
 }

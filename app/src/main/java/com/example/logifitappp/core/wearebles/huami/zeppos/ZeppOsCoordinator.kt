@@ -28,4 +28,6 @@ abstract class ZeppOsCoordinator: HuamiCoordinator() {
     override fun supportsHeartRateMeasurement() = true
 
     override fun supportsRemSleep() = true
+
+    override fun supportsSpo2() = true
 }

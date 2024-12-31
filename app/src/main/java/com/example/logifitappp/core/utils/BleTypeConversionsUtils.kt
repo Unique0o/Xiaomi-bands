@@ -23,10 +23,8 @@ object BleTypeConversionsUtils {
         )
     }
 
-    fun dayOfWeekToRawBytes(calendar: Calendar): Byte {
-        val value = calendar[Calendar.DAY_OF_WEEK]
-
-        return when (value) {
+    private fun dayOfWeekToRawBytes(calendar: Calendar): Byte {
+        return when (val value = calendar[Calendar.DAY_OF_WEEK]) {
             Calendar.SUNDAY -> 7
             else -> (value - 1).toByte()
         }

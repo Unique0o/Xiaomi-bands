@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.core.utils.MathUtils
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.ui.screens.sleep_detail.SleepDetailSummaryItem
 
 @Composable

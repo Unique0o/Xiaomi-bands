@@ -19,7 +19,7 @@ import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
 import com.example.logifitappp.ui.components.cards.InformationCard
-import com.example.logifitappp.ui.components.graphics.VerticalBar
+import com.example.logifitappp.ui.components.graphics.VerticalBarChart
 
 @Composable
 fun GraphicsStepsChart(
@@ -51,7 +51,7 @@ fun GraphicsStepsChart(
                 )
             }
         ) {
-            VerticalBar(
+            VerticalBarChart(
                 Modifier.fillMaxWidth().height(80.dp),
                 dataSet = dataset.self,
                 yMax = dataset.yMax

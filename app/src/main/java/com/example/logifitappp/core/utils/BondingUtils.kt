@@ -125,7 +125,6 @@ object BondingUtils {
     fun handleDeviceBonded(candidate: WearableCandidate?) {
         if (candidate == null) {
             println("candidate was null! Can't handle bonded device!")
-
             return
         }
 

@@ -11,12 +11,14 @@ import com.example.logifitappp.core.analyzers.HeartRateAnalyzer
 import com.example.logifitappp.core.analyzers.StepsAnalyzer
 import com.example.logifitappp.core.graphics.HeartRateDataSet
 import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.Spo2DataSet
 import com.example.logifitappp.core.graphics.StepsBarDataSet
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
+import com.example.logifitappp.domain.usecase.FetchSpo2SampleAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.SynchronizationProcessingException
@@ -32,6 +34,7 @@ class GraphicsViewModel  @AssistedInject constructor(
     @Assisted private val user: UserModel?,
     private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
+    private val fetchSpo2SampleAmountsBetweenDayUseCase: FetchSpo2SampleAmountsBetweenDayUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase
 ): ViewModel() {
     @AssistedFactory
@@ -61,6 +64,7 @@ class GraphicsViewModel  @AssistedInject constructor(
         state = state.copy(
             heartRateDataSet = HeartRateDataSet(heartRateAnalyzer.calculate(activitiesFromToday, calendar, 30)),
             shift = shift,
+            spo2DataSet = Spo2DataSet(fetchSpo2SampleAmountsBetweenDayUseCase(wearable, calendar)),
             stepsDataset = StepsBarDataSet(stepsAnalyzer.calculate(activitiesFromToday, calendar, 30)),
         )
 

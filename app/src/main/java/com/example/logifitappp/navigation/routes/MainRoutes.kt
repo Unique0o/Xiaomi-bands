@@ -44,6 +44,9 @@ sealed class MainRoutes {
     data object SplashScreen: MainRoutes()
 
     @Serializable
+    data class Spo2Detail(val mac: String): MainRoutes()
+
+    @Serializable
     data object Trainings: MainRoutes()
 
     @Serializable

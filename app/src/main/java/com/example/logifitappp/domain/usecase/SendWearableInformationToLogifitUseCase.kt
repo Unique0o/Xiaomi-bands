@@ -11,7 +11,7 @@ import com.example.logifitappp.core.utils.HeartRateUtils
 import com.example.logifitappp.core.utils.StepsUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableActivityProvider
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.WearableModel
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
@@ -94,7 +94,7 @@ class SendWearableInformationToLogifitUseCase @Inject constructor(
                     StoreSleepByMinuteRequest(
                         heartRate = it.heartRate,
                         intensity = if (type == WearableActivityTypeEnum.NOT_WORN) 0.01 else intensity + 0.01,
-                        rawKind = type.getCode(),
+                        rawKind = type.code,
                         steps = it.steps,
                         timestamp = it.timestamp.toString()
                     )

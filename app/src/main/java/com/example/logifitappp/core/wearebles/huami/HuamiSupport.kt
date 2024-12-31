@@ -40,6 +40,7 @@ import com.example.logifitappp.core.wearebles.huami.miband.miband2.Mi2Notificati
 import com.example.logifitappp.core.wearebles.huami.miband.miband2.Mi2TextNotificationStrategy
 import com.example.logifitappp.core.wearebles.huami.operations.AbstractFetchOperation
 import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchActivityOperation
+import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchSpo2NormalOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation2021
 import com.example.logifitappp.enums.AlertCategoryEnum
@@ -403,6 +404,10 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
         if ((dataTypes and RecordedDataType.TYPE_ACTIVITY) != 0) {
             println("operation: HuamiFetchActivityOperation")
             fetchOperationQueue.add(HuamiFetchActivityOperation(this))
+        }
+
+        if ((dataTypes and RecordedDataType.TYPE_SPO2) != 0 && getCoordinator().supportsSpo2()) {
+            fetchOperationQueue.add(HuamiFetchSpo2NormalOperation(this))
         }
 
         fetchOperationQueue.poll()?.let {

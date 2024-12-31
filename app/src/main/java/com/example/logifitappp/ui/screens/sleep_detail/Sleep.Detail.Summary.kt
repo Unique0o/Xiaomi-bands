@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.core.analyzers.ActivityAmountList
 import com.example.logifitappp.core.utils.DateTimeUtils
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.ui.components.SleepInformationGroup
 import com.example.logifitappp.ui.components.cards.InformationCard
 import com.example.logifitappp.ui.components.graphics.TimedProgressBar

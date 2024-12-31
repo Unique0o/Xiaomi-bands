@@ -16,10 +16,11 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 
 @Composable
-fun VerticalBar(
+fun VerticalBarChart(
     modifier: Modifier = Modifier,
     dataSet: BarDataSet,
-    yMax: Float
+    yMax: Float,
+    yMin: Float = 0f
 ) {
     Column {
         AndroidView(
@@ -43,7 +44,7 @@ fun VerticalBar(
 
                     axisLeft.apply {
                         isEnabled = false
-                        axisMinimum = 0f
+                        axisMinimum = yMin
                         axisMaximum = yMax
                         setDrawLabels(false)
                         setDrawGridLines(false)
@@ -57,6 +58,20 @@ fun VerticalBar(
 
                     invalidate()
                 }
+            },
+
+            update = { chart ->
+                chart.data = BarData(dataSet).apply {
+                    setDrawValues(false)
+                    barWidth = 0.5f
+                }
+
+                chart.axisLeft.apply {
+                    axisMaximum = yMax
+                    axisMinimum = yMin
+                }
+
+                chart.invalidate()
             },
 
             modifier = modifier

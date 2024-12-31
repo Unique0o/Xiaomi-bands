@@ -1,6 +1,7 @@
 package com.example.logifitappp.core.analyzers
 
 import android.icu.util.Calendar
+import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 
 class HeartRateAnalyzer {
@@ -9,18 +10,12 @@ class HeartRateAnalyzer {
         var totalMeasuredHeartRate = 0L
         var measuredHeartRateTimes = 0
 
-        val initDay = calendar.apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.timeInMillis / 1000
+        val timestamps = DateTimeUtils.getStartOfTodayAndTomorrow(calendar)
+        val rangeInMills = rangeInMinutes * 60 * 1000
 
-        for (j in 0 .. 47) {
-            val rangeInMillis = rangeInMinutes * 60
-
-            val startTime = initDay + j * rangeInMillis
-            val endTime = startTime + rangeInMillis
+        for (i in timestamps.first until  timestamps.second step rangeInMills) {
+            val startTime = i / 1000
+            val endTime = (i + rangeInMills) / 1000
 
             val filteredActivities = activities.filter { it.timestamp in startTime ..< endTime }
 

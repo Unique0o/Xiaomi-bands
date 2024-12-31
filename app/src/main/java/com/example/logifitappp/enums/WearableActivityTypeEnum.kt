@@ -1,4 +1,4 @@
-package com.example.logifitappp.core.wearebles
+package com.example.logifitappp.enums
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
@@ -9,8 +9,8 @@ import com.example.logifitappp.ui.theme.Sky320
 import com.example.logifitappp.ui.theme.Violet500
 
 enum class WearableActivityTypeEnum(
-    private val code: Int,
-    @StringRes private val label: Int,
+    val code: Int,
+    @StringRes val label: Int,
     val color: Color
 ) {
     ACTIVITY(0x00000001, R.string.activity, Orange390),
@@ -21,8 +21,6 @@ enum class WearableActivityTypeEnum(
     REM_SLEEP(0x01000000, R.string.rem_sleep, Violet500),
     RUNNING(0x00000010, R.string.running, Orange390),
     UNKNOWN(0x00000000, R.string.unknown_activity, Orange390);
-
-    fun getCode() = code
 
     companion object {
         fun fromCode(code: Int): WearableActivityTypeEnum {

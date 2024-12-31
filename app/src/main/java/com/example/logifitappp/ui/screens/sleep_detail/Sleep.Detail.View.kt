@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.screens.sleep_detail
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +21,7 @@ import com.example.logifitappp.enums.SleepProcessingStatusEnum
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
 import com.example.logifitappp.ui.components.cards.InformationCard
-import com.example.logifitappp.ui.components.graphics.SimpleHorizontalStackBar
+import com.example.logifitappp.ui.components.graphics.SimpleHorizontalStackBarChart
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -52,21 +51,20 @@ fun SleepDetailView(
         item {
             SleepDetailHeader(sleepDetailViewModel)
             Spacer(Modifier.height(16.dp))
-            SimpleHorizontalStackBar(dataSet = sleepDetailViewModel.state.sleepDataSet)
+            SimpleHorizontalStackBarChart(dataSet = sleepDetailViewModel.state.sleepDataSet)
         }
 
         if (!sleepDetailViewModel.state.sleepDataSet.empty) {
             item {
                 Column(Modifier.padding(vertical = 16.dp, horizontal = 12.dp)) {
-                    Box (Modifier.padding(horizontal = 12.dp)) {
-                        IconText(
-                            icon = Icons.Default.InsertChartOutlined,
-                            iconColor = MaterialTheme.colorScheme.onSurface,
-                            iconSize = 24.dp,
-                            label = stringResource(R.string.summary),
-                            labelTypography = MaterialTheme.typography.displayMedium,
-                        )
-                    }
+                    IconText(
+                        icon = Icons.Default.InsertChartOutlined,
+                        iconColor = MaterialTheme.colorScheme.onSurface,
+                        iconSize = 24.dp,
+                        label = stringResource(R.string.summary),
+                        labelTypography = MaterialTheme.typography.displayMedium,
+                        modifier = Modifier.padding(horizontal = 12.dp)
+                    )
 
                     Spacer(Modifier.height(8.dp))
 

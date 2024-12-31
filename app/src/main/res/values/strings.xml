@@ -3,10 +3,13 @@
     <string name="administrator">Administrator</string>
     <string name="and">and</string>
     <string name="app_name">Logifit Plus</string>
+    <string name="asleep_measurement_legend">Measurement during sleep</string>
     <string name="authenticating">Authenticating</string>
     <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
     <string name="authentication_required">Authentication required</string>
+    <string name="average_spo2">Average SpO2</string>
+    <string name="awake_measurement_legend">Measurement during activity</string>
     <string name="awaken">Awaken</string>
     <string name="band_theft_alert">It has been detected that you are trying to synchronize your sleep report using a device already used by another user, which constitutes a serious irregularity. This violates the company\'s rules. We remind you that any attempt at fraud will be sanctioned by supervision.</string>
     <string name="band_theft_message">The data for this band has already been registered by another user</string>
@@ -14,11 +17,13 @@
     <string name="between_40_and_100">Between 40 and 100</string>
     <string name="biking">Biking</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
+    <string name="busy_task_fetch_spo2_data">Fetching SpO2 data</string>
     <string name="button_active_bluetooth">Activate Bluetooth</string>
     <string name="button_add">Add</string>
     <string name="button_authenticate_band">Authenticate band</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_close">Close</string>
+    <string name="button_connect_smart_band">Connect my Smart Band</string>
     <string name="button_device_detection">Devices detection</string>
     <string name="button_download_certificate">Download certificate</string>
     <string name="button_erase">Erase</string>
@@ -28,9 +33,11 @@
     <string name="button_ok">OK</string>
     <string name="button_register">Register</string>
     <string name="button_send">Send</string>
+    <string name="button_send_to_logifit">Send to Logifit</string>
     <string name="button_share">Share</string>
     <string name="button_start_detection">Start detection</string>
     <string name="button_stop_detection">Stop detection</string>
+    <string name="button_sync_sleep">Sync my sleep</string>
     <string name="button_try_again">Try again</string>
     <string name="change_location_modal_message">Remember this is very important for your sleep analysis</string>
     <string name="change_location_modal_subtitle">Select your location in your company</string>
@@ -50,6 +57,7 @@
     <string name="description">Description</string>
     <string name="device_unknown_name">(unknown)</string>
     <string name="disabled_bluetooth_message">Bluetooth is disabled</string>
+    <string name="disabled_location_message">Location is disabled</string>
     <string name="disconnected">Disconnected</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
@@ -98,6 +106,7 @@
     <string name="lack_of_sleep_synchronization_with_logifit_message">Lack of sleep synchronization with Logifit</string>
     <string name="last_extraction_data">Last extraction</string>
     <string name="last_sending_to_logifit">Last sending to Logifit</string>
+    <string name="last_recorded_measurement">Last recorded measurement</string>
     <string name="less_than_1_hour">Less than 1 hour</string>
     <string name="less_than_15_percentage">Less than 15%</string>
     <string name="less_than_20_minutes">Less than 20 minutes</string>
@@ -183,6 +192,10 @@
     <string name="sleep_sync_message_missing">Sleep information has not yet been extracted from the Smart Band</string>
     <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
     <string name="sleep_time">Sleep Time</string>
+    <string name="spo2">SpO2</string>
+    <string name="spo2_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="spo2_detail_chart_title">SpO2</string>
+    <string name="spo2_detail_title">My SpO2</string>
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
     <string name="steps_detail_chart_chip_message">%1$s steps</string>
     <string name="steps_detail_chart_title">My steps</string>
@@ -219,6 +232,7 @@
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
     <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
     <string name="wearable_pairing_title">Pairing with %1$s</string>
+    <string name="wearable_profile_disconnecting_message">Your Smart Band is disconnected from the application, please connect to be able to register your information</string>
     <string name="without_role">Without role</string>
     <string name="yes">Yes </string>
 

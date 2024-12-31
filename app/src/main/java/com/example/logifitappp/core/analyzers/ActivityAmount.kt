@@ -1,6 +1,6 @@
 package com.example.logifitappp.core.analyzers
 
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import java.util.Date
 import kotlin.math.max
 

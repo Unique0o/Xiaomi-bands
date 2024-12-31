@@ -1,6 +1,5 @@
 package com.example.logifitappp.ui.screens.sleep_detail
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +16,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.core.analyzers.ActivityAmountList
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.DurationUtils
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
@@ -34,15 +33,14 @@ fun SleepDetailNaps(
 
     if (sleeps.isEmpty()) return
 
-    Box (Modifier.padding(horizontal = 12.dp)) {
-        IconText(
-            icon = Icons.Default.Bed,
-            iconColor = MaterialTheme.colorScheme.onSurface,
-            iconSize = 24.dp,
-            label = stringResource(R.string.naps),
-            labelTypography = MaterialTheme.typography.displayMedium,
-        )
-    }
+    IconText(
+        icon = Icons.Default.Bed,
+        iconColor = MaterialTheme.colorScheme.onSurface,
+        iconSize = 24.dp,
+        label = stringResource(R.string.naps),
+        labelTypography = MaterialTheme.typography.displayMedium,
+        modifier = Modifier.padding(horizontal = 12.dp)
+    )
 
     sleeps.forEach {
         Spacer(Modifier.height(8.dp))

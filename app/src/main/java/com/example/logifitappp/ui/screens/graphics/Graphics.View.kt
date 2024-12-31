@@ -57,6 +57,7 @@ fun GraphicsView(
 
         item {
             Spacer(Modifier.height(16.dp))
+
             GraphicsSleepChart(
                 dataSet = graphicsViewModel.state.sleepDataSet,
                 shift = graphicsViewModel.state.shift,
@@ -70,9 +71,26 @@ fun GraphicsView(
             GraphicsStepsChart(dataset = graphicsViewModel.state.stepsDataset)
         }
 
-        item {
-            Spacer(Modifier.height(16.dp))
-            GraphicsHeartRateChart(dataset = graphicsViewModel.state.heartRateDataSet)
+        graphicsViewModel.state.wearable?.getWearableCoordinator()?.let {
+            if (it.supportsHeartRateMeasurement()) {
+                item {
+                    Spacer(Modifier.height(16.dp))
+                    GraphicsHeartRateChart(dataset = graphicsViewModel.state.heartRateDataSet)
+                }
+            }
+
+            if (it.supportsSpo2()) {
+                item {
+                    Spacer(Modifier.height(16.dp))
+
+                    GraphicsSpo2Chart(
+                        dataset = graphicsViewModel.state.spo2DataSet,
+                        navigation = navigation,
+                        wearable = graphicsViewModel.state.wearable
+                    )
+                }
+            }
         }
+
     }
 }

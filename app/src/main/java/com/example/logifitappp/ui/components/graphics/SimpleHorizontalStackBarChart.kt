@@ -17,7 +17,7 @@ import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.data.BarData
 
 @Composable
-fun SimpleHorizontalStackBar(
+fun SimpleHorizontalStackBarChart(
     modifier: Modifier =  Modifier.fillMaxWidth().height(40.dp),
     dataSet: SleepBarDataSet
 ) {

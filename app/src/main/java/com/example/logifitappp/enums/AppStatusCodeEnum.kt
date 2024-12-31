@@ -26,6 +26,10 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))
     }),
 
+    DISABLED_LOCATION(314, R.string.disabled_location_message, false, {
+        Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))
+    }),
+
     DOWNLOADING_TRAINING_CERTIFICATE(308, R.string.downloading_training_certificate_message, true, { Loader() }),
     DOWNLOADING_EVALUATION_RESULT(305, R.string.downloading_evaluation_result_message, true, { Loader() }),
     EXTRACTING_WEARABLE_INFORMATION(6, R.string.extracting_wearable_information_message, true, { AnimatedWearableDataExtraction() }),

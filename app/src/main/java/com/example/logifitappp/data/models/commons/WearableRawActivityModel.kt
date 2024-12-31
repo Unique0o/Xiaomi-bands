@@ -1,7 +1,7 @@
 package com.example.logifitappp.data.models.commons
 
 import com.example.logifitappp.core.wearebles.WearableActivityProvider
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 
 open class WearableRawActivityModel(
     open var heartRate: Int,

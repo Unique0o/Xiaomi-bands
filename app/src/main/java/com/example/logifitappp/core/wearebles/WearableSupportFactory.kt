@@ -3,17 +3,21 @@ package com.example.logifitappp.core.wearebles
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.location.LocationManager
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.services.WearableSupportService
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.SynchronizationProcessingException
 
 class WearableSupportFactory(private val context: Context) {
-    private var adapter: BluetoothAdapter? = null
+    private val bluetoothAdapter: BluetoothAdapter?
+    private val locationManager: LocationManager?
 
     init {
         val manager = App.context.getSystemService(BluetoothManager::class.java)
-        adapter = manager.adapter
+
+        bluetoothAdapter = manager.adapter
+        locationManager = App.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
     }
 
     @Synchronized
@@ -27,27 +31,42 @@ class WearableSupportFactory(private val context: Context) {
             else ->  createClassNameWearableSupport(wearable)
         }
 
+        checkLocationAvailability()
         checkBluetoothAvailability()
 
         return wearableSupport
     }
 
     private fun checkBluetoothAvailability() {
-        if (adapter == null) {
+        if (bluetoothAdapter == null) {
             println("Bluetooth not supported")
             throw SynchronizationProcessingException(AppStatusCodeEnum.FAILED_WEARABLE_PAIRING)
-        } else if (!adapter!!.isEnabled) {
+        } else if (!bluetoothAdapter.isEnabled) {
             println("Bluetooth is disabled")
             throw SynchronizationProcessingException(AppStatusCodeEnum.DISABLED_BLUETOOTH)
         }
     }
 
+    private fun checkLocationAvailability() {
+        if (locationManager == null) {
+            println("Location not supported")
+            throw SynchronizationProcessingException(AppStatusCodeEnum.FAILED_WEARABLE_PAIRING)
+        } else {
+            val isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+            if (!isEnabled) {
+                println("Location is disabled")
+                throw SynchronizationProcessingException(AppStatusCodeEnum.DISABLED_LOCATION)
+            }
+        }
+    }
+
     private fun createBluetoothWearableSupport(wearable: Wearable): WearableSupport? {
-        if (adapter == null || !adapter!!.isEnabled) return null
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled) return null
 
         try {
             val support = createServiceWearableSupport(wearable)
-            support.setContext(wearable, adapter!!, context)
+            support.setContext(wearable, bluetoothAdapter, context)
 
             return support
         } catch (e: Exception) {

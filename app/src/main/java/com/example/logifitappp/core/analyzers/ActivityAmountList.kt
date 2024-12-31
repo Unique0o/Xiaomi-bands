@@ -1,7 +1,8 @@
 package com.example.logifitappp.core.analyzers
 
 import com.example.logifitappp.core.utils.DateTimeUtils
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.core.utils.MathUtils
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.SleepModel
 import kotlin.math.abs
 import kotlin.math.max
@@ -19,8 +20,8 @@ class ActivityAmountList {
     var totalSleepMinutes = 0L
     var totalSteps = 0L
 
-    var remSleepPercentage: Long = 0
-        get() = if (totalSleepMinutes == 0L) 0 else totalRemSleepMinutes * 100 / totalSleepMinutes
+    var remSleepPercentage: Float = 0f
+        get() = MathUtils.percentage(totalRemSleepMinutes, totalSleepMinutes)
         private set
 
     fun add(amount: ActivityAmount) {

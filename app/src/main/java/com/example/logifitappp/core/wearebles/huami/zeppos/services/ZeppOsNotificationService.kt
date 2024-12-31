@@ -1,6 +1,7 @@
 package com.example.logifitappp.core.wearebles.huami.zeppos.services
 
 import androidx.annotation.RequiresPermission
+import com.example.logifitappp.BuildConfig
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.events.WearableCallControlEvent
 import com.example.logifitappp.core.events.WearableNotificationControlEvent
@@ -12,7 +13,6 @@ import com.example.logifitappp.core.utils.StringUtils
 import com.example.logifitappp.core.wearebles.huami.zeppos.ZeppOsSupport
 import com.example.logifitappp.enums.CallSpecTypeEnum
 import com.example.logifitappp.enums.NotificationSpecTypeEnum
-import com.github.mikephil.charting.BuildConfig
 import org.apache.commons.lang3.ArrayUtils
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer

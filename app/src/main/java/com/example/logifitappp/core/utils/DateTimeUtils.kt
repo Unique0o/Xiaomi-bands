@@ -38,6 +38,16 @@ object DateTimeUtils {
         return (hours * 3600) + (minutes * 60) + seconds
     }
 
+    fun getStartOfTodayAndTomorrow(calendar: Calendar): Pair<Long, Long> {
+        val start = setTime(calendar, "00:00:00").apply {
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val end = (start.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
+
+        return Pair(start.timeInMillis, end.timeInMillis)
+    }
+
     fun parse(date: String, format: String): Date? = SimpleDateFormat(format, Locale.US).parse(date)
 
     fun parse(time: Long, format: String, timeZone: TimeZone): String {

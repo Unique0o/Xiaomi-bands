@@ -4,7 +4,7 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.RangeMapUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableActivityProvider
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.XiaomiRawActivityModel
 import com.example.logifitappp.data.models.XiaomiSleepStageModel
 
@@ -90,7 +90,7 @@ class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityPr
                 val stage = stagesMap.get(ts)
 
                 if (stage != null && stage != WearableActivityTypeEnum.UNKNOWN) {
-                    it.type = stage.getCode()
+                    it.type = stage.code
 
                     when (stage) {
                         WearableActivityTypeEnum.DEEP_SLEEP -> it.intensity = 20

@@ -2,7 +2,7 @@ package com.example.logifitappp.core.wearebles.huami.miband.miband2
 
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableActivityTypeEnum
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.core.wearebles.huami.HuamiConst
 import com.example.logifitappp.core.wearebles.huami.miband.AbstractMiBandActivityProvider
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel

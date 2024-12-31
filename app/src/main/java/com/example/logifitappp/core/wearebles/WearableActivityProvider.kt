@@ -5,6 +5,7 @@ import android.icu.util.GregorianCalendar
 import com.example.logifitappp.data.dao.commons.WearableRawActivityDao
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
+import com.example.logifitappp.enums.WearableActivityTypeEnum
 
 abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
     fun findLastRawActivity(): T? {

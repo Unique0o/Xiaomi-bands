@@ -1,8 +1,24 @@
 package com.example.logifitappp.core.utils
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
+import androidx.annotation.ColorInt
 import androidx.compose.ui.graphics.Color
 
 object ColorUtils {
+    fun getGradientColor(@ColorInt colors: IntArray): Int {
+        val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colors)
+
+        val bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+
+        gradientDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        gradientDrawable.draw(canvas)
+
+        return bitmap.getPixel(0, 0)
+    }
+
     fun toColor(hex: String): Color {
         val cleanHex = hex.removePrefix("#")
 

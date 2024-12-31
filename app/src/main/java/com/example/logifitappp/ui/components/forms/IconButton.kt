@@ -35,11 +35,11 @@ fun IconButton(
     enabled : Boolean = true
 ) {
     FloatingActionButton(
-        onClick = onClick,
-        modifier = modifier,
-        shape = RoundedCornerShape(size = cornerRadius),
         containerColor = backgroundColor,
         elevation = elevation,
+        modifier = modifier,
+        onClick = onClick,
+        shape = RoundedCornerShape(size = cornerRadius),
     ) {
         Row(
             modifier = Modifier.padding(horizontal = horizontalPadding, verticalPadding),

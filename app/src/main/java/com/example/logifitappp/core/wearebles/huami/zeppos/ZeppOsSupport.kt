@@ -200,7 +200,7 @@ class ZeppOsSupport: HuamiSupport() {
             BleTypeConversionsUtils.fromUint8(timestamp.get(Calendar.HOUR_OF_DAY)),
             BleTypeConversionsUtils.fromUint8(timestamp.get(Calendar.MINUTE)),
             BleTypeConversionsUtils.fromUint8(timestamp.get(Calendar.SECOND)),
-            BleTypeConversionsUtils.fromUint8(timestamp.get(Calendar.DAY_OF_WEEK)),
+            BleTypeConversionsUtils.fromUint8(timestamp.get(Calendar.DAY_OF_WEEK) - 1),
             0x00,
             0x08,
             BleTypeConversionsUtils.mapTimeZone(timestamp, BleTypeConversionsUtils.TZ_FLAG_INCLUDE_DST_IN_TZ)

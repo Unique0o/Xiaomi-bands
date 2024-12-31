@@ -11,6 +11,8 @@ import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
 abstract class HuamiCoordinator: AbstractBleWearableCoordinator() {
     override fun getActivityProvider(wearable: Wearable): WearableActivityProvider<HuamiExtendedRawActivityModel> = MiBand2ActivityProvider(wearable)
 
+    override fun getSpo2SampleProvider(wearable: Wearable) = HuamiSpo2SampleProvider(wearable)
+
     override fun suggestUnbindBeforePair() = false
 
     override fun supportsActivityDataFetching() = true

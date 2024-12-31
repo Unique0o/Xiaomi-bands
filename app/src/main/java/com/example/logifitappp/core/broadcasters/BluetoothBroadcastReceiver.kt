@@ -17,6 +17,8 @@ import java.util.Objects
 
 abstract class BluetoothBroadcastReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
+        println("bluetooth broadcast receiver ${intent.action}")
+
         when (Objects.requireNonNull(intent.action)) {
             BluetoothAdapter.ACTION_DISCOVERY_STARTED -> println("ACTION_DISCOVERY_STARTED")
 
