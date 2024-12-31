@@ -7,7 +7,7 @@ data class FetchLessonResponse(
     val duration: Long,
     val id: Int,
     @SerializedName("image_url") val image: String?,
-    @SerializedName("lesson_completed") val isCompleted: Boolean,
+    @SerializedName("lesson_completed") var isCompleted: Boolean,
     val name: String,
     @SerializedName("video_url") val video: String
 )

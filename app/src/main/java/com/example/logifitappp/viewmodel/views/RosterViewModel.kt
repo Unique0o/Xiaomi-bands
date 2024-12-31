@@ -34,7 +34,7 @@ class RosterViewModel @AssistedInject constructor(
     }
 
     fun checkForNewRoster() {
-        if (App.preferences.getPreferences().getBoolean(AppPreferences.NEW_ROSTER, false)) {
+        if (App.preferences.getBoolean(AppPreferences.NEW_ROSTER, false)) {
             state = state.copy(roster = null)
             fetchRosterPage()
         }

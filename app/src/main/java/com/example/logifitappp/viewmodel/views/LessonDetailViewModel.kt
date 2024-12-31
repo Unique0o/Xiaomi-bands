@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logifitappp.core.App
+import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.MarkAsCompletedLessonRequest
 import com.example.logifitappp.domain.service.LessonService
@@ -62,16 +64,21 @@ class LessonDetailViewModel @AssistedInject constructor(
     fun markAsCompleted() {
         if (user == null) return
 
+        if (state.lesson == null) return
+
         viewModelScope.launch {
             try {
                 state = state.copy(isMarkingAsCompleted = true)
 
                 val response = lessonService.markAsCompleted(MarkAsCompletedLessonRequest(
-                    lesson_id = lessonId,
+                    lesson_id = state.lesson!!.id,
                     user_id = user.id
                 ))
 
-                if (response) state = state.copy(lesson = state.lesson?.copy(isCompleted = true))
+                if (response) {
+                    state = state.copy(lesson = state.lesson?.copy(isCompleted = true))
+                    App.preferences.addIntToSet(AppPreferences.COMPLETED_LESSON_IDS, state.lesson!!.id)
+                }
 
                 state = state.copy(hasMarkAsCompletedFailed = false)
             } catch (e: Exception) {

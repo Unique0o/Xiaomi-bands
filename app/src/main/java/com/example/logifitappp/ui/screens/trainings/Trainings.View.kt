@@ -23,6 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.navigation.routes.MainRoutes
@@ -40,6 +42,10 @@ fun TrainingsView(
     navigation: NavHostController
 ) {
     val trainingsViewModel: TrainingsViewModel = hiltViewModel()
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        trainingsViewModel.updateProgress()
+    }
 
     if (trainingsViewModel.state.isLoading) {
         LoaderPage()

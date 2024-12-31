@@ -40,8 +40,11 @@ open class AppPreferences(prefs: SharedPreferences): Preferences(prefs) {
     }
 
     companion object {
+        const val COMPLETED_LESSON_IDS = "completed_lesson_ids"
+        const val COMPLETED_TRAINING = "completed_training"
         const val DEVICE_AUTO_RECONNECT = "prefs_key_device_auto_reconnect"
         const val FIREBASE_NOTIFICATION_TOKEN = "firebase_notification_token"
+        const val IN_PROGRESS_TRAINING = "in_progress_training"
         const val LAST_DEVICE_ADDRESSES = "last_device_addresses"
         const val NEW_NOTIFICATION = "new_notification"
         const val NEW_ROSTER = "new_roster"

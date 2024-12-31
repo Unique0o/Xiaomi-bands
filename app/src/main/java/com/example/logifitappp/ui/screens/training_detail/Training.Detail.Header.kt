@@ -61,6 +61,7 @@ fun TrainingDetailHeader(
             IconButton(
                 backgroundColor = Green298,
                 icon = Icons.Default.Download,
+                modifier = Modifier.fillMaxWidth(),
                 onClick = { trainingDetailViewModel.downloadCertificate() },
                 text = stringResource(R.string.button_download_certificate)
             )

@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.data.remote.dto.response.FetchLessonResponse
 import com.example.logifitappp.domain.service.LessonService
 import com.example.logifitappp.domain.service.TrainingService
@@ -78,5 +79,34 @@ class TrainingDetailViewModel @AssistedInject constructor(
 
     fun stopProcessing() {
         state = state.copy(isDownloadingCertificate = false)
+    }
+
+    fun updateProgress() {
+        if (state.training == null) return
+
+        val completedLessonIds = App.preferences.getIntSet(AppPreferences.COMPLETED_LESSON_IDS, setOf())
+
+        completedLessonIds.forEach { lessonId ->
+            val lesson = lessons.find { it.id == lessonId }
+
+            if (lesson?.isCompleted == false) {
+                lesson.isCompleted = true
+
+                val completedLessonsCount = state.training!!.completedLessonsCount + 1
+                val percentage = completedLessonsCount * 100f / state.training!!.lessonsCount
+
+                state = state.copy(training = state.training?.copy(completedLessonsCount = completedLessonsCount, progressPercentage = percentage))
+            }
+        }
+
+        val edit = App.preferences.getPreferences().edit()
+        edit.remove(AppPreferences.COMPLETED_LESSON_IDS)
+
+        if (state.training!!.progressPercentage == 100f) edit.putInt(AppPreferences.COMPLETED_TRAINING, state.training!!.id)
+        else if (state.training!!.progressPercentage != null && state.training!!.progressPercentage!! > 0f) {
+            edit.putInt(AppPreferences.IN_PROGRESS_TRAINING, state.training!!.id)
+        }
+
+        edit.apply()
     }
 }

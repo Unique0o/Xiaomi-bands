@@ -74,7 +74,7 @@ fun MainNavigation(
         composable<MainRoutes.TrainingsDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.TrainingsDetail>()
 
-            TrainingDetailView(navBackStackEntry, navigation, arguments.trainingId)
+            TrainingDetailView(navigation, arguments.trainingId)
         }
 
         composable<MainRoutes.WearableProfile> { navBackStackEntry ->

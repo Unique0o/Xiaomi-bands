@@ -1,6 +1,7 @@
 package com.example.logifitappp.core
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.util.Calendar
@@ -10,6 +11,19 @@ import java.util.Locale
 open class Preferences(prefs: SharedPreferences) {
     init {
         preferences = prefs
+    }
+
+    fun addIntToSet(key: String, value: Int) {
+        val set = HashSet(getIntSet(key, setOf()))
+
+        if (set.contains(value)) return
+
+        set.add(value)
+
+        preferences
+            .edit()
+            .putString(key, Gson().toJson(set.toTypedArray()))
+            .apply()
     }
 
     fun getBoolean(key: String, default: Boolean): Boolean {
@@ -44,8 +58,20 @@ open class Preferences(prefs: SharedPreferences) {
         }
     }
 
-    fun getLocalTime(key: String, defaultValue: String?): LocalTime {
-        val time = getString(key, defaultValue!!)
+    fun getIntSet(key: String, default: Set<Int>): Set<Int> {
+        try {
+            val serializedList = getString(key, "")
+
+            if (serializedList.isEmpty()) return default
+
+            return Gson().fromJson(serializedList, Array<Int>::class.java).toSet()
+        } catch (e: Exception) {
+            return default
+        }
+    }
+
+    fun getLocalTime(key: String, defaultValue: String): LocalTime {
+        val time = getString(key, defaultValue)
 
         val df = SimpleDateFormat("HH:mm", Locale.ROOT)
 
@@ -60,7 +86,7 @@ open class Preferences(prefs: SharedPreferences) {
                 calendar.get(Calendar.MINUTE),
                 0
             )
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             println("Error reading localtime preference value: $key; returning default current time $e")
         }
 

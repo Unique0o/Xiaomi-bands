@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
@@ -26,7 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavHostController
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -45,13 +45,16 @@ import com.google.gson.Gson
 
 @Composable
 fun TrainingDetailView(
-    backStackEntry: NavBackStackEntry,
     navigation: NavHostController,
     trainingId: Int
 ) {
     val gson = Gson()
     val trainingDetailViewModel = hiltViewModel<TrainingDetailViewModel, TrainingDetailViewModel.TrainingDetailViewModelFactory>{
         it.create(trainingId)
+    }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        trainingDetailViewModel.updateProgress()
     }
 
     if (trainingDetailViewModel.state.isFetchingTrainingInformation) {

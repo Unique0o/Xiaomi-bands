@@ -11,11 +11,11 @@ data class FetchTrainingResponse(
     @SerializedName("lessons_count") val lessonsCount: Int,
     val name: String,
     @SerializedName("completed_lessons_count") val completedLessonsCount: Int,
-    @SerializedName("completion_percentage") val progressPercentage: Float?
+    @SerializedName("completion_percentage") var progressPercentage: Float?
 ) {
     fun getStatusPair(): Pair<Int, ChipStatusEnum>? = when {
         progressPercentage == 100f -> Pair(R.string.completed, ChipStatusEnum.SUCCESS)
-        progressPercentage != null && progressPercentage > 0 -> Pair(R.string.in_progress, ChipStatusEnum.WARNING)
+        progressPercentage != null && progressPercentage!! > 0 -> Pair(R.string.in_progress, ChipStatusEnum.WARNING)
         else -> null
     }
 }
