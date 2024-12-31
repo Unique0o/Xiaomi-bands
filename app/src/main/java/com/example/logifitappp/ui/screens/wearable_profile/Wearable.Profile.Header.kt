@@ -18,6 +18,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
+import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.viewmodel.views.WearableProfileViewModel
 
 @Composable
@@ -75,5 +76,15 @@ fun WearableProfileHeader(
             labelColor = MaterialTheme.colorScheme.surfaceTint,
             labelTypography = MaterialTheme.typography.bodyMedium
         )
+
+        if (wearableProfileViewModel.state.wearable?.isConnected() != true) {
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                color = MaterialTheme.colorScheme.surfaceTint,
+                text = stringResource(R.string.wearable_profile_disconnecting_message),
+                typography = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }
