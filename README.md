@@ -59,6 +59,8 @@ The process of obtaining and using data follows this flow:
 3. Data parsing (XiaomiDataParser)
 4. Storage in local database
 5. Application use (visualization, analysis, etc.)
+![Screenshot 2025-01-06 at 11 33 19 AM](https://github.com/user-attachments/assets/c6f4cb91-353f-4d98-8081-23592a5d5ca3)
+
 
 ### Interaction with Other Parts of the App
 
