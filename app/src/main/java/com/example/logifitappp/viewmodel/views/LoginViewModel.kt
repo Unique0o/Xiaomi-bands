@@ -7,8 +7,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
-import com.example.logifitappp.core.App.Companion.context
-import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.core.App
 import com.example.logifitappp.domain.usecase.LoginUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
@@ -31,10 +30,8 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    fun login(onLoginSuccess: (UserModel) -> Unit) {
-        if (!validateInputsNotEmpty()) {
-            return
-        }
+    fun login() {
+        if (!validateInputsNotEmpty()) return
 
         viewModelScope.launch {
             try {
@@ -43,7 +40,9 @@ class LoginViewModel @Inject constructor(
                     status = AppStatusCodeEnum.LOGGING_IN
                 )
 
-                onLoginSuccess(loginUseCase(state.username.text, state.password.text))
+                loginUseCase(state.username.text, state.password.text)
+                App.signalReloadAuthenticatedUser()
+
                 clearForm()
             } catch (e: HttpConsumerException) {
                 state = state.copy(
@@ -76,8 +75,8 @@ class LoginViewModel @Inject constructor(
         val isPasswordValid = state.password.text.isNotBlank()
 
         state = state.copy(
-            usernameError = if (isUsernameValid) null else context.getString(R.string.username_validation_error_message),
-            passwordError = if (isPasswordValid) null else context.getString(R.string.password_validation_error_message)
+            usernameError = if (isUsernameValid) null else App.context.getString(R.string.username_validation_error_message),
+            passwordError = if (isPasswordValid) null else App.context.getString(R.string.password_validation_error_message)
         )
 
         return isUsernameValid && isPasswordValid

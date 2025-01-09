@@ -27,6 +27,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ScanEvent
 import com.example.logifitappp.core.bluetooth.ScanEventProcessor
@@ -163,11 +164,19 @@ class WearableDetectionViewModel @AssistedInject constructor(
 
         wearables.firstOrNull()?.let {
             if (it.isInitialized()) {
-                App.getWearablePreferences(it.getAddress()!!).getPreferences()
+                App.getWearablePreferences(it.getAddress()!!)
+                    .getPreferences()
                     .edit()
                     .putBoolean(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION, true)
                     .apply()
 
+                App.preferences
+                    .getPreferences()
+                    .edit()
+                    .putBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, false)
+                    .apply()
+
+                App.signalRequestAdditionalInformation(true)
                 navigation.navigate(MainRoutes.SplashScreen)
             }
         }

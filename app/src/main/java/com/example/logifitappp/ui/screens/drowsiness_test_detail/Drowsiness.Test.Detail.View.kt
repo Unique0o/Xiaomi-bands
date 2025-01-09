@@ -11,8 +11,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.logifitappp.ui.components.Loader
 import com.example.logifitappp.ui.components.modals.MessageModal
+import com.example.logifitappp.ui.components.pages.LoaderPage
 import com.example.logifitappp.ui.components.pages.NoInternetPage
 import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.DrowsinessTestDetailViewModel
@@ -47,7 +47,7 @@ fun DrowsinessTestDetailView(
     }
 
     if (drowsinessTestDetailViewModel.state.isFetchingTestDetail) {
-        Loader()
+        LoaderPage()
         return
     }
 

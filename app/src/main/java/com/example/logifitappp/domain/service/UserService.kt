@@ -10,7 +10,11 @@ import com.example.logifitappp.exceptions.HttpConsumerException
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
+import java.io.File
 import javax.inject.Inject
 
 class UserService @Inject constructor(private val userRepository: UserRepository) {
@@ -83,8 +87,7 @@ class UserService @Inject constructor(private val userRepository: UserRepository
 
             if (!response.isSuccessful) {
                 response.errorBody()?.let {
-                    val errorResponse =
-                        Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
+                    val errorResponse = Gson().fromJson(it.string(), GeneralErrorResponse::class.java)
 
                     if (errorResponse.code == 403) throw HttpConsumerException(AppStatusCodeEnum.FAILED_ROSTER_INFORMATION_STORAGE)
 
@@ -98,6 +101,19 @@ class UserService @Inject constructor(private val userRepository: UserRepository
                 ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         } catch (e: HttpConsumerException) {
             throw e
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun uploadProfilePhoto(userId: Int, file: File) = withContext(Dispatchers.IO) {
+        val requestBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData("image_profile", file.name, requestBody)
+
+        try {
+            val response = userRepository.updateProfilePhoto(userId, body)
+
+            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         } catch (e: Exception) {
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         }

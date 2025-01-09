@@ -24,6 +24,7 @@ fun IconText(
     label: String,
     labelColor: Color = MaterialTheme.colorScheme.onSurface,
     labelTypography: TextStyle = MaterialTheme.typography.bodyLarge,
+    spaceBetween: Dp = 4.dp
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -36,7 +37,7 @@ fun IconText(
             modifier = Modifier.size(iconSize)
         )
 
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(spaceBetween))
 
         Text(
             color = labelColor,

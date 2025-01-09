@@ -8,6 +8,8 @@ import com.example.logifitappp.data.remote.dto.requests.StoreRosterRequest
 import com.example.logifitappp.data.remote.dto.response.FetchUserInformationResponse
 import com.example.logifitappp.data.remote.dto.response.FetchUserViewDetailsResponse
 import com.example.logifitappp.data.remote.dto.response.GeneralResponse
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -32,4 +34,8 @@ interface UserApi {
 
     @POST("api/users/roster")
     suspend fun storeRosterInformation(@Body storeRosterRequest: StoreRosterRequest): Response<GeneralResponse>
+
+    @Multipart
+    @POST("api/update_profile/{id}")
+    suspend fun updateProfilePhoto(@Path("id") userId: Int, @Part photo: MultipartBody.Part): Response<ResponseBody>
 }

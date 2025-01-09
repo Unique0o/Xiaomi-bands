@@ -21,40 +21,12 @@ class UpdateTenantInformationUseCase @Inject constructor(
         val evaluations = evaluationService.fetchResults()
 
         App.database.tenantDao().store(tenant.toTenantModel())
-
-        App.database.groupDao().apply {
-            delete(tenant.data.id)
-            store(*tenant.getGroupModels().toTypedArray())
-        }
-
-        App.database.locationDao().apply {
-            delete(tenant.data.id)
-            store(*tenant.getLocationModels().toTypedArray())
-        }
-
-        App.database.rosterLocationDao().apply {
-            delete(tenant.data.id)
-            store(*tenant.getRosterLocationModels().toTypedArray())
-        }
-
-        App.database.shiftDao().apply {
-            delete(tenant.data.id)
-            store(*tenant.getShiftModels().toTypedArray())
-        }
-
-        App.database.sleepConditionDao().apply {
-            delete(tenant.data.id)
-            store(*tenant.getSleepConditionModels().toTypedArray())
-        }
-
-        App.database.restParameterDao().apply {
-            delete(tenant.data.id)
-            store(*restParameters.toTypedArray())
-        }
-
-        App.database.evaluationResultDao().apply {
-            delete()
-            store(*evaluations.toTypedArray())
-        }
+        App.database.groupDao().replaceAll(tenant.data.id, *tenant.getGroupModels().toTypedArray())
+        App.database.locationDao().replaceAll(tenant.data.id, *tenant.getLocationModels().toTypedArray())
+        App.database.rosterLocationDao().replaceAll(tenant.data.id, *tenant.getRosterLocationModels().toTypedArray())
+        App.database.shiftDao().replaceAll(tenant.data.id, *tenant.getShiftModels().toTypedArray())
+        App.database.sleepConditionDao().replaceAll(tenant.data.id, *tenant.getSleepConditionModels().toTypedArray())
+        App.database.restParameterDao().replaceAll(tenant.data.id, *restParameters.toTypedArray())
+        App.database.evaluationResultDao().replaceAll(*evaluations.toTypedArray())
     }
 }

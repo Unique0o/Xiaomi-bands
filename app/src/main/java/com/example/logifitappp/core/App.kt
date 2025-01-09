@@ -47,9 +47,11 @@ class App: Application() {
     companion object {
         const val ACTION_NEW_DATA = "com.info.logifit.pe.action.new_data"
         const val ACTION_QUIT = "com.info.logifit.pe.action.quit"
+        const val EXTRA_SHOULD_REQUEST_ADDITIONAL_INFORMATION = "should_request_additional_information"
         const val FAILED_CONNECTION_WITH_WEARABLE = "com.info.logifit.pe.failed.connection.with.wearable"
         const val NOTIFICATION = "com.info.logifit.pe.notification"
         const val RELOAD_AUTHENTICATED_USER = "com.info.logifit.pe.reload.authenticated.user"
+        const val REQUEST_ADDITIONAL_INFORMATION = "com.info.logifit.pe.request.additional.information"
 
         lateinit var context: App
             private set
@@ -110,6 +112,13 @@ class App: Application() {
 
         fun signalReloadAuthenticatedUser() {
             LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(RELOAD_AUTHENTICATED_USER))
+        }
+
+        fun signalRequestAdditionalInformation(should: Boolean) {
+            val intent = Intent(REQUEST_ADDITIONAL_INFORMATION)
+            intent.putExtra(EXTRA_SHOULD_REQUEST_ADDITIONAL_INFORMATION, should)
+
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
         }
 
         fun supportsBluetoothLE() = context.packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)

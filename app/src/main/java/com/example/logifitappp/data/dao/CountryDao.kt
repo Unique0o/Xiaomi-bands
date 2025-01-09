@@ -1,26 +1,25 @@
 package com.example.logifitappp.data.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Upsert
 import com.example.logifitappp.data.models.CountryModel
 
 @Dao
 abstract class CountryDao {
     @Query("SELECT * FROM countries")
-    abstract fun getAllCountries(): List<CountryModel>
+    abstract fun all(): List<CountryModel>
 
     @Query("DELETE FROM countries")
-    abstract fun clearAllCountries()
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertCountries(countries: List<CountryModel>)
+    abstract fun delete()
 
     @Transaction
-    open suspend fun replaceAll(countries: List<CountryModel>) {
-        clearAllCountries()
-        insertCountries(countries)
+    open suspend fun replaceAll(vararg countries: CountryModel) {
+        delete()
+        store(*countries)
     }
+
+    @Upsert
+    abstract fun store(vararg countries: CountryModel)
 }

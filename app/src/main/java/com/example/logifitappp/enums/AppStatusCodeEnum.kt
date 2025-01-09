@@ -35,6 +35,7 @@ enum class AppStatusCodeEnum(
     EXTRACTING_WEARABLE_INFORMATION(6, R.string.extracting_wearable_information_message, true, { AnimatedWearableDataExtraction() }),
     FAILED_EVALUATION_STORE(313, R.string.failed_evaluation_store_message, false, { AnimatedErrorSignal() }),
     FAILED_PASSWORD_RECOVERY(16, R.string.failed_password_recovery_message, false, { AnimatedErrorSignal() }),
+    FAILED_PROFILE_PHOTO_STORE(317, R.string.failed_profile_photo_store_message, false, { AnimatedErrorSignal() }),
     FAILED_ROSTER_INFORMATION_STORAGE(309, R.string.failed_roster_information_storage_message, false, { AnimatedErrorSignal() }),
 
     FAILED_WEARABLE_PAIRING(18, R.string.failed_wearable_pairing_message, false, {
@@ -80,7 +81,9 @@ enum class AppStatusCodeEnum(
     REQUIRE_SUBSCRIPTION_UPGRADING(402, R.string.require_subscription_upgrading_message, false, { AnimatedWarningSignal() }),
     SERVER_ERROR(500, R.string.server_error_message, false),
     SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT(310, R.string.sharing_without_synchronization_to_logifit_message, false, { AnimatedWarningSignal() }),
+    STORING_ADDITIONAL_INFORMATION(315, R.string.storing_additional_information_message, true, { Loader() }),
     STORING_EVALUATION(312, R.string.storing_evaluation_message, true, { Loader() }),
+    STORING_PROFILE_PHOTO(316, R.string.storing_profile_photo_message, true, { Loader() }),
     STORING_ROSTER_INFORMATION(306, R.string.storing_roster_information_message, true, { Loader() }),
     SUCCESSFUL_PASSWORD_RECOVERY(119, R.string.successful_password_recovery_message, false, { AnimatedSuccessSignal() }),
     SUCCESSFUL_ROSTER_INFORMATION_STORAGE(307, R.string.successful_roster_information_storage_message, false, { AnimatedSuccessSignal() }),

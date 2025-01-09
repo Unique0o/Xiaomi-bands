@@ -34,6 +34,7 @@ fun OutlinedTextField(
     error: String? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOption: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+    leadingComponent: @Composable (() -> Unit)? = null,
     leadingIcon: ImageVector? = null,
     onValueChange: (TextFieldValue) -> Unit,
     placeholder: String,
@@ -91,7 +92,7 @@ fun OutlinedTextField(
                 modifier = Modifier.size(16.dp),
                 contentDescription = null
             )
-        }) else null,
+        }) else leadingComponent,
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),

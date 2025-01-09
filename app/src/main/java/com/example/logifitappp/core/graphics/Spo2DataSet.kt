@@ -43,7 +43,7 @@ class Spo2DataSet(amounts: Spo2AmountList) {
 
                 entries.add(when {
                     amount.minSpo2 == amount.maxSpo2 && amount.maxSpo2 != 0 -> {
-                        BarEntry(index.toFloat(), floatArrayOf(amount.minSpo2.toFloat(), 5f))
+                        BarEntry(index.toFloat(), floatArrayOf(amount.minSpo2.toFloat(), 1.5f))
                     }
                     else -> BarEntry(index.toFloat(), floatArrayOf(amount.minSpo2.toFloat(), (amount.maxSpo2 - amount.minSpo2).toFloat()))
                 })

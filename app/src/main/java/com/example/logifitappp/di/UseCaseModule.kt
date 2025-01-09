@@ -1,7 +1,9 @@
 package com.example.logifitappp.di
 
 import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.domain.service.DocumentTypeService
 import com.example.logifitappp.domain.service.EvaluationService
+import com.example.logifitappp.domain.service.LocationService
 import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
 import com.example.logifitappp.domain.service.TrainingService
@@ -22,6 +24,7 @@ import com.example.logifitappp.domain.usecase.ShareEvaluationDetailUseCase
 import com.example.logifitappp.domain.usecase.ShareTrainingCertificateUseCase
 import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.domain.usecase.UpdateNotificationTokenUseCase
+import com.example.logifitappp.domain.usecase.UpdatePersonalInformationFormDataUseCase
 import com.example.logifitappp.domain.usecase.UpdateTenantInformationUseCase
 import dagger.Module
 import dagger.Provides
@@ -114,12 +117,19 @@ object UseCaseModule {
 
     @Provides
     @Singleton
+    fun provideUpdateNotificationTokenUseCase(authService: AuthService) = UpdateNotificationTokenUseCase(authService)
+
+    @Provides
+    @Singleton
+    fun provideUpdatePersonalInformationFormDataUseCase(
+        documentTypeService: DocumentTypeService,
+        locationService: LocationService
+    ) = UpdatePersonalInformationFormDataUseCase(documentTypeService, locationService)
+
+    @Provides
+    @Singleton
     fun provideUpdateTenantInformationUseCase(
         tenantService: TenantService,
         evaluationService: EvaluationService
     ) = UpdateTenantInformationUseCase(tenantService, evaluationService)
-
-    @Provides
-    @Singleton
-    fun provideUpdateNotificationTokenUseCase(authService: AuthService) = UpdateNotificationTokenUseCase(authService)
 }

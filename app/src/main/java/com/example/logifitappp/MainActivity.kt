@@ -29,9 +29,14 @@ class MainActivity: ComponentActivity() {
     private val appViewModel: AppViewModel by viewModels()
 
     private val broadCasterReceiver = object: BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action) {
+        override fun onReceive(context: Context?, intent: Intent) {
+            when (intent.action) {
                 App.RELOAD_AUTHENTICATED_USER -> appViewModel.reloadAuthenticatedUser()
+
+                App.REQUEST_ADDITIONAL_INFORMATION -> {
+                    val shouldRequest = intent.getBooleanExtra(App.EXTRA_SHOULD_REQUEST_ADDITIONAL_INFORMATION, false)
+                    appViewModel.updateShouldItOmitAdditionalInformation(!shouldRequest)
+                }
             }
         }
     }
@@ -58,12 +63,13 @@ class MainActivity: ComponentActivity() {
 
         val filter = IntentFilter()
         filter.addAction(App.RELOAD_AUTHENTICATED_USER)
+        filter.addAction(App.REQUEST_ADDITIONAL_INFORMATION)
         LocalBroadcastManager.getInstance(this).registerReceiver(broadCasterReceiver, filter)
     }
 
     override fun onStop() {
-        super.onStop()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadCasterReceiver)
+        super.onStop()
     }
 
     private fun retrieveFCMToken() {

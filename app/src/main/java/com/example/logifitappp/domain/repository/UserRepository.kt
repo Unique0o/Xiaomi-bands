@@ -8,6 +8,8 @@ import com.example.logifitappp.data.remote.dto.response.FetchUserViewDetailsResp
 import com.example.logifitappp.data.remote.dto.response.GeneralResponse
 import com.example.logifitappp.data.remote.dto.response.StoreOccupationalInformationResponse
 import com.example.logifitappp.data.remote.dto.response.StorePersonalInformationResponse
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 interface UserRepository {
@@ -20,4 +22,6 @@ interface UserRepository {
     suspend fun storePersonalInformation(userId: Int, request: StorePersonalInformationRequest): Response<StorePersonalInformationResponse>
 
     suspend fun storeRosterInformation(request: StoreRosterRequest): Response<GeneralResponse>
+
+    suspend fun updateProfilePhoto(userId: Int, photo: MultipartBody.Part): Response<ResponseBody>
 }

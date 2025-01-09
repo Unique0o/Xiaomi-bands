@@ -4,17 +4,14 @@ import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -91,8 +88,8 @@ fun SideBarContent(
         Spacer(Modifier.height(12.dp))
 
         sideBarViewModel.options.map {
-            Row(
-                Modifier
+            IconText(
+                modifier = Modifier
                     .clickable {
                         scope.launch {
                             it.action(drawerState, navigation) {
@@ -110,23 +107,14 @@ fun SideBarContent(
                     }
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    contentDescription = null,
-                    imageVector = it.icon,
-                    modifier = Modifier.size(18.dp),
-                    tint = MaterialTheme.colorScheme.outlineVariant
-                )
-
-                Spacer(Modifier.width(8.dp))
-
-                Text(
-                    color = MaterialTheme.colorScheme.outlineVariant,
-                    text = stringResource(it.label),
-                    typography = MaterialTheme.typography.labelLarge
-                )
-            }
+                icon = it.icon,
+                iconColor = MaterialTheme.colorScheme.outlineVariant,
+                iconSize = 18.dp,
+                label = stringResource(it.label),
+                labelColor = MaterialTheme.colorScheme.outlineVariant,
+                labelTypography = MaterialTheme.typography.labelLarge,
+                spaceBetween = 8.dp
+            )
         }
     }
 }

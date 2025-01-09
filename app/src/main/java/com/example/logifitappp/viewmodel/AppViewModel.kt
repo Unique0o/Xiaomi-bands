@@ -24,6 +24,9 @@ class AppViewModel @Inject constructor(
     var isLoading by mutableStateOf(true)
         private set
 
+    var shouldItOmitAdditionalInformation by mutableStateOf(true)
+        private set
+
     var shouldItOmitOnboarding by mutableStateOf(false)
         private set
 
@@ -46,8 +49,6 @@ class AppViewModel @Inject constructor(
                 user = try {
                     loadAppWhenAnUserIsAuthenticatedUseCase(authenticatedUser.accessToken)
                 } catch (e: HttpConsumerException) {
-                    e.printStackTrace()
-
                     when (e.getStatus()) {
                         AppStatusCodeEnum.INACTIVE_USER -> run inactiveUser@ {
                             val inactiveUser = authenticatedUser.copy(isActive = false)
@@ -77,16 +78,13 @@ class AppViewModel @Inject constructor(
     private fun load() {
         tenant = user?.tenantId?.let { App.database.tenantDao().find(it) }
         shouldItOmitOnboarding = App.preferences.getBoolean(AppPreferences.OMIT_ONBOARDING, false)
+        shouldItOmitAdditionalInformation = App.preferences.getBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, true)
     }
 
     fun logout() {
         App.database.userDao().logout()
         user = null
         tenant = null
-    }
-
-    fun reloadAuthenticatedUser() {
-        user = App.database.userDao().getLoggedIn()
     }
 
     fun omitOnboarding() {
@@ -99,8 +97,12 @@ class AppViewModel @Inject constructor(
         shouldItOmitOnboarding = true
     }
 
-    fun updateUser(user: UserModel) {
-        this.user = user
-        this.tenant = App.database.tenantDao().find(user.tenantId)
+    fun reloadAuthenticatedUser() {
+        user = App.database.userDao().getLoggedIn()
+        tenant = user?.let { App.database.tenantDao().find(it.tenantId) }
+    }
+
+    fun updateShouldItOmitAdditionalInformation(shouldOmit: Boolean) {
+        shouldItOmitAdditionalInformation = shouldOmit
     }
 }

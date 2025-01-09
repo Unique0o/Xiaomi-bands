@@ -1,8 +1,8 @@
 package com.example.logifitappp.domain.repository
 
-import com.example.logifitappp.data.remote.dto.response.DocumentTypeResponse
+import com.example.logifitappp.data.remote.dto.response.FetchDocumentTypeResponse
 import retrofit2.Response
 
 interface DocumentTypeRepository {
-    suspend fun all(): Response<DocumentTypeResponse>
+    suspend fun all(): Response<FetchDocumentTypeResponse>
 }

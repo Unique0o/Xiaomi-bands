@@ -1,8 +1,10 @@
 package com.example.logifitappp.di
 
 import com.example.logifitappp.domain.repository.AuthRepository
+import com.example.logifitappp.domain.repository.DocumentTypeRepository
 import com.example.logifitappp.domain.repository.EvaluationRepository
 import com.example.logifitappp.domain.repository.LessonRepository
+import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.NotificationRepository
 import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.domain.repository.TenantRepository
@@ -10,8 +12,10 @@ import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.domain.service.AuthService
+import com.example.logifitappp.domain.service.DocumentTypeService
 import com.example.logifitappp.domain.service.EvaluationService
 import com.example.logifitappp.domain.service.LessonService
+import com.example.logifitappp.domain.service.LocationService
 import com.example.logifitappp.domain.service.NotificationService
 import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
@@ -33,11 +37,19 @@ object ServiceModule {
 
     @Provides
     @Singleton
+    fun provideDocumentTypeService(documentTypeRepository: DocumentTypeRepository) = DocumentTypeService(documentTypeRepository)
+
+    @Provides
+    @Singleton
     fun provideEvaluationService(evaluationRepository: EvaluationRepository) = EvaluationService(evaluationRepository)
 
     @Provides
     @Singleton
     fun provideLessonService(lessonRepository: LessonRepository) = LessonService(lessonRepository)
+
+    @Provides
+    @Singleton
+    fun provideLocationService(locationRepository: LocationRepository) = LocationService(locationRepository)
 
     @Provides
     @Singleton

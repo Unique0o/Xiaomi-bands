@@ -20,12 +20,10 @@ import com.example.logifitappp.ui.components.Link
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.LoginViewModel
 
 @Composable
 fun LoginView(
-    appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
     val loginViewModel: LoginViewModel = hiltViewModel()
@@ -56,11 +54,7 @@ fun LoginView(
         LoginForm(
             loginViewModel = loginViewModel,
             modifier = Modifier.padding(top = 24.dp),
-            onSubmit = {
-                loginViewModel.login {
-                    appViewModel.updateUser(it)
-                }
-            }
+            onSubmit = { loginViewModel.login() }
         )
 
         Spacer(modifier = Modifier.weight(1f))

@@ -1,13 +1,12 @@
 package com.example.logifitappp.domain.repository
 
-
-import com.example.logifitappp.data.remote.dto.response.CountryResponse
-import com.example.logifitappp.data.remote.dto.response.DepartmentResponse
-import com.example.logifitappp.data.remote.dto.response.ProvinceResponse
+import com.example.logifitappp.data.remote.dto.response.FetchCountryResponse
+import com.example.logifitappp.data.remote.dto.response.FetchDepartmentResponse
+import com.example.logifitappp.data.remote.dto.response.FetchProvinceResponse
 import retrofit2.Response
 
 interface LocationRepository {
-    suspend fun fetchCountries(): Response<List<CountryResponse>>
-    suspend fun fetchDepartments(): Response<List<DepartmentResponse>>
-    suspend fun fetchProvinces(): Response<List<ProvinceResponse>>
+    suspend fun fetchCountries(): Response<FetchCountryResponse>
+    suspend fun fetchDepartments(): Response<FetchDepartmentResponse>
+    suspend fun fetchProvinces(): Response<FetchProvinceResponse>
 }

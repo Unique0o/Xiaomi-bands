@@ -15,7 +15,7 @@ import com.example.logifitappp.R
 fun ProgressiveImage(
     modifier: Modifier = Modifier,
     @DrawableRes default: Int = R.drawable.ic_placeholder_image,
-    url: String?
+    url: Any?
 ) {
     val painter = rememberAsyncImagePainter(
         model = url ?: default,

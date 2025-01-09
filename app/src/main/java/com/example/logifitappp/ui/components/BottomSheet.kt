@@ -38,7 +38,7 @@ fun BottomSheet(
     val closeBottomSheet = {
         coroutineScope.launch {
             modalBottomSheetState.hide()
-        }
+        }.invokeOnCompletion { onDismissRequest() }
     }
 
     if (!isVisible) return

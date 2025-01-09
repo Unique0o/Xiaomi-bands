@@ -1,8 +1,10 @@
 package com.example.logifitappp.di
 
 import com.example.logifitappp.data.remote.api.AuthApi
+import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
 import com.example.logifitappp.data.remote.api.LessonApi
+import com.example.logifitappp.data.remote.api.LocationApi
 import com.example.logifitappp.data.remote.api.NotificationApi
 import com.example.logifitappp.data.remote.api.SleepApi
 import com.example.logifitappp.data.remote.api.TenantApi
@@ -10,8 +12,10 @@ import com.example.logifitappp.data.remote.api.TrainingApi
 import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.remote.api.WearableApi
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
+import com.example.logifitappp.data.repository.DocumentTypeRepositoryImpl
 import com.example.logifitappp.data.repository.EvaluationRepositoryImpl
 import com.example.logifitappp.data.repository.LessonRepositoryImpl
+import com.example.logifitappp.data.repository.LocationRepositoryImpl
 import com.example.logifitappp.data.repository.NotificationRepositoryImpl
 import com.example.logifitappp.data.repository.SleepRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
@@ -19,8 +23,10 @@ import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.data.repository.WearableRepositoryImpl
 import com.example.logifitappp.domain.repository.AuthRepository
+import com.example.logifitappp.domain.repository.DocumentTypeRepository
 import com.example.logifitappp.domain.repository.EvaluationRepository
 import com.example.logifitappp.domain.repository.LessonRepository
+import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.NotificationRepository
 import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.domain.repository.TenantRepository
@@ -44,6 +50,14 @@ object RepositoryModule {
     @Singleton
     fun provideAuthRepositoryImpl(authApi: AuthApi) = AuthRepositoryImpl(authApi)
 
+    @Singleton
+    @Provides
+    fun provideDocumentTypeRepository(documentTypeRepositoryImpl: DocumentTypeRepositoryImpl): DocumentTypeRepository = documentTypeRepositoryImpl
+
+    @Singleton
+    @Provides
+    fun provideDocumentTypeRepositoryImpl(documentTypeApi: DocumentTypeApi) = DocumentTypeRepositoryImpl(documentTypeApi)
+
     @Provides
     @Singleton
     fun provideEvaluationRepository(evaluationRepositoryImpl: EvaluationRepositoryImpl): EvaluationRepository = evaluationRepositoryImpl
@@ -59,6 +73,14 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideLessonRepositoryImpl(lessonApi: LessonApi) = LessonRepositoryImpl(lessonApi)
+
+    @Singleton
+    @Provides
+    fun provideLocationRepository(locationRepositoryImpl: LocationRepositoryImpl): LocationRepository = locationRepositoryImpl
+
+    @Singleton
+    @Provides
+    fun provideLocationRepositoryImp(locationApi: LocationApi)= LocationRepositoryImpl(locationApi)
 
     @Provides
     @Singleton
