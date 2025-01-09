@@ -8,35 +8,20 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
 class HeartRateDataSet(amounts: HeartRateAmountList) {
-    var averageHeartRate: Float
-        private set
+    val averageHeartRate = amounts.averageHeartRate
+    val latestMeasuredHeartRate = amounts.latestMeasuredHeartRate
 
-    var empty = amounts.latestMeasuredHeartRate == 0L
-        private set
+    val empty = amounts.latestMeasuredHeartRate == 0L
 
     var self: BarDataSet
         private set
 
-    var latestMeasuredHeartRate: Long
-        private set
+    val maxMeasuredHeartRate = amounts.maxMeasuredHeartRate
+    val minMeasuredHeartRate = amounts.minMeasuredHeartRate
 
-    var maxMeasuredHeartRate: Long
-        private set
-
-    var minMeasuredHeartRate: Long
-        private set
-
-    var yMax: Float
-        private set
+    val yMax = if (empty) 10f else amounts.maxMeasuredHeartRate.toFloat()
 
     init {
-        averageHeartRate = amounts.averageHeartRate
-        latestMeasuredHeartRate = amounts.latestMeasuredHeartRate
-        maxMeasuredHeartRate = amounts.maxMeasuredHeartRate
-        minMeasuredHeartRate = amounts.minMeasuredHeartRate
-
-        yMax = if (empty) 10f else amounts.maxMeasuredHeartRate.toFloat()
-
         val entries = mutableListOf<BarEntry>()
 
         if (empty) {

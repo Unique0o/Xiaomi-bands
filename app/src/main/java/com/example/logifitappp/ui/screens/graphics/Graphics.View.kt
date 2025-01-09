@@ -80,7 +80,12 @@ fun GraphicsView(
             if (it.supportsHeartRateMeasurement()) {
                 item {
                     Spacer(Modifier.height(16.dp))
-                    GraphicsHeartRateChart(dataset = graphicsViewModel.state.heartRateDataSet)
+
+                    GraphicsHeartRateChart(
+                        dataset = graphicsViewModel.state.heartRateDataSet,
+                        navigation = navigation,
+                        wearable = graphicsViewModel.state.wearable
+                    )
                 }
             }
 

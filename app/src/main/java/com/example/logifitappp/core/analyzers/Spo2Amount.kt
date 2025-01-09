@@ -14,7 +14,6 @@ class Spo2Amount {
     var maxSpo2 = 0
 
     fun addMode(mode: Spo2ModeEnum) {
-        println("mode: $mode")
         modes.add(mode)
     }
 

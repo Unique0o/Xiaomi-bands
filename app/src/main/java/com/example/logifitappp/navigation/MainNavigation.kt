@@ -11,6 +11,7 @@ import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.drowsiness_test_detail.DrowsinessTestDetailView
 import com.example.logifitappp.ui.screens.drowsiness_tests.DrowsinessTestsView
+import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
@@ -32,8 +33,6 @@ fun MainNavigation(
     appViewModel: AppViewModel,
     navigation: NavHostController = rememberNavController()
 ) {
-    val gson = Gson()
-
     NavHost(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
@@ -54,7 +53,14 @@ fun MainNavigation(
             DrowsinessTestDetailView(appViewModel, navigation, arguments.drowsinessTestId)
         }
 
+        composable<MainRoutes.HeartRateDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.HeartRateDetail>()
+
+            HeartRateDetailView(navigation, arguments.mac)
+        }
+
         composable<MainRoutes.LessonDetail> { navBackStackEntry ->
+            val gson = Gson()
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
 
             LessonDetailView(appViewModel, navigation, arguments.lessonId, gson.fromJson(arguments.serializedLessonIds, Array<Int>::class.java))

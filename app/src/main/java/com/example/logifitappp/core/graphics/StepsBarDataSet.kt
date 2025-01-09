@@ -7,22 +7,16 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
 class StepsBarDataSet(amounts: StepsAmountList) {
-    var empty = amounts.totalSteps == 0L
-        private set
+    val empty = amounts.totalSteps == 0L
 
     var self: BarDataSet
         private set
 
-    var totalSteps: Long
-        private set
+    val totalSteps = amounts.totalSteps
 
-    var yMax: Float
-        private set
+    val yMax = if (empty) 10f else amounts.maxStepsAmount.toFloat()
 
     init {
-        totalSteps = amounts.totalSteps
-        yMax = if (empty) 10f else amounts.maxStepsAmount.toFloat()
-
         val entries = mutableListOf<BarEntry>()
 
         if (empty) {

@@ -14,6 +14,9 @@ sealed class MainRoutes {
     data object HealthInformation: MainRoutes()
 
     @Serializable
+    data class HeartRateDetail(val mac: String): MainRoutes()
+
+    @Serializable
     data class LessonDetail(val lessonId: Int, val serializedLessonIds: String): MainRoutes()
 
     @Serializable

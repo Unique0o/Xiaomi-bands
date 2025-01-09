@@ -14,8 +14,9 @@ class HeartRateAmountList {
     fun add(amount: HeartRateAmount) {
         amounts.add(amount)
 
-        maxMeasuredHeartRate = max(amount.maxHeartRate, maxMeasuredHeartRate)
-        minMeasuredHeartRate = min(amount.minHeartRate, minMeasuredHeartRate)
+        if (amount.maxHeartRate in 10..250) maxMeasuredHeartRate = max(amount.maxHeartRate, maxMeasuredHeartRate)
+
+        if (amount.minHeartRate in 10..250) minMeasuredHeartRate = min(amount.minHeartRate, minMeasuredHeartRate)
     }
 
     fun getList() = amounts

@@ -24,8 +24,6 @@ class Spo2Analyzer {
                 setEndDate(endTime)
 
                 for (sample in filteredSamples) {
-                    println("spo2 sample: $sample")
-
                     addMode(Spo2ModeEnum.fromName(sample.modeName))
                     setSpo2(sample.spo2)
 

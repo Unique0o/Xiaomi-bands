@@ -9,6 +9,7 @@
     <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
     <string name="authentication_required">Authentication required</string>
+    <string name="average_heart_rate">Average heart rate</string>
     <string name="average_spo2">Average SpO2</string>
     <string name="awake_measurement_legend">Measurement during activity</string>
     <string name="awaken">Awaken</string>
@@ -115,6 +116,7 @@
     <string name="heart_rate">Heart rate</string>
     <string name="heart_rate_detail_chart_subtitle">Last recorded measurement</string>
     <string name="heart_rate_detail_chart_title">My heart rate</string>
+    <string name="heart_rate_detail_title">My heart rate</string>
     <string name="help_already_stored_message">A help request has already been made for today</string>
     <string name="honduras">Honduras</string>
     <string name="identity_document_validation_error_message">You must insert an identity document</string>
@@ -354,8 +356,6 @@
     <string name="my_sleep">My sleep</string>
     <string name="information_between">Information between:</string>
     <string name="my_steps">My steps</string>
-
-    <string name="average_heart_rate">Average heart rate</string>
 
     <!-- CardSleepSession -->
     <string name="content_description_sleep">Sleep</string>
