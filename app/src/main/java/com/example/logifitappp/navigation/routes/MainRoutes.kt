@@ -70,9 +70,6 @@ sealed class MainRoutes {
     data object Profile : MainRoutes()
 
     @Serializable
-    data object AdditionalInformationPicture : MainRoutes()
-
-    @Serializable
     data object AppLanguage : MainRoutes()
 
     @Serializable
