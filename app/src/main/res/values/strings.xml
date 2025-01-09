@@ -19,6 +19,7 @@
     <string name="biking">Biking</string>
     <string name="bolivia">Bolivia</string>
     <string name="brazil">Brazil</string>
+    <string name="burned_calories">Burned calories</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
     <string name="busy_task_fetch_spo2_data">Fetching SpO2 data</string>
     <string name="button_active_bluetooth">Activate Bluetooth</string>
@@ -239,6 +240,9 @@
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
     <string name="steps_detail_chart_chip_message">%1$s steps</string>
     <string name="steps_detail_chart_title">My steps</string>
+    <string name="steps_detail_subtitle">%1$s steps</string>
+    <string name="steps_detail_title">My steps</string>
+    <string name="steps_taken">Steps taken</string>
     <string name="storing_additional_information_message">Personal information is being stored, please wait...</string>
     <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
@@ -259,6 +263,7 @@
     <string name="training_progress_label">Progress %1$s</string>
     <string name="trainings_title">Trainings</string>
     <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
+    <string name="traveled_distance">Traveled distance</string>
     <string name="unauthorized_screen_message">You are currently unable to use Logifit features. Please contact your administrator.</string>
     <string name="unauthorized_screen_title">Unauthorized user</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
@@ -349,7 +354,6 @@
     <string name="my_sleep">My sleep</string>
     <string name="information_between">Information between:</string>
     <string name="my_steps">My steps</string>
-    <string name="steps_taken">Steps taken</string>
 
     <string name="average_heart_rate">Average heart rate</string>
 

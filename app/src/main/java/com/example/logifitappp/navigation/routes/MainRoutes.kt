@@ -47,6 +47,9 @@ sealed class MainRoutes {
     data class Spo2Detail(val mac: String): MainRoutes()
 
     @Serializable
+    data class StepsDetail(val mac: String): MainRoutes()
+
+    @Serializable
     data object Trainings: MainRoutes()
 
     @Serializable

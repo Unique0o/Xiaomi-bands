@@ -5,27 +5,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.graphics.Spo2DataSet
+import com.example.logifitappp.core.analyzers.StepsAnalyzer
+import com.example.logifitappp.core.graphics.StepsBarDataSet
 import com.example.logifitappp.core.utils.DateTimeUtils
-import com.example.logifitappp.domain.usecase.FetchSpo2SampleAmountsBetweenDayUseCase
-import com.example.logifitappp.viewmodel.states.Spo2DetailState
+import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
+import com.example.logifitappp.viewmodel.states.StepsDetailState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-@HiltViewModel(assistedFactory = Spo2DetailViewModel.Spo2DetailViewModelFactory::class)
-class Spo2DetailViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = StepsDetailViewModel.StepsDetailViewModelFactory::class)
+class StepsDetailViewModel @AssistedInject constructor(
     @Assisted private val mac: String,
-    private val fetchSpo2SampleAmountsBetweenDayUseCase: FetchSpo2SampleAmountsBetweenDayUseCase
+    private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase
 ): ViewModel() {
     @AssistedFactory
-    interface Spo2DetailViewModelFactory {
-        fun create(mac: String): Spo2DetailViewModel
+    interface StepsDetailViewModelFactory {
+        fun create(mac: String): StepsDetailViewModel
     }
 
-    var state by mutableStateOf(Spo2DetailState())
+    var state by mutableStateOf(StepsDetailState())
         private set
 
     init {
@@ -41,11 +43,12 @@ class Spo2DetailViewModel @AssistedInject constructor(
     private fun fetchInformation() {
         if (state.wearable == null) return
 
-        val spo2DataSet = Spo2DataSet(fetchSpo2SampleAmountsBetweenDayUseCase(state.wearable!!, state.date))
+        val activitiesFromToday = fetchActivityAmountsBetweenDayUseCase(state.wearable!!, state.date)
+        val stepsDataSet = StepsBarDataSet(StepsAnalyzer().calculate(activitiesFromToday, state.date, 30))
 
         state = state.copy(
-            spo2DataSet = spo2DataSet,
-            subtitle = if (spo2DataSet.empty) "N/A" else "${spo2DataSet.minMeasuredSpo2}% - ${spo2DataSet.maxMeasuredSpo2}%"
+            stepsDataSet = stepsDataSet,
+            subtitle = if (stepsDataSet.empty) "N/A" else App.context.getString(R.string.steps_detail_subtitle, stepsDataSet.totalSteps.toString())
         )
     }
 

@@ -19,6 +19,7 @@ import com.example.logifitappp.ui.screens.roster_recording.RosterRecordingView
 import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
 import com.example.logifitappp.ui.screens.sleep_detail.SleepDetailView
 import com.example.logifitappp.ui.screens.spo2_detail.Spo2DetailView
+import com.example.logifitappp.ui.screens.steps_detail.StepsDetailView
 import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
 import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
@@ -69,6 +70,12 @@ fun MainNavigation(
             val arguments = navBackStackEntry.toRoute<MainRoutes.Spo2Detail>()
 
             Spo2DetailView(navigation, arguments.mac)
+        }
+
+        composable<MainRoutes.StepsDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.StepsDetail>()
+
+            StepsDetailView(navigation, arguments.mac)
         }
 
         composable<MainRoutes.TrainingsDetail> { navBackStackEntry ->

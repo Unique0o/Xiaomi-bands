@@ -19,6 +19,7 @@
     <string name="biking">Ciclismo</string>
     <string name="bolivia">Bolivia</string>
     <string name="brazil">Brasil</string>
+    <string name="burned_calories">Calorías quemadas</string>
     <string name="busy_task_fetch_activity_data">Recuperando datos de actividad</string>
     <string name="busy_task_fetch_spo2_data">Obtener los datos de SpO2</string>
     <string name="button_active_bluetooth">Activar Bluetooth</string>
@@ -239,6 +240,9 @@
     <string name="state_to_drive_not_found_message">Al Parecer tienes otro estado diferente, consulte con su administrador.</string>
     <string name="steps_detail_chart_chip_message">%1$s pasos</string>
     <string name="steps_detail_chart_title">Mis pasos</string>
+    <string name="steps_detail_subtitle">%1$s pasos</string>
+    <string name="steps_detail_title">Mis pasos</string>
+    <string name="steps_taken">Pasos realizados</string>
     <string name="storing_additional_information_message">La información personal está siendo almacenada, espere por favor...</string>
     <string name="storing_evaluation_message">El test está siendo procesado para generar su condición de somnolencia...</string>
     <string name="storing_profile_photo_message">La foto de perfil está siendo almacenada, espere por favor...</string>
@@ -259,6 +263,7 @@
     <string name="training_progress_label">Progreso %1$s</string>
     <string name="trainings_title">Capacitaciones</string>
     <string name="transferring_wearable_information_message">Ahora se está realizando el envío de los datos a la plataforma de Logifit</string>
+    <string name="traveled_distance">Distancia recorrida</string>
     <string name="unauthorized_screen_message">Actualmente no puede utilizar las funciones de Logifit. Favor de contactarse con el administrador.</string>
     <string name="unauthorized_screen_title">Usuario no authorizado</string>
     <string name="unbind_before_pair_message">Este dispositivo ya está vinculado en los ajustes de Android, lo que puede hacer que el emparejamiento falle en algunos dispositivos. Si no se puede añadir el dispositivo, elimínelo de los ajustes de Android y vuelva a intentarlo.</string>
@@ -348,7 +353,6 @@
     <string name="my_sleep">Mi sueño</string>
     <string name="information_between">Información entre:</string>
     <string name="my_steps">Mis pasos"</string>
-    <string name="steps_taken">Pasos realizados</string>
     <string name="average_heart_rate">Ritmo cardiaco promedio</string>
 
     // CardSleepSession

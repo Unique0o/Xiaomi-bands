@@ -21,8 +21,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.Instant
-import java.time.ZoneId
 
 @HiltViewModel(assistedFactory = SleepDetailViewModel.SleepDetailViewModelFactory::class)
 class SleepDetailViewModel @AssistedInject constructor(
@@ -81,16 +79,7 @@ class SleepDetailViewModel @AssistedInject constructor(
     fun handleChangeDateInMillis(timeInMillis: Long?) {
         val calendar = Calendar.getInstance()
 
-        if (timeInMillis != null) {
-            val instant = Instant.ofEpochMilli(timeInMillis)
-            val systemZone = ZoneId.systemDefault()
-            val zonedDateTime = instant.atZone(systemZone)
-
-            /*val timeZone = TimeZone.getDefault()
-            val offset = timeZone.getOffset(timeInMillis)*/
-
-            calendar.timeInMillis = zonedDateTime.toInstant().toEpochMilli()
-        }
+        timeInMillis?.let { calendar.timeInMillis = it }
 
         state = state.copy(
             canGoToNextDay = checkIfCanGoToNext(calendar),

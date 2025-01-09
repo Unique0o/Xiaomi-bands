@@ -1,13 +1,13 @@
-package com.example.logifitappp.ui.screens.spo2_detail
+package com.example.logifitappp.ui.screens.steps_detail
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BubbleChart
 import androidx.compose.material.icons.filled.InsertChartOutlined
-import androidx.compose.material.icons.filled.WifiTethering
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.Route
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.core.utils.StepsUtils
 import com.example.logifitappp.enums.ChipStatusEnum
 import com.example.logifitappp.ui.components.Chip
 import com.example.logifitappp.ui.components.IconText
@@ -23,14 +24,14 @@ import com.example.logifitappp.ui.components.cards.InformationCard
 import com.example.logifitappp.ui.components.graphics.VerticalBarChart
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.ScrollablePage
-import com.example.logifitappp.viewmodel.views.Spo2DetailViewModel
+import com.example.logifitappp.viewmodel.views.StepsDetailViewModel
 
 @Composable
-fun Spo2DetailView(
+fun StepsDetailView(
     navigation: NavHostController,
     mac: String
 ) {
-    val spo2DetailViewModel = hiltViewModel<Spo2DetailViewModel, Spo2DetailViewModel.Spo2DetailViewModelFactory>{
+    val stepsDetailViewModel = hiltViewModel<StepsDetailViewModel, StepsDetailViewModel.StepsDetailViewModelFactory> {
         it.create(mac)
     }
 
@@ -38,26 +39,23 @@ fun Spo2DetailView(
         topBar = {
             ColumnStackHeader(
                 navigation = navigation,
-                title = stringResource(id = R.string.spo2_detail_title)
+                title = stringResource(id = R.string.steps_detail_title)
             )
         }
     ) {
         item {
-            Spo2DetailHeader(spo2DetailViewModel)
+            StepsDetailHeader(stepsDetailViewModel)
             Spacer(Modifier.height(16.dp))
 
             VerticalBarChart(
                 Modifier.fillMaxWidth().height(170.dp),
-                dataSet = spo2DetailViewModel.state.spo2DataSet.self,
-                yMax = spo2DetailViewModel.state.spo2DataSet.yMax,
-                yMin = spo2DetailViewModel.state.spo2DataSet.yMin
+                dataSet = stepsDetailViewModel.state.stepsDataSet.self,
+                yMax = stepsDetailViewModel.state.stepsDataSet.yMax
             )
         }
 
-        if (!spo2DetailViewModel.state.spo2DataSet.empty) {
+        if (!stepsDetailViewModel.state.stepsDataSet.empty) {
             item {
-                Spacer(Modifier.height(8.dp))
-                Spo2DetailLegend()
                 Spacer(Modifier.height(16.dp))
 
                 IconText(
@@ -72,11 +70,11 @@ fun Spo2DetailView(
                 Spacer(Modifier.height(8.dp))
 
                 InformationCard(
-                    icon = Icons.Default.WifiTethering,
-                    label = stringResource(R.string.average_spo2),
+                    icon = Icons.Default.LocalFireDepartment,
+                    label = stringResource(R.string.burned_calories),
                     suffixComponent = {
                         Chip(
-                            label = "${spo2DetailViewModel.state.spo2DataSet.averageSpo2}%",
+                            label = "${StepsUtils.calculateKcal(stepsDetailViewModel.state.stepsDataSet.totalSteps)}kcal",
                             labelTypography = MaterialTheme.typography.titleSmall,
                             status = ChipStatusEnum.SUCCESS
                         )
@@ -86,11 +84,11 @@ fun Spo2DetailView(
                 Spacer(Modifier.height(8.dp))
 
                 InformationCard(
-                    icon = Icons.Default.BubbleChart,
-                    label = stringResource(R.string.last_recorded_measurement),
+                    icon = Icons.Default.Route,
+                    label = stringResource(R.string.traveled_distance),
                     suffixComponent = {
                         Chip(
-                            label = "${spo2DetailViewModel.state.spo2DataSet.latestMeasuredSpo2}%",
+                            label = StepsUtils.formatDistance(StepsUtils.calculateDistance(stepsDetailViewModel.state.stepsDataSet.totalSteps)),
                             labelTypography = MaterialTheme.typography.titleSmall,
                             status = ChipStatusEnum.SUCCESS
                         )
