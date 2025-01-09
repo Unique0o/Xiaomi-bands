@@ -1,7 +1,6 @@
 package com.example.logifitappp.ui.components.forms
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,8 +31,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.core.utils.DateTimeUtils
+import com.example.logifitappp.ui.components.Link
 import com.example.logifitappp.ui.components.Text
-import com.example.logifitappp.ui.components.layouts.ModalLayout
 import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,73 +43,79 @@ fun DateRangePicker(
     value: Pair<Long?, Long?>? = null
 ) {
     val state = rememberDateRangePickerState(initialSelectedStartDateMillis = value?.first, initialSelectedEndDateMillis = value?.second)
-    var isVisible by remember { mutableStateOf(false) }
+    var visible by remember { mutableStateOf(false) }
 
-    ModalLayout(
-        onClose = { isVisible = false },
-        onDismissRequest = { isVisible = false },
-        visible = isVisible
-    ) {
-        DateRangePicker(
-            colors = DatePickerDefaults.colors(
-                dayContentColor = MaterialTheme.colorScheme.onSurface,
-                dayInSelectionRangeContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                dayInSelectionRangeContentColor = MaterialTheme.colorScheme.onPrimary,
-                dividerColor = Color.Transparent,
-                todayDateBorderColor = MaterialTheme.colorScheme.primary,
-                selectedDayContentColor = MaterialTheme.colorScheme.onPrimary,
-                selectedDayContainerColor = MaterialTheme.colorScheme.primary,
-                weekdayContentColor = MaterialTheme.colorScheme.surfaceTint
-            ),
-            headline = {
-                Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                    Box(Modifier.weight(1f)) {
-                        (if (state.selectedStartDateMillis != null) state.selectedStartDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } else stringResource(R.string.placeholder_start_date))?.let {
-                            Text(
-                                text = it,
-                                typography = MaterialTheme.typography.headlineLarge
-                            )
-                        }
-                    }
+    if (visible) {
+        DatePickerDialog(
+            confirmButton = {
+                Link(text = stringResource(id = R.string.button_ok)) {
+                    onDateRangeSelected(
+                        DateTimeUtils.transformUtcTimestampToSystemTimestamp(state.selectedStartDateMillis),
+                        DateTimeUtils.transformUtcTimestampToSystemTimestamp(state.selectedEndDateMillis)
+                    )
 
-                    Box(Modifier.weight(1f)) {
-                        (if (state.selectedEndDateMillis != null) state.selectedEndDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } else stringResource(R.string.placeholder_end_date))?.let {
-                            Text(
-                                text = it,
-                                typography = MaterialTheme.typography.headlineLarge
-                            )
-                        }
-                    }
+                    visible = false
                 }
             },
-            modifier = Modifier.fillMaxWidth().height(470.dp),
-            state = state,
-            showModeToggle = false,
-            title = {
-                Text(
-                    color = MaterialTheme.colorScheme.primary,
-                    text = stringResource(R.string.select_date_range_title),
-                    typography = MaterialTheme.typography.displayMedium
-                )
-            }
-        )
-
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
+            dismissButton = {
+                Link(
+                    text = stringResource(id = R.string.button_cancel),
+                    textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                ) {
+                    visible = false
+                }
+            },
+            onDismissRequest = { visible = false },
         ) {
-            Button(
-                onClick = {
-                    onDateRangeSelected(state.selectedStartDateMillis, state.selectedEndDateMillis)
-                    isVisible = false
+            DateRangePicker(
+                colors = DatePickerDefaults.colors(
+                    dayContentColor = MaterialTheme.colorScheme.onSurface,
+                    dayInSelectionRangeContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                    dayInSelectionRangeContentColor = MaterialTheme.colorScheme.onPrimary,
+                    dividerColor = Color.Transparent,
+                    todayDateBorderColor = MaterialTheme.colorScheme.primary,
+                    selectedDayContentColor = MaterialTheme.colorScheme.onPrimary,
+                    selectedDayContainerColor = MaterialTheme.colorScheme.primary,
+                    weekdayContentColor = MaterialTheme.colorScheme.surfaceTint
+                ),
+                headline = {
+                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
+                        Box(Modifier.weight(1f)) {
+                            (if (state.selectedStartDateMillis != null) state.selectedStartDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } else stringResource(R.string.placeholder_start_date))?.let {
+                                Text(
+                                    text = it,
+                                    typography = MaterialTheme.typography.headlineLarge
+                                )
+                            }
+                        }
+
+                        Box(Modifier.weight(1f)) {
+                            (if (state.selectedEndDateMillis != null) state.selectedEndDateMillis?.let { DateTimeUtils.parse(it, "dd/MM/yyyy", TimeZone.getTimeZone("UTC")) } else stringResource(R.string.placeholder_end_date))?.let {
+                                Text(
+                                    text = it,
+                                    typography = MaterialTheme.typography.headlineLarge
+                                )
+                            }
+                        }
+                    }
                 },
-                text = stringResource(id = R.string.button_ok)
+                modifier = Modifier.fillMaxWidth().height(470.dp),
+                state = state,
+                showModeToggle = false,
+                title = {
+                    Text(
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = 24.dp).padding(top = 16.dp),
+                        text = stringResource(R.string.select_date_range_title),
+                        typography = MaterialTheme.typography.displayMedium
+                    )
+                }
             )
         }
     }
 
     Row(
-        Modifier.clickable { isVisible = true },
+        Modifier.clickable { visible = true },
         verticalAlignment = Alignment.CenterVertically
     ) {
         OutlinedTextField(

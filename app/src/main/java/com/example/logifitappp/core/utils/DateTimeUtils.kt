@@ -68,7 +68,7 @@ object DateTimeUtils {
     }
 
     fun setTime(calendar: Calendar, date: String): Calendar {
-        val clonedCalendar =  GregorianCalendar.getInstance().apply {
+        val clonedCalendar = GregorianCalendar.getInstance().apply {
             timeInMillis = calendar.timeInMillis
         }
 
@@ -81,5 +81,13 @@ object DateTimeUtils {
         clonedCalendar.set(GregorianCalendar.SECOND, outdatedCalendar.get(GregorianCalendar.SECOND))
 
         return clonedCalendar
+    }
+
+    fun transformUtcTimestampToSystemTimestamp(utcTimestamp: Long?): Long {
+        if (utcTimestamp == null) return GregorianCalendar.getInstance().timeInMillis
+
+        val date = parse(parse(utcTimestamp, "yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("UTC")), "yyyy-MM-dd HH:mm:ss")
+
+        return date?.time ?: GregorianCalendar.getInstance().timeInMillis
     }
 }
