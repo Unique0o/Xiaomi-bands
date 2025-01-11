@@ -5,8 +5,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class BottomTabRoutes {
     @Serializable
-    data object Graphics : BottomTabRoutes()
+    data object Graphics: BottomTabRoutes()
 
     @Serializable
-    data object Home : BottomTabRoutes()
+    data object Home: BottomTabRoutes()
+
+    @Serializable
+    data object Meditation: BottomTabRoutes()
 }

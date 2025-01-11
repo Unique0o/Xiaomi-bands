@@ -2,6 +2,7 @@ package com.example.logifitappp.di
 
 import android.content.Context
 import com.example.logifitappp.core.App
+import com.example.logifitappp.data.remote.api.AudioApi
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
@@ -72,6 +73,10 @@ object NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    @Provides
+    @Singleton
+    fun provideAudioApi(retrofit: Retrofit): AudioApi = retrofit.create(AudioApi::class.java)
 
     @Provides
     @Singleton

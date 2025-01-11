@@ -30,7 +30,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = GraphicsViewModel.GraphicsViewModelFactory::class)
-class GraphicsViewModel  @AssistedInject constructor(
+class GraphicsViewModel @AssistedInject constructor(
     @Assisted private val user: UserModel?,
     private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,

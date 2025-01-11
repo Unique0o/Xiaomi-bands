@@ -44,6 +44,7 @@ import com.example.logifitappp.navigation.routes.BottomTabRoutes
 import com.example.logifitappp.ui.components.SideBarContent
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.home.HomeView
+import com.example.logifitappp.ui.screens.meditation.MeditationView
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.viewmodel.views.BottomTabScreenViewModel
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -168,6 +169,7 @@ fun BottomTabScreen(
             NavHost(bottomTabNavigation, startDestination = BottomTabRoutes.Home) {
                 composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
+                composable<BottomTabRoutes.Meditation> { MeditationView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
             }
         }
     }

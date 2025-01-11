@@ -1,5 +1,6 @@
 package com.example.logifitappp.di
 
+import com.example.logifitappp.data.remote.api.AudioApi
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
 import com.example.logifitappp.data.remote.api.EvaluationApi
@@ -11,6 +12,7 @@ import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.TrainingApi
 import com.example.logifitappp.data.remote.api.UserApi
 import com.example.logifitappp.data.remote.api.WearableApi
+import com.example.logifitappp.data.repository.AudioRepositoryImpl
 import com.example.logifitappp.data.repository.AuthRepositoryImpl
 import com.example.logifitappp.data.repository.DocumentTypeRepositoryImpl
 import com.example.logifitappp.data.repository.EvaluationRepositoryImpl
@@ -22,6 +24,7 @@ import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
 import com.example.logifitappp.data.repository.UserRepositoryImpl
 import com.example.logifitappp.data.repository.WearableRepositoryImpl
+import com.example.logifitappp.domain.repository.AudioRepository
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.DocumentTypeRepository
 import com.example.logifitappp.domain.repository.EvaluationRepository
@@ -42,6 +45,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+    @Provides
+    @Singleton
+    fun provideAudioRepository(audioRepositoryImpl: AudioRepositoryImpl): AudioRepository = audioRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideAudioRepositoryImpl(audioApi: AudioApi) = AudioRepositoryImpl(audioApi)
+
     @Provides
     @Singleton
     fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository = authRepositoryImpl

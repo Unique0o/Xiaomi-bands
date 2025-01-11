@@ -56,6 +56,8 @@ class BottomTabScreenViewModel @AssistedInject constructor(
                 wearables.firstOrNull()?.let {
                     screens.add(BottomTabScreenEnum.GRAPHICS)
                 }
+
+                screens.add(BottomTabScreenEnum.MEDITATION)
             }
         }
     }
