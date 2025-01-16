@@ -2,11 +2,11 @@ package com.example.logifitappp.core.wearebles.huami
 
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableActivityProvider
+import com.example.logifitappp.core.wearebles.AbstractWearableActivityProvider
 import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
 
-class HuamiExtendedActivityProvider(wearable: Wearable): WearableActivityProvider<HuamiExtendedRawActivityModel>(wearable) {
+class HuamiExtendedActivityProvider(wearable: Wearable): AbstractWearableActivityProvider<HuamiExtendedRawActivityModel>(wearable) {
     override fun getWearableRawActivityDao() = App.database.huamiExtendedRawActivityDao()
 
     override fun getRawActivitiesBetween(from: Long, to: Long): List<HuamiExtendedRawActivityModel> {

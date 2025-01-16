@@ -12,6 +12,8 @@ abstract class XiaomiCoordinator: AbstractBleWearableCoordinator() {
 
     override fun getBondingStyle() = BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY
 
+    override fun getSpo2SampleProvider(wearable: Wearable) = XiaomiSpo2SampleProvider(wearable)
+
     override fun getWearableSupportClass() = XiaomiSupport::class.java
 
     override fun isAuthenticationKeyValid(authenticationKey: String): Boolean {
@@ -29,6 +31,8 @@ abstract class XiaomiCoordinator: AbstractBleWearableCoordinator() {
     override fun supportsHeartRateMeasurement() = true
 
     override fun supportsRemSleep() = true
+
+    override fun supportsSpo2() = true
 
     companion object {
         val AUTH_KEY_PATTERN: Pattern = Pattern.compile("^[0-9]+\$")

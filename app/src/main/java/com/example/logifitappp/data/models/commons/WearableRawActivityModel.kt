@@ -1,6 +1,6 @@
 package com.example.logifitappp.data.models.commons
 
-import com.example.logifitappp.core.wearebles.WearableActivityProvider
+import com.example.logifitappp.core.wearebles.AbstractWearableActivityProvider
 import com.example.logifitappp.enums.WearableActivityTypeEnum
 
 open class WearableRawActivityModel(
@@ -11,7 +11,7 @@ open class WearableRawActivityModel(
     open var type: Int,
     open var wearableId: Int,
 
-    var provider: WearableActivityProvider<out WearableRawActivityModel>? = null
+    var provider: AbstractWearableActivityProvider<out WearableRawActivityModel>? = null
 ) {
     fun getNormalizedIntensity() = provider?.normalizeIntensity(intensity) ?: 0f
 

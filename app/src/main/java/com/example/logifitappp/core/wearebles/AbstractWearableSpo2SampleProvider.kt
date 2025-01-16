@@ -5,11 +5,11 @@ import android.icu.util.GregorianCalendar
 import com.example.logifitappp.data.dao.commons.WearableSpo2SampleDao
 import com.example.logifitappp.data.models.commons.WearableSpo2SampleModel
 
-abstract class WearableSpo2SampleProvider<T: WearableSpo2SampleModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
-    fun getSamplesBetween(from: Long, to: Long): List<T> {
+abstract class AbstractWearableSpo2SampleProvider<T: WearableSpo2SampleModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
+    open fun getSamplesBetween(from: Long, to: Long): List<T> {
         println("fetch spo2 samples between $from - $to")
 
-        return getWearableSpo2SampleDao().getSamplesBetween(from, to, getStoredWearable()?.id ?: 0)
+        return getWearableSpo2SampleDao()?.getSamplesBetween(from, to, getStoredWearable()?.id ?: 0) ?: listOf()
     }
 
     fun getSamplesBetweenDay(calendar: Calendar): List<T> {
@@ -33,8 +33,8 @@ abstract class WearableSpo2SampleProvider<T: WearableSpo2SampleModel>(wearable: 
             it.wearableId = wearable?.id ?: 0
         }
 
-        getWearableSpo2SampleDao().store(*samples)
+        getWearableSpo2SampleDao()?.store(*samples)
     }
 
-    abstract fun getWearableSpo2SampleDao(): WearableSpo2SampleDao<T>
+    abstract fun getWearableSpo2SampleDao(): WearableSpo2SampleDao<T>?
 }

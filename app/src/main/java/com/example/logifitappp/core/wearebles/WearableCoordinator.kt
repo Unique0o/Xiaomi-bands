@@ -23,7 +23,7 @@ abstract class WearableCoordinator {
 
     open fun getInitialFlags(): EnumSet<WearableSupportFlagEnum> = EnumSet.of(WearableSupportFlagEnum.BUSY_CHECKING)
 
-    open fun getSpo2SampleProvider(wearable: Wearable): WearableSpo2SampleProvider<out WearableSpo2SampleModel>? = null
+    open fun getSpo2SampleProvider(wearable: Wearable): AbstractWearableSpo2SampleProvider<out WearableSpo2SampleModel>? = null
 
     open fun isAuthenticationKeyValid(authenticationKey: String): Boolean {
         return !(authenticationKey.toByteArray().size < 34 || !authenticationKey.startsWith("0x"))
@@ -60,7 +60,7 @@ abstract class WearableCoordinator {
 
     open fun supportsStepCounter() = supportsActivityTracking()
 
-    abstract fun getActivityProvider(wearable: Wearable): WearableActivityProvider<out WearableRawActivityModel>
+    abstract fun getActivityProvider(wearable: Wearable): AbstractWearableActivityProvider<out WearableRawActivityModel>
     abstract fun getSupportedWearableName(): Pattern?
     abstract fun getWearableSupportClass(): Class<out WearableSupport>
 }

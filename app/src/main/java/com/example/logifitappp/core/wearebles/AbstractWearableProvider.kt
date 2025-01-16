@@ -3,7 +3,7 @@ package com.example.logifitappp.core.wearebles
 import com.example.logifitappp.core.App
 import com.example.logifitappp.data.models.WearableModel
 
-abstract class AbstractWearableProvider(private val wearable: Wearable) {
+abstract class AbstractWearableProvider(protected val wearable: Wearable) {
     fun getStoredWearable(): WearableModel? {
         val user = App.database.userDao().getLoggedIn()
 

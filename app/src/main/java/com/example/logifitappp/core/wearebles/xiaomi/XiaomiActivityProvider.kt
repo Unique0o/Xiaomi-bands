@@ -3,12 +3,12 @@ package com.example.logifitappp.core.wearebles.xiaomi
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.RangeMapUtils
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableActivityProvider
+import com.example.logifitappp.core.wearebles.AbstractWearableActivityProvider
 import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.XiaomiRawActivityModel
 import com.example.logifitappp.data.models.XiaomiSleepStageModel
 
-class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityProvider<XiaomiRawActivityModel>(wearable) {
+class XiaomiActivityProvider(wearable: Wearable): AbstractWearableActivityProvider<XiaomiRawActivityModel>(wearable) {
     override fun getRawActivitiesBetween(from: Long, to: Long): List<XiaomiRawActivityModel> {
         val activities = super.getRawActivitiesBetween(from, to)
 

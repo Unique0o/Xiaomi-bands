@@ -10,7 +10,7 @@ import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.core.utils.HeartRateUtils
 import com.example.logifitappp.core.utils.StepsUtils
 import com.example.logifitappp.core.wearebles.Wearable
-import com.example.logifitappp.core.wearebles.WearableActivityProvider
+import com.example.logifitappp.core.wearebles.AbstractWearableActivityProvider
 import com.example.logifitappp.enums.WearableActivityTypeEnum
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.WearableModel
@@ -73,7 +73,7 @@ class SendWearableInformationToLogifitUseCase @Inject constructor(
     }
 
     private fun structureGraphics(
-        provider: WearableActivityProvider<out WearableRawActivityModel>,
+        provider: AbstractWearableActivityProvider<out WearableRawActivityModel>,
         shift: ShiftModel,
         wearable: Wearable
     ): StoreSleepGraphicRequest {
@@ -111,7 +111,7 @@ class SendWearableInformationToLogifitUseCase @Inject constructor(
     }
 
     private fun structureHeartRates(
-        provider: WearableActivityProvider<out WearableRawActivityModel>,
+        provider: AbstractWearableActivityProvider<out WearableRawActivityModel>,
         wearable: Wearable
     ): StoreHeartRateRequest {
         val lastActivity = provider.findLastRawActivity()
@@ -129,7 +129,7 @@ class SendWearableInformationToLogifitUseCase @Inject constructor(
     }
 
     private fun structureSleeps(
-        provider: WearableActivityProvider<out WearableRawActivityModel>,
+        provider: AbstractWearableActivityProvider<out WearableRawActivityModel>,
         shift: ShiftModel,
         wearable: Wearable,
         wearableModel: WearableModel
