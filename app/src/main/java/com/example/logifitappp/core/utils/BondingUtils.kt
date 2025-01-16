@@ -24,16 +24,9 @@ object BondingUtils {
     const val REQUEST_CODE = 1
 
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
-    private fun askCompanionPairing(candidate: WearableCandidate, macAddress: String) = AlertDialog.Builder(App.context)
-        .setTitle(Resources.getSystem().getString(R.string.companion_pairing_request_title))
-        .setMessage(Resources.getSystem().getString(R.string.companion_pairing_request_message))
-        .setPositiveButton(Resources.getSystem().getString(R.string.button_ok)) { _, _ ->
-            companionDeviceManagerBond(candidate, macAddress)
-        }
-        .setNegativeButton(Resources.getSystem().getString(R.string.button_cancel)) { _, _ ->
-            bluetoothBond(candidate)
-        }
-        .show()
+    private fun askCompanionPairing(candidate: WearableCandidate, macAddress: String) {
+        bluetoothBond(candidate)
+    }
 
     private fun attemptToFirstConnect(candidate: WearableCandidate) {
         val mainLooper = Looper.getMainLooper()

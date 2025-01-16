@@ -1,7 +1,7 @@
 package com.example.logifitappp.core.builders.ble
 
 import android.bluetooth.BluetoothGattCharacteristic
-import com.example.logifitappp.core.bluetooth.BleQueue
+import com.example.logifitappp.core.bluetooth.services.BleQueue
 import com.example.logifitappp.core.builders.ble.actions.Action
 import com.example.logifitappp.core.builders.ble.actions.NotifyAction
 import com.example.logifitappp.core.builders.ble.actions.ReadAction

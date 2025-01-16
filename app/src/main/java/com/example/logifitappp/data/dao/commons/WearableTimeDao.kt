@@ -14,7 +14,7 @@ abstract class WearableTimeDao<T: WearableTimeModel>(private val tableName: Stri
     abstract fun getLastBeforeOf(query: SupportSQLiteQuery): T?
 
     @Upsert
-    abstract fun store(vararg activities: T)
+    abstract fun store(vararg samples: T)
 
     fun getBetween(from: Long, to: Long, wearableId: Int): List<T> {
         return getBetween(
@@ -24,7 +24,7 @@ abstract class WearableTimeDao<T: WearableTimeModel>(private val tableName: Stri
 
     fun getLastBeforeOf(timestamp: Long, wearableId: Int): T? {
         return getLastBeforeOf(
-            SimpleSQLiteQuery("SELECT * FROM xiaomi_sleep_times WHERE timestamp <= $timestamp AND wearable_id = $wearableId ORDER BY timestamp DESC LIMIT 1")
+            SimpleSQLiteQuery("SELECT * FROM $tableName WHERE timestamp <= $timestamp AND wearable_id = $wearableId ORDER BY timestamp DESC LIMIT 1")
         )
     }
 }

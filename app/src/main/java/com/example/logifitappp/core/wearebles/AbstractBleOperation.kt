@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
 import android.content.Context
 import androidx.annotation.RequiresPermission
-import com.example.logifitappp.core.bluetooth.BleQueue
+import com.example.logifitappp.core.bluetooth.services.BleQueue
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.handlers.BluetoothGattCallbackHandler
 import com.example.logifitappp.enums.OperationStatusEnum

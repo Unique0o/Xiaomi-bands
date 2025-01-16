@@ -17,6 +17,8 @@ abstract class HuamiCoordinator: AbstractBleWearableCoordinator() {
 
     override fun supportsActivityDataFetching() = true
 
+    override fun supportsActivityTracking() = true
+
     companion object {
         fun getKeepActivityDataOnDevice(mac: String): Boolean {
             val prefs = Preferences(App.getWearableSpecificSharedPrefs(mac)!!)

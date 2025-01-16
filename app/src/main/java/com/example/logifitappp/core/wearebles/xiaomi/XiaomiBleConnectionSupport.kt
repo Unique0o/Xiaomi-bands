@@ -14,7 +14,7 @@ import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 
-class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): XiaomiConnectionSupport {
+class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): XiaomiConnectionSupport() {
     private var characteristicActivityData: XiaomiCharacteristic? = null
     private var characteristicCommandRead: XiaomiCharacteristic? = null
     private var characteristicCommandWrite: XiaomiCharacteristic? = null
@@ -74,7 +74,7 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
             characteristicCommandRead = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, characteristicRead, xiaomiSupport.getAuthService())
             characteristicCommandRead?.setIsEncrypted(uuidSet.encrypted)
             characteristicCommandRead?.setHandler(object: XiaomiChannelHandler {
-                override fun handler(payload: ByteArray) = xiaomiSupport.handleCommandBytes(payload)
+                override fun handle(payload: ByteArray) = xiaomiSupport.handleCommandBytes(payload)
             })
             characteristicCommandRead?.setMtu(expectedMtu)
 
@@ -84,7 +84,7 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
 
             characteristicActivityData = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, mCharacteristicActivityData, xiaomiSupport.getAuthService())
             characteristicActivityData?.setHandler(object: XiaomiChannelHandler {
-                override fun handler(payload: ByteArray) = xiaomiSupport.getHealthService().getActivityFetcher().addChunk(payload)
+                override fun handle(payload: ByteArray) = xiaomiSupport.getHealthService().getActivityFetcher().addChunk(payload)
             })
             characteristicActivityData?.setIsEncrypted(uuidSet.encrypted)
             characteristicActivityData?.setMtu(expectedMtu)

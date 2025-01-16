@@ -113,7 +113,7 @@ object BleTypeConversionsUtils {
     }
 
     fun toUint16(bytes: ByteArray, offset: Int): Int {
-        return (bytes[offset].toInt() and 0xff) or ((bytes[offset + 1].toInt() and 0xff) shl 0xff)
+        return (bytes[offset].toInt() and 0xff) or ((bytes[offset + 1].toInt() and 0xff) shl 8)
     }
 
     fun toUint16(vararg bytes: Byte): Int {

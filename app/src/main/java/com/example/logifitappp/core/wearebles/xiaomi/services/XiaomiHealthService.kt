@@ -8,7 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-class XiaomiHealthService(support: XiaomiSupport) : AbstractXiaomiService(support) {
+class XiaomiHealthService(support: XiaomiSupport): AbstractXiaomiService(support) {
     private val activityFetcher = XiaomiActivityFileFetcher(this)
 
     fun ackRecordedData(fileId: XiaomiActivityFileId) {
@@ -22,6 +22,10 @@ class XiaomiHealthService(support: XiaomiSupport) : AbstractXiaomiService(suppor
                 ))
                 .build()
         )
+    }
+
+    override fun dispose() {
+        activityFetcher.dispose()
     }
 
     private fun fetchRecordedDataPast() {
@@ -64,7 +68,7 @@ class XiaomiHealthService(support: XiaomiSupport) : AbstractXiaomiService(suppor
             val fileId = XiaomiActivityFileId.from(buffer)
             println("Got activity to fetch: $fileId")
 
-            if (fileId.getTimestamp().time == 0.toLong() && fileId.getVersion() == 0) {
+            if (fileId.getTimestamp().time == 0L && fileId.getVersion() == 0) {
                 println("Skipping invalid file with no timestamp and version")
                 continue
             }
@@ -84,6 +88,8 @@ class XiaomiHealthService(support: XiaomiSupport) : AbstractXiaomiService(suppor
         when (cmd.subtype) {
             CMD_ACTIVITY_FETCH_PAST,
             CMD_ACTIVITY_FETCH_TODAY -> handleActivityFetchResponse(cmd.subtype, cmd.health.activityRequestFileIds.toByteArray())
+
+            else -> println("Unknown health command ${cmd.subtype}")
         }
     }
 

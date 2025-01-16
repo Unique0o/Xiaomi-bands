@@ -22,14 +22,14 @@ class XiaomiComplexActivityParser(private val header: ByteArray, private val buf
     private fun getCurrentNibble(): Int {
         val headerByte = currentGroup / 2
 
-        return if (currentGroup % 2 == 0) (header[headerByte].toInt() and 0xf0) shr 4 else header[headerByte].toInt() and 0xf0
+        return if (currentGroup % 2 == 0) (header[headerByte].toInt() and 0xf0) shr 4 else header[headerByte].toInt() and 0x0f
     }
 
     fun hasFirst() = isValid(0)
 
     fun hasSecond() = isValid(1)
 
-    fun hasThrid() = isValid(2)
+    fun hasThird() = isValid(2)
 
     private fun isValid(idx: Int): Boolean {
         if (idx < 0 || idx > 2) throw IllegalArgumentException("Invalid idx $idx")

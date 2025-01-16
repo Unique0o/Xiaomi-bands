@@ -9,6 +9,7 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
 import java.nio.BufferUnderflowException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import kotlin.math.abs
 
 class XiaomiSleepDetailsParser: XiaomiActivityParser() {
     private fun decodeStage(stage: Int) = when (stage) {
@@ -41,6 +42,7 @@ class XiaomiSleepDetailsParser: XiaomiActivityParser() {
             buffer.get().toInt() and 0xff
         }
 
+        var lastHeartPulseTimestamp = 0L
         println("Sleep sample: bedTime: $bedTime, wakeupTime: $wakeupTime, isAwake: $isAwake")
 
         var time: XiaomiSleepTimeModel? = XiaomiSleepTimeModel()
@@ -110,6 +112,19 @@ class XiaomiSleepDetailsParser: XiaomiActivityParser() {
                 val dataBuffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN)
 
                 when (type) {
+                    1 -> {
+                        if (abs(lastHeartPulseTimestamp - ts) > 30000) {
+                            lastHeartPulseTimestamp = ts
+                            //TODO: heart pulse when is required
+                        }
+
+                        while (dataBuffer.position() < dataBuffer.limit()) {
+                            val delta = dataBuffer.get().toInt() and 0xff
+                            lastHeartPulseTimestamp += 10 * delta
+                            //TODO: heart pulse when is required
+                        }
+                    }
+
                     16 -> {
                         dataBuffer.get().toInt() and 0xff
 
@@ -139,7 +154,7 @@ class XiaomiSleepDetailsParser: XiaomiActivityParser() {
                     17 -> {
                         var currentTime = ts * 1000
 
-                        for (i in 0 .. dataLength / 2) {
+                        for (i in 0 until dataLength / 2) {
                             val value = dataBuffer.getShort().toInt() and 0xffff
                             val phase = value shr 12
                             val offsetMinutes = value and 0xfff
@@ -160,27 +175,28 @@ class XiaomiSleepDetailsParser: XiaomiActivityParser() {
 
         if (times.isEmpty()) times.add(time!!)
 
+        var persistSuccess = !stagesParseFailed
         val wearable = support.getWearable()
 
         try {
             val sleepTimeProvider = XiaomiSleepTimeProvider(wearable)
 
-            times.forEach {
-                val existingTimes = sleepTimeProvider.getBetween(it.timestamp, it.timestamp)
+            for (tm in times) {
+                val existingTimes = sleepTimeProvider.getBetween(tm.timestamp, tm.timestamp)
 
                 if (existingTimes.isNotEmpty()) {
                     val existingTime = existingTimes[0]
 
-                    if (existingTime.wakeupTime!! > it.wakeupTime!!) {
-                        return true.also { println("Ignoring sleep sample - existing sample is more recent (${existingTime.wakeupTime})") }
+                    if (existingTime.wakeupTime!! > tm.wakeupTime!!) {
+                        println("Ignoring sleep sample - existing sample is more recent (${existingTime.wakeupTime})")
+                        continue
                     }
                 }
 
-                sleepTimeProvider.store(it)
+                sleepTimeProvider.store(tm)
             }
-
         } catch (e: Exception) {
-            return false.also { println("Error saving sleep sample $e") }
+            persistSuccess = false.also { println("Error saving sleep sample $e") }
         }
 
         if (!stagesParseFailed && stages.isNotEmpty()) {
@@ -190,11 +206,11 @@ class XiaomiSleepDetailsParser: XiaomiActivityParser() {
                 val sleepStageProvider = XiaomiSleepStageProvider(wearable)
                 sleepStageProvider.store(*stages.toTypedArray())
             } catch (e: Exception) {
-                return false.also { println("Error saving sleep stage samples $e") }
+                persistSuccess = false.also { println("Error saving sleep stage samples $e") }
             }
         }
 
-        return !stagesParseFailed
+        return persistSuccess
     }
 
     private fun readStagePacketHeader(buffer: ByteBuffer): Boolean {

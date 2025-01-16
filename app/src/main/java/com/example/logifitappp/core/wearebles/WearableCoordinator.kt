@@ -50,11 +50,15 @@ abstract class WearableCoordinator {
 
     open fun supportsActivityDataFetching() = false
 
+    open fun supportsActivityTracking() = false
+
     open fun supportsHeartRateMeasurement() = false
 
     open fun supportsRemSleep() = false
 
     open fun supportsSpo2() = false
+
+    open fun supportsStepCounter() = supportsActivityTracking()
 
     abstract fun getActivityProvider(wearable: Wearable): WearableActivityProvider<out WearableRawActivityModel>
     abstract fun getSupportedWearableName(): Pattern?

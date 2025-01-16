@@ -23,5 +23,7 @@ class FitProCoordinator: AbstractBleWearableCoordinator() {
 
     override fun supportsActivityDataFetching() = true
 
+    override fun supportsActivityTracking() = true
+
     override fun supportsHeartRateMeasurement() = true
 }

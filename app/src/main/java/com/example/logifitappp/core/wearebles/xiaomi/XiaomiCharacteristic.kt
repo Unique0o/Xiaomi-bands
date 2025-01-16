@@ -1,8 +1,6 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
 import android.bluetooth.BluetoothGattCharacteristic
-import android.os.Handler
-import android.os.Looper
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiAuthService
@@ -13,7 +11,6 @@ import java.nio.ByteOrder
 import java.util.LinkedList
 import java.util.UUID
 import kotlin.math.ceil
-import kotlin.math.min
 
 class XiaomiCharacteristic(
     private val support: XiaomiBleConnectionSupport,
@@ -54,7 +51,7 @@ class XiaomiCharacteristic(
 
             if (currentChunk == numChunks) {
                 sendChunkEndAck()
-                handler?.handler(if (isEncrypted) authService!!.decrypt(chunkBuffer.toByteArray()) else chunkBuffer.toByteArray())
+                handler?.handle(if (isEncrypted) authService!!.decrypt(chunkBuffer.toByteArray()) else chunkBuffer.toByteArray())
 
                 currentChunk = 0
                 chunkBuffer.reset()
@@ -139,7 +136,7 @@ class XiaomiCharacteristic(
 
                                 if (maxWriteSize != maxWriteSizeForCurrentMessage) {
                                     println("MTU changed while sending message, prepending message to queue and resending")
-                                    payloadQueue.addFirst(currentPayload)
+                                    payloadQueue.addFirst(currentPayload!!)
                                     currentPayload = null
                                     sendingChunked = false
                                     sendNext(null)
@@ -159,7 +156,7 @@ class XiaomiCharacteristic(
                     val encryption = buffer.get()
                     val bytes = ByteArray(buffer.limit() - buffer.position())
                     buffer.get(bytes)
-                    handler?.handler(if (encryption == 1.toByte()) authService!!.decrypt(bytes) else bytes)
+                    handler?.handle(if (encryption == 1.toByte()) authService!!.decrypt(bytes) else bytes)
 
                     return
                 }

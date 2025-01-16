@@ -7,7 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
+import com.example.logifitappp.core.analyzers.HeartRateAmountList
 import com.example.logifitappp.core.analyzers.HeartRateAnalyzer
+import com.example.logifitappp.core.analyzers.StepsAmountList
 import com.example.logifitappp.core.analyzers.StepsAnalyzer
 import com.example.logifitappp.core.graphics.HeartRateDataSet
 import com.example.logifitappp.core.graphics.SleepBarDataSet
@@ -58,14 +60,21 @@ class GraphicsViewModel @AssistedInject constructor(
         val calendar = GregorianCalendar.getInstance()
         val activitiesFromToday = fetchActivityAmountsBetweenDayUseCase(wearable, calendar)
 
-        val heartRateAnalyzer = HeartRateAnalyzer()
-        val stepsAnalyzer = StepsAnalyzer()
+        val heartRateAnalyzer = HeartRateDataSet(when (wearable.getWearableCoordinator().supportsHeartRateMeasurement()) {
+            true -> HeartRateAnalyzer().calculate(activitiesFromToday, calendar, 30)
+            else -> HeartRateAmountList()
+        })
+
+        val stepsDataset = StepsBarDataSet(when (wearable.getWearableCoordinator().supportsActivityTracking()) {
+            true -> StepsAnalyzer().calculate(activitiesFromToday, calendar, 30)
+            else -> StepsAmountList()
+        })
 
         state = state.copy(
-            heartRateDataSet = HeartRateDataSet(heartRateAnalyzer.calculate(activitiesFromToday, calendar, 30)),
+            heartRateDataSet = heartRateAnalyzer,
             shift = shift,
             spo2DataSet = Spo2DataSet(fetchSpo2SampleAmountsBetweenDayUseCase(wearable, calendar)),
-            stepsDataset = StepsBarDataSet(stepsAnalyzer.calculate(activitiesFromToday, calendar, 30)),
+            stepsDataset = stepsDataset,
         )
 
         if (shift == null) return

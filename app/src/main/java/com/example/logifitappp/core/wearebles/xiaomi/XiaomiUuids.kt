@@ -1,5 +1,6 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
+import com.example.logifitappp.core.wearebles.AbstractBleWearableSupport
 import java.util.UUID
 
 object XiaomiUuids {
@@ -45,13 +46,13 @@ object XiaomiUuids {
         )
     )
 
+    val UUID_SERVICE_SERIAL_PORT_PROFILE: UUID = UUID.fromString(String.format(AbstractBleWearableSupport.BASE_UUID, "1101"))
+
     class XiaomiBleUuidSet(
         val encrypted: Boolean,
         val characteristicCommandRead: UUID,
         val characteristicCommandWrite: UUID,
         val characteristicActivityData: UUID,
         val characteristicDataUpload: UUID?
-    ) {
-
-    }
+    )
 }

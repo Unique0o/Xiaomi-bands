@@ -1,4 +1,4 @@
-package com.example.logifitappp.core.bluetooth
+package com.example.logifitappp.core.bluetooth.services
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice

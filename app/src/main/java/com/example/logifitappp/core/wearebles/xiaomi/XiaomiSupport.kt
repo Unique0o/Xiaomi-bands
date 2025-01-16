@@ -9,19 +9,23 @@ import com.example.logifitappp.core.wearebles.AbstractWearableSupport
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiAuthService
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiHealthService
+import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiNotificationService
 import com.example.logifitappp.core.wearebles.xiaomi.services.XiaomiSystemService
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 
 class XiaomiSupport: AbstractWearableSupport() {
     private val authService = XiaomiAuthService(this)
+    private val healthService = XiaomiHealthService(this)
+    private val notificationService = XiaomiNotificationService(this)
+    private val systemService = XiaomiSystemService(this)
+
     private var cachedFirmwareVersion: String? = null
     private var connectionSupport: XiaomiConnectionSupport? = null
-    private val healthService = XiaomiHealthService(this)
-    private val systemService = XiaomiSystemService(this)
 
     private val serviceMap = linkedMapOf(
         XiaomiAuthService.COMMAND_TYPE to authService,
         XiaomiHealthService.COMMAND_TYPE to healthService,
+        XiaomiNotificationService.COMMAND_TYPE to notificationService,
         XiaomiSystemService.COMMAND_TYPE to systemService
     )
 
@@ -31,15 +35,12 @@ class XiaomiSupport: AbstractWearableSupport() {
         }
     }
 
-    private fun createConnectionSpecificSupport(): XiaomiConnectionSupport? {
+    private fun createConnectionSpecificSupport(): XiaomiConnectionSupport {
         return when (getCoordinator().getConnectionType()) {
             ConnectionTypeEnum.BOTH,
             ConnectionTypeEnum.BLE -> XiaomiBleConnectionSupport(this)
 
-            ConnectionTypeEnum.BT_CLASSIC -> {
-                //TODO WHEN IS REQUIRED
-                null
-            }
+            ConnectionTypeEnum.BT_CLASSIC -> XiaomiSppConnectionSupport(this)
         }
     }
 
@@ -104,7 +105,7 @@ class XiaomiSupport: AbstractWearableSupport() {
     }
 
     override fun onSetCallState(callSpec: CallSpec) {
-
+        notificationService.onSetCallState(callSpec)
     }
 
     fun sendCommand(taskName: String, command: XiaomiProto.Command) {

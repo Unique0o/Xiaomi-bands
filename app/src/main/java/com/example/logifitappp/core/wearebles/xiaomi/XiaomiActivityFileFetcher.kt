@@ -1,5 +1,7 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
+import android.os.Handler
+import android.os.Looper
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.BleTypeConversionsUtils
@@ -12,18 +14,27 @@ import java.util.PriorityQueue
 
 class XiaomiActivityFileFetcher(private val healthService: XiaomiHealthService) {
     private var buffer = ByteArrayOutputStream()
+    private val timeoutHandler = Handler(Looper.getMainLooper())
+
     private val fetchQueue = PriorityQueue<XiaomiActivityFileId>()
     private var isFetching = false
 
     fun addChunk(payload: ByteArray) {
+        clearTimeout()
+
         val total = BleTypeConversionsUtils.toUint16(payload, 0)
         val num = BleTypeConversionsUtils.toUint16(payload, 2)
+
+        if (num == 1) buffer = ByteArrayOutputStream()
 
         println("Got activity chunk $num / $total")
 
         buffer.write(payload, 4, payload.size - 4)
 
-        if (num != total) return
+        if (num != total) {
+            setTimeout()
+            return
+        }
 
         val data = buffer.toByteArray()
         buffer = ByteArrayOutputStream()
@@ -67,14 +78,25 @@ class XiaomiActivityFileFetcher(private val healthService: XiaomiHealthService) 
             if (activityParser.parse(healthService.support, fileId, data)) println("Successfully parsed $fileId")
             else println("Failed to parse $fileId")
         } catch (e: Exception) {
-            println("Exception while parsing $fileId")
+            println("Exception while parsing $fileId - $e")
         }
 
         triggerNextFetch()
     }
 
+    private fun clearTimeout() {
+        timeoutHandler.removeCallbacksAndMessages(null)
+    }
+
+    fun dispose() {
+        clearTimeout()
+    }
+
     fun fetch(fileIds: List<XiaomiActivityFileId>) {
-        fetchQueue.addAll(fileIds)
+        for (fileId in fileIds) {
+            if (!fetchQueue.contains(fileId)) fetchQueue.add(fileId)
+            else println("Ignoring duplicated file $fileId")
+        }
 
         if (isFetching) return
 
@@ -92,6 +114,9 @@ class XiaomiActivityFileFetcher(private val healthService: XiaomiHealthService) 
     }
 
     private fun triggerNextFetch() {
+        clearTimeout()
+        buffer = ByteArrayOutputStream()
+
         val fileId = fetchQueue.poll()
 
         if (fileId == null) {
@@ -104,6 +129,15 @@ class XiaomiActivityFileFetcher(private val healthService: XiaomiHealthService) 
         }
 
         println("Triggering next fetch for: $fileId")
+
+        setTimeout()
         healthService.requestRecordedData(fileId)
+    }
+
+    private fun setTimeout() {
+        timeoutHandler.postDelayed({
+            println("Timed out waiting for activity file with ${buffer.size()} bytes in the buffer")
+            triggerNextFetch()
+        }, 5000L)
     }
 }

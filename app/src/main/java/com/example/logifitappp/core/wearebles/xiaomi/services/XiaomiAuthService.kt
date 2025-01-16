@@ -17,10 +17,13 @@ import org.bouncycastle.crypto.params.AEADParameters
 import org.bouncycastle.crypto.params.KeyParameter
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.security.GeneralSecurityException
 import java.security.SecureRandom
 import java.util.Locale
+import javax.crypto.Cipher
 import javax.crypto.Mac
 import javax.crypto.SecretKey
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support) {
@@ -67,7 +70,7 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         while (i < output.size) {
             mac.update(tmp)
             mac.update(miwearAuthBytes)
-            mac.update(b) //b.toInt().toByte()
+            mac.update(b)
             tmp = mac.doFinal()
 
             for (j in tmp.indices) {
@@ -96,6 +99,13 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         }
     }
 
+    private fun ctrCrypt(op: Int, key: ByteArray, iv: ByteArray, message: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/CTR/NoPadding")
+        cipher.init(op, SecretKeySpec(key, "AES"), IvParameterSpec(iv))
+
+        return cipher.doFinal(message)
+    }
+
     fun decrypt(payload: ByteArray): ByteArray {
         val packetNonce = ByteBuffer.allocate(12).order(ByteOrder.LITTLE_ENDIAN)
         packetNonce.put(decryptionNonce)
@@ -122,6 +132,14 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         return out
     }
 
+    fun decryptV2(cipherText: ByteArray): ByteArray {
+        try {
+            return ctrCrypt(Cipher.DECRYPT_MODE, decryptionKey, decryptionKey, cipherText)
+        } catch (e: GeneralSecurityException) {
+            throw RuntimeException("failed to decrypt message", e)
+        }
+    }
+
     fun encrypt(payload: ByteArray, i: Int): ByteArray {
         val packetNonce = ByteBuffer.allocate(12).order(ByteOrder.LITTLE_ENDIAN)
             .put(encryptionNonce)
@@ -143,6 +161,14 @@ class XiaomiAuthService(support: XiaomiSupport) : AbstractXiaomiService(support)
         cipher.doFinal(out, bytes)
 
         return out
+    }
+
+    fun encryptV2(message: ByteArray): ByteArray {
+        try {
+            return ctrCrypt(Cipher.ENCRYPT_MODE, encryptionKey, encryptionKey, message)
+        } catch (e: GeneralSecurityException) {
+            throw RuntimeException("failed to encrypt message", e)
+        }
     }
 
     private fun getSecretKey(wearable: Wearable): ByteArray {

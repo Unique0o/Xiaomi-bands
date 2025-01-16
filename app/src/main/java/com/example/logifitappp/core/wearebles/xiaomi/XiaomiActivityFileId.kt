@@ -62,6 +62,7 @@ class XiaomiActivityFileId(
 
     companion object {
         fun from(bytes: ByteArray): XiaomiActivityFileId {
+            require(bytes.size == 7)
             return from(ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN))
         }
 

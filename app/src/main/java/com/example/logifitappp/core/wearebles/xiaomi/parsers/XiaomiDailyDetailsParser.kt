@@ -49,7 +49,7 @@ class XiaomiDailyDetailsParser: XiaomiActivityParser() {
             if (complexParser.nextGroup(16)) {
                 if (complexParser.hasSecond()) includeExtraEntry = complexParser.get(1, 1)
 
-                if (complexParser.hasThrid()) sample.steps = complexParser.get(2, 14)
+                if (complexParser.hasThird()) sample.steps = complexParser.get(2, 14)
             }
 
             if (complexParser.nextGroup(8)) {

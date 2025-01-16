@@ -8,9 +8,12 @@ import com.example.logifitappp.core.wearebles.xiaomi.XiaomiCoordinator
 import com.example.logifitappp.core.wearebles.xiaomi.XiaomiSupport
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto
 
-abstract class AbstractXiaomiService(private val _support: XiaomiSupport) {
+abstract class AbstractXiaomiService(val support: XiaomiSupport) {
     val coordinator get() = support.getWearable().getWearableCoordinator() as XiaomiCoordinator
-    val support get() = _support
+
+    open fun dispose() {
+
+    }
 
     protected fun getWearablePreferences(): WearablePreferences {
         return App.getWearablePreferences(support.getWearable().getAddress()!!)

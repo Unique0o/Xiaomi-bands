@@ -20,7 +20,7 @@ class XiaomiActivityProvider(private val wearable: Wearable): WearableActivityPr
     private fun getWearableActivityTypeForStage(model: XiaomiSleepStageModel) = when (model.stage) {
         2 -> WearableActivityTypeEnum.DEEP_SLEEP
         3 -> WearableActivityTypeEnum.LIGHT_SLEEP
-        4 -> WearableActivityTypeEnum.DEEP_SLEEP
+        4 -> WearableActivityTypeEnum.REM_SLEEP
         else -> WearableActivityTypeEnum.UNKNOWN
     }
 

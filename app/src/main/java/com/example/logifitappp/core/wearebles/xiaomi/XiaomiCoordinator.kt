@@ -22,11 +22,13 @@ abstract class XiaomiCoordinator: AbstractBleWearableCoordinator() {
                 || AUTH_KEY_PATTERN.matcher(authenticationKey.trim()).matches()
     }
 
+    override fun supportsActivityDataFetching() = true
+
+    override fun supportsActivityTracking() = true
+
     override fun supportsHeartRateMeasurement() = true
 
     override fun supportsRemSleep() = true
-
-    override fun supportsActivityDataFetching() = true
 
     companion object {
         val AUTH_KEY_PATTERN: Pattern = Pattern.compile("^[0-9]+\$")

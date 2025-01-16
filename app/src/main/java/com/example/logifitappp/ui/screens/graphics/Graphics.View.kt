@@ -66,17 +66,19 @@ fun GraphicsView(
             )
         }
 
-        item {
-            Spacer(Modifier.height(16.dp))
-
-            GraphicsStepsChart(
-                dataset = graphicsViewModel.state.stepsDataset,
-                navigation = navigation,
-                wearable = graphicsViewModel.state.wearable
-            )
-        }
-
         graphicsViewModel.state.wearable?.getWearableCoordinator()?.let {
+            if (it.supportsStepCounter()) {
+                item {
+                    Spacer(Modifier.height(16.dp))
+
+                    GraphicsStepsChart(
+                        dataset = graphicsViewModel.state.stepsDataset,
+                        navigation = navigation,
+                        wearable = graphicsViewModel.state.wearable
+                    )
+                }
+            }
+
             if (it.supportsHeartRateMeasurement()) {
                 item {
                     Spacer(Modifier.height(16.dp))

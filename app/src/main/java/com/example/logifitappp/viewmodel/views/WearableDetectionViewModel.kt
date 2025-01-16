@@ -243,14 +243,10 @@ class WearableDetectionViewModel @AssistedInject constructor(
     }
 
     fun handleFailedConnection(status: AppStatusCodeEnum) {
-        state = when (status) {
-            AppStatusCodeEnum.INVALID_WEARABLE_AUTHENTICATION_KEY -> state.copy(
-                currentPage = 0,
-                status = status
-            )
-
-            else -> state.copy(status = status)
-        }
+        state = state.copy(
+            currentPage = 0,
+            status = status
+        )
     }
 
     fun handleBluetoothStateChanged(state: Int) {
@@ -349,6 +345,27 @@ class WearableDetectionViewModel @AssistedInject constructor(
         scanEventProcessor.start()
 
         refreshWearableList(false)
+
+        try {
+            val manager = App.context.getSystemService(BluetoothManager::class.java)
+            val pairedDevices = manager.adapter.bondedDevices
+
+            for (device in pairedDevices) {
+               try {
+                   val isConnectedMethod = device.javaClass.getMethod("isConnected")
+                   val isConnected = isConnectedMethod.invoke(device) as Boolean?
+
+                   if (isConnected == true) {
+                       println("Pre-adding already bonded device ${device.address}")
+                       scanEventProcessor.scheduleProcessing(ScanEvent(device, -1, null))
+                   }
+               } catch (e: Exception) {
+                   println("Failed to check whether ${device.address} is connected")
+               }
+            }
+        } catch (e: SecurityException) {
+            println("Failed to pre-add paired devices $e")
+        }
 
         try {
             if (!ensureBluetoothReady()) {

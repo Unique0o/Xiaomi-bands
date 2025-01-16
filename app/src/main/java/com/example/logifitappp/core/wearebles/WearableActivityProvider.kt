@@ -2,6 +2,7 @@ package com.example.logifitappp.core.wearebles
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.data.dao.commons.WearableRawActivityDao
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
@@ -13,10 +14,15 @@ abstract class WearableActivityProvider<T: WearableRawActivityModel>(wearable: W
     }
 
     fun getRawActivities(shift: ShiftModel, baseCalendar: Calendar = GregorianCalendar.getInstance()): List<T> {
-        val startTs = shift.getStartDateTimestamp(baseCalendar).timeInMillis / 1000
-        val endTs = shift.getEndDateTimestamp(baseCalendar).timeInMillis / 1000
+        val shiftStartTs = shift.getStartDateTimestamp(baseCalendar).timeInMillis / 1000
+        val shiftEndTs = shift.getEndDateTimestamp(baseCalendar).timeInMillis / 1000
 
-        return getRawActivitiesBetween(startTs, endTs)
+        val endTs = DateTimeUtils.setTime(baseCalendar, "23:59:59").timeInMillis / 1000
+        val startTs = endTs - 2 * 24 * 60 * 60
+
+        val activities = getRawActivitiesBetween(startTs, endTs)
+
+        return activities.filter { it.timestamp in shiftStartTs .. shiftEndTs }
     }
 
     open fun getRawActivitiesBetween(from: Long, to: Long): List<T> {
