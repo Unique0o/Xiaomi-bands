@@ -12,15 +12,6 @@ import java.nio.ByteOrder
 import kotlin.math.abs
 
 class XiaomiSleepDetailsParser: XiaomiActivityParser() {
-    private fun decodeStage(stage: Int) = when (stage) {
-        0 -> 5
-        1 -> 3
-        2 -> 2
-        3 -> 4
-        4 -> 0
-        else -> 1
-    }
-
     override fun parse(support: XiaomiSupport, fileId: XiaomiActivityFileId, bytes: ByteArray): Boolean {
         if (fileId.getVersion() > 4) return false.also { println("Unknown sleep details version ${fileId.getVersion()}") }
 
@@ -213,16 +204,27 @@ class XiaomiSleepDetailsParser: XiaomiActivityParser() {
         return persistSuccess
     }
 
-    private fun readStagePacketHeader(buffer: ByteBuffer): Boolean {
-        while (buffer.remaining() >= 17) {
-            if (buffer.getInt().toLong() != 0xfffcfafb) {
-                buffer.position(buffer.position() - 3)
-                continue
-            }
-
-            return true
+    companion object {
+        private fun decodeStage(stage: Int) = when (stage) {
+            0 -> 5
+            1 -> 3
+            2 -> 2
+            3 -> 4
+            4 -> 0
+            else -> 1
         }
 
-        return false
+        private fun readStagePacketHeader(buffer: ByteBuffer): Boolean {
+            while (buffer.remaining() >= 17) {
+                if (buffer.getInt() != 0xfffcfafb.toInt()) {
+                    buffer.position(buffer.position() - 3)
+                    continue
+                }
+
+                return true
+            }
+
+            return false
+        }
     }
 }
