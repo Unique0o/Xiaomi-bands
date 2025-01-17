@@ -35,7 +35,6 @@ class SleepBarDataSet(var amounts: ActivityAmountList) {
                 val endIndex = list.indexOfLast { it.isSleep() }
 
                 if (startIndex != -1 && endIndex != -1) {
-                    println("${list[startIndex]} - ${list[endIndex]}")
                     for (i in startIndex .. endIndex) {
                         time += list[i].totalMinutes
                         sleeps.add(list[i])

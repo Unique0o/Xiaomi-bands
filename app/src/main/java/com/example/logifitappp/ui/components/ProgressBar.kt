@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -22,7 +23,7 @@ fun ProgressBar(
     modifier: Modifier = Modifier.fillMaxWidth(),
     progressValues: List<Float>,
 ) {
-    Box(modifier.background(backgroundColor, RoundedCornerShape(12.dp))) {
+    Box(modifier.background(backgroundColor, RoundedCornerShape(12.dp)).clip(RoundedCornerShape(12.dp))) {
         Canvas(Modifier.fillMaxWidth().height(height)) {
             val totalWidth = size.width
             var startX = 0f

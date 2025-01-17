@@ -1,12 +1,12 @@
 package com.example.logifitappp.core.wearebles.xiaomi
 
-import com.example.logifitappp.core.wearebles.AbstractActivityToSpo2SampleProvider
+import com.example.logifitappp.core.wearebles.AbstractActivityToSampleProvider
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.XiaomiRawActivityModel
 import com.example.logifitappp.data.models.commons.WearableSpo2SampleModel
 import com.example.logifitappp.enums.Spo2ModeEnum
 
-class XiaomiSpo2SampleProvider(wearable: Wearable): AbstractActivityToSpo2SampleProvider<XiaomiSpo2SampleProvider.XiaomiSpo2SampleModel, XiaomiRawActivityModel>(wearable) {
+class XiaomiSpo2SampleProvider(wearable: Wearable): AbstractActivityToSampleProvider<XiaomiSpo2SampleProvider.XiaomiSpo2SampleModel, XiaomiRawActivityModel>(wearable) {
     data class XiaomiSpo2SampleModel(
         override var modeName: String,
         override var spo2: Int,

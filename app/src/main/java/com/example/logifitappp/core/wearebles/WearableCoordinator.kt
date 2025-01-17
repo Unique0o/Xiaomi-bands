@@ -4,6 +4,7 @@ import com.example.logifitappp.enums.BondingStyleEnum
 import com.example.logifitappp.core.bluetooth.ConnectionTypeEnum
 import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 import com.example.logifitappp.data.models.commons.WearableSpo2SampleModel
+import com.example.logifitappp.data.models.commons.WearableStressSampleModel
 import com.example.logifitappp.enums.WearableSupportFlagEnum
 import java.util.EnumSet
 import java.util.regex.Pattern
@@ -23,7 +24,9 @@ abstract class WearableCoordinator {
 
     open fun getInitialFlags(): EnumSet<WearableSupportFlagEnum> = EnumSet.of(WearableSupportFlagEnum.BUSY_CHECKING)
 
-    open fun getSpo2SampleProvider(wearable: Wearable): AbstractWearableSpo2SampleProvider<out WearableSpo2SampleModel>? = null
+    open fun getSpo2SampleProvider(wearable: Wearable): AbstractWearableSampleProvider<out WearableSpo2SampleModel>? = null
+
+    open fun getStressSampleProvider(wearable: Wearable): AbstractWearableSampleProvider<out WearableStressSampleModel>? = null
 
     open fun isAuthenticationKeyValid(authenticationKey: String): Boolean {
         return !(authenticationKey.toByteArray().size < 34 || !authenticationKey.startsWith("0x"))
@@ -58,7 +61,9 @@ abstract class WearableCoordinator {
 
     open fun supportsSpo2() = false
 
-    open fun supportsStepCounter() = supportsActivityTracking()
+    fun supportsStepCounter() = supportsActivityTracking()
+
+    open fun supportsStressMeasurement() = false
 
     abstract fun getActivityProvider(wearable: Wearable): AbstractWearableActivityProvider<out WearableRawActivityModel>
     abstract fun getSupportedWearableName(): Pattern?

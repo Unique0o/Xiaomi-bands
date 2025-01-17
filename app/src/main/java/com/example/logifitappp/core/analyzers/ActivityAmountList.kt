@@ -38,26 +38,32 @@ class ActivityAmountList {
                     totalSleepMinutes += it
 
                     if (prevAmount != null && !prevAmount!!.isRemSleep()) remCycles++
+
+                    prevAmount = amount
                 }
 
                 WearableActivityTypeEnum.DEEP_SLEEP -> amount.totalMinutes.let {
                     totalDeepSleepMinutes += it
                     totalSleepMinutes += it
+                    prevAmount = amount
                 }
 
                 WearableActivityTypeEnum.LIGHT_SLEEP -> amount.totalMinutes.let {
                     totalLightSleepMinutes += it
                     totalSleepMinutes += it
+                    prevAmount = amount
                 }
 
                 else -> amount.totalMinutes.let {
-                    totalAwakeningMinutes += it
-                    maxAwakeningMinutes = max(maxAwakeningMinutes, it)
+                    if (prevAmount != null) {
+                        totalAwakeningMinutes += it
+                        maxAwakeningMinutes = max(maxAwakeningMinutes, it)
+                        prevAmount = amount
+                    }
                 }
             }
 
             totalSteps += amount.totalSteps
-            prevAmount = amount
         }
     }
 
@@ -121,13 +127,8 @@ class ActivityAmountList {
             )
         }
 
-        sleep?.let {
-            sleeps.add(it)
-        }
-
-        sleeps.forEach {
-            it.interruptions = interruptions
-        }
+        sleep?.let { sleeps.add(it) }
+        sleeps.forEach { it.interruptions = interruptions }
 
         return sleeps
     }
@@ -136,5 +137,15 @@ class ActivityAmountList {
 
     fun lastOrNull() = amounts.lastOrNull()
 
-    inner class Awakening(val duration: Long, val endAt: String, val startAt: String) { }
+    override fun toString() = "activity amount list={" +
+            "maxAwakeningMinutes: $maxAwakeningMinutes, " +
+            "remCycles: $remCycles, " +
+            "totalAwakeningMinutes: $totalAwakeningMinutes, " +
+            "totalSleepMinutes: $totalSleepMinutes, " +
+            "totalDeepSleepMinutes: $totalDeepSleepMinutes, " +
+            "totalLightSleepMinutes: $totalLightSleepMinutes, " +
+            "totalRemSleepMinutes: $totalRemSleepMinutes, " +
+            "totalSteps: $totalSteps}"
+
+    data class Awakening(val duration: Long, val endAt: String, val startAt: String)
 }

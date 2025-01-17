@@ -40,7 +40,7 @@ class XiaomiActivityFileId(
         buffer.putInt((timestamp.time / 1000).toInt())
         buffer.put(timezone.toByte())
         buffer.put(version.toByte())
-        buffer.put(((type shl 7) or (subtype shl 2) or detailType).toByte())
+        buffer.put((type shl 7 or subtype shl 2 or detailType).toByte())
 
         return buffer.array()
     }

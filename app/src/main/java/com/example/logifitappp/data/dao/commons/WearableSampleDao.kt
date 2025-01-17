@@ -4,9 +4,9 @@ import androidx.room.RawQuery
 import androidx.room.Upsert
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.example.logifitappp.data.models.commons.WearableSpo2SampleModel
+import com.example.logifitappp.data.models.commons.WearableSampleModel
 
-abstract class WearableSpo2SampleDao<T: WearableSpo2SampleModel>(private val tableName: String) {
+abstract class WearableSampleDao<T: WearableSampleModel>(private val tableName: String) {
     @RawQuery
     protected abstract fun getSamplesBetween(query: SupportSQLiteQuery): List<T>
 
