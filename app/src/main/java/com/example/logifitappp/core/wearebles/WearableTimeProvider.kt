@@ -4,6 +4,10 @@ import com.example.logifitappp.data.dao.commons.WearableTimeDao
 import com.example.logifitappp.data.models.commons.WearableTimeModel
 
 abstract class WearableTimeProvider<T: WearableTimeModel>(wearable: Wearable) : AbstractWearableProvider(wearable) {
+    fun delete() {
+        getWearableTimeDao().delete(getStoredWearable()?.id ?: 0)
+    }
+
     fun getBetween(from: Long, to: Long): List<T> {
         return getWearableTimeDao().getBetween(from, to, getStoredWearable()?.id ?: 0)
     }

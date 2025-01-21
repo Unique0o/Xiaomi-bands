@@ -7,6 +7,12 @@ import com.example.logifitappp.core.wearebles.huami.HuamiExtendedActivityProvide
 import java.util.regex.Pattern
 
 abstract class ZeppOsCoordinator: HuamiCoordinator() {
+    override fun deleteWearable(wearable: Wearable) {
+        super.deleteWearable(wearable)
+
+        getSpo2SampleProvider(wearable).delete()
+    }
+
     override fun getActivityProvider(wearable: Wearable) = HuamiExtendedActivityProvider(wearable)
 
     override fun getBondingStyle() = BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY

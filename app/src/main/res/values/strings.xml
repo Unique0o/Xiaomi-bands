@@ -36,6 +36,7 @@
     <string name="button_get_into">Get into</string>
     <string name="button_mark_as_view">Mark as view</string>
     <string name="button_ok">OK</string>
+    <string name="button_pair_smart_band">Pair Smart Band</string>
     <string name="button_register">Register</string>
     <string name="button_send">Send</string>
     <string name="button_send_to_logifit">Send to Logifit</string>
@@ -162,9 +163,11 @@
     <string name="naps">Naps</string>
     <string name="nicaragua">Nicaragua</string>
     <string name="no">No</string>
+    <string name="no_associated_user_error_message">Missing device paring</string>
     <string name="no_data">No data</string>
     <string name="no_internet_connection_message">Check your Internet connection</string>
     <string name="no_internet_connection_page_message">You can consult this section with an Internet connection. Please check and try again.</string>
+    <string name="no_paired_wearables_page_message">You do not have any paired Smart Band</string>
     <string name="no_synchronized_wearable_data_message">It seems you do not have current data, please perform the extraction and try again</string>
     <string name="no_wearable_sleep_data_message">It looks like you do not have a sleep log to send. Try to sync again</string>
     <string name="not_connected">Not connected</string>
@@ -215,6 +218,7 @@
     <string name="select">Select</string>
     <string name="select_date_range_title">Select date range</string>
     <string name="select_date_title">Select date</string>
+    <string name="select_shift">Select shift</string>
     <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
     <string name="share_training_certificate_message">Share training certificate</string>
@@ -274,7 +278,8 @@
     <string name="unfit_to_drive_message">You are not able to drive due to incomplete sleep regimen.</string>
     <string name="united_states">United States</string>
     <string name="unknown_activity">Unknown activity</string>
-    <string name="unprocessable_http_error_message">Missing device paring</string>
+    <string name="unpair_band_modal_message">Are you sure you want to unpair Smart Band that you currently use?</string>
+    <string name="unpair_band_modal_title">Unpair Smart Band</string>
     <string name="unprocessable_wearable_information_transfer_message">The data was successfully extracted but not sent to Logifit. Please check your Internet connection and try again</string>
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
     <string name="unselected_shift_message">Please select a work shift before extracting sleep data or making a test</string>
@@ -449,7 +454,6 @@
 
     <!-- Ocupacional Information -->
     <string name="occupational_info">Occupational Information</string>
-    <string name="personal_info">Personal Information</string>
     <string name="company">Company</string>
     <string name="work_position">Work position</string>
     <string name="function">Function</string>

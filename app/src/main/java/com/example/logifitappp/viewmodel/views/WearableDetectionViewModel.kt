@@ -36,6 +36,7 @@ import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableCoordinator
 import com.example.logifitappp.core.wearebles.WearableHelper
 import com.example.logifitappp.core.wearebles.WearableSettingPreferenceConstants
+import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.navigation.routes.MainRoutes
@@ -49,11 +50,12 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = WearableDetectionViewModel.WearableDetectionViewModelFactory::class)
 class WearableDetectionViewModel @AssistedInject constructor(
     @Assisted private val navigation: NavHostController,
+    @Assisted private val user: UserModel?,
     private val wearableService: WearableService
 ): ViewModel(), ScanEventProcessor.Callback {
     @AssistedFactory
     interface WearableDetectionViewModelFactory {
-        fun create(navigation: NavHostController): WearableDetectionViewModel
+        fun create(navigation: NavHostController, user: UserModel?): WearableDetectionViewModel
     }
 
     private var adapter: BluetoothAdapter? = null
@@ -162,21 +164,24 @@ class WearableDetectionViewModel @AssistedInject constructor(
     fun checkWearableConnection() {
         val wearables = App.wearableManager.getWearables()
 
-        wearables.firstOrNull()?.let {
+        wearables.find { it.getAddress() == state.currentCandidate?.getMacAddress() }?.let {
             if (it.isInitialized()) {
-                App.getWearablePreferences(it.getAddress()!!)
-                    .getPreferences()
-                    .edit()
-                    .putBoolean(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION, true)
-                    .apply()
+                if (user?.isAdmin() == false) {
+                    App.getWearablePreferences(it.getAddress()!!)
+                        .getPreferences()
+                        .edit()
+                        .putBoolean(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION, true)
+                        .apply()
 
-                App.preferences
-                    .getPreferences()
-                    .edit()
-                    .putBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, false)
-                    .apply()
+                    App.preferences
+                        .getPreferences()
+                        .edit()
+                        .putBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, false)
+                        .apply()
 
-                App.signalRequestAdditionalInformation(true)
+                    App.signalRequestAdditionalInformation(true)
+                }
+
                 navigation.navigate(MainRoutes.SplashScreen)
             }
         }

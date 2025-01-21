@@ -1,5 +1,7 @@
 package com.example.logifitappp.core.wearebles
 
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import com.example.logifitappp.core.App
 import com.example.logifitappp.data.models.WearableModel
 
@@ -29,6 +31,23 @@ class WearableHelper {
         val wearableType = resolveWearableType(candidate)
 
         return wearableType.getWearableCoordinator().createWearable(candidate, wearableType)
+    }
+
+    fun removeBond(wearable: Wearable): Boolean {
+        val manager = App.context.getSystemService(BluetoothManager::class.java)
+        val adapter = manager.adapter ?: return false
+        val remoteWearable = adapter.getRemoteDevice(wearable.getAddress()) ?: return false
+
+        try {
+            val method = BluetoothDevice::class.java.getMethod("removeBond", null)
+            val result = method.invoke(remoteWearable, null)
+
+            return true == result
+        } catch (e: Exception) {
+            println("Error removing bond to device: $wearable")
+        }
+
+        return false
     }
 
     fun resolveWearableType(candidate: WearableCandidate): WearableTypeEnum {

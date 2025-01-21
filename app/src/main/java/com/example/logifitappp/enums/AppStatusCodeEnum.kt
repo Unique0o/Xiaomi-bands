@@ -59,7 +59,7 @@ enum class AppStatusCodeEnum(
     }),
 
     LOGGING_IN(31, R.string.logging_in_message, true, { Loader() }),
-    NO_ASSOCIATED_USER(422, R.string.unprocessable_http_error_message, false, { AnimatedErrorSignal() }),
+    NO_ASSOCIATED_USER(422, R.string.no_associated_user_error_message, false, { AnimatedErrorSignal() }),
 
     NO_INTERNET_CONNECTION(34, R.string.no_internet_connection_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))

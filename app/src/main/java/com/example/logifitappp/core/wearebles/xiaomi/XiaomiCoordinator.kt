@@ -8,6 +8,13 @@ import java.util.regex.Pattern
 abstract class XiaomiCoordinator: AbstractBleWearableCoordinator() {
     fun checkDecryptionMac() = true
 
+    override fun deleteWearable(wearable: Wearable) {
+        super.deleteWearable(wearable)
+
+        XiaomiSleepTimeProvider(wearable).delete()
+        XiaomiSleepStageProvider(wearable).delete()
+    }
+
     override fun getActivityProvider(wearable: Wearable) = XiaomiActivityProvider(wearable)
 
     override fun getBondingStyle() = BondingStyleEnum.BONDING_STYLE_REQUIRE_KEY

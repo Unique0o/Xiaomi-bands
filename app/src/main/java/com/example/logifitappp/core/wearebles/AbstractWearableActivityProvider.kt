@@ -9,6 +9,10 @@ import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 import com.example.logifitappp.enums.WearableActivityTypeEnum
 
 abstract class AbstractWearableActivityProvider<T: WearableRawActivityModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
+    fun delete() {
+        getWearableRawActivityDao()?.delete(getStoredWearable()?.id ?: 0)
+    }
+
     fun findLastRawActivity(): T? {
         return getWearableRawActivityDao()?.findLastActivity(getStoredWearable()?.id ?: 0)
     }

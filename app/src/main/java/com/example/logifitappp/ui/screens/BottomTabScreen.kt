@@ -42,6 +42,7 @@ import com.example.logifitappp.core.utils.avoidTop
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.BottomTabRoutes
 import com.example.logifitappp.ui.components.SideBarContent
+import com.example.logifitappp.ui.screens.all_in_one.AllInOneView
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.home.HomeView
 import com.example.logifitappp.ui.screens.meditation.MeditationView
@@ -54,11 +55,9 @@ fun BottomTabScreen(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val user = appViewModel.user
-
     val bottomTabNavigation = rememberNavController()
-    val bottomTabScreenViewModel = hiltViewModel<BottomTabScreenViewModel, BottomTabScreenViewModel.BottomTabScreenViewModelFactory>{
-        it.create(user)
+    val bottomTabScreenViewModel = hiltViewModel<BottomTabScreenViewModel, BottomTabScreenViewModel.BottomTabScreenViewModelFactory> {
+        it.create(appViewModel.user)
     }
 
     val context = LocalContext.current
@@ -166,9 +165,10 @@ fun BottomTabScreen(
                 }
             }
         ) { innerPadding ->
-            NavHost(bottomTabNavigation, startDestination = BottomTabRoutes.Home) {
-                composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
+            NavHost(bottomTabNavigation, startDestination = bottomTabScreenViewModel.initialScreen) {
+                composable<BottomTabRoutes.AllInOne> { AllInOneView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
+                composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Meditation> { MeditationView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
             }
         }

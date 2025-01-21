@@ -19,6 +19,7 @@ import com.example.logifitappp.enums.ChipStatusEnum
 
 @Composable
 fun Chip(
+    modifier: Modifier = Modifier,
     label: String,
     labelColor: Color? = null,
     labelTypography: TextStyle = MaterialTheme.typography.titleMedium,
@@ -26,7 +27,7 @@ fun Chip(
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = Modifier
+        modifier = modifier
             .background(status.backgroundColor, RoundedCornerShape(12.dp))
             .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically

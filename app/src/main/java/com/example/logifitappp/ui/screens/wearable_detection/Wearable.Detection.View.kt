@@ -30,6 +30,7 @@ import com.example.logifitappp.core.wearebles.WearableCandidate
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.ui.components.modals.MessageModal
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.WearableDetectionViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -38,12 +39,13 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun WearableDetectionView(
+    appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val wearableDetectionViewModel = hiltViewModel<WearableDetectionViewModel, WearableDetectionViewModel.WearableDetectionViewModelFactory>{
-        it.create(navigation)
+        it.create(navigation, appViewModel.user)
     }
 
     val bluetoothPermissions = rememberMultiplePermissionsState(permissions = wearableDetectionViewModel.getWantedPermissions())

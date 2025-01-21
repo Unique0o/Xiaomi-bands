@@ -1,5 +1,6 @@
 package com.example.logifitappp.ui.screens.wearable_detection
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.views.WearableDetectionViewModel
 
+@SuppressLint("MissingPermission")
 @Composable
 fun WearableDetectionStep(
     navigation: NavHostController,

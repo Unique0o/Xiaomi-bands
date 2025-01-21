@@ -8,6 +8,15 @@ import com.example.logifitappp.data.models.commons.WearableRawActivityModel
 
 abstract class WearableRawActivityDao<T: WearableRawActivityModel>(private val tableName: String) {
     @RawQuery
+    abstract fun delete(query: SupportSQLiteQuery): Int
+
+    fun delete(wearableId: Int) {
+        delete(
+            SimpleSQLiteQuery("DELETE FROM $tableName WHERE wearable_id = $wearableId")
+        )
+    }
+
+    @RawQuery
     abstract fun findLastActivity(query: SupportSQLiteQuery): T?
 
     fun findLastActivity(wearableId: Int): T? {

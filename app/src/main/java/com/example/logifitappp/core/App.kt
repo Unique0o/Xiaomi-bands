@@ -73,6 +73,10 @@ class App: Application() {
         lateinit var wearableService: WearableService
             private set
 
+        fun deleteWearableSpecificSharedPrefs(wearableIdentifier: String?) {
+            getWearableSpecificSharedPrefs(wearableIdentifier)?.edit()?.clear()?.apply()
+        }
+
         fun getWearableServiceTo(wearable: Wearable) = wearableService.forDevice(wearable)
 
         fun getWearablePreferences(wearableIdentifier: String) = WearablePreferences(getWearableSpecificSharedPrefs(wearableIdentifier)!!)

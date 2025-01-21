@@ -15,6 +15,7 @@ import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
+import com.example.logifitappp.ui.screens.personal_information.PersonalInformationView
 import com.example.logifitappp.ui.screens.roster.RosterView
 import com.example.logifitappp.ui.screens.roster_recording.RosterRecordingView
 import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordingView
@@ -40,12 +41,13 @@ fun MainNavigation(
         composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+        composable<MainRoutes.PersonalInformation> { PersonalInformationView(navigation) }
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
         composable<MainRoutes.RosterRecording> { RosterRecordingView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
         composable<MainRoutes.Trainings> { TrainingsView(navigation) }
-        composable<MainRoutes.WearableDetection> { WearableDetectionView(navigation) }
+        composable<MainRoutes.WearableDetection> { WearableDetectionView(appViewModel, navigation) }
 
         composable<MainRoutes.DrowsinessTestDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.DrowsinessTestDetail>()

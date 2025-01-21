@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class BottomTabRoutes {
     @Serializable
+    data object AllInOne: BottomTabRoutes()
+
+    @Serializable
     data object Graphics: BottomTabRoutes()
 
     @Serializable

@@ -62,13 +62,15 @@ class WearableProfileViewModel @AssistedInject constructor(
         viewModelScope.launch {
             state.wearable?.let { wearable ->
                 try {
-                    wearableService.associate(user.id, AssociateWearableRequest(
-                        device_mac = wearable.getAddress()!!,
-                        oper_system = "Android",
-                        oper_system_version = Build.VERSION.RELEASE,
-                        phone_brand = Build.BRAND,
-                        phone_model = Build.MODEL
-                    ))
+                    if (!user.isAdmin()) {
+                        wearableService.associate(user.id, AssociateWearableRequest(
+                            device_mac = wearable.getAddress()!!,
+                            oper_system = "Android",
+                            oper_system_version = Build.VERSION.RELEASE,
+                            phone_brand = Build.BRAND,
+                            phone_model = Build.MODEL
+                        ))
+                    }
                 } catch (_: Exception) {
 
                 }
@@ -184,6 +186,11 @@ class WearableProfileViewModel @AssistedInject constructor(
 
     private fun refreshWearable() {
         App.wearableManager.getWearableByMac(mac)?.let {
+            if (user?.isAdmin() == true) {
+                val wearable = App.database.wearableDao().find(it.getAddress()!!, user.id)!!
+                state = state.copy(shift = wearable.shiftId?.let { id -> App.database.shiftDao().find(id, user.tenantId) })
+            }
+
             state = state.copy(wearable = it)
             refreshSleepProcessingData(it)
         }

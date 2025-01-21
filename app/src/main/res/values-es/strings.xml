@@ -36,6 +36,7 @@
     <string name="button_get_into">Ingresar</string>
     <string name="button_mark_as_view">Marcar como visto</string>
     <string name="button_ok">Aceptar</string>
+    <string name="button_pair_smart_band">Emparejar Smart Band</string>
     <string name="button_register">Registrar</string>
     <string name="button_send">Enviar</string>
     <string name="button_send_to_logifit">Enviar a Logifit</string>
@@ -162,9 +163,11 @@
     <string name="naps">Siestas</string>
     <string name="nicaragua">Nicaragua</string>
     <string name="no">No</string>
+    <string name="no_associated_user_error_message">Falta asociar dispositivo</string>
     <string name="no_data">Sin datos</string>
     <string name="no_internet_connection_message">Verifique su conexión a Internet</string>
     <string name="no_internet_connection_page_message">Esta sección la puede consultar con conexión a Internet. Favor de verificar e inténtelo nuevamente.</string>
+    <string name="no_paired_wearables_page_message">No tiene ninguna Smart Band enparejada</string>
     <string name="no_synchronized_wearable_data_message">Al parecer no tiene datos actuales, realice la extracción e inténtelo nuevamente</string>
     <string name="no_wearable_sleep_data_message">Al parecer no tienes registro de sueño para enviar. Intente sincronizar nuevamente</string>
     <string name="not_connected">No conectado</string>
@@ -215,6 +218,7 @@
     <string name="select">Seleccionar</string>
     <string name="select_date_range_title">Seleccione el rango de fecha</string>
     <string name="select_date_title">Seleccione la fecha</string>
+    <string name="select_shift">Seleccione un turno</string>
     <string name="share_evaluation_result_message">Compartir resultado de evaluación</string>
     <string name="share_sleep_detail_message">Compartir detalle de sueño</string>
     <string name="share_training_certificate_message">Compartir certificado de capacitación</string>
@@ -274,7 +278,8 @@
     <string name="unfit_to_drive_message">No estás en capacidad de manejo por régimen de sueño incompleto.</string>
     <string name="united_states">Estados Unidos</string>
     <string name="unknown_activity">Actividad desconocida</string>
-    <string name="unprocessable_http_error_message">Falta asociar dispositivo</string>
+    <string name="unpair_band_modal_message">¿Estás seguro que deseas desvincular la Smart Band que actualmente usas?</string>
+    <string name="unpair_band_modal_title">Desvincular Smart Band</string>
     <string name="unprocessable_wearable_information_transfer_message">Los datos fueron extraídos exitosamente pero no se enviaron a Logifit. Verifique su conexión a Internet e inténtelo nuevamente</string>
     <string name="unregistered_user_error_message">Usuario no registrado. Por favor, crear una cuenta para iniciar sesión</string>
     <string name="unselected_shift_message">Por favor seleccione un turno de trabajo antes de extraer datos de sueño o realizar una evaluación</string>
@@ -445,7 +450,6 @@
 
     <!-- Ocupacional Information -->
     <string name="occupational_info">Información Ocupacional</string>
-    <string name="personal_info">Información Personal</string>
     <string name="company">Compañía</string>
     <string name="work_position">Puesto de trabajo</string>
     <string name="function">Función</string>

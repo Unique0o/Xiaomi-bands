@@ -6,6 +6,10 @@ import com.example.logifitappp.data.dao.commons.WearableSampleDao
 import com.example.logifitappp.data.models.commons.WearableSampleModel
 
 abstract class AbstractWearableSampleProvider<T: WearableSampleModel>(wearable: Wearable): AbstractWearableProvider(wearable) {
+    fun delete() {
+        getWearableSampleDao()?.delete(getStoredWearable()?.id ?: 0)
+    }
+
     open fun getSamplesBetween(from: Long, to: Long): List<T> {
         println("fetch spo2 samples between $from - $to")
 

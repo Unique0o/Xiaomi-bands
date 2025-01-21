@@ -3,12 +3,14 @@ package com.example.logifitappp.viewmodel.views
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.enums.BottomTabScreenEnum
+import com.example.logifitappp.navigation.routes.BottomTabRoutes
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -24,6 +26,7 @@ class BottomTabScreenViewModel @AssistedInject constructor(
     }
 
     var index by mutableIntStateOf(0)
+    val initialScreen by mutableStateOf(if (user?.isAdmin() == true) BottomTabRoutes.AllInOne else BottomTabRoutes.Home)
 
     var screens = mutableStateListOf<BottomTabScreenEnum>()
         private set
@@ -47,7 +50,7 @@ class BottomTabScreenViewModel @AssistedInject constructor(
 
         when {
             user?.isAdmin() == true -> {
-
+                screens.add(BottomTabScreenEnum.ALL_IN_ONE)
             }
 
             else -> {

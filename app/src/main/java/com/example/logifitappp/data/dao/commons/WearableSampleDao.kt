@@ -8,6 +8,15 @@ import com.example.logifitappp.data.models.commons.WearableSampleModel
 
 abstract class WearableSampleDao<T: WearableSampleModel>(private val tableName: String) {
     @RawQuery
+    abstract fun delete(query: SupportSQLiteQuery): Int
+
+    fun delete(wearableId: Int) {
+        delete(
+            SimpleSQLiteQuery("DELETE FROM $tableName WHERE wearable_id = $wearableId")
+        )
+    }
+
+    @RawQuery
     protected abstract fun getSamplesBetween(query: SupportSQLiteQuery): List<T>
 
     fun getSamplesBetween(from: Long, to: Long, wearableId: Int): List<T> {
