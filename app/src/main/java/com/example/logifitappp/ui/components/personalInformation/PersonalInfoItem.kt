@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.theme.Rose120
@@ -24,7 +25,6 @@ fun PersonalInfoItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onClick)
                 .padding(vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -37,11 +37,14 @@ fun PersonalInfoItem(
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = value,
+                textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge,
                 color = if (isValueSelected) Color.Black else Rose120,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(onClick = onClick)
             )
             Icon(
                 imageVector = Icons.Default.ChevronRight,

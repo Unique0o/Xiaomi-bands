@@ -460,6 +460,8 @@
     <string name="breaks_length">¿Cuál es la duración promedio típica de estos descansos proporcionados o tomados?</string>
     <string name="not_assigned">No asignado</string>
     <string name="not_selected">No seleccionado</string>
+
+    <!-- Personal Information -->
     <string name="names">Nombres</string>
     <string name="surnames">Apellidos</string>
     <string name="email">Correo electrónico</string>
@@ -467,6 +469,9 @@
     <string name="country">País</string>
     <string name="birthdate">Fecha de nacimiento</string>
     <string name="phone">Teléfono</string>
+    <string name="identification_documents">Documento de identificación</string>
+    <string name="department">Departamento</string>
+    <string name="province">Provincia</string>
 
     <!-- Health Information -->
     <string name="health_info">Información de Salud</string>

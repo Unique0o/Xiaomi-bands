@@ -11,13 +11,40 @@ class PersonalInfoRepositoryImpl @Inject constructor(
 ) : PersonalInfoRepository {
     override suspend fun getPersonalInfo(): List<PersonalInfoModel> {
         return listOf(
-                PersonalInfoModel(context.getString(R.string.names), "John"),
-                PersonalInfoModel(context.getString(R.string.surnames), "Doe"),
-                PersonalInfoModel(context.getString(R.string.email), "john.doe@example.com"),
-                PersonalInfoModel(context.getString(R.string.document_type), context.getString(R.string.not_selected), false),
-                PersonalInfoModel(context.getString(R.string.country), context.getString(R.string.not_selected), false),
-                PersonalInfoModel(context.getString(R.string.birthdate), context.getString(R.string.not_selected), false),
-                PersonalInfoModel(context.getString(R.string.phone), "-"),
+            PersonalInfoModel(context.getString(R.string.names), "John"),
+            PersonalInfoModel(context.getString(R.string.surnames), "Doe"),
+            PersonalInfoModel(context.getString(R.string.email), "john.doe@example.com"),
+            PersonalInfoModel(
+                context.getString(R.string.identification_documents),
+               "cnic",
+            ),
+            PersonalInfoModel(context.getString(R.string.phone), "12356789"),
+            PersonalInfoModel(
+                context.getString(R.string.document_type),
+                context.getString(R.string.not_selected),
+                false
+            ),
+            PersonalInfoModel(
+                context.getString(R.string.country),
+                context.getString(R.string.not_selected),
+                false
+            ),
+            PersonalInfoModel(
+                context.getString(R.string.department),
+                context.getString(R.string.not_selected),
+                false
+            ),
+            PersonalInfoModel(
+                context.getString(R.string.birthdate),
+                context.getString(R.string.not_selected),
+                false
+            ),
+            PersonalInfoModel(
+                context.getString(R.string.province),
+                context.getString(R.string.not_selected),
+                false
+            ),
+
         )
     }
 }

@@ -2,6 +2,7 @@ package com.example.logifitappp.ui.components.personalInformation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -17,45 +18,66 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.ProgressiveImage
+import kotlinx.coroutines.launch
 
 @Composable
-fun ProfilePhoto(onPhotoClick: () -> Unit) {
+fun ProfilePhoto(profilePic: String, onPhotoClick: () -> Unit) {
     Column {
-        Text(
-            text = stringResource(id = R.string.profile_photo),
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray,
-            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-        )
-        Box(
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.user1),
-                contentDescription = "Profile Photo",
+            Text(
+                text = stringResource(id = R.string.profile_photo),
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.Gray,
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .align(Alignment.CenterEnd),
-                contentScale = ContentScale.Crop
+                    .wrapContentSize(Alignment.Center)
             )
-            IconButton(
-                onClick = onPhotoClick,
+            Box(
                 modifier = Modifier
-                    .size(32.dp)
-                    .align(Alignment.BottomEnd)
-                    .offset(x = (-8).dp, y = (-8).dp)
-                    .background(Color.Black, CircleShape)
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Camera,
-                    contentDescription = "Change photo",
-                    tint = Color.White
+//                Image(
+//                    painter = painterResource(id = R.drawable.user1),
+//                    contentDescription = "Profile Photo",
+//                    modifier = Modifier
+//                        .size(100.dp)
+//                        .clip(CircleShape)
+//                        .align(Alignment.CenterEnd),
+//                    contentScale = ContentScale.Crop
+//                )
+
+                ProgressiveImage(
+                    default = R.drawable.ic_default_profile_photo,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .align(Alignment.CenterEnd)
+                        .clickable {
+                        },
+                    url = profilePic
                 )
+                IconButton(
+                    onClick = onPhotoClick,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .align(Alignment.BottomEnd)
+                        .offset(x = (-6).dp, y = (-6).dp)
+                        .background(Color.Black, CircleShape)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Camera,
+                        contentDescription = "Change photo",
+                        tint = Color.White
+                    )
+                }
             }
+
         }
-        Divider(color = Color.LightGray)
+        HorizontalDivider(color = Color.LightGray)
     }
 }
