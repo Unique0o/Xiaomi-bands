@@ -13,6 +13,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,12 +39,13 @@ fun AllInOneWearableItem(
     navigation: NavHostController,
     wearable: Wearable
 ) {
-    val drowsiness = allInOneViewModel.fetchDrowsiness(wearable)
-    val sleepCondition = allInOneViewModel.fetchSleepCondition(drowsiness)
+    val drowsiness by remember(wearable) { mutableStateOf(allInOneViewModel.fetchDrowsiness(wearable)) }
+    val sleepCondition by remember(wearable) { mutableStateOf(allInOneViewModel.fetchSleepCondition(drowsiness)) }
     val shift = allInOneViewModel.fetchShift(wearable)
 
     InformationCard(
         icon = Icons.Default.AccountCircle,
+        iconAction = { allInOneViewModel.goToPairingWorkerPage(wearable) },
         label = wearable.getAliasOrName(),
         modifier = Modifier.clickable { navigation.navigate(MainRoutes.WearableProfile(wearable.getAddress()!!)) },
         suffixComponent = {
@@ -54,7 +58,7 @@ fun AllInOneWearableItem(
             }
         }
     ) {
-        Column(Modifier.padding(start = 28.dp).offset(y = (-12).dp)) {
+        Column(Modifier.padding(start = 50.dp).offset(y = (-12).dp)) {
             wearable.getAddress()?.let {
                 Text(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -73,13 +77,13 @@ fun AllInOneWearableItem(
                 )
             } else {
                 val now = GregorianCalendar.getInstance().timeInMillis / 1000
-                val createAtInMillis = DateTimeUtils.parse(drowsiness.createdAt, "yyyy-MM-dd HH:mm:ss")!!.time / 1000
+                val createAtInMillis = DateTimeUtils.parse(drowsiness!!.createdAt, "yyyy-MM-dd HH:mm:ss")!!.time / 1000
 
                 Text(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     text = stringResource(
                         R.string.sleep_synchronization_message,
-                        drowsiness.createdAt,
+                        drowsiness!!.createdAt,
                         DurationUtils.formatExtended(App.context, now - createAtInMillis)
                     ),
                     typography = MaterialTheme.typography.labelMedium

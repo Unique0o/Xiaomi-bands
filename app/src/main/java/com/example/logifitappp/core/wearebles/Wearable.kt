@@ -138,6 +138,10 @@ class Wearable(): Parcelable {
         LocalBroadcastManager.getInstance(context).sendBroadcast(wearableUpdateIntent)
     }
 
+    fun setAlias(alias: String?) {
+        this.alias = alias
+    }
+
     fun setBatteryLevel(batteryLevel: Int, index: Int) {
         if ((batteryLevel in 0..100) || batteryLevel.toShort() == BATTERY_UNKNOWN) {
             this.batteryLevel?.set(index, batteryLevel)

@@ -28,6 +28,7 @@ import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.ChangeShiftModal
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.modals.UnpairWearableModal
 import com.example.logifitappp.ui.components.pages.IconMessagePage
 import com.example.logifitappp.ui.components.pages.ScrollablePage
@@ -43,7 +44,7 @@ fun AllInOneView(
 ) {
     val context = LocalContext.current
     val allInOneViewModel = hiltViewModel<AllInOneViewModel, AllInOneViewModel.AllInOneViewModelFactory> {
-        it.create(appViewModel.user, appViewModel.tenant)
+        it.create(navigation, appViewModel.user, appViewModel.tenant)
     }
 
     DisposableEffect(Unit) {
@@ -65,6 +66,13 @@ fun AllInOneView(
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
         }
     }
+
+    MessageModal(
+        onClose = { allInOneViewModel.stopFetchingWorkersProcessing() },
+        onDismissRequest = { allInOneViewModel.stopFetchingWorkersProcessing() },
+        status = allInOneViewModel.state.fetchingWorkersStatus,
+        visible = allInOneViewModel.state.isFetchingWorkers
+    )
 
     UnpairWearableModal(
         onClose = { allInOneViewModel.closeUnpairWearableModal() },

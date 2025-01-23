@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.DrowsinessModel
@@ -13,22 +15,30 @@ import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.SleepConditionModel
 import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
+import com.example.logifitappp.domain.service.AdminService
 import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
+import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.exceptions.HttpConsumerException
+import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.viewmodel.states.AllInOneState
+import com.google.gson.Gson
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = AllInOneViewModel.AllInOneViewModelFactory::class)
 class AllInOneViewModel @AssistedInject constructor(
+    @Assisted private val navigation: NavHostController,
     @Assisted private val tenant: TenantModel?,
     @Assisted private val user: UserModel?,
+    private val adminService: AdminService,
     private val findAppropriateSleepConditionUseCase: FindAppropriateSleepConditionUseCase
 ): ViewModel() {
     @AssistedFactory
     interface AllInOneViewModelFactory {
-        fun create(user: UserModel?, tenant: TenantModel?): AllInOneViewModel
+        fun create(navigation: NavHostController, user: UserModel?, tenant: TenantModel?): AllInOneViewModel
     }
 
     var state by mutableStateOf(AllInOneState())
@@ -83,6 +93,29 @@ class AllInOneViewModel @AssistedInject constructor(
         return wearableModel.shiftId?.let { App.database.shiftDao().find(it, tenant.id) }
     }
 
+    fun goToPairingWorkerPage(wearable: Wearable) {
+        viewModelScope.launch {
+            try {
+                state = state.copy(
+                    isFetchingWorkers = true,
+                    fetchingWorkersStatus = AppStatusCodeEnum.FETCHING_WORKER_LIST
+                )
+
+                val workers = adminService.fetchWorkers()
+                val gson = Gson()
+
+                state = state.copy(isFetchingWorkers = false)
+
+                navigation.navigate(MainRoutes.PairingWorker(
+                    wearable.getAddress()!!,
+                    gson.toJson(workers.toTypedArray())
+                ))
+            } catch (e: HttpConsumerException) {
+                state = state.copy(fetchingWorkersStatus = e.getStatus())
+            }
+        }
+    }
+
     fun handleSelectShift(shift: ShiftModel) {
         if (user == null) return
 
@@ -135,5 +168,9 @@ class AllInOneViewModel @AssistedInject constructor(
 
         if (value.text.isBlank()) filteredWearables.addAll(wearables)
         else filteredWearables.addAll(wearables.filter { it.getAliasOrName().contains(value.text, true) or it.getAddress()!!.contains(value.text, true) })
+    }
+
+    fun stopFetchingWorkersProcessing() {
+        state = state.copy(isFetchingWorkers = false)
     }
 }

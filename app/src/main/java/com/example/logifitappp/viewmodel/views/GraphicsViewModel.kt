@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = GraphicsViewModel.GraphicsViewModelFactory::class)
 class GraphicsViewModel @AssistedInject constructor(
+    @Assisted private val mac: String?,
     @Assisted private val user: UserModel?,
     private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
@@ -41,7 +42,7 @@ class GraphicsViewModel @AssistedInject constructor(
 ): ViewModel() {
     @AssistedFactory
     interface GraphicsViewModelFactory {
-        fun create(user: UserModel?): GraphicsViewModel
+        fun create(mac: String?, user: UserModel?): GraphicsViewModel
     }
 
     var state by mutableStateOf(GraphicsState())
@@ -49,7 +50,7 @@ class GraphicsViewModel @AssistedInject constructor(
 
     init {
         user?.shiftId?.let {
-            val wearable = App.wearableManager.getWearables().first()
+            val wearable = if (mac == null) App.wearableManager.getWearables().first() else App.wearableManager.getWearableByMac(mac)
             val shift = App.database.shiftDao().find(it, user.tenantId)
 
             refreshGraphics(shift, wearable)

@@ -7,13 +7,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.logifitappp.data.remote.dto.response.WorkerItemResponse
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.drowsiness_test_detail.DrowsinessTestDetailView
 import com.example.logifitappp.ui.screens.drowsiness_tests.DrowsinessTestsView
+import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
+import com.example.logifitappp.ui.screens.pairing_worker.PairingWorkerView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.personal_information.PersonalInformationView
 import com.example.logifitappp.ui.screens.roster.RosterView
@@ -55,6 +58,12 @@ fun MainNavigation(
             DrowsinessTestDetailView(appViewModel, navigation, arguments.drowsinessTestId)
         }
 
+        composable<MainRoutes.Graphics> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.Graphics>()
+
+            GraphicsView(appViewModel, null, navigation, mac = arguments.mac)
+        }
+
         composable<MainRoutes.HeartRateDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.HeartRateDetail>()
 
@@ -66,6 +75,13 @@ fun MainNavigation(
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
 
             LessonDetailView(appViewModel, navigation, arguments.lessonId, gson.fromJson(arguments.serializedLessonIds, Array<Int>::class.java))
+        }
+
+        composable<MainRoutes.PairingWorker> { navBackStackEntry ->
+            val gson = Gson()
+            val arguments = navBackStackEntry.toRoute<MainRoutes.PairingWorker>()
+
+            PairingWorkerView(appViewModel, navigation, arguments.mac, gson.fromJson(arguments.serializedWorkers, Array<WorkerItemResponse>::class.java))
         }
 
         composable<MainRoutes.SleepDetail> { navBackStackEntry ->

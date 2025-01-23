@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 fun IconText(
     modifier: Modifier = Modifier,
     icon: ImageVector,
+    iconAction: (() -> Unit)? = null,
     iconColor: Color = MaterialTheme.colorScheme.primary,
     iconSize: Dp = 24.dp,
     label: String,
@@ -30,12 +32,23 @@ fun IconText(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = iconColor,
-            modifier = Modifier.size(iconSize)
-        )
+        if (iconAction == null) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = iconColor,
+                modifier = Modifier.size(iconSize)
+            )
+        } else {
+            IconButton(onClick = iconAction) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = iconColor,
+                    modifier = Modifier.size(iconSize)
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.width(spaceBetween))
 

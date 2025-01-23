@@ -2,6 +2,7 @@ package com.example.logifitappp.di
 
 import android.content.Context
 import com.example.logifitappp.core.App
+import com.example.logifitappp.data.remote.api.AdminApi
 import com.example.logifitappp.data.remote.api.AudioApi
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
@@ -72,6 +73,10 @@ object NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    @Provides
+    @Singleton
+    fun provideAdminApi(retrofit: Retrofit): AdminApi = retrofit.create(AdminApi::class.java)
 
     @Provides
     @Singleton

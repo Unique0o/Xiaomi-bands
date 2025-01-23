@@ -1,5 +1,6 @@
 package com.example.logifitappp.di
 
+import com.example.logifitappp.domain.repository.AdminRepository
 import com.example.logifitappp.domain.repository.AudioRepository
 import com.example.logifitappp.domain.repository.AuthRepository
 import com.example.logifitappp.domain.repository.DocumentTypeRepository
@@ -12,6 +13,7 @@ import com.example.logifitappp.domain.repository.TenantRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
 import com.example.logifitappp.domain.repository.UserRepository
 import com.example.logifitappp.domain.repository.WearableRepository
+import com.example.logifitappp.domain.service.AdminService
 import com.example.logifitappp.domain.service.AudioService
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.DocumentTypeService
@@ -33,6 +35,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
+    @Provides
+    @Singleton
+    fun provideAdminService(adminRepository: AdminRepository) = AdminService(adminRepository)
+
     @Provides
     @Singleton
     fun provideAudioService(audioRepository: AudioRepository) = AudioService(audioRepository)

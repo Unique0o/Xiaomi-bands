@@ -23,6 +23,7 @@ import com.example.logifitappp.ui.components.Text
 fun IconButton(
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
+    enabled : Boolean = true,
     elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     horizontalPadding: Dp = 24.dp,
     verticalPadding: Dp = 16.dp,
@@ -32,13 +33,12 @@ fun IconButton(
     text: String,
     textColor: Color = MaterialTheme.colorScheme.onPrimary,
     cornerRadius: Dp = 24.dp,
-    enabled : Boolean = true
 ) {
     FloatingActionButton(
-        containerColor = backgroundColor,
+        containerColor = if (enabled) backgroundColor else MaterialTheme.colorScheme.surfaceTint,
         elevation = elevation,
         modifier = modifier,
-        onClick = onClick,
+        onClick = { if (enabled) onClick() },
         shape = RoundedCornerShape(size = cornerRadius),
     ) {
         Row(

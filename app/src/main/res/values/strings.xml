@@ -5,6 +5,7 @@
     <string name="app_name">Logifit Plus</string>
     <string name="argentina">Argentina</string>
     <string name="asleep_measurement_legend">Measurement during sleep</string>
+    <string name="associating_worker_message">Wait until the process finishes</string>
     <string name="authenticating">Authenticating</string>
     <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
@@ -24,6 +25,7 @@
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
     <string name="busy_task_fetch_spo2_data">Fetching SpO2 data</string>
     <string name="button_active_bluetooth">Activate Bluetooth</string>
+    <string name="button_activity">Activity</string>
     <string name="button_add">Add</string>
     <string name="button_authenticate_band">Authenticate band</string>
     <string name="button_cancel">Cancel</string>
@@ -36,6 +38,7 @@
     <string name="button_get_into">Get into</string>
     <string name="button_mark_as_view">Mark as view</string>
     <string name="button_ok">OK</string>
+    <string name="button_pair_operator">Link operator</string>
     <string name="button_pair_smart_band">Pair Smart Band</string>
     <string name="button_register">Register</string>
     <string name="button_send">Send</string>
@@ -99,6 +102,7 @@
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
+    <string name="fetching_worker_list_message">The operators under your charge are being obtained. Please wait...</string>
     <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
     <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
     <string name="first_additional_information_title">Before starting</string>
@@ -107,6 +111,7 @@
     <string name="fit_with_observations">With obs.</string>
     <string name="full_name">Full name</string>
     <string name="go_back">Go back</string>
+    <string name="graphics_title">Activity</string>
     <string name="greater_than_1_hour">Greater than 1 hour</string>
     <string name="greater_than_15_percentage">Greater than 15%</string>
     <string name="greater_than_20_minutes">Greater than 20 minutes</string>
@@ -176,6 +181,8 @@
     <string name="occupational_information_title">Occupational information</string>
     <string name="open_on_phone">Open on Android device</string>
     <string name="operator">Operator</string>
+    <string name="pairing_worker_message">Type the name, surname and/or identity document of the operator to which the Smart Band %1$s (%2$s) be paired</string>
+    <string name="pairing_worker_title">Pair operator</string>
     <string name="panama">Panama</string>
     <string name="paraguay">Paraguay</string>
     <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
@@ -258,6 +265,7 @@
     <string name="successful_roster_information_storage_message">The registration of the information was carried out successfully</string>
     <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
     <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
+    <string name="successful_worker_associated_message">Contributor updated successfully</string>
     <string name="summary">Summary</string>
     <string name="surnames_validation_error_message">You must insert your surnames</string>
     <string name="sync_with_logifit_required_alert">The extracted data has not been sent to the supervision. Please check if the device has a signal, mobile data or is connected to a stable Wi-Fi network. If there is no internet connection at the moment, please send the information as soon as possible once the connection is reestablished.</string>
@@ -294,6 +302,7 @@
     <string name="wearable_pairing_title">Pairing with %1$s</string>
     <string name="wearable_profile_disconnecting_message">Your Smart Band is disconnected from the application, please connect to be able to register your information</string>
     <string name="without_role">Without role</string>
+    <string name="worker_list_empty_message">There are no operators under your supervision</string>
     <string name="yes">Yes </string>
 
     <string-array name="operator_onboarding_subtitle">

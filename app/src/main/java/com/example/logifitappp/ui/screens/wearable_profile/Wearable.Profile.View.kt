@@ -105,7 +105,7 @@ fun WearableProfileView(
                 .background(MaterialTheme.colorScheme.surface)
                 .padding(24.dp)
         ) {
-            WearableProfileOptions(wearableProfileViewModel)
+            WearableProfileOptions(navigation, appViewModel.user, wearableProfileViewModel)
             Spacer(Modifier.weight(1f))
             WearableProfileActions(wearableProfileViewModel)
         }
