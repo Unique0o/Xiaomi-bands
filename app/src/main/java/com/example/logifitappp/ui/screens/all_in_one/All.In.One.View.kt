@@ -22,8 +22,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.avoidBottom
+import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.utils.plus
+import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
@@ -51,14 +54,20 @@ fun AllInOneView(
         val receiver = object: BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent) {
                 when (intent.action) {
+                    App.ACTION_NEW_DATA -> {
+                        val wearable = intent.parcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
+                        allInOneViewModel.refreshSingleWearable(wearable)
+                    }
+
                     WearableManager.ACTION_DEVICES_CHANGED -> {
-                        allInOneViewModel.refreshPairedWearables()
+                        allInOneViewModel.checkWearableConnection()
                     }
                 }
             }
         }
 
         val filterLocal = IntentFilter()
+        filterLocal.addAction(App.ACTION_NEW_DATA)
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
@@ -70,8 +79,8 @@ fun AllInOneView(
     MessageModal(
         onClose = { allInOneViewModel.stopFetchingWorkersProcessing() },
         onDismissRequest = { allInOneViewModel.stopFetchingWorkersProcessing() },
-        status = allInOneViewModel.state.fetchingWorkersStatus,
-        visible = allInOneViewModel.state.isFetchingWorkers
+        status = allInOneViewModel.state.status,
+        visible = allInOneViewModel.state.isLoading
     )
 
     UnpairWearableModal(

@@ -152,9 +152,9 @@ class WearableProfileViewModel @AssistedInject constructor(
         when {
             drowsiness == null -> {
                 state = state.copy(
-                    activityDataSynchronizationMessage = App.context.getString(R.string.lack_of_sleep_synchronization_message),
+                    activityDataSynchronizationMessage = App.context.getString(R.string.lack_of_sleep_extraction_message),
                     synchronizationWithLogifitMessage = App.context.getString(R.string.lack_of_sleep_synchronization_with_logifit_message),
-                    totalSleepTimeMessage = App.context.getString(R.string.lack_of_sleep_synchronization_message)
+                    totalSleepTimeMessage = App.context.getString(R.string.lack_of_sleep_extraction_message)
                 )
             }
 
@@ -165,7 +165,7 @@ class WearableProfileViewModel @AssistedInject constructor(
 
                 state = state.copy(
                     activityDataSynchronizationMessage = App.context.getString(
-                        R.string.sleep_synchronization_message,
+                        R.string.sleep_extraction_message,
                         drowsiness.createdAt,
                         DurationUtils.formatExtended(App.context, now - createAtInMillis)
                     ),
@@ -177,7 +177,7 @@ class WearableProfileViewModel @AssistedInject constructor(
                         DurationUtils.formatExtended(App.context, now - sentAtInMillis)
                     ),
 
-                    totalSleepTimeMessage = if (drowsiness.totalSleepSeconds == 0L) App.context.getString(R.string.lack_of_sleep_synchronization_message)
+                    totalSleepTimeMessage = if (drowsiness.totalSleepSeconds == 0L) App.context.getString(R.string.lack_of_sleep_extraction_message)
                     else App.context.getString(R.string.sleep_hours_message, DurationUtils.format(drowsiness.totalSleepSeconds))
                 )
             }

@@ -30,7 +30,7 @@ import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
-import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
+import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -149,8 +149,8 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInfoViewModel {
-        return OccupationalInfoViewModel(getOccupationalInfoUseCase)
+    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInformationViewModel {
+        return OccupationalInformationViewModel(getOccupationalInfoUseCase)
     }
 
     @Provides

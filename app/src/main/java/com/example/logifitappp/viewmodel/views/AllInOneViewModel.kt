@@ -17,8 +17,13 @@ import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.service.AdminService
 import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
+import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
+import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
+import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
+import com.example.logifitappp.exceptions.SynchronizationProcessingException
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.viewmodel.states.AllInOneState
 import com.google.gson.Gson
@@ -34,7 +39,10 @@ class AllInOneViewModel @AssistedInject constructor(
     @Assisted private val tenant: TenantModel?,
     @Assisted private val user: UserModel?,
     private val adminService: AdminService,
-    private val findAppropriateSleepConditionUseCase: FindAppropriateSleepConditionUseCase
+    private val findAppropriateSleepConditionUseCase: FindAppropriateSleepConditionUseCase,
+    private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
+    private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
+    private val synchronizeWearableUseCase: SynchronizeWearableUseCase
 ): ViewModel() {
     @AssistedFactory
     interface AllInOneViewModelFactory {
@@ -52,6 +60,32 @@ class AllInOneViewModel @AssistedInject constructor(
         refreshPairedWearables()
     }
 
+    fun checkWearableConnection() {
+        viewModelScope.launch {
+            refreshPairedWearables()
+
+            state.currentWearable?.let { currentWearable ->
+                val wearable = wearables.find { it.getAddress() == currentWearable.getAddress() }
+
+                if (wearable == null) return@launch
+
+                if (!state.isLoading) return@launch
+
+                if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)
+
+                if (wearable.isDisconnected()) {
+                    val status = when (state.status) {
+                        AppStatusCodeEnum.CONNECTING_WITH_WEARABLE -> AppStatusCodeEnum.FAILED_WEARABLE_PAIRING
+                        AppStatusCodeEnum.EXTRACTING_WEARABLE_INFORMATION -> AppStatusCodeEnum.INTERRUPTED_SYNCHRONIZATION
+                        else -> state.status
+                    }
+
+                    state = state.copy(status = status)
+                }
+            }
+        }
+    }
+
     fun closeUnpairWearableModal() {
         state = state.copy(
             currentWearable = null,
@@ -65,6 +99,36 @@ class AllInOneViewModel @AssistedInject constructor(
             currentWearable = null,
             shouldShowWearableShiftModal = false
         )
+    }
+
+    fun connect(wearable: Wearable) {
+        state = state.copy(
+            currentWearable = wearable,
+            isLoading = true,
+            status = AppStatusCodeEnum.CONNECTING_WITH_WEARABLE
+        )
+
+        if (!wearable.getWearableCoordinator().isConnectable()) {
+            wearable.setState(Wearable.State.WAITING_FOR_SCAN)
+            wearable.sendDeviceUpdateIntent(App.context, WearableUpdateSubjectEnum.CONNECTION_STATE)
+
+            return
+        }
+
+        App.getWearableServiceTo(wearable).connect()
+    }
+
+    fun fetchActivities(wearable: Wearable) {
+        try {
+            state = state.copy(
+                isLoading = true,
+                status = AppStatusCodeEnum.EXTRACTING_WEARABLE_INFORMATION
+            )
+
+            synchronizeWearableUseCase(fetchShift(wearable), wearable)
+        } catch (e: SynchronizationProcessingException) {
+            state = state.copy(status = e.getStatus())
+        }
     }
 
     fun fetchDrowsiness(wearable: Wearable): DrowsinessModel? {
@@ -97,21 +161,21 @@ class AllInOneViewModel @AssistedInject constructor(
         viewModelScope.launch {
             try {
                 state = state.copy(
-                    isFetchingWorkers = true,
-                    fetchingWorkersStatus = AppStatusCodeEnum.FETCHING_WORKER_LIST
+                    isLoading = true,
+                    status = AppStatusCodeEnum.FETCHING_WORKER_LIST
                 )
 
                 val workers = adminService.fetchWorkers()
                 val gson = Gson()
 
-                state = state.copy(isFetchingWorkers = false)
+                state = state.copy(isLoading = false)
 
                 navigation.navigate(MainRoutes.PairingWorker(
                     wearable.getAddress()!!,
                     gson.toJson(workers.toTypedArray())
                 ))
             } catch (e: HttpConsumerException) {
-                state = state.copy(fetchingWorkersStatus = e.getStatus())
+                state = state.copy(status = e.getStatus())
             }
         }
     }
@@ -152,13 +216,32 @@ class AllInOneViewModel @AssistedInject constructor(
         )
     }
 
-    fun refreshPairedWearables() {
+    private fun refreshPairedWearables() {
         wearables.clear()
         filteredWearables.clear()
 
         App.wearableManager.getWearables().let {
             wearables.addAll(it)
             filteredWearables.addAll(it)
+        }
+    }
+
+    fun refreshSingleWearable(wearable: Wearable) {
+        try {
+            val index = wearables.indexOf(wearable)
+
+            if (index >= 0) {
+                wearables[index].copyFromDevice(wearable)
+                processSynchronizedWearableDataUseCase(fetchShift(wearable), wearable)
+                state = state.copy(currentWearable = wearable)
+
+                sendSleep(wearable)
+            } else {
+                refreshPairedWearables()
+                state = state.copy(status = AppStatusCodeEnum.SUCCESSFUL_WEARABLE_INFORMATION_SYNCHRONIZING)
+            }
+        } catch (e: SynchronizationProcessingException) {
+            state = state.copy(status = e.getStatus())
         }
     }
 
@@ -170,7 +253,27 @@ class AllInOneViewModel @AssistedInject constructor(
         else filteredWearables.addAll(wearables.filter { it.getAliasOrName().contains(value.text, true) or it.getAddress()!!.contains(value.text, true) })
     }
 
+    private fun sendSleep(wearable: Wearable) {
+        viewModelScope.launch {
+            try {
+                state = state.copy(
+                    isLoading = true,
+                    status = AppStatusCodeEnum.TRANSFERRING_WEARABLE_INFORMATION
+                )
+
+                sendWearableInformationToLogifitUseCase(fetchShift(wearable), wearable)
+                state = state.copy(status = AppStatusCodeEnum.SUCCESSFUL_WEARABLE_INFORMATION_TRANSFERRING)
+            } catch (e: SynchronizationProcessingException) {
+                state = state.copy(status = e.getStatus())
+            } catch (e: HttpConsumerException) {
+                state = state.copy(status = e.getStatus())
+            } catch (e: Exception) {
+                state = state.copy(status = AppStatusCodeEnum.UNPROCESSABLE_WEARABLE_INFORMATION_TRANSFER)
+            }
+        }
+    }
+
     fun stopFetchingWorkersProcessing() {
-        state = state.copy(isFetchingWorkers = false)
+        state = state.copy(isLoading = false)
     }
 }

@@ -134,7 +134,7 @@
     <string name="initializing">Inicializando</string>
     <string name="interrupted_synchronization_message">Sincronización interrumpida. Se recomienda mantener la Smart Band cerca del celular hasta que finalice el proceso de extracción de información</string>
     <string name="invalid_wearable_authentication_key_message">Al parecer la llave de seguridad no es la correcta, inténtalo nuevamente o contáctese con el área de soporte</string>
-    <string name="lack_of_sleep_synchronization_message">Falta sincronizar sueño</string>
+    <string name="lack_of_sleep_extraction_message">Falta extraer datos de sueño</string>
     <string name="lack_of_sleep_synchronization_with_logifit_message">Falta sincronizar sueño con Logifit</string>
     <string name="last_extraction_data">Última extracción</string>
     <string name="last_sending_to_logifit">Último envío a Logifit</string>
@@ -241,8 +241,11 @@
     <string name="sleep_detail_screenshot_title">Reporte de Fatiga y Somnolencia</string>
     <string name="sleep_detail_summary">Información ente %1$s - %2$s</string>
     <string name="sleep_detail_title">Mi sueño</string>
+    <string name="sleep_extraction_label">Extracción realizada hace %1$s</string>
+    <string name="sleep_extraction_message">%1$s Extracción realizada hace %2$s</string>
     <string name="sleep_hours_message">%1$s horas de sueño completadas</string>
     <string name="sleep_information">Información del sueño</string>
+    <string name="sleep_synchronization_label">Reporte realizado hace %1$s</string>
     <string name="sleep_synchronization_message">%1$s Reporte realizado hace %2$s</string>
     <string name="sleep_sync_message_missing">La información de su sueño aun no se ha extraido del Smart Band</string>
     <string name="sleep_time">Tiempo de sueño</string>

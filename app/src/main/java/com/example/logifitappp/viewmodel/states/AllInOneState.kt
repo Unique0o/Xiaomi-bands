@@ -8,9 +8,9 @@ import com.example.logifitappp.enums.AppStatusCodeEnum
 data class AllInOneState(
     var currentShift: ShiftModel? = null,
     var currentWearable: Wearable? = null,
-    var fetchingWorkersStatus: AppStatusCodeEnum = AppStatusCodeEnum.FETCHING_WORKER_LIST,
-    var isFetchingWorkers: Boolean = false,
+    var isLoading: Boolean = false,
     var searchText: TextFieldValue = TextFieldValue(""),
     var shouldShowUnpairWearableModal: Boolean = false,
-    var shouldShowWearableShiftModal: Boolean = false
+    var shouldShowWearableShiftModal: Boolean = false,
+    var status: AppStatusCodeEnum = AppStatusCodeEnum.FETCHING_WORKER_LIST
 )

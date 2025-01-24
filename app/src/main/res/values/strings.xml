@@ -134,7 +134,7 @@
     <string name="initializing">Initializing</string>
     <string name="interrupted_synchronization_message">Interrupted synchronization. It is recommended to keep the Smart Band close to the phone until the information extraction process is finished</string>
     <string name="invalid_wearable_authentication_key_message">It seems the security key is not correct, try again or contact the support area</string>
-    <string name="lack_of_sleep_synchronization_message">Lack of sleep synchronization</string>
+    <string name="lack_of_sleep_extraction_message">Sleep data needs to be extracted</string>
     <string name="lack_of_sleep_synchronization_with_logifit_message">Lack of sleep synchronization with Logifit</string>
     <string name="last_extraction_data">Last extraction</string>
     <string name="last_sending_to_logifit">Last sending to Logifit</string>
@@ -241,9 +241,12 @@
     <string name="sleep_detail_screenshot_title">Drowsiness and Fatigue report</string>
     <string name="sleep_detail_summary">Information between %1$s - %2$s</string>
     <string name="sleep_detail_title">My sleep</string>
+    <string name="sleep_extraction_label">Extraction made %1$s ago</string>
+    <string name="sleep_extraction_message">%1$s Extraction made %2$s ago</string>
     <string name="sleep_hours_message">%1$s completed hour sleep</string>
     <string name="sleep_information">Sleep information</string>
     <string name="sleep_sync_message_missing">Sleep information has not yet been extracted from the Smart Band</string>
+    <string name="sleep_synchronization_label">Report made %1$s ago</string>
     <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
     <string name="sleep_time">Sleep Time</string>
     <string name="spo2">SpO2</string>

@@ -16,6 +16,7 @@ import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
+import com.example.logifitappp.ui.screens.occupational_information.OccupationalInformationView
 import com.example.logifitappp.ui.screens.pairing_worker.PairingWorkerView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.personal_information.PersonalInformationView
@@ -45,6 +46,7 @@ fun MainNavigation(
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.PersonalInformation> { PersonalInformationView(navigation) }
+        composable<MainRoutes.OccupationalInformation> { OccupationalInformationView(navigation) }
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
         composable<MainRoutes.RosterRecording> { RosterRecordingView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
