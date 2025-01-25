@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 val Amber60 = Color(0xfffff3c8)
 val Blue130 = Color(0xffd2e7fa)
 val Blue690 = Color(0xff1c85e8)
+val Esmerald300 = Color(0xff5ee9b5)
 val Gray605 = Color(0xff4f4f4f)
 val Gray615 = Color(0xff495656)
 val Green298 = Color(0xff83cc5e)

@@ -12,6 +12,7 @@
     <string name="authentication_required">Authentication required</string>
     <string name="average_heart_rate">Average heart rate</string>
     <string name="average_spo2">Average SpO2</string>
+    <string name="average_stress">Average stress</string>
     <string name="awake_measurement_legend">Measurement during activity</string>
     <string name="awaken">Awaken</string>
     <string name="band_theft_alert">It has been detected that you are trying to synchronize your sleep report using a device already used by another user, which constitutes a serious irregularity. This violates the company\'s rules. We remind you that any attempt at fraud will be sanctioned by supervision.</string>
@@ -263,6 +264,10 @@
     <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
     <string name="storing_roster_information_message">Roster information is being storing</string>
+    <string name="stress">Stress</string>
+    <string name="stress_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="stress_detail_chart_title">Stress</string>
+    <string name="stress_detail_title">My stress</string>
     <string name="subtitle_login">Type your credentials to continue</string>
     <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
     <string name="successful_roster_information_storage_message">The registration of the information was carried out successfully</string>

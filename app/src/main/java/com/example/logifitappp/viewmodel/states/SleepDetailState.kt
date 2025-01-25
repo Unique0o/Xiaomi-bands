@@ -5,7 +5,7 @@ import android.icu.util.GregorianCalendar
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.analyzers.ActivityAmountList
-import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.SleepDataSet
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.FatigueModel
@@ -20,7 +20,7 @@ data class SleepDetailState(
     val nap: ActivityAmountList = ActivityAmountList(),
     var shift: ShiftModel? = null,
     val sleepCondition: SleepConditionModel? = null,
-    val sleepDataSet: SleepBarDataSet = SleepBarDataSet(ActivityAmountList()),
+    val sleepDataSet: SleepDataSet = SleepDataSet(ActivityAmountList()),
     val subtitle: String = DurationUtils.format(0L),
     val summary: String = "",
     val tenant: TenantModel? = null,

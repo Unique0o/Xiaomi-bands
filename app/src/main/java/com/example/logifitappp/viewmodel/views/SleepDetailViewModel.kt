@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.SleepDataSet
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.data.models.UserModel
@@ -64,7 +64,7 @@ class SleepDetailViewModel @AssistedInject constructor(
         if (state.shift == null || state.wearable == null) return
 
         val activities = fetchActivitiesByShiftUseCase(state.shift!!, state.wearable!!, state.date)
-        val dataset = SleepBarDataSet(fetchActivityAmountsByShiftUseCase(state.shift!!, state.wearable!!, state.date))
+        val dataset = SleepDataSet(fetchActivityAmountsByShiftUseCase(state.shift!!, state.wearable!!, state.date))
         val sleepCondition = findAppropriateSleepConditionUseCase(dataset.amounts.totalSleepMinutes * 60, state.tenant!!)
 
         state = state.copy(

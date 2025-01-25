@@ -5,29 +5,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.analyzers.StepsAnalyzer
-import com.example.logifitappp.core.graphics.StepsDataSet
+import com.example.logifitappp.core.graphics.StressDataSet
 import com.example.logifitappp.core.utils.DateTimeUtils
-import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
-import com.example.logifitappp.viewmodel.states.StepsDetailState
+import com.example.logifitappp.domain.usecase.FetchStressSampleAmountBetweenDayUseCase
+import com.example.logifitappp.viewmodel.states.StressDetailState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-@HiltViewModel(assistedFactory = StepsDetailViewModel.StepsDetailViewModelFactory::class)
-class StepsDetailViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = StressDetailViewModel.StressDetailViewModelFactory::class)
+class StressDetailViewModel @AssistedInject constructor(
     @Assisted private val mac: String,
-    private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase
+    private val fetchStressSampleAmountBetweenDayUseCase: FetchStressSampleAmountBetweenDayUseCase
 ): ViewModel() {
     @AssistedFactory
-    interface StepsDetailViewModelFactory {
-        fun create(mac: String): StepsDetailViewModel
+    interface StressDetailViewModelFactory {
+        fun create(mac: String): StressDetailViewModel
     }
 
-    var state by mutableStateOf(StepsDetailState())
+    var state by mutableStateOf(StressDetailState())
         private set
 
     init {
@@ -43,12 +41,11 @@ class StepsDetailViewModel @AssistedInject constructor(
     private fun fetchInformation() {
         if (state.wearable == null) return
 
-        val activitiesFromToday = fetchActivityAmountsBetweenDayUseCase(state.wearable!!, state.date)
-        val stepsDataSet = StepsDataSet(StepsAnalyzer().calculate(activitiesFromToday, state.date, 30))
+        val spo2DataSet = StressDataSet(fetchStressSampleAmountBetweenDayUseCase(state.wearable!!, state.date))
 
         state = state.copy(
-            stepsDataSet = stepsDataSet,
-            subtitle = if (stepsDataSet.empty) "N/A" else App.context.getString(R.string.steps_detail_subtitle, stepsDataSet.totalSteps.toString())
+            stressDataSet = spo2DataSet,
+            subtitle = if (spo2DataSet.empty) "N/A" else "${spo2DataSet.minMeasuredStress} - ${spo2DataSet.maxMeasuredStress}"
         )
     }
 

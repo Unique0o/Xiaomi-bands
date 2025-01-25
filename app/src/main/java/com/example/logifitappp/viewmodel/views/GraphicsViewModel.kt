@@ -12,15 +12,17 @@ import com.example.logifitappp.core.analyzers.HeartRateAnalyzer
 import com.example.logifitappp.core.analyzers.StepsAmountList
 import com.example.logifitappp.core.analyzers.StepsAnalyzer
 import com.example.logifitappp.core.graphics.HeartRateDataSet
-import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.SleepDataSet
 import com.example.logifitappp.core.graphics.Spo2DataSet
-import com.example.logifitappp.core.graphics.StepsBarDataSet
+import com.example.logifitappp.core.graphics.StepsDataSet
+import com.example.logifitappp.core.graphics.StressDataSet
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchSpo2SampleAmountsBetweenDayUseCase
+import com.example.logifitappp.domain.usecase.FetchStressSampleAmountBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.SynchronizationProcessingException
@@ -38,6 +40,7 @@ class GraphicsViewModel @AssistedInject constructor(
     private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
     private val fetchSpo2SampleAmountsBetweenDayUseCase: FetchSpo2SampleAmountsBetweenDayUseCase,
+    private val fetchStressSampleAmountBetweenDayUseCase: FetchStressSampleAmountBetweenDayUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase
 ): ViewModel() {
     @AssistedFactory
@@ -66,7 +69,7 @@ class GraphicsViewModel @AssistedInject constructor(
             else -> HeartRateAmountList()
         })
 
-        val stepsDataset = StepsBarDataSet(when (wearable.getWearableCoordinator().supportsActivityTracking()) {
+        val stepsDataset = StepsDataSet(when (wearable.getWearableCoordinator().supportsActivityTracking()) {
             true -> StepsAnalyzer().calculate(activitiesFromToday, calendar, 30)
             else -> StepsAmountList()
         })
@@ -76,11 +79,12 @@ class GraphicsViewModel @AssistedInject constructor(
             shift = shift,
             spo2DataSet = Spo2DataSet(fetchSpo2SampleAmountsBetweenDayUseCase(wearable, calendar)),
             stepsDataset = stepsDataset,
+            stressDataSet = StressDataSet(fetchStressSampleAmountBetweenDayUseCase(wearable, calendar))
         )
 
         if (shift == null) return
 
-        state = state.copy(sleepDataSet = SleepBarDataSet(fetchActivityAmountsByShiftUseCase(shift, wearable)))
+        state = state.copy(sleepDataSet = SleepDataSet(fetchActivityAmountsByShiftUseCase(shift, wearable)))
     }
 
     fun refreshGraphics(shift: ShiftModel?, wearable: Wearable?) {

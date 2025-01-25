@@ -59,6 +59,9 @@ sealed class MainRoutes {
     data class StepsDetail(val mac: String): MainRoutes()
 
     @Serializable
+    data class StressDetail(val mac: String): MainRoutes()
+
+    @Serializable
     data object Trainings: MainRoutes()
 
     @Serializable

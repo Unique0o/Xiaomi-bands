@@ -12,6 +12,7 @@
     <string name="authentication_key_bottom_sheet_title">Autentica tu banda</string>
     <string name="average_heart_rate">Ritmo cardiaco promedio</string>
     <string name="average_spo2">SpO2 promedio</string>
+    <string name="average_stress">Estrés promedio</string>
     <string name="awake_measurement_legend">Medición en actividad</string>
     <string name="awaken">Despertar</string>
     <string name="band_theft_alert"> Se ha detectado que esta intentando  sincronizar su reporte de sueño usando un dispositivo ya usado por  otro usuario, lo cual constituye una grave irregularidad. Esto incumple las normas de la empresa. Le Recordamos Cualquier intento de fraude será sancionado por la supervisión.</string>
@@ -263,6 +264,10 @@
     <string name="storing_evaluation_message">El test está siendo procesado para generar su condición de somnolencia...</string>
     <string name="storing_profile_photo_message">La foto de perfil está siendo almacenada, espere por favor...</string>
     <string name="storing_roster_information_message">Se está registrando la información en el Roster</string>
+    <string name="stress">Estrés</string>
+    <string name="stress_detail_chart_subtitle">Últma medición registrada</string>
+    <string name="stress_detail_chart_title">Estrés</string>
+    <string name="stress_detail_title">Mi estrés</string>
     <string name="subtitle_login">Ingrese sus credenciales para continuar</string>
     <string name="successful_password_recovery_message">Se ha notificado a un encargado para que lo pueda ayudar</string>
     <string name="successful_roster_information_storage_message">EL registro de la información se realizó con éxito</string>

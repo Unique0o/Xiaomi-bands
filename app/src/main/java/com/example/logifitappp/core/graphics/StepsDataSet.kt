@@ -6,7 +6,7 @@ import com.example.logifitappp.ui.theme.Green298
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
-class StepsBarDataSet(amounts: StepsAmountList) {
+class StepsDataSet(amounts: StepsAmountList) {
     val empty = amounts.totalSteps == 0L
 
     var self: BarDataSet

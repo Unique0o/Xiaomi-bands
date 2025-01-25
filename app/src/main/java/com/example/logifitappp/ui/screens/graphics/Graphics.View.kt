@@ -113,6 +113,18 @@ fun GraphicsView(
                     )
                 }
             }
+
+            if (it.supportsStressMeasurement()) {
+                item {
+                    Spacer(Modifier.height(16.dp))
+
+                    GraphicsStressChart(
+                        dataset = graphicsViewModel.state.stressDataSet,
+                        navigation = navigation,
+                        wearable = graphicsViewModel.state.wearable
+                    )
+                }
+            }
         }
 
     }
