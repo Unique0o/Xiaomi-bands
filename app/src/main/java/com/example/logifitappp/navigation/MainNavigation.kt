@@ -41,7 +41,7 @@ fun MainNavigation(
         composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
-        composable<MainRoutes.PersonalInformation> { PersonalInformationView(navigation) }
+        composable<MainRoutes.PersonalInformation> { PersonalInformationView(appViewModel,navigation) }
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
         composable<MainRoutes.RosterRecording> { RosterRecordingView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
