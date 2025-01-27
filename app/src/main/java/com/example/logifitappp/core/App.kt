@@ -20,6 +20,7 @@ import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.core.wearebles.WearablePreferences
 import com.example.logifitappp.core.wearebles.WearableService
 import com.example.logifitappp.data.AppDatabase
+import com.example.logifitappp.di.DaggerWearableComponent
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import dagger.hilt.android.HiltAndroidApp
 
@@ -40,6 +41,9 @@ class App: Application() {
         preferences = AppPreferences(PreferenceManager.getDefaultSharedPreferences(context))
         wearableManager = WearableManager(this)
         wearableService = WearableService(this)
+
+        val wearableComponent = DaggerWearableComponent.create()
+        wearableManager.initializeInjection(wearableComponent)
 
         registerReceiver(BluetoothStateChangeReceiver(), IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED))
     }

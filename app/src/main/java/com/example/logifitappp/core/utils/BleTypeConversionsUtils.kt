@@ -128,6 +128,8 @@ object BleTypeConversionsUtils {
         return (bytes[0].toInt() and 0xff) or ((bytes[1].toInt() and 0xff) shl 8) or ((bytes[2].toInt() and 0xff) shl 16) or ((bytes[3].toInt() and 0xff) shl 24)
     }
 
+    fun toUnsigned(unsignedInt: Int) = unsignedInt.toLong() and 0xffffffffL
+
     fun toUtf8s(message: String): ByteArray {
         return message.toByteArray(StandardCharsets.UTF_8)
     }

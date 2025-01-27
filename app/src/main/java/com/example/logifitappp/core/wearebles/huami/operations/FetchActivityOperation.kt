@@ -8,7 +8,7 @@ import com.example.logifitappp.core.wearebles.huami.HuamiFetchDataTypeEnum
 import com.example.logifitappp.core.wearebles.huami.HuamiSupport
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
 
-open class HuamiFetchActivityOperation(support: HuamiSupport): AbstractRepeatingFetchOperation(support, HuamiFetchDataTypeEnum.ACTIVITY) {
+open class FetchActivityOperation(support: HuamiSupport): AbstractRepeatingFetchOperation(support, HuamiFetchDataTypeEnum.ACTIVITY) {
     private var sampleSize = support.getRawActivitySize()
 
     private fun createActivity(payload: ByteArray, i: Int) = HuamiExtendedRawActivityModel(

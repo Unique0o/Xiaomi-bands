@@ -31,6 +31,7 @@ import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
 import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
+import com.example.logifitappp.ui.screens.wearable_settings.WearableSettingsView
 import com.example.logifitappp.viewmodel.AppViewModel
 import com.google.gson.Gson
 
@@ -121,6 +122,12 @@ fun MainNavigation(
             val arguments = navBackStackEntry.toRoute<MainRoutes.WearableProfile>()
 
             WearableProfileView(appViewModel, navigation, arguments.mac)
+        }
+
+        composable<MainRoutes.WearableSettings> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.WearableSettings>()
+
+            WearableSettingsView(navigation, arguments.mac)
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PieChart
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -47,4 +48,12 @@ fun WearableProfileOptions(
 
         Spacer(Modifier.height(12.dp))
     }
+
+    InformationCard(
+        icon = Icons.Default.Settings,
+        label = stringResource(R.string.button_settings),
+        labelColor = MaterialTheme.colorScheme.onSurface,
+        labelTypography = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.clickable { wearableProfileViewModel.state.wearable?.getAddress()?.let { navigation.navigate(MainRoutes.WearableSettings(it)) } }
+    )
 }

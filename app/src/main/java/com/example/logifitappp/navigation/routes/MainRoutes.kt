@@ -72,4 +72,7 @@ sealed class MainRoutes {
 
     @Serializable
     data class WearableProfile(val mac: String): MainRoutes()
+
+    @Serializable
+    data class WearableSettings(val mac: String): MainRoutes()
 }

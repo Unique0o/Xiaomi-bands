@@ -25,6 +25,7 @@
     <string name="burned_calories">Calorías quemadas</string>
     <string name="busy_task_fetch_activity_data">Recuperando datos de actividad</string>
     <string name="busy_task_fetch_spo2_data">Obtener los datos de SpO2</string>
+    <string name="busy_task_fetch_stress_data">Obtener los datos de la estrés</string>
     <string name="button_active_bluetooth">Activar Bluetooth</string>
     <string name="button_activity">Actividad</string>
     <string name="button_add">Agregar</string>
@@ -44,6 +45,7 @@
     <string name="button_register">Registrar</string>
     <string name="button_send">Enviar</string>
     <string name="button_send_to_logifit">Enviar a Logifit</string>
+    <string name="button_settings">Configuraciones</string>
     <string name="button_share">Compartir</string>
     <string name="button_start_detection">Empezar detección</string>
     <string name="button_stop_detection">Detener detección</string>
@@ -296,6 +298,8 @@
     <string name="unknown_activity">Actividad desconocida</string>
     <string name="unpair_band_modal_message">¿Estás seguro que deseas desvincular la Smart Band que actualmente usas?</string>
     <string name="unpair_band_modal_title">Desvincular Smart Band</string>
+    <string name="unpair_wearable_setting_summary">El reloj se desvinculará de Logifit y los datos almacenados serán eliminados</string>
+    <string name="unpair_wearable_setting_title">Desvincular Smart Band</string>
     <string name="unprocessable_wearable_information_transfer_message">Los datos fueron extraídos exitosamente pero no se enviaron a Logifit. Verifique su conexión a Internet e inténtelo nuevamente</string>
     <string name="unregistered_user_error_message">Usuario no registrado. Por favor, crear una cuenta para iniciar sesión</string>
     <string name="unselected_shift_message">Por favor seleccione un turno de trabajo antes de extraer datos de sueño o realizar una evaluación</string>
@@ -309,6 +313,7 @@
     <string name="wearable_pairing_message">Por favor, mantener cerca la Smart Band para que Logifit complete la conexión.</string>
     <string name="wearable_pairing_title">Emparejando con %1$s</string>
     <string name="wearable_profile_disconnecting_message">Tu Smart Band está desconectada del aplicativo, por favor conéctela para poder registrar su información</string>
+    <string name="wearable_settings_title">Configuraciones</string>
     <string name="without_role">Sin rol</string>
     <string name="worker_list_empty_message">No hay operadores bajo su supervisión</string>
     <string name="yes">Sí</string>
