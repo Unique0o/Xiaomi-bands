@@ -12,15 +12,17 @@ import com.example.logifitappp.core.analyzers.HeartRateAnalyzer
 import com.example.logifitappp.core.analyzers.StepsAmountList
 import com.example.logifitappp.core.analyzers.StepsAnalyzer
 import com.example.logifitappp.core.graphics.HeartRateDataSet
-import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.SleepDataSet
 import com.example.logifitappp.core.graphics.Spo2DataSet
-import com.example.logifitappp.core.graphics.StepsBarDataSet
+import com.example.logifitappp.core.graphics.StepsDataSet
+import com.example.logifitappp.core.graphics.StressDataSet
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchSpo2SampleAmountsBetweenDayUseCase
+import com.example.logifitappp.domain.usecase.FetchStressSampleAmountBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.SynchronizationProcessingException
@@ -33,15 +35,17 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = GraphicsViewModel.GraphicsViewModelFactory::class)
 class GraphicsViewModel @AssistedInject constructor(
+    @Assisted private val mac: String?,
     @Assisted private val user: UserModel?,
     private val fetchActivityAmountsBetweenDayUseCase: FetchActivityAmountsBetweenDayUseCase,
     private val fetchActivityAmountsByShiftUseCase: FetchActivityAmountsByShiftUseCase,
     private val fetchSpo2SampleAmountsBetweenDayUseCase: FetchSpo2SampleAmountsBetweenDayUseCase,
+    private val fetchStressSampleAmountBetweenDayUseCase: FetchStressSampleAmountBetweenDayUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase
 ): ViewModel() {
     @AssistedFactory
     interface GraphicsViewModelFactory {
-        fun create(user: UserModel?): GraphicsViewModel
+        fun create(mac: String?, user: UserModel?): GraphicsViewModel
     }
 
     var state by mutableStateOf(GraphicsState())
@@ -49,7 +53,7 @@ class GraphicsViewModel @AssistedInject constructor(
 
     init {
         user?.shiftId?.let {
-            val wearable = App.wearableManager.getWearables().first()
+            val wearable = if (mac == null) App.wearableManager.getWearables().first() else App.wearableManager.getWearableByMac(mac)
             val shift = App.database.shiftDao().find(it, user.tenantId)
 
             refreshGraphics(shift, wearable)
@@ -65,7 +69,7 @@ class GraphicsViewModel @AssistedInject constructor(
             else -> HeartRateAmountList()
         })
 
-        val stepsDataset = StepsBarDataSet(when (wearable.getWearableCoordinator().supportsActivityTracking()) {
+        val stepsDataset = StepsDataSet(when (wearable.getWearableCoordinator().supportsActivityTracking()) {
             true -> StepsAnalyzer().calculate(activitiesFromToday, calendar, 30)
             else -> StepsAmountList()
         })
@@ -75,11 +79,12 @@ class GraphicsViewModel @AssistedInject constructor(
             shift = shift,
             spo2DataSet = Spo2DataSet(fetchSpo2SampleAmountsBetweenDayUseCase(wearable, calendar)),
             stepsDataset = stepsDataset,
+            stressDataSet = StressDataSet(fetchStressSampleAmountBetweenDayUseCase(wearable, calendar))
         )
 
         if (shift == null) return
 
-        state = state.copy(sleepDataSet = SleepBarDataSet(fetchActivityAmountsByShiftUseCase(shift, wearable)))
+        state = state.copy(sleepDataSet = SleepDataSet(fetchActivityAmountsByShiftUseCase(shift, wearable)))
     }
 
     fun refreshGraphics(shift: ShiftModel?, wearable: Wearable?) {

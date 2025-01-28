@@ -5,12 +5,14 @@
     <string name="app_name">Logifit Plus</string>
     <string name="argentina">Argentina</string>
     <string name="asleep_measurement_legend">Measurement during sleep</string>
+    <string name="associating_worker_message">Wait until the process finishes</string>
     <string name="authenticating">Authenticating</string>
     <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
     <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
     <string name="authentication_required">Authentication required</string>
     <string name="average_heart_rate">Average heart rate</string>
     <string name="average_spo2">Average SpO2</string>
+    <string name="average_stress">Average stress</string>
     <string name="awake_measurement_legend">Measurement during activity</string>
     <string name="awaken">Awaken</string>
     <string name="band_theft_alert">It has been detected that you are trying to synchronize your sleep report using a device already used by another user, which constitutes a serious irregularity. This violates the company\'s rules. We remind you that any attempt at fraud will be sanctioned by supervision.</string>
@@ -23,7 +25,9 @@
     <string name="burned_calories">Burned calories</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
     <string name="busy_task_fetch_spo2_data">Fetching SpO2 data</string>
+    <string name="busy_task_fetch_stress_data">Fetching stress data</string>
     <string name="button_active_bluetooth">Activate Bluetooth</string>
+    <string name="button_activity">Activity</string>
     <string name="button_add">Add</string>
     <string name="button_authenticate_band">Authenticate band</string>
     <string name="button_cancel">Cancel</string>
@@ -36,10 +40,12 @@
     <string name="button_get_into">Get into</string>
     <string name="button_mark_as_view">Mark as view</string>
     <string name="button_ok">OK</string>
+    <string name="button_pair_operator">Link operator</string>
     <string name="button_pair_smart_band">Pair Smart Band</string>
     <string name="button_register">Register</string>
     <string name="button_send">Send</string>
     <string name="button_send_to_logifit">Send to Logifit</string>
+    <string name="button_settings">Settings</string>
     <string name="button_share">Share</string>
     <string name="button_start_detection">Start detection</string>
     <string name="button_stop_detection">Stop detection</string>
@@ -101,6 +107,7 @@
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
+    <string name="fetching_worker_list_message">The operators under your charge are being obtained. Please wait...</string>
     <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
     <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
     <string name="first_additional_information_title">Before starting</string>
@@ -109,6 +116,7 @@
     <string name="fit_with_observations">With obs.</string>
     <string name="full_name">Full name</string>
     <string name="go_back">Go back</string>
+    <string name="graphics_title">Activity</string>
     <string name="greater_than_1_hour">Greater than 1 hour</string>
     <string name="greater_than_15_percentage">Greater than 15%</string>
     <string name="greater_than_20_minutes">Greater than 20 minutes</string>
@@ -131,7 +139,7 @@
     <string name="initializing">Initializing</string>
     <string name="interrupted_synchronization_message">Interrupted synchronization. It is recommended to keep the Smart Band close to the phone until the information extraction process is finished</string>
     <string name="invalid_wearable_authentication_key_message">It seems the security key is not correct, try again or contact the support area</string>
-    <string name="lack_of_sleep_synchronization_message">Lack of sleep synchronization</string>
+    <string name="lack_of_sleep_extraction_message">Sleep data needs to be extracted</string>
     <string name="lack_of_sleep_synchronization_with_logifit_message">Lack of sleep synchronization with Logifit</string>
     <string name="last_extraction_data">Last extraction</string>
     <string name="last_sending_to_logifit">Last sending to Logifit</string>
@@ -178,6 +186,8 @@
     <string name="occupational_information_title">Occupational information</string>
     <string name="open_on_phone">Open on Android device</string>
     <string name="operator">Operator</string>
+    <string name="pairing_worker_message">Type the name, surname and/or identity document of the operator to which the Smart Band %1$s (%2$s) be paired</string>
+    <string name="pairing_worker_title">Pair operator</string>
     <string name="panama">Panama</string>
     <string name="paraguay">Paraguay</string>
     <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
@@ -236,9 +246,12 @@
     <string name="sleep_detail_screenshot_title">Drowsiness and Fatigue report</string>
     <string name="sleep_detail_summary">Information between %1$s - %2$s</string>
     <string name="sleep_detail_title">My sleep</string>
+    <string name="sleep_extraction_label">Extraction made %1$s ago</string>
+    <string name="sleep_extraction_message">%1$s Extraction made %2$s ago</string>
     <string name="sleep_hours_message">%1$s completed hour sleep</string>
     <string name="sleep_information">Sleep information</string>
     <string name="sleep_sync_message_missing">Sleep information has not yet been extracted from the Smart Band</string>
+    <string name="sleep_synchronization_label">Report made %1$s ago</string>
     <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
     <string name="sleep_time">Sleep Time</string>
     <string name="spo2">SpO2</string>
@@ -255,11 +268,16 @@
     <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
     <string name="storing_roster_information_message">Roster information is being storing</string>
+    <string name="stress">Stress</string>
+    <string name="stress_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="stress_detail_chart_title">Stress</string>
+    <string name="stress_detail_title">My stress</string>
     <string name="subtitle_login">Type your credentials to continue</string>
     <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
     <string name="successful_roster_information_storage_message">The registration of the information was carried out successfully</string>
     <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
     <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
+    <string name="successful_worker_associated_message">Contributor updated successfully</string>
     <string name="summary">Summary</string>
     <string name="surnames_validation_error_message">You must insert your surnames</string>
     <string name="sync_with_logifit_required_alert">The extracted data has not been sent to the supervision. Please check if the device has a signal, mobile data or is connected to a stable Wi-Fi network. If there is no internet connection at the moment, please send the information as soon as possible once the connection is reestablished.</string>
@@ -282,6 +300,8 @@
     <string name="unknown_activity">Unknown activity</string>
     <string name="unpair_band_modal_message">Are you sure you want to unpair Smart Band that you currently use?</string>
     <string name="unpair_band_modal_title">Unpair Smart Band</string>
+    <string name="unpair_wearable_setting_summary">The watch will be unpaired from Logifit and the stored data will be deleted</string>
+    <string name="unpair_wearable_setting_title">Unpair Smart Band</string>
     <string name="unprocessable_wearable_information_transfer_message">The data was successfully extracted but not sent to Logifit. Please check your Internet connection and try again</string>
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
     <string name="unselected_shift_message">Please select a work shift before extracting sleep data or making a test</string>
@@ -295,7 +315,9 @@
     <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
     <string name="wearable_pairing_title">Pairing with %1$s</string>
     <string name="wearable_profile_disconnecting_message">Your Smart Band is disconnected from the application, please connect to be able to register your information</string>
+    <string name="wearable_settings_title">Settings</string>
     <string name="without_role">Without role</string>
+    <string name="worker_list_empty_message">There are no operators under your supervision</string>
     <string name="yes">Yes </string>
 
     <string-array name="operator_onboarding_subtitle">

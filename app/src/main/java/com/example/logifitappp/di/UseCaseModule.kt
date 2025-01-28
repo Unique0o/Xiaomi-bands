@@ -15,6 +15,7 @@ import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseC
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchNapAmountsByShiftUseCase
 import com.example.logifitappp.domain.usecase.FetchSpo2SampleAmountsBetweenDayUseCase
+import com.example.logifitappp.domain.usecase.FetchStressSampleAmountBetweenDayUseCase
 import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import com.example.logifitappp.domain.usecase.LoginUseCase
@@ -66,6 +67,10 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideFetchSpo2SamplesBetweenDayUseCase() = FetchSpo2SampleAmountsBetweenDayUseCase()
+
+    @Provides
+    @Singleton
+    fun provideFetchStressSampleAmountBetweenDayUseCase() = FetchStressSampleAmountBetweenDayUseCase()
 
     @Provides
     @Singleton

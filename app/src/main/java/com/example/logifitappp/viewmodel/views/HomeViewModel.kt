@@ -2,7 +2,6 @@ package com.example.logifitappp.viewmodel.views
 
 import android.graphics.Bitmap
 import android.icu.util.GregorianCalendar
-import android.os.Build
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -20,10 +19,8 @@ import com.example.logifitappp.data.models.EvaluationResultModel
 import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.data.models.UserModel
-import com.example.logifitappp.data.remote.dto.requests.AssociateWearableRequest
 import com.example.logifitappp.data.remote.dto.requests.StoreOccupationalInformationRequest
 import com.example.logifitappp.domain.service.UserService
-import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.domain.usecase.CalculateSleepProcessingUseCase
 import com.example.logifitappp.domain.usecase.FindAppropriateSleepConditionUseCase
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
@@ -50,8 +47,7 @@ class HomeViewModel @AssistedInject constructor(
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
     private val shareEvaluationDetailUseCase: ShareEvaluationDetailUseCase,
     private val synchronizeWearableUseCase: SynchronizeWearableUseCase,
-    private val userService: UserService,
-    private val wearableService: WearableService
+    private val userService: UserService
 ): ViewModel() {
     @AssistedFactory
     interface HomeViewModelFactory {
@@ -96,18 +92,6 @@ class HomeViewModel @AssistedInject constructor(
             refreshPairedWearables()
 
             wearables.firstOrNull()?.let { wearable ->
-                try {
-                    wearableService.associate(user.id, AssociateWearableRequest(
-                        device_mac = wearable.getAddress()!!,
-                        oper_system = "Android",
-                        oper_system_version = Build.VERSION.RELEASE,
-                        phone_brand = Build.BRAND,
-                        phone_model = Build.MODEL
-                    ))
-                } catch (_: Exception) {
-
-                }
-
                 if (!state.isLoading) return@launch
 
                 if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) fetchActivities(wearable)

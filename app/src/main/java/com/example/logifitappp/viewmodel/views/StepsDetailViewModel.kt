@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.analyzers.StepsAnalyzer
-import com.example.logifitappp.core.graphics.StepsBarDataSet
+import com.example.logifitappp.core.graphics.StepsDataSet
 import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.domain.usecase.FetchActivityAmountsBetweenDayUseCase
 import com.example.logifitappp.viewmodel.states.StepsDetailState
@@ -44,7 +44,7 @@ class StepsDetailViewModel @AssistedInject constructor(
         if (state.wearable == null) return
 
         val activitiesFromToday = fetchActivityAmountsBetweenDayUseCase(state.wearable!!, state.date)
-        val stepsDataSet = StepsBarDataSet(StepsAnalyzer().calculate(activitiesFromToday, state.date, 30))
+        val stepsDataSet = StepsDataSet(StepsAnalyzer().calculate(activitiesFromToday, state.date, 30))
 
         state = state.copy(
             stepsDataSet = stepsDataSet,

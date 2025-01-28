@@ -22,6 +22,7 @@ import com.example.logifitappp.ui.components.layouts.CardLayout
 fun InformationCard(
     modifier: Modifier = Modifier,
     icon: ImageVector,
+    iconAction: (() -> Unit)? = null,
     iconSize: Dp = 24.dp,
     label: String,
     labelColor: Color = MaterialTheme.colorScheme.primary,
@@ -36,6 +37,7 @@ fun InformationCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconText(
                     icon = icon,
+                    iconAction = iconAction,
                     iconSize = iconSize,
                     label = label,
                     labelColor = labelColor,

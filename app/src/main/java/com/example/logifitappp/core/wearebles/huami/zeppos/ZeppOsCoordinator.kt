@@ -11,6 +11,7 @@ abstract class ZeppOsCoordinator: HuamiCoordinator() {
         super.deleteWearable(wearable)
 
         getSpo2SampleProvider(wearable).delete()
+        getStressSampleProvider(wearable).delete()
     }
 
     override fun getActivityProvider(wearable: Wearable) = HuamiExtendedActivityProvider(wearable)
@@ -36,4 +37,6 @@ abstract class ZeppOsCoordinator: HuamiCoordinator() {
     override fun supportsRemSleep() = true
 
     override fun supportsSpo2() = true
+
+    override fun supportsStressMeasurement() = true
 }

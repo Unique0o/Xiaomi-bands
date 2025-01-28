@@ -15,7 +15,7 @@ import java.nio.ByteOrder
 import kotlin.math.max
 import kotlin.math.min
 
-open class HuamiFetchSpo2NormalOperation(support: HuamiSupport): AbstractRepeatingFetchOperation(support, HuamiFetchDataTypeEnum.SPO2_NORMAL) {
+open class FetchSpo2NormalOperation(support: HuamiSupport): AbstractRepeatingFetchOperation(support, HuamiFetchDataTypeEnum.SPO2_NORMAL) {
     override fun getLastSyncTimeKey() = "lastSpo2normalTimeMillis"
 
     override fun handleActivityData(timestamp: GregorianCalendar, bytes: ByteArray): Boolean {

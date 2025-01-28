@@ -13,7 +13,6 @@ class Spo2AmountList {
 
     fun add(amount: Spo2Amount) {
         amounts.add(amount)
-
         maxMeasuredSpo2 = max(amount.maxSpo2, maxMeasuredSpo2)
 
         if (amount.minSpo2 > 0) minMeasuredSpo2 = min(amount.minSpo2, minMeasuredSpo2)

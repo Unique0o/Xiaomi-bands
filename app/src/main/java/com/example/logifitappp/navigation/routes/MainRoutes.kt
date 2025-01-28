@@ -11,6 +11,9 @@ sealed class MainRoutes {
     data object DrowsinessTests: MainRoutes()
 
     @Serializable
+    data class Graphics(val mac: String): MainRoutes()
+
+    @Serializable
     data object HealthInformation: MainRoutes()
 
     @Serializable
@@ -24,6 +27,9 @@ sealed class MainRoutes {
 
     @Serializable
     data object OccupationalInformation: MainRoutes()
+
+    @Serializable
+    data class PairingWorker(val mac: String, val serializedWorkers: String): MainRoutes()
 
     @Serializable
     data object PasswordRecovery: MainRoutes()
@@ -53,6 +59,9 @@ sealed class MainRoutes {
     data class StepsDetail(val mac: String): MainRoutes()
 
     @Serializable
+    data class StressDetail(val mac: String): MainRoutes()
+
+    @Serializable
     data object Trainings: MainRoutes()
 
     @Serializable
@@ -64,23 +73,6 @@ sealed class MainRoutes {
     @Serializable
     data class WearableProfile(val mac: String): MainRoutes()
 
-
-
     @Serializable
-    data object Graphics : MainRoutes() //
-
-    @Serializable
-    data object Home : MainRoutes() //
-
-    @Serializable
-    data object Profile : MainRoutes()
-
-    @Serializable
-    data object AppLanguage : MainRoutes()
-
-    @Serializable
-    data object Help : MainRoutes()
-
-    @Serializable
-    data object TermsAndConditions : MainRoutes()
+    data class WearableSettings(val mac: String): MainRoutes()
 }

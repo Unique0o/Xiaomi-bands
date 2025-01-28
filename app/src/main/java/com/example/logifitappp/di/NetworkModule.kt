@@ -2,6 +2,7 @@ package com.example.logifitappp.di
 
 import android.content.Context
 import com.example.logifitappp.core.App
+import com.example.logifitappp.data.remote.api.AdminApi
 import com.example.logifitappp.data.remote.api.AudioApi
 import com.example.logifitappp.data.remote.api.AuthApi
 import com.example.logifitappp.data.remote.api.DocumentTypeApi
@@ -29,7 +30,7 @@ import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.utils.Constants.BASE_URL
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
-import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoViewModel
+import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,6 +73,10 @@ object NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    @Provides
+    @Singleton
+    fun provideAdminApi(retrofit: Retrofit): AdminApi = retrofit.create(AdminApi::class.java)
 
     @Provides
     @Singleton
@@ -144,8 +149,8 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInfoViewModel {
-        return OccupationalInfoViewModel(getOccupationalInfoUseCase)
+    fun provideOccupationalInfoViewModel(getOccupationalInfoUseCase: GetOccupationalInfoUseCase): OccupationalInformationViewModel {
+        return OccupationalInformationViewModel(getOccupationalInfoUseCase)
     }
 
     @Provides

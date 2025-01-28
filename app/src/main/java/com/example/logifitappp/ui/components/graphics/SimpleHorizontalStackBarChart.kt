@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.SleepDataSet
 import com.example.logifitappp.ui.components.Text
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.data.BarData
@@ -19,7 +19,7 @@ import com.github.mikephil.charting.data.BarData
 @Composable
 fun SimpleHorizontalStackBarChart(
     modifier: Modifier =  Modifier.fillMaxWidth().height(40.dp),
-    dataSet: SleepBarDataSet
+    dataSet: SleepDataSet
 ) {
     Column {
         AndroidView(

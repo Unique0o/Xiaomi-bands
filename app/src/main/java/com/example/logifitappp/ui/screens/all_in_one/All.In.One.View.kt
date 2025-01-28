@@ -22,12 +22,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.avoidBottom
+import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.core.utils.plus
+import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
 import com.example.logifitappp.ui.components.modals.ChangeShiftModal
+import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.modals.UnpairWearableModal
 import com.example.logifitappp.ui.components.pages.IconMessagePage
 import com.example.logifitappp.ui.components.pages.ScrollablePage
@@ -43,21 +47,27 @@ fun AllInOneView(
 ) {
     val context = LocalContext.current
     val allInOneViewModel = hiltViewModel<AllInOneViewModel, AllInOneViewModel.AllInOneViewModelFactory> {
-        it.create(appViewModel.user, appViewModel.tenant)
+        it.create(navigation, appViewModel.user, appViewModel.tenant)
     }
 
     DisposableEffect(Unit) {
         val receiver = object: BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent) {
                 when (intent.action) {
+                    App.ACTION_NEW_DATA -> {
+                        val wearable = intent.parcelableExtra<Wearable>(Wearable.EXTRA_DEVICE)!!
+                        allInOneViewModel.refreshSingleWearable(wearable)
+                    }
+
                     WearableManager.ACTION_DEVICES_CHANGED -> {
-                        allInOneViewModel.refreshPairedWearables()
+                        allInOneViewModel.checkWearableConnection()
                     }
                 }
             }
         }
 
         val filterLocal = IntentFilter()
+        filterLocal.addAction(App.ACTION_NEW_DATA)
         filterLocal.addAction(WearableManager.ACTION_DEVICES_CHANGED)
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filterLocal)
 
@@ -65,6 +75,13 @@ fun AllInOneView(
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
         }
     }
+
+    MessageModal(
+        onClose = { allInOneViewModel.stopFetchingWorkersProcessing() },
+        onDismissRequest = { allInOneViewModel.stopFetchingWorkersProcessing() },
+        status = allInOneViewModel.state.status,
+        visible = allInOneViewModel.state.isLoading
+    )
 
     UnpairWearableModal(
         onClose = { allInOneViewModel.closeUnpairWearableModal() },

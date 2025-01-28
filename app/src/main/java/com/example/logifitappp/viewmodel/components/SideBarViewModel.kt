@@ -39,7 +39,7 @@ class SideBarViewModel @AssistedInject constructor(
         if (user?.isAdmin() == false) {
             options.addAll(listOf(
                 SideBarScreenEnum.PERSONAL_INFORMATION,
-                //SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
+                SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
                 //SideBarScreenEnum.HEALTH_INFORMATION
             ))
 

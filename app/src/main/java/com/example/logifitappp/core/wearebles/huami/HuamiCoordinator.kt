@@ -13,6 +13,8 @@ abstract class HuamiCoordinator: AbstractBleWearableCoordinator() {
 
     override fun getSpo2SampleProvider(wearable: Wearable) = HuamiSpo2SampleProvider(wearable)
 
+    override fun getStressSampleProvider(wearable: Wearable) = HuamiStressSampleProvider(wearable)
+
     override fun suggestUnbindBeforePair() = false
 
     override fun supportsActivityDataFetching() = true

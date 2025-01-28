@@ -6,18 +6,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.logifitappp.R
+import com.example.logifitappp.core.App
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.components.forms.RadioButtonGroup
 import com.example.logifitappp.ui.components.layouts.ModalLayout
-import com.example.logifitappp.viewmodel.components.ChangeShiftModalViewModel
 
 @Composable
 fun ChangeShiftModal(
@@ -27,15 +30,11 @@ fun ChangeShiftModal(
     shiftId: Int?,
     visible: Boolean
 ) {
-    val changeShiftModalViewModel = hiltViewModel<ChangeShiftModalViewModel, ChangeShiftModalViewModel.ChangeShiftModalViewModelFactory>{
-        it.create(shiftId)
-    }
+    val shifts by remember { mutableStateOf(App.database.userDao().getLoggedIn()?.let { user -> App.database.shiftDao().all(user.tenantId) } ?: listOf()) }
+    var shift by remember(shiftId) { mutableStateOf(shifts.find { shift -> shift.id == shiftId }) }
 
     ModalLayout(
-        onClose = {
-            onClose()
-            changeShiftModalViewModel.fetchShift()
-        },
+        onClose = onClose,
         onDismissRequest = onDismissRequest,
         visible = visible
     ) {
@@ -60,9 +59,9 @@ fun ChangeShiftModal(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            onChangeValue = { changeShiftModalViewModel.shift = it },
-            options = changeShiftModalViewModel.shifts,
-            value = changeShiftModalViewModel.shift
+            onChangeValue = { shift = it },
+            options = shifts,
+            value = shift
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -76,10 +75,10 @@ fun ChangeShiftModal(
         Spacer(Modifier.height(16.dp))
 
         Button(
-            enabled = changeShiftModalViewModel.shift != null,
+            enabled = shift != null,
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                onSelectShift(changeShiftModalViewModel.shift!!)
+                shift?.let { onSelectShift(it) }
                 onClose()
             },
             text = stringResource(id = R.string.button_ok)
