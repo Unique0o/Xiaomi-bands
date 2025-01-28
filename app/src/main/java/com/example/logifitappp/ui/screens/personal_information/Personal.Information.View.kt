@@ -10,7 +10,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,6 @@ import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.ui.components.personalInformation.PersonalInfoItem
 import com.example.logifitappp.ui.components.personalInformation.ProfilePhoto
 import com.example.logifitappp.viewmodel.AppViewModel
-import com.example.logifitappp.viewmodel.views.AdditionalInformationViewModel
 import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoUiState
 import com.example.logifitappp.viewmodel.views.PersonalInformationViewModel
 import java.util.TimeZone
@@ -40,26 +38,23 @@ fun PersonalInformationView(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val viewModel: PersonalInformationViewModel = hiltViewModel()
-    val personalInfoState by viewModel.personalInfo.collectAsState()
-    val context = LocalContext.current
     val datePickerVisibility = remember { mutableStateMapOf<Int, Boolean>() }
-    val documentVisibility = remember { mutableStateMapOf<Int, Boolean>() }
     var selectedDate by remember { mutableStateOf("") }
 
-
-    val additionalInformationViewModel =
-        hiltViewModel<AdditionalInformationViewModel, AdditionalInformationViewModel.AdditionalInformationViewModelFactory> {
+    val personalInformationViewModel =
+        hiltViewModel<PersonalInformationViewModel, PersonalInformationViewModel.PersonalInformationViewModelFactory> {
             it.create(appViewModel.user)
         }
 
-    if (additionalInformationViewModel.state.isNecessaryDataFetching) {
+    val personalInfoState by personalInformationViewModel.personalInfo.collectAsState()
+
+    if (personalInformationViewModel.state.isNecessaryDataFetching) {
         LoaderPage()
         return
     }
 
-    if (additionalInformationViewModel.state.hasNecessaryDataFetchingFailed) {
-        NoInternetPage { additionalInformationViewModel.fetchNecessaryData() }
+    if (personalInformationViewModel.state.hasNecessaryDataFetchingFailed) {
+        NoInternetPage { personalInformationViewModel.fetchNecessaryData() }
         return
     }
 
@@ -85,7 +80,7 @@ fun PersonalInformationView(
                     if (showBottomSheet) {
                         BottomSheetSelectableImageSourceAuto(
                             onImageObtained = { uri ->
-                                viewModel.updateProfilePhoto(uri)
+                                personalInformationViewModel.updateProfilePhoto(uri)
                                 showBottomSheet = false
                                 // Handle the selected image URI here if needed
                             },
@@ -105,10 +100,10 @@ fun PersonalInformationView(
                     ) {
                         item {
                             ProfilePhoto(
-                                if (viewModel.state.photo == null) {
+                                if (personalInformationViewModel.state.photo == null) {
                                     appViewModel.user?.profilePhoto.toString()
                                 } else {
-                                    viewModel.state.photo.toString()
+                                    personalInformationViewModel.state.photo.toString()
                                 },
                                 onPhotoClick = {
                                     showBottomSheet = true
@@ -119,44 +114,16 @@ fun PersonalInformationView(
                         items(info.size) { index ->
 
                             val item = info[index]
-                            var label = ""
-                            val user = appViewModel.user
-                            if (user != null) {
-                                label = when (item.label) {
-                                    "Names" -> user.firstName ?: ""
-                                    "Surnames" -> user.lastName ?: ""
-                                    "Identification Document" -> user.identificationDocument
-                                        ?: ""
+                            val value = item.value
+                            val label = item.label
 
-                                    "Birthdate" -> user.birthDate
-                                        ?: context.getString(R.string.not_selected)
-
-                                    "Email" -> user.email ?: ""
-                                    "Phone" -> user.phone ?: ""
-                                    "Document type" -> user.documentId?.toString()
-                                        ?: context.getString(
-                                            R.string.not_selected
-                                        )
-
-                                    "Country" -> user.countryId?.toString()
-                                        ?: context.getString(R.string.not_selected)
-
-                                    "Department" -> user.departmentId?.toString()
-                                        ?: context.getString(R.string.not_selected)
-
-                                    "Province" -> user.provinceId?.toString()
-                                        ?: context.getString(R.string.not_selected)
-
-                                    else -> ""
-                                }
-                            }
                             val showDatePicker = datePickerVisibility[index] ?: false
-                            val showDocument = documentVisibility[index] ?: false
-                            if (item.label == "Names" || item.label == "Surnames" || item.label == "Identification Document" ||
-                                item.label == "Email" || item.label == "Phone"||item.label=="Birthdate") {
+                            if (label == "Names" || label == "Surnames" || label == "Identification Document" ||
+                                label == "Email" || label == "Phone" || label == "Birthdate"
+                            ) {
                                 PersonalInfoItem(
-                                    label = item.label,
-                                    value = label,
+                                    label = label,
+                                    value = value,
                                     isValueSelected = item.isValueSelected,
                                     onClick = {
                                         if (item.label == "Birthdate") {
@@ -164,63 +131,67 @@ fun PersonalInformationView(
                                         }
                                     }
                                 )
-                            }else {
-                                when (item.label) {
+                            } else {
+                                when (label) {
                                     "Document type" -> {
                                         Spacer(modifier = Modifier.width(16.dp))
                                         SelectableBottomSheet(
-                                            elements = additionalInformationViewModel.state.documentTypes,
-                                            error = additionalInformationViewModel.state.documentTypesError,
+                                            elements = personalInformationViewModel.state.documentTypes,
+                                            error = personalInformationViewModel.state.documentTypesError,
                                             onChange = {
-                                                additionalInformationViewModel.updateDocumentType(
+                                                personalInformationViewModel.updateDocumentType(
                                                     it
                                                 )
                                             },
                                             placeholder = stringResource(R.string.placeholder_document_type),
                                             title = stringResource(R.string.document_type_title),
-                                            value = additionalInformationViewModel.state.selectedDocumentType
+                                            value = personalInformationViewModel.state.selectedDocumentType
                                         )
                                     }
+
                                     "Department" -> {
                                         SelectableBottomSheet(
-                                            elements = additionalInformationViewModel.state.documentTypes,
-                                            error = additionalInformationViewModel.state.documentTypesError,
+                                            elements = personalInformationViewModel.state.documentTypes,
+                                            error = personalInformationViewModel.state.documentTypesError,
                                             onChange = {
-                                                additionalInformationViewModel.updateDocumentType(
+                                                personalInformationViewModel.updateDocumentType(
                                                     it
                                                 )
                                             },
-                                            placeholder = stringResource(R.string.placeholder_document_type),
-                                            title = stringResource(R.string.document_type_title),
-                                            value = additionalInformationViewModel.state.selectedDocumentType
+                                            placeholder = stringResource(R.string.department),
+                                            title = stringResource(R.string.department_type_title),
+                                            value = personalInformationViewModel.state.selectedDocumentType
                                         )
                                     }
+
                                     "Country" -> {
+                                        Spacer(Modifier.height(5.dp))
                                         SelectableBottomSheet(
-                                            elements = additionalInformationViewModel.state.documentTypes,
-                                            error = additionalInformationViewModel.state.documentTypesError,
+                                            elements = personalInformationViewModel.state.countries,
+                                            error = personalInformationViewModel.state.documentTypesError,
                                             onChange = {
-                                                additionalInformationViewModel.updateDocumentType(
+                                                personalInformationViewModel.updateCountry(
                                                     it
                                                 )
                                             },
-                                            placeholder = stringResource(R.string.placeholder_document_type),
-                                            title = stringResource(R.string.document_type_title),
-                                            value = additionalInformationViewModel.state.selectedDocumentType
+                                            placeholder = stringResource(R.string.country),
+                                            title = stringResource(R.string.country_title),
+                                            value = personalInformationViewModel.state.selectedCountry
                                         )
                                     }
+
                                     "Province" -> {
                                         SelectableBottomSheet(
-                                            elements = additionalInformationViewModel.state.documentTypes,
-                                            error = additionalInformationViewModel.state.documentTypesError,
+                                            elements = personalInformationViewModel.state.countries,
+                                            error = personalInformationViewModel.state.documentTypesError,
                                             onChange = {
-                                                additionalInformationViewModel.updateDocumentType(
-                                                    it
-                                                )
+//                                                personalInformationViewModel.updateDocumentType(
+//                                                    it
+//                                                )
                                             },
-                                            placeholder = stringResource(R.string.placeholder_document_type),
-                                            title = stringResource(R.string.document_type_title),
-                                            value = additionalInformationViewModel.state.selectedDocumentType
+                                            placeholder = stringResource(R.string.province),
+                                            title = stringResource(R.string.province_title),
+                                            value = personalInformationViewModel.state.selectedDocumentType
                                         )
                                     }
                                 }
@@ -248,7 +219,7 @@ fun PersonalInformationView(
 
                     Button(
                         onClick = {
-
+                            personalInformationViewModel.storePersonalInformation()
                         },
                         modifier = Modifier
                             .fillMaxWidth()

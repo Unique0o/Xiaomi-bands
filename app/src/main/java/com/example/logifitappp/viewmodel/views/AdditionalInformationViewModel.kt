@@ -13,6 +13,7 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.core.utils.toFile
 import com.example.logifitappp.data.models.CountryModel
+import com.example.logifitappp.data.models.DepartmentModel
 import com.example.logifitappp.data.models.DocumentTypeModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
@@ -169,6 +170,7 @@ class AdditionalInformationViewModel @AssistedInject constructor (
     fun updateDocumentType(documentType: DocumentTypeModel) {
         state = state.copy(selectedDocumentType = documentType)
     }
+
 
     fun updateIdentityDocument(identityDocument: TextFieldValue) {
         state = state.copy(identityDocument = identityDocument)

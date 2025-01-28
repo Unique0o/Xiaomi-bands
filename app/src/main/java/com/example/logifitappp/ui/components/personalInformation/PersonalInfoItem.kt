@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.rounded.AlternateEmail
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,7 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.theme.Rose120
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.ui.text.input.TextFieldValue
+import com.example.logifitappp.ui.components.forms.OutlinedTextField
+
 
 
 @Composable
@@ -32,50 +35,41 @@ fun PersonalInfoItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(top = 5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.Gray,
-                modifier = Modifier.weight(1f)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-
-            if (label in listOf("Names", "Surnames", "Identification Document","Email", "Phone")) {
+//            if (label in listOf("Names", "Surnames", "Identification Document","Email", "Phone")) {
                 var textValue by remember { mutableStateOf(value) } // Mutable state for the text field
 
-                TextField(
-                    value = value,
-                    onValueChange = { newValue -> textValue = newValue },
-                    singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(
-                        color = Color.Black ,
-                        textAlign = TextAlign.End
-                    ), modifier = Modifier.weight(1f)
+                OutlinedTextField(
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+
+                        }
+                    ),
+                    onValueChange = {
+//                        loginViewModel.updateUsername(it)
+                    },
+                    placeholder = label,
+                    value = TextFieldValue(value),
+                    error = "",
                 )
 
-            }else {
-                Text(
-                    text = value,
-                    textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = if (isValueSelected) Color.Black else Rose120,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable(onClick = onClick)
-                )
-
-            }
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = Color.Gray
-            )
+//            }else {
+//                Text(
+//                    text = value,
+//                    textAlign = TextAlign.End,
+//                    style = MaterialTheme.typography.bodyLarge,
+//                    color = if (isValueSelected) Color.Black else Rose120,
+//                    maxLines = 1,
+//                    overflow = TextOverflow.Ellipsis,
+//                    modifier = Modifier
+//                        .weight(1f)
+//                        .clickable(onClick = onClick)
+//                )
+//
+//            }
         }
-        HorizontalDivider(color = Color.LightGray)
+//        HorizontalDivider(color = Color.LightGray)
     }
 }

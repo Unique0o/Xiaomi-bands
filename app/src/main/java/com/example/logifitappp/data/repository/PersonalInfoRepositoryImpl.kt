@@ -19,6 +19,12 @@ class PersonalInfoRepositoryImpl @Inject constructor(
                "cnic",
             ),
             PersonalInfoModel(context.getString(R.string.phone), "12356789"),
+
+            PersonalInfoModel(
+                context.getString(R.string.country),
+                context.getString(R.string.not_selected),
+                false
+            ),
             PersonalInfoModel(
                 context.getString(R.string.document_type),
                 context.getString(R.string.not_selected),
