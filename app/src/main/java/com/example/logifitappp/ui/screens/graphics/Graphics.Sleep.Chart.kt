@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
-import com.example.logifitappp.core.graphics.SleepBarDataSet
+import com.example.logifitappp.core.graphics.SleepDataSet
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.data.models.ShiftModel
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -37,7 +37,7 @@ import com.example.logifitappp.core.wearebles.Wearable
 
 @Composable
 fun GraphicsSleepChart(
-    dataSet: SleepBarDataSet,
+    dataSet: SleepDataSet,
     shift: ShiftModel?,
     navigation: NavHostController,
     wearable: Wearable?

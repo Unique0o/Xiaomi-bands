@@ -12,6 +12,7 @@ import com.example.logifitappp.data.dao.FitProRawActivityDao
 import com.example.logifitappp.data.dao.GroupDao
 import com.example.logifitappp.data.dao.HuamiExtendedRawActivityDao
 import com.example.logifitappp.data.dao.HuamiSpo2SampleDao
+import com.example.logifitappp.data.dao.HuamiStressSampleDao
 import com.example.logifitappp.data.dao.LocationDao
 import com.example.logifitappp.data.dao.ProvinceDao
 import com.example.logifitappp.data.dao.RestParameterDao
@@ -35,6 +36,7 @@ import com.example.logifitappp.data.models.FitProRawActivityModel
 import com.example.logifitappp.data.models.GroupModel
 import com.example.logifitappp.data.models.HuamiExtendedRawActivityModel
 import com.example.logifitappp.data.models.HuamiSpo2SampleModel
+import com.example.logifitappp.data.models.HuamiStressSampleModel
 import com.example.logifitappp.data.models.LocationModel
 import com.example.logifitappp.data.models.ProvinceModel
 import com.example.logifitappp.data.models.RestParameterModel
@@ -61,6 +63,7 @@ import com.example.logifitappp.data.models.XiaomiSleepTimeModel
         GroupModel::class,
         HuamiExtendedRawActivityModel::class,
         HuamiSpo2SampleModel::class,
+        HuamiStressSampleModel::class,
         LocationModel::class,
         ProvinceModel::class,
         RestParameterModel::class,
@@ -89,6 +92,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun groupDao(): GroupDao
     abstract fun huamiExtendedRawActivityDao(): HuamiExtendedRawActivityDao
     abstract fun huamiSpo2SampleDao(): HuamiSpo2SampleDao
+    abstract fun huamiStressSampleDao(): HuamiStressSampleDao
     abstract fun locationDao(): LocationDao
     abstract fun provinceDao(): ProvinceDao
     abstract fun restParameterDao(): RestParameterDao

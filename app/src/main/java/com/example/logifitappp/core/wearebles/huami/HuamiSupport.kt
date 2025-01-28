@@ -39,8 +39,10 @@ import com.example.logifitappp.core.wearebles.huami.miband.VibrationProfile
 import com.example.logifitappp.core.wearebles.huami.miband.miband2.Mi2NotificationStrategy
 import com.example.logifitappp.core.wearebles.huami.miband.miband2.Mi2TextNotificationStrategy
 import com.example.logifitappp.core.wearebles.huami.operations.AbstractFetchOperation
-import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchActivityOperation
-import com.example.logifitappp.core.wearebles.huami.operations.HuamiFetchSpo2NormalOperation
+import com.example.logifitappp.core.wearebles.huami.operations.FetchActivityOperation
+import com.example.logifitappp.core.wearebles.huami.operations.FetchSpo2NormalOperation
+import com.example.logifitappp.core.wearebles.huami.operations.FetchStressAutoOperation
+import com.example.logifitappp.core.wearebles.huami.operations.FetchStressManualOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation
 import com.example.logifitappp.core.wearebles.huami.operations.InitOperation2021
 import com.example.logifitappp.enums.AlertCategoryEnum
@@ -402,12 +404,16 @@ abstract class HuamiSupport: AbstractBleWearableSupport(), Huami2021Handler {
 
     override fun onFetchRecordedData(dataTypes: Int) {
         if ((dataTypes and RecordedDataType.TYPE_ACTIVITY) != 0) {
-            println("operation: HuamiFetchActivityOperation")
-            fetchOperationQueue.add(HuamiFetchActivityOperation(this))
+            fetchOperationQueue.add(FetchActivityOperation(this))
+        }
+
+        if ((dataTypes and RecordedDataType.TYPE_STRESS) != 0 && getCoordinator().supportsStressMeasurement()) {
+            fetchOperationQueue.add(FetchStressAutoOperation(this))
+            fetchOperationQueue.add(FetchStressManualOperation(this))
         }
 
         if ((dataTypes and RecordedDataType.TYPE_SPO2) != 0 && getCoordinator().supportsSpo2()) {
-            fetchOperationQueue.add(HuamiFetchSpo2NormalOperation(this))
+            fetchOperationQueue.add(FetchSpo2NormalOperation(this))
         }
 
         fetchOperationQueue.poll()?.let {

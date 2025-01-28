@@ -9,7 +9,7 @@ import com.example.logifitappp.ui.theme.Zinc680
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
-class SleepBarDataSet(var amounts: ActivityAmountList) {
+class SleepDataSet(var amounts: ActivityAmountList) {
     var empty = amounts.totalSleepMinutes == 0L
         private set
 

@@ -17,7 +17,7 @@ class XiaomiStressSampleProvider(wearable: Wearable): AbstractActivityToSamplePr
 
         return XiaomiStressSample(
             stress = activity.stress!!,
-            timestamp = activity.timestamp,
+            timestamp = activity.timestamp * 1000,
             wearableId = activity.wearableId
         )
     }

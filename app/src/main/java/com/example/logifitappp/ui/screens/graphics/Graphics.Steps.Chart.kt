@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
-import com.example.logifitappp.core.graphics.StepsBarDataSet
+import com.example.logifitappp.core.graphics.StepsDataSet
 import com.example.logifitappp.core.utils.StepsUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.enums.ChipStatusEnum
@@ -27,7 +27,7 @@ import com.example.logifitappp.ui.components.graphics.VerticalBarChart
 
 @Composable
 fun GraphicsStepsChart(
-    dataset: StepsBarDataSet,
+    dataset: StepsDataSet,
     navigation: NavHostController,
     wearable: Wearable?
 ) {

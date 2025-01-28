@@ -7,13 +7,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.logifitappp.data.remote.dto.response.WorkerItemResponse
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.drowsiness_test_detail.DrowsinessTestDetailView
 import com.example.logifitappp.ui.screens.drowsiness_tests.DrowsinessTestsView
+import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
+import com.example.logifitappp.ui.screens.occupational_information.OccupationalInformationView
+import com.example.logifitappp.ui.screens.pairing_worker.PairingWorkerView
 import com.example.logifitappp.ui.screens.password_recovery.PasswordRecoveryView
 import com.example.logifitappp.ui.screens.personal_information.PersonalInformationView
 import com.example.logifitappp.ui.screens.roster.RosterView
@@ -22,10 +26,12 @@ import com.example.logifitappp.ui.screens.sleep_data_recording.SleepDataRecordin
 import com.example.logifitappp.ui.screens.sleep_detail.SleepDetailView
 import com.example.logifitappp.ui.screens.spo2_detail.Spo2DetailView
 import com.example.logifitappp.ui.screens.steps_detail.StepsDetailView
+import com.example.logifitappp.ui.screens.stress_detail.StressDetailView
 import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
 import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
+import com.example.logifitappp.ui.screens.wearable_settings.WearableSettingsView
 import com.example.logifitappp.viewmodel.AppViewModel
 import com.google.gson.Gson
 
@@ -41,7 +47,12 @@ fun MainNavigation(
         composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
+
         composable<MainRoutes.PersonalInformation> { PersonalInformationView(appViewModel,navigation) }
+
+
+        composable<MainRoutes.OccupationalInformation> { OccupationalInformationView(navigation) }
+
         composable<MainRoutes.Roster> { RosterView(appViewModel, navigation) }
         composable<MainRoutes.RosterRecording> { RosterRecordingView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
@@ -55,6 +66,12 @@ fun MainNavigation(
             DrowsinessTestDetailView(appViewModel, navigation, arguments.drowsinessTestId)
         }
 
+        composable<MainRoutes.Graphics> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.Graphics>()
+
+            GraphicsView(appViewModel, null, navigation, mac = arguments.mac)
+        }
+
         composable<MainRoutes.HeartRateDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.HeartRateDetail>()
 
@@ -66,6 +83,13 @@ fun MainNavigation(
             val arguments = navBackStackEntry.toRoute<MainRoutes.LessonDetail>()
 
             LessonDetailView(appViewModel, navigation, arguments.lessonId, gson.fromJson(arguments.serializedLessonIds, Array<Int>::class.java))
+        }
+
+        composable<MainRoutes.PairingWorker> { navBackStackEntry ->
+            val gson = Gson()
+            val arguments = navBackStackEntry.toRoute<MainRoutes.PairingWorker>()
+
+            PairingWorkerView(appViewModel, navigation, arguments.mac, gson.fromJson(arguments.serializedWorkers, Array<WorkerItemResponse>::class.java))
         }
 
         composable<MainRoutes.SleepDetail> { navBackStackEntry ->
@@ -86,6 +110,12 @@ fun MainNavigation(
             StepsDetailView(navigation, arguments.mac)
         }
 
+        composable<MainRoutes.StressDetail> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.StressDetail>()
+
+            StressDetailView(navigation, arguments.mac)
+        }
+
         composable<MainRoutes.TrainingsDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.TrainingsDetail>()
 
@@ -96,6 +126,12 @@ fun MainNavigation(
             val arguments = navBackStackEntry.toRoute<MainRoutes.WearableProfile>()
 
             WearableProfileView(appViewModel, navigation, arguments.mac)
+        }
+
+        composable<MainRoutes.WearableSettings> { navBackStackEntry ->
+            val arguments = navBackStackEntry.toRoute<MainRoutes.WearableSettings>()
+
+            WearableSettingsView(navigation, arguments.mac)
         }
     }
 }

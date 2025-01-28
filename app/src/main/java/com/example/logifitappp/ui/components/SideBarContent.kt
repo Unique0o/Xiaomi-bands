@@ -108,13 +108,15 @@ fun SideBarContent(
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 12.dp),
                 icon = it.icon,
-                iconColor = MaterialTheme.colorScheme.outlineVariant,
+                iconColor = if (it == SideBarScreenEnum.EXIT) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outlineVariant,
                 iconSize = 18.dp,
                 label = stringResource(it.label),
-                labelColor = MaterialTheme.colorScheme.outlineVariant,
+                labelColor = if (it == SideBarScreenEnum.EXIT) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outlineVariant,
                 labelTypography = MaterialTheme.typography.labelLarge,
                 spaceBetween = 8.dp
             )
+
+            if (it == SideBarScreenEnum.LOGOUT) Spacer(Modifier.weight(1f))
         }
     }
 }

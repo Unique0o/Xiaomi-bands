@@ -6,14 +6,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavHostController
+import com.example.logifitappp.R
 import com.example.logifitappp.core.utils.avoidBottom
 import com.example.logifitappp.core.utils.plus
 import com.example.logifitappp.ui.components.headers.BottomTabsHeader
+import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.modals.MessageModal
 import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -22,12 +25,13 @@ import com.example.logifitappp.viewmodel.views.GraphicsViewModel
 @Composable
 fun GraphicsView(
     appViewModel: AppViewModel,
-    drawerState: DrawerState,
+    drawerState: DrawerState?,
     navigation: NavHostController,
-    contentPadding: PaddingValues? = null
+    contentPadding: PaddingValues? = null,
+    mac: String? = null
 ) {
     val graphicsViewModel = hiltViewModel<GraphicsViewModel, GraphicsViewModel.GraphicsViewModelFactory>{
-        it.create(appViewModel.user)
+        it.create(mac, appViewModel.user)
     }
 
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
@@ -44,11 +48,18 @@ fun GraphicsView(
     ScrollablePage(
         contentPadding = PaddingValues(16.dp).avoidBottom() + contentPadding,
         topBar = {
-            BottomTabsHeader(
-                appViewModel = appViewModel,
-                drawerState = drawerState,
-                navigation = navigation
-            )
+            if (drawerState != null) {
+                BottomTabsHeader(
+                    appViewModel = appViewModel,
+                    drawerState = drawerState,
+                    navigation = navigation
+                )
+            } else {
+                ColumnStackHeader(
+                    navigation = navigation,
+                    title = stringResource(id = R.string.graphics_title)
+                )
+            }
         }
     ) {
         item {
@@ -97,6 +108,18 @@ fun GraphicsView(
 
                     GraphicsSpo2Chart(
                         dataset = graphicsViewModel.state.spo2DataSet,
+                        navigation = navigation,
+                        wearable = graphicsViewModel.state.wearable
+                    )
+                }
+            }
+
+            if (it.supportsStressMeasurement()) {
+                item {
+                    Spacer(Modifier.height(16.dp))
+
+                    GraphicsStressChart(
+                        dataset = graphicsViewModel.state.stressDataSet,
                         navigation = navigation,
                         wearable = graphicsViewModel.state.wearable
                     )

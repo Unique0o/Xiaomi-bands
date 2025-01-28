@@ -1,6 +1,5 @@
 package com.example.logifitappp.viewmodel.views
 
-import android.os.Build
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,8 +13,6 @@ import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.core.utils.DurationUtils
 import com.example.logifitappp.core.wearebles.Wearable
 import com.example.logifitappp.data.models.UserModel
-import com.example.logifitappp.data.remote.dto.requests.AssociateWearableRequest
-import com.example.logifitappp.domain.service.WearableService
 import com.example.logifitappp.domain.usecase.ProcessSynchronizedWearableDataUseCase
 import com.example.logifitappp.domain.usecase.SendWearableInformationToLogifitUseCase
 import com.example.logifitappp.domain.usecase.SynchronizeWearableUseCase
@@ -38,8 +35,7 @@ class WearableProfileViewModel @AssistedInject constructor(
     @Assisted private val user: UserModel?,
     private val processSynchronizedWearableDataUseCase: ProcessSynchronizedWearableDataUseCase,
     private val sendWearableInformationToLogifitUseCase: SendWearableInformationToLogifitUseCase,
-    private val synchronizeWearableUseCase: SynchronizeWearableUseCase,
-    private val wearableService: WearableService
+    private val synchronizeWearableUseCase: SynchronizeWearableUseCase
 ): ViewModel() {
     @AssistedFactory
     interface WearableProfileViewModelFactory {
@@ -61,20 +57,6 @@ class WearableProfileViewModel @AssistedInject constructor(
 
         viewModelScope.launch {
             state.wearable?.let { wearable ->
-                try {
-                    if (!user.isAdmin()) {
-                        wearableService.associate(user.id, AssociateWearableRequest(
-                            device_mac = wearable.getAddress()!!,
-                            oper_system = "Android",
-                            oper_system_version = Build.VERSION.RELEASE,
-                            phone_brand = Build.BRAND,
-                            phone_model = Build.MODEL
-                        ))
-                    }
-                } catch (_: Exception) {
-
-                }
-
                 if (!state.isLoading) return@launch
 
                 if (wearable.isInitialized() && wearable.getWearableCoordinator().supportsActivityDataFetching() && state.status == AppStatusCodeEnum.CONNECTING_WITH_WEARABLE) {
@@ -152,9 +134,9 @@ class WearableProfileViewModel @AssistedInject constructor(
         when {
             drowsiness == null -> {
                 state = state.copy(
-                    activityDataSynchronizationMessage = App.context.getString(R.string.lack_of_sleep_synchronization_message),
+                    activityDataSynchronizationMessage = App.context.getString(R.string.lack_of_sleep_extraction_message),
                     synchronizationWithLogifitMessage = App.context.getString(R.string.lack_of_sleep_synchronization_with_logifit_message),
-                    totalSleepTimeMessage = App.context.getString(R.string.lack_of_sleep_synchronization_message)
+                    totalSleepTimeMessage = App.context.getString(R.string.lack_of_sleep_extraction_message)
                 )
             }
 
@@ -165,7 +147,7 @@ class WearableProfileViewModel @AssistedInject constructor(
 
                 state = state.copy(
                     activityDataSynchronizationMessage = App.context.getString(
-                        R.string.sleep_synchronization_message,
+                        R.string.sleep_extraction_message,
                         drowsiness.createdAt,
                         DurationUtils.formatExtended(App.context, now - createAtInMillis)
                     ),
@@ -177,7 +159,7 @@ class WearableProfileViewModel @AssistedInject constructor(
                         DurationUtils.formatExtended(App.context, now - sentAtInMillis)
                     ),
 
-                    totalSleepTimeMessage = if (drowsiness.totalSleepSeconds == 0L) App.context.getString(R.string.lack_of_sleep_synchronization_message)
+                    totalSleepTimeMessage = if (drowsiness.totalSleepSeconds == 0L) App.context.getString(R.string.lack_of_sleep_extraction_message)
                     else App.context.getString(R.string.sleep_hours_message, DurationUtils.format(drowsiness.totalSleepSeconds))
                 )
             }

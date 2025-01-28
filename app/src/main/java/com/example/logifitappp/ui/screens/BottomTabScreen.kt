@@ -8,8 +8,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -85,11 +83,7 @@ fun BottomTabScreen(
 
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .fillMaxHeight()
-            ) {
+            ModalDrawerSheet {
                 SideBarContent(
                     appViewModel = appViewModel,
                     drawerState = drawerState,
