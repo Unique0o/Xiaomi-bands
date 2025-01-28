@@ -69,6 +69,7 @@
     <string name="costa_rica">Costa Rica</string>
     <string name="country_phone_code_title">Select a country phone code</string>
     <string name="country_title">Select a country</string>
+    <string name="province_title">Select a province</string>
     <string name="country_validation_error_message">You must select a country</string>
     <string name="cuba">Cuba</string>
     <string name="date">Date</string>
@@ -82,6 +83,7 @@
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
     <string name="document_type_title">Select a document type</string>
+    <string name="department_type_title">Select a department</string>
     <string name="document_type_validation_error_message">You must select a document type</string>
     <string name="dominican_republic">Dominican Republic</string>
     <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>

@@ -82,6 +82,8 @@
     <string name="discovery_pair_message">Selecciona Emparejar para emparejar tus dispositivos. Si esto falla, prueba de nuevo sin emparejar.</string>
     <string name="discovery_pair_title">¿Emparejar con %1$s?</string>
     <string name="document_type_title">Elija un tipo de documento</string>
+    <string name="department_type_title">Seleccione un departamento</string>
+    <string name="province_title">Selecciona una provincia</string>
     <string name="document_type_validation_error_message">Debe seleccionar un tipo de documento</string>
     <string name="dominican_republic">República Dominicana</string>
     <string name="downloading_evaluation_result_message">Obteniendo el resultado de la evaluación...</string>

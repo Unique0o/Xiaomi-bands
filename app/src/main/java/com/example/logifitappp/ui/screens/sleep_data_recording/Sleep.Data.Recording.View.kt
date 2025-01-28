@@ -1,6 +1,11 @@
 package com.example.logifitappp.ui.screens.sleep_data_recording
 
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -8,13 +13,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
+import com.example.logifitappp.core.utils.Permissions
 import com.example.logifitappp.ui.components.addSleepData.PhotoSelectionCard
 import com.example.logifitappp.ui.components.addSleepData.SleepEntryCard
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
@@ -111,9 +119,20 @@ fun SleepDataRecordingView(
             PhotoSelectionCard(
                 photoUri = state.photoUri,
                 onTakePhoto = {
-                    viewModel.createTempPhotoUri(context)?.let { uri ->
-                        cameraLauncher.launch(uri)
-                    }
+                    Permissions.requestPermission(
+                        context,
+                        permissions = arrayOf(Manifest.permission.CAMERA),
+                        onPermissionsResult = { granted ->
+                            if (granted) {
+                                viewModel.createTempPhotoUri(context)?.let { uri ->
+                                    cameraLauncher.launch(uri)
+                                }
+                                Log.d("Permissions", "All permissions granted!")
+                            } else {
+                                Log.d("Permissions", "Some permissions were denied.")
+                            }
+                        }
+                    )
                 },
                 onRemovePhoto = { viewModel.onEvent(AddSleepDataEvent.RemoveMedia) }
             )
