@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
@@ -36,6 +37,7 @@ fun <T: BottomSheetSelectableItem> SelectableBottomSheet(
     var isVisibleBottomSheetModal by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val updatedElements by rememberUpdatedState(elements)
 
     val toggleModalBottomSheet = {
         coroutineScope.launch {
@@ -48,7 +50,7 @@ fun <T: BottomSheetSelectableItem> SelectableBottomSheet(
 
     BottomSheetSearchable(
         coroutineScope = coroutineScope,
-        elements = elements,
+        elements = updatedElements,
         isVisible = isVisibleBottomSheetModal,
         modalBottomSheetState = modalBottomSheetState,
         onChange = onChange,

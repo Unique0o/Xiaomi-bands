@@ -72,6 +72,8 @@
     <string name="country_phone_code_title">Selecciona un código de país</string>
     <string name="country_title">Selecciona un país</string>
     <string name="country_validation_error_message">Debe seleccionar un país</string>
+    <string name="province_validation_error_message">Debes seleccionar una provincia</string>
+    <string name="department_validation_error_message">Debes seleccionar un departamento</string>
     <string name="cuba">Cuba</string>
     <string name="date">Fecha</string>
     <string name="deep_sleep">Sueño profundo</string>
@@ -292,6 +294,7 @@
     <string name="successful_worker_associated_message">Colaborador actualizado exitosamente</string>
     <string name="summary">Resumen</string>
     <string name="surnames_validation_error_message">Debe ingresar sus apellidos</string>
+    <string name="email_validation_error_message">Debes insertar tu email válido</string>
     <string name="sync_with_logifit_required_alert">Los datos extraidos no han sido enviados a la supervisión. Por favor, verifica si el dispositivo tiene señal, datos móviles o está conectado a una red Wi-Fi estable. Si en este momento no cuenta con conexión a internet, se agradece enviar la información a la brevedad posible una vez restablecida la conexión.</string>
     <string name="sync_with_logifit_required_message">No se realizó el envío a Logifit</string>
     <string name="sync_without_sleep_data_alert">No cuenta con registros de sueño para enviar</string>
