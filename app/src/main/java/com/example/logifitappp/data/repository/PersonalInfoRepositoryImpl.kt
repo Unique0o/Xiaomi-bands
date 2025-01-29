@@ -16,21 +16,19 @@ class PersonalInfoRepositoryImpl @Inject constructor(
             PersonalInfoModel(context.getString(R.string.email), "john.doe@example.com"),
             PersonalInfoModel(
                 context.getString(R.string.identification_documents),
-               "cnic",
+                "cnic",
             ),
             PersonalInfoModel(context.getString(R.string.phone), "12356789"),
-
-            PersonalInfoModel(
-                context.getString(R.string.country),
-                context.getString(R.string.not_selected),
-                false
-            ),
             PersonalInfoModel(
                 context.getString(R.string.document_type),
                 context.getString(R.string.not_selected),
                 false
             ),
-
+            PersonalInfoModel(
+                context.getString(R.string.country),
+                context.getString(R.string.not_selected),
+                false
+            ),
             PersonalInfoModel(
                 context.getString(R.string.department),
                 context.getString(R.string.not_selected),
