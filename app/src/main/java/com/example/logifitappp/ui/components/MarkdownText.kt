@@ -25,7 +25,7 @@ fun MarkdownText(
         BasicRichText(style = RichTextStyle(
             stringStyle = RichTextStringStyle(boldStyle = boldTextTypography.toSpanStyle())
         )) {
-            val parser = remember { CommonmarkAstNodeParser() }
+            val parser = remember(text) { CommonmarkAstNodeParser() }
             val astNode = remember(parser) { parser.parse(text) }
 
             BasicMarkdown(astNode)

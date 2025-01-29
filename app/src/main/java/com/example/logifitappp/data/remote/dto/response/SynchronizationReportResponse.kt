@@ -40,6 +40,6 @@ data class UnsynchronizedUserResponse(
 
 data class SynchronizationReportResponse(
     @SerializedName("count_condiciones") val conditions: List<ConditionResponse>,
-    @SerializedName("data") val sleepData: List<ReportResponse>,
+    @SerializedName("data") val sleeps: List<ReportResponse>,
     @SerializedName("sin_datos") val unsynchronizedUsers: List<UnsynchronizedUserResponse>
 )

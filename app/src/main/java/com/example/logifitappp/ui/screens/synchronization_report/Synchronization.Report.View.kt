@@ -67,21 +67,17 @@ fun SynchronizationReportView(
         item {
             SynchronizationReportResume(synchronizationReportViewModel.state)
             SynchronizationReportFilters(synchronizationReportViewModel)
-        }
 
-        synchronizationReportViewModel.state.report?.let {
-            item {
-                SynchronizationReportConditionList(
-                    conditions = it.conditions,
-                    currentTabIndex = synchronizationReportViewModel.state.currentTabIndex,
-                    onSelectCondition = { index, condition -> synchronizationReportViewModel.updateCondition(index, condition) }
-                )
-            }
+            SynchronizationReportConditionList(
+                conditions = synchronizationReportViewModel.state.conditions,
+                currentTabIndex = synchronizationReportViewModel.state.currentTabIndex,
+                onSelectConditionIndex = { synchronizationReportViewModel.updateConditionIndex(it) }
+            )
         }
 
         item {
             Spacer(Modifier.height(16.dp))
-            SynchronizationReportTeam(synchronizationReportViewModel.state.data)
+            SynchronizationReportTeam(synchronizationReportViewModel.state.filteredReport[synchronizationReportViewModel.state.currentTabIndex])
         }
     }
 }

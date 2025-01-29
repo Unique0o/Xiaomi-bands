@@ -22,7 +22,7 @@ import com.example.logifitappp.ui.components.Text
 fun SynchronizationReportConditionList(
     conditions: List<ConditionResponse>,
     currentTabIndex: Int,
-    onSelectCondition: (Int, ConditionResponse) -> Unit
+    onSelectConditionIndex: (Int) -> Unit
 ) {
     val sizes = remember { mutableStateMapOf<Int, Pair<Int, Int>>() }
 
@@ -46,7 +46,7 @@ fun SynchronizationReportConditionList(
 
             Tab(
                 modifier = Modifier.onSizeChanged { sizes[index] = Pair(it.width, it.height) }.zIndex(1f),
-                onClick = { onSelectCondition(index, condition) },
+                onClick = { onSelectConditionIndex(index) },
                 selected = isSelected,
                 selectedContentColor = MaterialTheme.colorScheme.primary,
                 unselectedContentColor = Color.White,

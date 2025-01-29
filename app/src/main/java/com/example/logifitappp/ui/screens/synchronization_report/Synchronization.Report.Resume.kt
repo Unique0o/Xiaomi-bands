@@ -35,7 +35,7 @@ fun SynchronizationReportResume(
                     )
                 }
 
-                state.report?.conditions?.forEach {
+                state.conditions.forEach {
                     Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                         SynchronizationReportResumeItem(
                             label = it.label,

@@ -13,7 +13,7 @@ import com.example.logifitappp.core.utils.DateTimeUtils
 import com.example.logifitappp.data.models.FatigueModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.SynchronizationReportRequest
-import com.example.logifitappp.data.remote.dto.response.ConditionResponse
+import com.example.logifitappp.data.remote.dto.response.SynchronizationReportResponse
 import com.example.logifitappp.domain.service.SynchronizationReportService
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
@@ -46,72 +46,19 @@ class SynchronizationReportViewModel @AssistedInject constructor(
         fetchReport()
     }
 
-    private fun applyFilters() {
-        when (state.condition?.label) {
-            null -> { state = state.copy(data = listOf()) }
+    private fun applyFilters(
+        report: Map<Int, List<SynchronizationReportItemType>>,
+        specificKey: Int,
+        group: BottomSheetSelectableItem,
+        shift: BottomSheetSelectableItem
+    ): Map<Int, List<SynchronizationReportItemType>> {
+        val data = mutableMapOf<Int, List<SynchronizationReportItemType>>()
 
-            "S/D" -> {
-                val items = mutableListOf<SynchronizationReportItemType>()
-
-                state.report?.unsynchronizedUsers?.let {
-                    for (unsynchronizedUser in it) {
-                        if (state.selectedShift.id != 0 && unsynchronizedUser.shift?.id != state.selectedShift.id) continue
-
-                        if (state.selectedGroup.id != 0 && unsynchronizedUser.group?.id != state.selectedGroup.id) continue
-
-                        items.add(SynchronizationReportItemType(
-                            background = Stone240,
-                            color = Stone510,
-                            condition = App.context.getString(R.string.no_data),
-                            group = unsynchronizedUser.group?.name ?: App.context.getString(R.string.unassigned_shift_label),
-                            label = unsynchronizedUser.fullName,
-                            shift = unsynchronizedUser.shift?.name ?: App.context.getString(R.string.unassigned_shift_label)
-                        ))
-                    }
-                }
-
-                state = state.copy(data = items)
-            }
-
-            else -> {
-                val items = mutableListOf<SynchronizationReportItemType>()
-
-                state.report?.sleepData?.let {
-                    for (sleep in it) {
-                        if (state.condition?.label != sleep.condition) continue
-
-                        if (state.selectedShift.id != 0 && sleep.shiftId != state.selectedShift.id) continue
-
-                        if (state.selectedGroup.id != 0 && sleep.groupId != state.selectedGroup.id) continue
-
-                        items.add(SynchronizationReportItemType(
-                            background = ColorUtils.toColor(sleep.backgroundColor ?: "#fadab1"),
-                            color = ColorUtils.toColor(sleep.color ?: "#ffab40"),
-                            condition = sleep.condition,
-                            fatigue = sleep.fatigue?.let { fatigue ->
-                                FatigueModel(
-                                    remCycles = fatigue.reemCycles,
-                                    totalAwakeSeconds = fatigue.totalAwakeTime.toLong(),
-                                    totalRemSeconds = fatigue.totalReemSleep?.toLong(),
-                                    totalSleepSeconds = fatigue.totalSleep.toLong(),
-                                    wearableId = 0,
-                                    withAwakeningOvercome = fatigue.withAwakeningOvercome == 1,
-                                    withHypertension = fatigue.withHypertension == 1,
-                                    withLittleReemSleep = fatigue.withLittleReemSleep == 1,
-                                    withLittleSleep = fatigue.withLittleSleep == 1,
-                                    withLongAwake = fatigue.withLongAwake == 1
-                                )
-                            },
-                            group = sleep.group ?: App.context.getString(R.string.unassigned_shift_label),
-                            label = sleep.fullName,
-                            shift = sleep.shift
-                        ))
-                    }
-                }
-
-                state = state.copy(data = items)
-            }
+        report.keys.forEach { key ->
+            data[key] = if (specificKey == key) report[key]!!.filter { (shift.id == 0 || shift.id == it.shiftId) &&(group.id == 0 || group.id == it.groupId) } else report[key]!!
         }
+
+        return data
     }
 
     private fun checkIfCanGoToNext(calendar: Calendar): Boolean {
@@ -142,15 +89,16 @@ class SynchronizationReportViewModel @AssistedInject constructor(
                     tenant_id = user.tenantId
                 ))
 
-                state = state.copy(
-                    currentTabIndex = 0,
-                    condition = report.conditions.firstOrNull(),
-                    hasFetchReportFailed = false,
-                    isFetchingReport = false,
-                    report = report
-                )
-
-                applyFilters()
+                processReport(report).let {
+                    state = state.copy(
+                        currentTabIndex = 0,
+                        conditions = report.conditions,
+                        filteredReport = applyFilters(it, 0, state.selectedGroup, state.selectedShift),
+                        hasFetchReportFailed = false,
+                        isFetchingReport = false,
+                        report = it
+                    )
+                }
             } catch (e: HttpConsumerException) {
                 state = state.copy(isFetchingReport = false, hasFetchReportFailed = true)
             }
@@ -196,24 +144,81 @@ class SynchronizationReportViewModel @AssistedInject constructor(
         fetchReport()
     }
 
+    private fun processReport(report: SynchronizationReportResponse): MutableMap<Int, List<SynchronizationReportItemType>> {
+        val data = mutableMapOf<Int, List<SynchronizationReportItemType>>()
+
+        report.conditions.forEachIndexed { index, condition ->
+            val items = mutableListOf<SynchronizationReportItemType>()
+
+            if (condition.label == "S/D") {
+                report.unsynchronizedUsers.forEach {
+                    items.add(SynchronizationReportItemType(
+                        background = Stone240,
+                        color = Stone510,
+                        condition = App.context.getString(R.string.no_data),
+                        group = it.group?.name ?: App.context.getString(R.string.unassigned_shift_label),
+                        groupId = it.group?.id,
+                        label = it.fullName,
+                        shift = it.shift?.name ?: App.context.getString(R.string.unassigned_shift_label),
+                        shiftId = it.shift?.id
+                    ))
+                }
+            } else {
+                report.sleeps.forEach { sleep ->
+                    items.add(SynchronizationReportItemType(
+                        background = ColorUtils.toColor(sleep.backgroundColor ?: "#fadab1"),
+                        color = ColorUtils.toColor(sleep.color ?: "#ffab40"),
+                        condition = sleep.condition,
+                        fatigue = sleep.fatigue?.let { fatigue ->
+                            FatigueModel(
+                                remCycles = fatigue.reemCycles,
+                                totalAwakeSeconds = fatigue.totalAwakeTime.toLong(),
+                                totalRemSeconds = fatigue.totalReemSleep?.toLong(),
+                                totalSleepSeconds = fatigue.totalSleep.toLong(),
+                                wearableId = 0,
+                                withAwakeningOvercome = fatigue.withAwakeningOvercome == 1,
+                                withHypertension = fatigue.withHypertension == 1,
+                                withLittleReemSleep = fatigue.withLittleReemSleep == 1,
+                                withLittleSleep = fatigue.withLittleSleep == 1,
+                                withLongAwake = fatigue.withLongAwake == 1
+                            )
+                        },
+                        group = sleep.group ?: App.context.getString(R.string.unassigned_shift_label),
+                        groupId = sleep.groupId,
+                        label = sleep.fullName,
+                        shift = sleep.shift,
+                        shiftId = sleep.shiftId
+                    ))
+                }
+            }
+
+            data[index] = items.toList()
+        }
+
+        return data
+    }
+
     fun stopProcessing() {
         state = state.copy(
             isFetchingReport = false
         )
     }
 
-    fun updateCondition(index: Int, condition: ConditionResponse) {
-        state = state.copy(currentTabIndex = index, condition = condition)
-        applyFilters()
+    fun updateConditionIndex(index: Int) {
+        state = state.copy(currentTabIndex = index, filteredReport = applyFilters(state.report, index, state.selectedGroup, state.selectedShift),)
     }
 
     fun updateGroup(group: BottomSheetSelectableItem) {
-        state = state.copy(selectedGroup = group)
-        applyFilters()
+        state = state.copy(
+            filteredReport = applyFilters(state.report, state.currentTabIndex, group, state.selectedShift),
+            selectedGroup = group
+        )
     }
 
     fun updateShift(shift: BottomSheetSelectableItem) {
-        state = state.copy(selectedShift = shift)
-        applyFilters()
+        state = state.copy(
+            filteredReport = applyFilters(state.report, state.currentTabIndex, state.selectedGroup, shift),
+            selectedShift = shift
+        )
     }
 }

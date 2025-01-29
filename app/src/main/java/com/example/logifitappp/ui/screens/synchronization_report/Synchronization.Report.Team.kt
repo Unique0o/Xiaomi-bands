@@ -18,7 +18,7 @@ import com.example.logifitappp.viewmodel.states.SynchronizationReportItemType
 
 @Composable
 fun SynchronizationReportTeam(
-    items: List<SynchronizationReportItemType>
+    items: List<SynchronizationReportItemType>?
 ) {
     Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
         IconText(
@@ -32,7 +32,7 @@ fun SynchronizationReportTeam(
 
         Spacer(Modifier.height(8.dp))
 
-        items.forEachIndexed { index, item ->
+        items?.forEachIndexed { index, item ->
             SynchronizationReportTeamItem(item)
 
             if (index + 1 < items.size) {
