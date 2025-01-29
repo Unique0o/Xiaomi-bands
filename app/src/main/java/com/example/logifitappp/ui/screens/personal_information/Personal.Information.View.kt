@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.core.utils.DateTimeUtils
+import com.example.logifitappp.data.models.PersonalInfoModel
 import com.example.logifitappp.ui.components.BottomSheetSelectableImageSourceAuto
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.forms.Button
@@ -38,8 +40,6 @@ fun PersonalInformationView(
     appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val datePickerVisibility = remember { mutableStateMapOf<Int, Boolean>() }
-    var selectedDate by remember { mutableStateOf("") }
 
     val personalInformationViewModel =
         hiltViewModel<PersonalInformationViewModel, PersonalInformationViewModel.PersonalInformationViewModelFactory> {
@@ -74,158 +74,8 @@ fun PersonalInformationView(
 
                 is PersonalInfoUiState.Success -> {
                     val info = (personalInfoState as PersonalInfoUiState.Success).data
-                    var showBottomSheet by remember { mutableStateOf(false) }
 
-                    // BottomSheetSelectableImageSourceAuto placed outside of LazyColumn
-                    if (showBottomSheet) {
-                        BottomSheetSelectableImageSourceAuto(
-                            onImageObtained = { uri ->
-                                personalInformationViewModel.updateProfilePhoto(uri)
-                                showBottomSheet = false
-                                // Handle the selected image URI here if needed
-                            },
-                            isVisible = showBottomSheet,
-                            onVisibilityChange = { showBottomSheet = it },
-                            trigger = {
-                                // Optionally include a trigger UI here, but it's not necessary
-                            }
-                        )
-                    }
-
-                    LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxSize(),
-                        contentPadding = PaddingValues(horizontal = 16.dp)
-                    ) {
-                        item {
-                            ProfilePhoto(
-                                if (personalInformationViewModel.state.photo == null) {
-                                    appViewModel.user?.profilePhoto.toString()
-                                } else {
-                                    personalInformationViewModel.state.photo.toString()
-                                },
-                                onPhotoClick = {
-                                    showBottomSheet = true
-                                })
-                        }
-
-
-                        items(info.size) { index ->
-
-                            val item = info[index]
-                            val value = item.value
-                            val label = item.label
-
-                            val showDatePicker = datePickerVisibility[index] ?: false
-                            if (label == "Names" || label == "Surnames" || label == "Identification Document" ||
-                                label == "Email" || label == "Phone" || label == "Birthdate"
-                            ) {
-                                PersonalInfoItem(
-                                    label = label,
-                                    value = value,
-                                    isValueSelected = item.isValueSelected,
-                                    onClick = {
-                                        if (item.label == "Birthdate") {
-                                            datePickerVisibility[index] = true
-                                        }
-                                    }
-                                )
-                            } else {
-                                when (label) {
-                                    "Document type" -> {
-                                        Spacer(modifier = Modifier.width(16.dp))
-                                        SelectableBottomSheet(
-                                            elements = personalInformationViewModel.state.documentTypes,
-                                            error = personalInformationViewModel.state.documentTypesError,
-                                            onChange = {
-                                                personalInformationViewModel.updateDocumentType(
-                                                    it
-                                                )
-                                            },
-                                            placeholder = stringResource(R.string.placeholder_document_type),
-                                            title = stringResource(R.string.document_type_title),
-                                            value = personalInformationViewModel.state.selectedDocumentType
-                                        )
-                                    }
-
-                                    "Department" -> {
-                                        SelectableBottomSheet(
-                                            elements = personalInformationViewModel.state.documentTypes,
-                                            error = personalInformationViewModel.state.documentTypesError,
-                                            onChange = {
-                                                personalInformationViewModel.updateDocumentType(
-                                                    it
-                                                )
-                                            },
-                                            placeholder = stringResource(R.string.department),
-                                            title = stringResource(R.string.department_type_title),
-                                            value = personalInformationViewModel.state.selectedDocumentType
-                                        )
-                                    }
-
-                                    "Country" -> {
-                                        Spacer(Modifier.height(5.dp))
-                                        SelectableBottomSheet(
-                                            elements = personalInformationViewModel.state.countries,
-                                            error = personalInformationViewModel.state.documentTypesError,
-                                            onChange = {
-                                                personalInformationViewModel.updateCountry(
-                                                    it
-                                                )
-                                            },
-                                            placeholder = stringResource(R.string.country),
-                                            title = stringResource(R.string.country_title),
-                                            value = personalInformationViewModel.state.selectedCountry
-                                        )
-                                    }
-
-                                    "Province" -> {
-                                        SelectableBottomSheet(
-                                            elements = personalInformationViewModel.state.countries,
-                                            error = personalInformationViewModel.state.documentTypesError,
-                                            onChange = {
-//                                                personalInformationViewModel.updateDocumentType(
-//                                                    it
-//                                                )
-                                            },
-                                            placeholder = stringResource(R.string.province),
-                                            title = stringResource(R.string.province_title),
-                                            value = personalInformationViewModel.state.selectedDocumentType
-                                        )
-                                    }
-                                }
-                            }
-
-                            if (showDatePicker) {
-                                DatePicker(
-                                    onDateSelected = { timestamp ->
-                                        if (timestamp != null) {
-                                            // Convert timestamp to your desired format
-                                            selectedDate = DateTimeUtils.parse(
-                                                timestamp, "MMMM dd, yyyy", TimeZone.getDefault()
-                                            )
-                                        }
-                                        datePickerVisibility[index] =
-                                            false // Hide DatePicker after selection
-                                    },
-                                    onDismissRequest = {
-                                        datePickerVisibility[index] = false // Hide on dismiss
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    Button(
-                        onClick = {
-                            personalInformationViewModel.storePersonalInformation()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
-                        text = stringResource(id = R.string.save),
-                    )
+                    PersonalInfoScreen(info, appViewModel, personalInformationViewModel)
                 }
 
 
@@ -244,14 +94,206 @@ fun PersonalInformationView(
 }
 
 
+@Composable
+fun PersonalInfoScreen(
+    info: List<PersonalInfoModel>,
+    appViewModel: AppViewModel,
+    personalInformationViewModel: PersonalInformationViewModel
+) {
+
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val datePickerVisibility = remember { mutableStateMapOf<Int, Boolean>() }
+    var updatedInfo by rememberSaveable { mutableStateOf(info) }
+
+    // BottomSheetSelectableImageSourceAuto placed outside of LazyColumn
+    if (showBottomSheet) {
+        BottomSheetSelectableImageSourceAuto(
+            onImageObtained = { uri ->
+                personalInformationViewModel.updateProfilePhoto(uri)
+                showBottomSheet = false
+                // Handle the selected image URI here if needed
+            },
+            isVisible = showBottomSheet,
+            onVisibilityChange = { showBottomSheet = it },
+            trigger = {
+                // Optionally include a trigger UI here, but it's not necessary
+            }
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
+
+            item {
+                ProfilePhoto(
+                    if (personalInformationViewModel.state.photo == null) {
+                        appViewModel.user?.profilePhoto.toString()
+                    } else {
+                        personalInformationViewModel.state.photo.toString()
+                    },
+                    onPhotoClick = {
+                        showBottomSheet = true
+                    })
+            }
+            items(updatedInfo.size) { index ->
+                val item = updatedInfo[index]
+                val label = item.label
+
+                if (label == "Names" || label == "Surnames" || label == "Identification Document" ||
+                    label == "Email" || label == "Phone" || label == "Birthdate"
+                ) {
+                    PersonalInfoItem(
+                        label = label,
+                        value = item.value,
+                        isValueSelected = item.isValueSelected,
+                        onValueChange = {
+//                            updatedInfo = updatedInfo.toMutableList().apply {
+//                                this[index] = this[index].copy(value = it.toString())
+//                            }
+                        },
+                        onClick = {
+                            if (item.label == "Birthdate") {
+                                datePickerVisibility[index] = true
+                            }
+                        }
+                    )
+                } else {
+                    when (label) {
+                        "Document type" -> DocumentTypeSection(personalInformationViewModel)
+                        "Country" -> CountrySection(personalInformationViewModel)
+                        "Department" -> DepartmentSection(personalInformationViewModel)
+                        "Province" -> ProvinceSection(personalInformationViewModel)
+                    }
+                }
+
+                // Show DatePicker if necessary
+                // Show DatePicker if necessary
+                if (datePickerVisibility[index] == true) {
+
+                    var selectedDate by remember { mutableStateOf("") }
+                    var selectedDateMillis by rememberSaveable { mutableStateOf<Long?>(null) }  // Store the selected date in state
+
+
+                    DatePicker(
+                        selectedDateMillis = selectedDateMillis,
+                        onDateSelected = { timestamp ->
+                            if (timestamp != null) {
+                                // Convert timestamp to your desired format
+                                selectedDateMillis = timestamp
+                                selectedDate = DateTimeUtils.parse(
+                                    timestamp, "MMMM dd, yyyy", TimeZone.getDefault()
+                                )
+                                updatedInfo = updatedInfo.toMutableList().apply {
+                                    this[index] = this[index].copy(value = selectedDate)
+                                }
+                            }
+                            datePickerVisibility[index] = false // Hide DatePicker after selection
+                        },
+                        onDismissRequest = {
+                            datePickerVisibility[index] = false // Hide on dismiss
+                        }
+                    )
+                }
+            }
+        }
+
+        Button(
+            onClick = {
+                personalInformationViewModel.storePersonalInformation()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            text = stringResource(id = R.string.save),
+        )
+    }
+}
+
+// Document Type Section
+@Composable
+fun DocumentTypeSection(personalInformationViewModel: PersonalInformationViewModel) {
+    Spacer(modifier = Modifier.width(16.dp))
+    SelectableBottomSheet(
+        elements = personalInformationViewModel.state.documentTypes,
+        error = personalInformationViewModel.state.documentTypesError,
+        onChange = {
+            personalInformationViewModel.updateDocumentType(it)
+        },
+        placeholder = stringResource(R.string.placeholder_document_type),
+        title = stringResource(R.string.document_type_title),
+        value = personalInformationViewModel.state.selectedDocumentType
+    )
+}
+
+// Country Section
+@Composable
+fun CountrySection(personalInformationViewModel: PersonalInformationViewModel) {
+    Spacer(Modifier.height(5.dp))
+    SelectableBottomSheet(
+        elements = personalInformationViewModel.state.countries,
+        error = personalInformationViewModel.state.countriesError,
+        onChange = {
+            personalInformationViewModel.updateCountry(it)
+        },
+        placeholder = stringResource(R.string.country),
+        title = stringResource(R.string.country_title),
+        value = personalInformationViewModel.state.selectedCountry
+    )
+}
+
+// Department Section
+@Composable
+fun DepartmentSection(personalInformationViewModel: PersonalInformationViewModel) {
+    key(personalInformationViewModel.state.departments) {
+        SelectableBottomSheet(
+            elements = personalInformationViewModel.state.departments,
+            error = personalInformationViewModel.state.departmentTypesError,
+            onChange = {
+                personalInformationViewModel.updateDepartment(it)
+            },
+            placeholder = stringResource(R.string.department),
+            title = stringResource(R.string.department_type_title),
+            value = personalInformationViewModel.state.selectedDepartment
+        )
+    }
+}
+
+// Province Section
+@Composable
+fun ProvinceSection(personalInformationViewModel: PersonalInformationViewModel) {
+    key(personalInformationViewModel.state.provinces) {
+        SelectableBottomSheet(
+            elements = personalInformationViewModel.state.provinces,
+            error = personalInformationViewModel.state.documentTypesError,
+            onChange = {
+                personalInformationViewModel.updateProvince(it)
+            },
+            placeholder = stringResource(R.string.province),
+            title = stringResource(R.string.province_title),
+            value = personalInformationViewModel.state.selectedProvince
+        )
+    }
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePicker(
+    selectedDateMillis: Long?,
     onDateSelected: (Long?) -> Unit,
     onDismissRequest: () -> Unit
 ) {
     val todayMillis = System.currentTimeMillis()
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = selectedDateMillis
+            ?: todayMillis  // Initialize picker with selected date
+    )
     val handleDateState = { selectedDateMillis: Long? ->
         if (selectedDateMillis != null && selectedDateMillis > todayMillis) {
             onDateSelected(todayMillis)

@@ -71,6 +71,8 @@
     <string name="country_title">Select a country</string>
     <string name="province_title">Select a province</string>
     <string name="country_validation_error_message">You must select a country</string>
+    <string name="province_validation_error_message">You must select a province</string>
+    <string name="department_validation_error_message">You must select a department</string>
     <string name="cuba">Cuba</string>
     <string name="date">Date</string>
     <string name="deep_sleep">Deep Sleep</string>
@@ -280,6 +282,7 @@
     <string name="successful_worker_associated_message">Contributor updated successfully</string>
     <string name="summary">Summary</string>
     <string name="surnames_validation_error_message">You must insert your surnames</string>
+    <string name="email_validation_error_message">You must insert your valid email</string>
     <string name="sync_with_logifit_required_alert">The extracted data has not been sent to the supervision. Please check if the device has a signal, mobile data or is connected to a stable Wi-Fi network. If there is no internet connection at the moment, please send the information as soon as possible once the connection is reestablished.</string>
     <string name="sync_with_logifit_required_message">The sending to Logifit was not made</string>
     <string name="sync_without_sleep_data_alert">You do not have sleep records to send</string>

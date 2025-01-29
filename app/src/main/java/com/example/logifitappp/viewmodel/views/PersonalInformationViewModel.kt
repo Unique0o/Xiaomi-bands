@@ -15,8 +15,9 @@ import com.example.logifitappp.core.App.Companion.context
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.core.utils.toFile
 import com.example.logifitappp.data.models.CountryModel
+import com.example.logifitappp.data.models.DepartmentModel
 import com.example.logifitappp.data.models.DocumentTypeModel
-import com.example.logifitappp.data.models.PersonalInfoModel
+import com.example.logifitappp.data.models.ProvinceModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
 import com.example.logifitappp.data.remote.dto.response.toUser
@@ -36,7 +37,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
-import javax.inject.Inject
+
 
 @HiltViewModel(assistedFactory = PersonalInformationViewModel.PersonalInformationViewModelFactory::class)
 class PersonalInformationViewModel @AssistedInject constructor(
@@ -70,17 +71,30 @@ class PersonalInformationViewModel @AssistedInject constructor(
 
                 val countries = App.database.countryDao().all()
                 val documentTypes = App.database.documentTypeDao().all()
+                val selectedCountry =
+                    user?.countryId?.let { countries.find { country -> country.id == it } }
+                val selectedDocumentType =
+                    user?.documentId?.let { documentTypes.find { documentType -> documentType.id == it } }
+
+                val departments =
+                    App.database.departmentDao().all(user?.countryId ?: countries[0].id)
+
+                val provinces =
+                    App.database.provinceDao().all(user?.departmentId ?: departments[0].id)
+
 
                 state = state.copy(
                     countries = countries,
                     documentTypes = documentTypes,
+                    departments = departments,
+                    provinces = provinces,
                     hasNecessaryDataFetchingFailed = false,
                     identityDocument = TextFieldValue(user?.identificationDocument ?: ""),
                     names = TextFieldValue(user?.firstName ?: ""),
                     phone = TextFieldValue(user?.phone ?: ""),
                     photo = user?.profilePhoto,
-                    selectedCountry = user?.countryId?.let { countries.find { country -> country.id == it } },
-                    selectedDocumentType = user?.documentId?.let { documentTypes.find { documentType -> documentType.id == it } },
+                    selectedCountry = selectedCountry,
+                    selectedDocumentType = selectedDocumentType,
                     surnames = TextFieldValue(user?.lastName ?: "")
                 )
 
@@ -161,7 +175,9 @@ class PersonalInformationViewModel @AssistedInject constructor(
                         document_type_id = state.selectedDocumentType?.id,
                         first_name = state.names.text,
                         last_name = state.surnames.text,
-                        phone = state.phone.text
+                        phone = state.phone.text,
+                        email =  state.email.text,
+                        date_birth = state.birthdate
                     )
                 )
 
@@ -230,7 +246,24 @@ class PersonalInformationViewModel @AssistedInject constructor(
     }
 
     fun updateCountry(country: CountryModel) {
-        state = state.copy(selectedCountry = country)
+        state = state.copy(
+            selectedCountry = country,
+            departments = App.database.departmentDao().all(country.id).toList(),
+            selectedDepartment = null
+        )
+    }
+
+    fun updateDepartment(department: DepartmentModel) {
+        state = state.copy(
+            selectedDepartment = department,
+            provinces = App.database.provinceDao().all(department.id).toList(),
+            selectedProvince = null
+        )
+
+    }
+
+    fun updateProvince(province: ProvinceModel) {
+        state = state.copy(selectedProvince = province)
     }
 
     fun updateDocumentType(documentType: DocumentTypeModel) {
@@ -260,19 +293,27 @@ class PersonalInformationViewModel @AssistedInject constructor(
     private fun validateInformationForm(): Boolean {
         val isNamesValid = state.names.text.isNotBlank()
         val isSurnamesValid = state.surnames.text.isNotBlank()
+        val isEmailValid =
+            state.email.text.isNotBlank() && !Patterns.EMAIL_ADDRESS.matcher(state.email.text)
+                .matches()
         val isDocumentTypeValid = state.selectedDocumentType != null
         val isIdentityDocumentValid = state.identityDocument.text.isNotBlank()
         val isCountryValid = state.selectedCountry != null
+        val isDepartmentValid = state.selectedDepartment != null
+        val isProvinceValid = state.selectedProvince != null
         val isPhoneValid = Patterns.PHONE.matcher(state.phone.text).matches()
 
         state = state.copy(
-            countriesError = if (isCountryValid) null else App.context.getString(R.string.country_validation_error_message),
             namesError = if (isNamesValid) null else App.context.getString(R.string.names_validation_error_message),
-            documentTypesError = if (isDocumentTypeValid) null else App.context.getString(R.string.document_type_validation_error_message),
+            surnamesError = if (isSurnamesValid) null else App.context.getString(R.string.surnames_validation_error_message),
+            emailError = if (isEmailValid) null else App.context.getString(R.string.email_validation_error_message),
             identityDocumentError = if (isIdentityDocumentValid) null else App.context.getString(R.string.identity_document_validation_error_message),
             phoneError = if (isPhoneValid) null else App.context.getString(R.string.phone_validation_error_message),
-            surnamesError = if (isSurnamesValid) null else App.context.getString(R.string.surnames_validation_error_message)
-        )
+            documentTypesError = if (isDocumentTypeValid) null else App.context.getString(R.string.document_type_validation_error_message),
+            countriesError = if (isCountryValid) null else App.context.getString(R.string.country_validation_error_message),
+            departmentTypesError = if (isDepartmentValid) null else App.context.getString(R.string.department_validation_error_message),
+            provinceError = if (isProvinceValid) null else App.context.getString(R.string.province_validation_error_message),
+            )
 
         return isNamesValid && isSurnamesValid && isDocumentTypeValid && isIdentityDocumentValid && isCountryValid && isPhoneValid
     }
