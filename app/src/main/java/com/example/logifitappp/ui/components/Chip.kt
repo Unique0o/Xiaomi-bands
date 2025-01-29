@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.enums.ChipStatusEnum
 
@@ -23,10 +22,7 @@ fun Chip(
     modifier: Modifier = Modifier,
     label: String,
     labelColor: Color? = null,
-    labelModifier: Modifier = Modifier,
-    labelTextAlign: TextAlign? = null,
     labelTypography: TextStyle = MaterialTheme.typography.titleMedium,
-    shouldItShowDotComponent: Boolean = true,
     status: ChipStatusEnum
 ) {
     Row(
@@ -36,15 +32,11 @@ fun Chip(
             .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (shouldItShowDotComponent) {
-            Box(Modifier.size(6.dp).background(status.color, CircleShape))
-        }
+        Box(Modifier.size(6.dp).background(status.color, CircleShape))
 
         Text(
             color = labelColor ?: status.color,
-            modifier = labelModifier,
             text = label,
-            textAlign = labelTextAlign,
             typography = labelTypography
         )
     }

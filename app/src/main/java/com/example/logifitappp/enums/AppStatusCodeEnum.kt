@@ -35,8 +35,9 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_network_activation_reminder))
     }),
 
-    DOWNLOADING_TRAINING_CERTIFICATE(308, R.string.downloading_training_certificate_message, true, { Loader() }),
     DOWNLOADING_EVALUATION_RESULT(305, R.string.downloading_evaluation_result_message, true, { Loader() }),
+    DOWNLOADING_SYNCHRONIZATION_REPORT(24, R.string.downloading_synchronization_report_message, true, { Loader() }),
+    DOWNLOADING_TRAINING_CERTIFICATE(308, R.string.downloading_training_certificate_message, true, { Loader() }),
     EXTRACTING_WEARABLE_INFORMATION(6, R.string.extracting_wearable_information_message, true, { AnimatedWearableDataExtraction() }),
     FAILED_EVALUATION_STORE(313, R.string.failed_evaluation_store_message, false, { AnimatedErrorSignal() }),
     FAILED_PASSWORD_RECOVERY(16, R.string.failed_password_recovery_message, false, { AnimatedErrorSignal() }),

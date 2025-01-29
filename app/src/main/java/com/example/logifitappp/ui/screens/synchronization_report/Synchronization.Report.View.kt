@@ -77,7 +77,11 @@ fun SynchronizationReportView(
 
         item {
             Spacer(Modifier.height(16.dp))
-            SynchronizationReportTeam(synchronizationReportViewModel.state.filteredReport[synchronizationReportViewModel.state.currentTabIndex])
+
+            SynchronizationReportTeam(
+                items = synchronizationReportViewModel.state.filteredReport[synchronizationReportViewModel.state.currentTabIndex],
+                onShareWeeklyReport = { synchronizationReportViewModel.shareWeeklyReport() }
+            )
         }
     }
 }

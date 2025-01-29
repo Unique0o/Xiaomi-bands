@@ -91,6 +91,7 @@
     <string name="document_type_validation_error_message">Debe seleccionar un tipo de documento</string>
     <string name="dominican_republic">República Dominicana</string>
     <string name="downloading_evaluation_result_message">Obteniendo el resultado de la evaluación...</string>
+    <string name="downloading_synchronization_report_message">Se está generando el reporte semanal. Por favor espere...</string>
     <string name="downloading_training_certificate_message">Descargando certificado de la capacitación...</string>
     <string name="drowsiness_detail_modal_message">Tu información de sueño debe superar las **%1$s horas** para contar como apto</string>
     <string name="drowsiness_detail_modal_subtitle">Usted se encuentra</string>
@@ -127,7 +128,6 @@
     <string name="greater_than_20_minutes">Mayor a 20 minutos</string>
     <string name="greater_than_6_hours">Mayor a 6 horas</string>
     <string name="greeting">Bienvenido de vuelta</string>
-    <string name="group_description">**Grupo:** %1$s</string>
     <string name="group_title">Selecciona un grupo</string>
     <string name="guatemala">Guatemala</string>
     <string name="health_information_title">Información de salud</string>
@@ -244,10 +244,10 @@
     <string name="select_shift">Seleccione un turno</string>
     <string name="share_evaluation_result_message">Compartir resultado de evaluación</string>
     <string name="share_sleep_detail_message">Compartir detalle de sueño</string>
+    <string name="share_synchronization_report_message">Compartir reporte de sincronización</string>
     <string name="share_training_certificate_message">Compartir certificado de capacitación</string>
     <string name="sharing_without_synchronization_to_logifit_message">Aún falta enviar los datos a Logifit, ¿desea compartir sus datos de todas formas?</string>
     <string name="shift">Turno</string>
-    <string name="shift_description">**Turno:** %1$s</string>
     <string name="shift_title">Selecciona un turno</string>
     <string name="sleep_condition">Condición de sueño</string>
     <string name="sleep_detail_chart_subtitle">Información entre %1$s - %2$s</string>

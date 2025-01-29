@@ -25,10 +25,11 @@ data class ReportResponse(
     @SerializedName("condicion") val condition: String,
     val fatigue: FatigueResponse? = null,
     @SerializedName("full_name") val fullName: String,
-    val group: String?,
+    @SerializedName("grupo") val group: String?,
     @SerializedName("group_id") val groupId: Int?,
     @SerializedName("turno") val shift: String,
-    @SerializedName("id_turno") val shiftId: Int
+    @SerializedName("id_turno") val shiftId: Int,
+    @SerializedName("horas_total_dormidas") val sleepTimeText: String
 )
 
 data class UnsynchronizedUserResponse(

@@ -18,6 +18,7 @@ data class SynchronizationReportState(
     var groups: List<BottomSheetSelectableItem> = listOf(),
     var filteredReport: Map<Int, List<SynchronizationReportItemType>> = mapOf(),
     var hasFetchReportFailed: Boolean = false,
+    var isDownloadingSynchronizationReport: Boolean = false,
     var isFetchingReport: Boolean = false,
     var report: Map<Int, List<SynchronizationReportItemType>> = mapOf(),
     var shifts: List<BottomSheetSelectableItem> = listOf(),
@@ -36,5 +37,6 @@ data class SynchronizationReportItemType(
     val groupId: Int? = null,
     val label: String,
     val shift: String,
-    val shiftId: Int? = null
+    val shiftId: Int? = null,
+    val sleepTime: String? = null
 )

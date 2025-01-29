@@ -10,6 +10,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.ColorUtils
 import com.example.logifitappp.core.utils.DateTimeUtils
+import com.example.logifitappp.core.utils.SharingUtils
 import com.example.logifitappp.data.models.FatigueModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.SynchronizationReportRequest
@@ -165,30 +166,33 @@ class SynchronizationReportViewModel @AssistedInject constructor(
                 }
             } else {
                 report.sleeps.forEach { sleep ->
-                    items.add(SynchronizationReportItemType(
-                        background = ColorUtils.toColor(sleep.backgroundColor ?: "#fadab1"),
-                        color = ColorUtils.toColor(sleep.color ?: "#ffab40"),
-                        condition = sleep.condition,
-                        fatigue = sleep.fatigue?.let { fatigue ->
-                            FatigueModel(
-                                remCycles = fatigue.reemCycles,
-                                totalAwakeSeconds = fatigue.totalAwakeTime.toLong(),
-                                totalRemSeconds = fatigue.totalReemSleep?.toLong(),
-                                totalSleepSeconds = fatigue.totalSleep.toLong(),
-                                wearableId = 0,
-                                withAwakeningOvercome = fatigue.withAwakeningOvercome == 1,
-                                withHypertension = fatigue.withHypertension == 1,
-                                withLittleReemSleep = fatigue.withLittleReemSleep == 1,
-                                withLittleSleep = fatigue.withLittleSleep == 1,
-                                withLongAwake = fatigue.withLongAwake == 1
-                            )
-                        },
-                        group = sleep.group ?: App.context.getString(R.string.unassigned_shift_label),
-                        groupId = sleep.groupId,
-                        label = sleep.fullName,
-                        shift = sleep.shift,
-                        shiftId = sleep.shiftId
-                    ))
+                    if (condition.label == sleep.condition) {
+                        items.add(SynchronizationReportItemType(
+                            background = ColorUtils.toColor(sleep.backgroundColor ?: "#fadab1"),
+                            color = ColorUtils.toColor(sleep.color ?: "#ffab40"),
+                            condition = sleep.condition,
+                            fatigue = sleep.fatigue?.let { fatigue ->
+                                FatigueModel(
+                                    remCycles = fatigue.reemCycles,
+                                    totalAwakeSeconds = fatigue.totalAwakeTime.toLong(),
+                                    totalRemSeconds = fatigue.totalReemSleep?.toLong(),
+                                    totalSleepSeconds = fatigue.totalSleep.toLong(),
+                                    wearableId = 0,
+                                    withAwakeningOvercome = fatigue.withAwakeningOvercome == 1,
+                                    withHypertension = fatigue.withHypertension == 1,
+                                    withLittleReemSleep = fatigue.withLittleReemSleep == 1,
+                                    withLittleSleep = fatigue.withLittleSleep == 1,
+                                    withLongAwake = fatigue.withLongAwake == 1
+                                )
+                            },
+                            group = sleep.group ?: App.context.getString(R.string.unassigned_shift_label),
+                            groupId = sleep.groupId,
+                            label = sleep.fullName,
+                            shift = sleep.shift,
+                            shiftId = sleep.shiftId,
+                            sleepTime = sleep.sleepTimeText
+                        ))
+                    }
                 }
             }
 
@@ -198,8 +202,33 @@ class SynchronizationReportViewModel @AssistedInject constructor(
         return data
     }
 
+    fun shareWeeklyReport() {
+        if (user == null) return
+
+        viewModelScope.launch {
+            try {
+                state = state.copy(
+                    isDownloadingSynchronizationReport = true,
+                    status = AppStatusCodeEnum.DOWNLOADING_SYNCHRONIZATION_REPORT
+                )
+
+                SharingUtils.share(
+                    App.context,
+                    synchronizationService.download(user.tenantId, state.selectedShift.id, state.selectedGroup.id),
+                    "synchronization_report_${DateTimeUtils.format(Calendar.getInstance().time, "yyyy_MM_dd_HH_mm_ss")}.pdf",
+                    R.string.share_synchronization_report_message
+                )
+
+                state = state.copy(isDownloadingSynchronizationReport = false)
+            } catch (e: HttpConsumerException) {
+                state = state.copy(status = e.getStatus())
+            }
+        }
+    }
+
     fun stopProcessing() {
         state = state.copy(
+            isDownloadingSynchronizationReport = false,
             isFetchingReport = false
         )
     }

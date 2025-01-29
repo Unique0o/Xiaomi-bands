@@ -91,6 +91,7 @@
     <string name="document_type_validation_error_message">You must select a document type</string>
     <string name="dominican_republic">Dominican Republic</string>
     <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
+    <string name="downloading_synchronization_report_message">The weekly report is being generated. Please wait...</string>
     <string name="downloading_training_certificate_message">Downloading training certificate...</string>
     <string name="drowsiness_detail_modal_message">Your sleep information must exceed **%1$s hours** to count as eligible</string>
     <string name="drowsiness_detail_modal_subtitle">You are</string>
@@ -127,7 +128,6 @@
     <string name="greater_than_20_minutes">Greater than 20 minutes</string>
     <string name="greater_than_6_hours">Greater than 6 hours</string>
     <string name="greeting">Welcome back</string>
-    <string name="group_description">**Group:** %1$s</string>
     <string name="group_title">Select group</string>
     <string name="guatemala">Guatemala</string>
     <string name="health_information_title">Health information</string>
@@ -244,10 +244,10 @@
     <string name="select_shift">Select shift</string>
     <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
+    <string name="share_synchronization_report_message">Share synchronization report</string>
     <string name="share_training_certificate_message">Share training certificate</string>
     <string name="sharing_without_synchronization_to_logifit_message">Data still needs to be sent to Logifit, do you still want to share your data?</string>
     <string name="shift">Shift</string>
-    <string name="shift_description">**Shift:** %1$s</string>
     <string name="shift_title">Select shift</string>
     <string name="sleep_condition">Sleep Condition</string>
     <string name="sleep_detail_chart_subtitle">Information between %1$s - %2$s</string>

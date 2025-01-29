@@ -1,6 +1,7 @@
 package com.example.logifitappp.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,6 +19,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,6 +72,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
         title = title
     ) {
         OutlinedTextField(
+            colors = TextFieldDefaults.colors().copy(unfocusedIndicatorColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.outline),
             leadingIcon = Icons.Default.Search,
             onValueChange = {
                 searchText = it
@@ -85,7 +88,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
                     Box(
                         Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .padding(vertical = 16.dp)
                             .clickable {
                                 onChange(it)
                                 toggleModalBottomSheet()
@@ -97,7 +100,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .padding(vertical = 16.dp)
                             .clickable {
                                 onChange(it)
                                 toggleModalBottomSheet()
@@ -108,7 +111,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
                             contentDescription = null,
                             imageVector = Icons.Default.Circle,
                             modifier = Modifier.size(4.dp),
-                            tint = if (it.id == value?.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary
+                            tint = if (it.id == value?.id) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
 
                         Text(
@@ -134,7 +137,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
                 }
 
                 HorizontalDivider(
-                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.5f),
                     thickness = 0.5.dp
                 )
             }
