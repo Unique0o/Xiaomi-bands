@@ -13,7 +13,7 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
+        android:required="false" />
 
     <uses-permission android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
@@ -116,7 +116,7 @@
             android:name=".core.broadcasters.CallControlBroadcastReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="nodomain.freeyourgadget.gadgetbridge.callcontrol" />
+                <action android:name="com.info.logifit.pe.callcontrol" />
             </intent-filter>
         </receiver>
 

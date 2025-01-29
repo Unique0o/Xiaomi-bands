@@ -10,5 +10,5 @@ data class WearableDetectionState(
     val currentPage: Int = 0,
     val isBottomSheetVisible: Boolean = false,
     val isScanning: Boolean = false,
-    val status: AppStatusCodeEnum? = null
+    val status: AppStatusCodeEnum? = AppStatusCodeEnum.DISABLED_NETWORKS
 )

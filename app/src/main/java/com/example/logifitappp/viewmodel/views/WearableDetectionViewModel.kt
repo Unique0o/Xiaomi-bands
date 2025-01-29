@@ -10,10 +10,12 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.provider.Settings
 import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -58,7 +60,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
         fun create(navigation: NavHostController, user: UserModel?): WearableDetectionViewModel
     }
 
-    private var adapter: BluetoothAdapter? = null
+    private var bluetoothAdapter: BluetoothAdapter? = null
     private val handler = Handler(Looper.getMainLooper())
     private var refreshAt = System.currentTimeMillis()
     private var scanCallback = BleScanCallback()
@@ -74,6 +76,10 @@ class WearableDetectionViewModel @AssistedInject constructor(
 
     var state by mutableStateOf(WearableDetectionState())
         private set
+
+    init {
+        if (checkScannerPermissions()) state = state.copy(status = AppStatusCodeEnum.DISABLED_NETWORKS)
+    }
 
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
     fun authenticate() {
@@ -116,16 +122,22 @@ class WearableDetectionViewModel @AssistedInject constructor(
             if (ActivityCompat.checkSelfPermission(App.context.applicationContext, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 println("No BLUETOOTH_SCAN permission")
 
-                this.adapter = null
+                this.bluetoothAdapter = null
                 return false
             }
 
             if (ActivityCompat.checkSelfPermission(App.context.applicationContext, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 println("No BLUETOOTH_CONNECT permission")
 
-                this.adapter = null
+                this.bluetoothAdapter = null
                 return false
             }
+        }
+
+        val locationManager = App.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager? ?: return false.also { println("No location adapter available") }
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            return false.also { state = state.copy(status = AppStatusCodeEnum.REQUIRE_ENABLE_LOCATION) }
         }
 
         val bluetoothService = App.context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?
@@ -133,56 +145,71 @@ class WearableDetectionViewModel @AssistedInject constructor(
         if (bluetoothService == null) {
             println("No bluetooth service available")
 
-            this.adapter = null
+            this.bluetoothAdapter = null
             return false
         }
 
-        val adapter = bluetoothService.adapter
+        val bluetoothAdapter = bluetoothService.adapter
 
-        if (adapter == null) {
+        if (bluetoothAdapter == null) {
             println("No bluetooth adapter available")
 
-            this.adapter = null
+            this.bluetoothAdapter = null
             return false
         }
 
-        if (!adapter.isEnabled) {
+        if (!bluetoothAdapter.isEnabled) {
             println("Bluetooth not enabled")
 
             val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             App.context.startActivity(intent)
 
-            this.adapter = null
+            this.bluetoothAdapter = null
             return false
         }
 
-        this.adapter = adapter
+        this.bluetoothAdapter = bluetoothAdapter
         return true
     }
 
+    private fun checkScannerPermissions(): Boolean {
+        val locationManager = App.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager? ?: return false.also { println("No location adapter available") }
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            return false
+        }
+
+        val bluetoothService = App.context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager? ?: return false
+        val bluetoothAdapter = bluetoothService.adapter
+
+        return !bluetoothAdapter.isEnabled
+    }
+
     fun checkWearableConnection() {
-        val wearables = App.wearableManager.getWearables()
+        viewModelScope.launch {
+            val wearables = App.wearableManager.getWearables()
 
-        wearables.find { it.getAddress() == state.currentCandidate?.getMacAddress() }?.let {
-            if (it.isInitialized()) {
-                if (user?.isAdmin() == false) {
-                    App.getWearablePreferences(it.getAddress()!!)
-                        .getPreferences()
-                        .edit()
-                        .putBoolean(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION, true)
-                        .apply()
+            wearables.find { it.getAddress() == state.currentCandidate?.getMacAddress() }?.let {
+                if (it.isInitialized()) {
+                    if (user?.isAdmin() == false) {
+                        App.getWearablePreferences(it.getAddress()!!)
+                            .getPreferences()
+                            .edit()
+                            .putBoolean(WearableSettingPreferenceConstants.PREF_FIRST_CONNECTION, true)
+                            .apply()
 
-                    App.preferences
-                        .getPreferences()
-                        .edit()
-                        .putBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, false)
-                        .apply()
+                        App.preferences
+                            .getPreferences()
+                            .edit()
+                            .putBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, false)
+                            .apply()
 
-                    App.signalRequestAdditionalInformation(true)
+                        App.signalRequestAdditionalInformation(true)
+                    }
+
+                    navigation.navigate(MainRoutes.SplashScreen)
                 }
-
-                navigation.navigate(MainRoutes.SplashScreen)
             }
         }
     }
@@ -191,10 +218,16 @@ class WearableDetectionViewModel @AssistedInject constructor(
         state = state.copy(isBottomSheetVisible = false)
     }
 
+    fun enableLocation() {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        App.context.startActivity(intent)
+    }
+
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")
     private fun ensureBluetoothReady(): Boolean {
         if (checkBluetoothAvailable()) {
-            adapter?.cancelDiscovery()
+            bluetoothAdapter?.cancelDiscovery()
             return true
         }
 
@@ -257,8 +290,8 @@ class WearableDetectionViewModel @AssistedInject constructor(
     fun handleBluetoothStateChanged(state: Int) {
         if (state == BluetoothAdapter.STATE_ON) {
             val manager = App.context.getSystemService(BluetoothManager::class.java)
-            adapter = manager.adapter
-        } else adapter = null
+            bluetoothAdapter = manager.adapter
+        } else bluetoothAdapter = null
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
@@ -323,7 +356,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
         handler.removeMessages(0, stopRunnable)
         handler.sendMessageDelayed(getPostMessage(stopRunnable), SCAN_DURATION)
 
-        if (adapter!!.startDiscovery()) println("Discovery started successfully")
+        if (bluetoothAdapter!!.startDiscovery()) println("Discovery started successfully")
         else println("Discovery starting failed")
     }
 
@@ -333,7 +366,7 @@ class WearableDetectionViewModel @AssistedInject constructor(
 
         handler.removeMessages(0, stopRunnable)
         handler.sendMessageDelayed(getPostMessage(stopRunnable), SCAN_DURATION)
-        adapter!!.bluetoothLeScanner.startScan(null, ScanEventProcessor.getSettings(), scanCallback)
+        bluetoothAdapter!!.bluetoothLeScanner.startScan(null, ScanEventProcessor.getSettings(), scanCallback)
 
         println("Bluetooth LE discovery started successfully")
     }
@@ -414,17 +447,17 @@ class WearableDetectionViewModel @AssistedInject constructor(
 
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")
     private fun stopBluetoothDiscovery() {
-        if (adapter == null) return
+        if (bluetoothAdapter == null) return
 
-        adapter!!.cancelDiscovery()
+        bluetoothAdapter!!.cancelDiscovery()
         println("Stopped BT discovery")
     }
 
     @RequiresPermission("android.permission.BLUETOOTH_SCAN")
     private fun stopBluetoothLEDiscovery() {
-        if (adapter == null) return
+        if (bluetoothAdapter == null) return
 
-        val bluetoothScanner = adapter!!.bluetoothLeScanner
+        val bluetoothScanner = bluetoothAdapter!!.bluetoothLeScanner
 
         if (bluetoothScanner == null) {
             println("Could not get BluetoothLeScanner()")

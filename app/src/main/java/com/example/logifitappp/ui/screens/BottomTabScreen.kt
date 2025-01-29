@@ -44,6 +44,7 @@ import com.example.logifitappp.ui.screens.all_in_one.AllInOneView
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.home.HomeView
 import com.example.logifitappp.ui.screens.meditation.MeditationView
+import com.example.logifitappp.ui.screens.synchronization_report.SynchronizationReportView
 import com.example.logifitappp.ui.theme.Blue690
 import com.example.logifitappp.viewmodel.views.BottomTabScreenViewModel
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -164,6 +165,7 @@ fun BottomTabScreen(
                 composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Meditation> { MeditationView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
+                composable<BottomTabRoutes.SynchronizationReport> { SynchronizationReportView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
             }
         }
     }

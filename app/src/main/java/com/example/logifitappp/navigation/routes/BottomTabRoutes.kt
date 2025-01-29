@@ -15,4 +15,7 @@ sealed class BottomTabRoutes {
 
     @Serializable
     data object Meditation: BottomTabRoutes()
+
+    @Serializable
+    data object SynchronizationReport: BottomTabRoutes()
 }

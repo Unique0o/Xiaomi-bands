@@ -1,4 +1,4 @@
-package com.example.logifitappp.di
+package com.example.logifitappp.di.modules
 
 import android.content.Context
 import com.example.logifitappp.core.App
@@ -11,6 +11,7 @@ import com.example.logifitappp.data.remote.api.LessonApi
 import com.example.logifitappp.data.remote.api.LocationApi
 import com.example.logifitappp.data.remote.api.NotificationApi
 import com.example.logifitappp.data.remote.api.SleepApi
+import com.example.logifitappp.data.remote.api.SynchronizationReportApi
 import com.example.logifitappp.data.remote.api.SleepWrittenDataApi
 import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.TrainingApi
@@ -112,11 +113,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTenantApi(retrofit: Retrofit): TenantApi = retrofit.create(TenantApi::class.java)
+    fun provideSynchronizationReportApi(retrofit: Retrofit): SynchronizationReportApi = retrofit.create(SynchronizationReportApi::class.java)
 
     @Provides
     @Singleton
-    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+    fun provideTenantApi(retrofit: Retrofit): TenantApi = retrofit.create(TenantApi::class.java)
 
     @Provides
     @Singleton
@@ -124,12 +125,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideWearableApi(retrofit: Retrofit): WearableApi = retrofit.create(WearableApi::class.java)
-
+    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
 
     @Provides
     @Singleton
-    fun providesUserDao(@ApplicationContext context: Context) = App.database.userDao()
+    fun provideWearableApi(retrofit: Retrofit): WearableApi = retrofit.create(WearableApi::class.java)
 
     @Provides
     @Singleton
@@ -195,6 +195,4 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideSleepWrittenDataApi(retrofit: Retrofit): SleepWrittenDataApi = retrofit.create(SleepWrittenDataApi::class.java)
-
-
 }

@@ -1,6 +1,6 @@
 package com.example.logifitappp.data.remote.dto.requests
 
-data class SleepReportRequest(
+data class SynchronizationReportRequest(
     val date: String,
-    val tenant_id: String
+    val tenant_id: Int
 )

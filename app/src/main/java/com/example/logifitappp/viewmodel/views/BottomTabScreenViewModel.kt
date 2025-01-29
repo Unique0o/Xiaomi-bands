@@ -50,7 +50,10 @@ class BottomTabScreenViewModel @AssistedInject constructor(
 
         when {
             user?.isAdmin() == true -> {
-                screens.add(BottomTabScreenEnum.ALL_IN_ONE)
+                screens.addAll(listOf(
+                    BottomTabScreenEnum.ALL_IN_ONE,
+                    BottomTabScreenEnum.SYNCHRONIZATION_REPORT
+                ))
             }
 
             else -> {

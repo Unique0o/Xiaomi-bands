@@ -31,6 +31,10 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))
     }),
 
+    DISABLED_NETWORKS(5, R.string.disabled_networks_message, false, {
+        Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_network_activation_reminder))
+    }),
+
     DOWNLOADING_TRAINING_CERTIFICATE(308, R.string.downloading_training_certificate_message, true, { Loader() }),
     DOWNLOADING_EVALUATION_RESULT(305, R.string.downloading_evaluation_result_message, true, { Loader() }),
     EXTRACTING_WEARABLE_INFORMATION(6, R.string.extracting_wearable_information_message, true, { AnimatedWearableDataExtraction() }),
@@ -43,6 +47,7 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))
     }),
 
+    FETCHING_SYNCHRONIZATION_REPORT(23, R.string.fetching_synchronization_report, true, { Loader() }),
     FETCHING_WORKER_LIST(25, R.string.fetching_worker_list_message, true, { Loader() }),
 
     FINDING_SMART_BAND(26, R.string.finding_smart_band_message, false, {
@@ -81,6 +86,7 @@ enum class AppStatusCodeEnum(
     }),
 
     RECOVERING_PASSWORD(109, R.string.recovering_password_message, true, { Loader() }),
+    REQUIRE_ENABLE_LOCATION(319, R.string.require_enable_location_message, false, { AnimatedWarningSignal() }),
     REQUIRE_SUBSCRIPTION_UPGRADING(402, R.string.require_subscription_upgrading_message, false, { AnimatedWarningSignal() }),
     SERVER_ERROR(500, R.string.server_error_message, false),
     SHARING_WITHOUT_SYNCHRONIZATION_TO_LOGIFIT(310, R.string.sharing_without_synchronization_to_logifit_message, false, { AnimatedWarningSignal() }),
