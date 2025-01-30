@@ -3,9 +3,11 @@ package com.example.logifitappp.viewmodel.views
 
 import android.net.Uri
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -43,7 +45,6 @@ import java.io.IOException
 class PersonalInformationViewModel @AssistedInject constructor(
     @Assisted private val user: UserModel?,
     private val updatePersonalInformationFormDataUseCase: UpdatePersonalInformationFormDataUseCase,
-    private val getPersonalInfoUseCase: GetPersonalInfoUseCase,
     private val userService: UserService
 ) : ViewModel() {
     @AssistedFactory
@@ -55,8 +56,6 @@ class PersonalInformationViewModel @AssistedInject constructor(
         private set
 
     private val _personalInfo = MutableStateFlow<PersonalInfoUiState>(PersonalInfoUiState.Loading)
-    val personalInfo: StateFlow<PersonalInfoUiState> = _personalInfo.asStateFlow()
-
 
     init {
         fetchNecessaryData()
@@ -65,7 +64,10 @@ class PersonalInformationViewModel @AssistedInject constructor(
     fun fetchNecessaryData() {
         viewModelScope.launch {
             try {
-                state = state.copy(isNecessaryDataFetching = true)
+                state = state.copy(
+                    isNecessaryDataFetching = true,
+                    storingInformationStatus = AppStatusCodeEnum.FETCHING_ADDITIONAL_INFORMATION
+                )
 
                 updatePersonalInformationFormDataUseCase()
 
@@ -78,9 +80,13 @@ class PersonalInformationViewModel @AssistedInject constructor(
 
                 val departments =
                     App.database.departmentDao().all(user?.countryId ?: countries[0].id)
+                val selectedDepartment =
+                    user?.departmentId?.let { departments.find { departments -> departments.id == it } }
 
                 val provinces =
                     App.database.provinceDao().all(user?.departmentId ?: departments[0].id)
+                val selectedProvince =
+                    user?.provinceId?.let { provinces.find { province-> province.id == it } }
 
 
                 state = state.copy(
@@ -95,10 +101,14 @@ class PersonalInformationViewModel @AssistedInject constructor(
                     photo = user?.profilePhoto,
                     selectedCountry = selectedCountry,
                     selectedDocumentType = selectedDocumentType,
-                    surnames = TextFieldValue(user?.lastName ?: "")
+                    selectedDepartment = selectedDepartment,
+                    selectedProvince = selectedProvince,
+                    surnames = TextFieldValue(user?.lastName ?: ""),
+                    birthdate = user?.birthDate ?: "",
+                    email = TextFieldValue(user?.email ?: "")
                 )
 
-                setModelValues()
+//                setModelValues()
             } catch (e: Exception) {
                 state = state.copy(hasNecessaryDataFetchingFailed = true)
             } finally {
@@ -107,59 +117,17 @@ class PersonalInformationViewModel @AssistedInject constructor(
         }
     }
 
-    private fun setModelValues() {
-        viewModelScope.launch {
-            _personalInfo.value = PersonalInfoUiState.Loading
-            try {
-                val info = getPersonalInfoUseCase()
-                for (index in info.indices) {
-                    if (user != null) {
-                        when (info[index].label) {
-                            "Names" -> info[index].value = user.firstName ?: ""
-                            "Surnames" -> info[index].value = user.lastName ?: ""
-                            "Identification Document" -> info[index].value =
-                                user.identificationDocument
-                                    ?: ""
-
-                            "Birthdate" -> info[index].value = user.birthDate
-                                ?: context.getString(R.string.not_selected)
-
-                            "Email" -> info[index].value = user.email ?: ""
-                            "Phone" -> info[index].value = user.phone ?: ""
-                            "Document type" -> info[index].value = user.documentId?.toString()
-                                ?: context.getString(
-                                    R.string.not_selected
-                                )
-
-                            "Country" -> info[index].value = user.countryId?.toString()
-                                ?: context.getString(R.string.not_selected)
-
-                            "Department" -> info[index].value = user.departmentId?.toString()
-                                ?: context.getString(R.string.not_selected)
-
-                            "Province" -> info[index].value = user.provinceId?.toString()
-                                ?: context.getString(R.string.not_selected)
-
-                            else -> ""
-                        }
-                    }
-                }
-                _personalInfo.value = PersonalInfoUiState.Success(info)
-
-            } catch (e: Exception) {
-                _personalInfo.value = PersonalInfoUiState.Error("Failed to load personal info")
-            }
-        }
-    }
-
     fun stopProcessing() {
         state = state.copy(isInformationStoring = false)
     }
 
-    fun storePersonalInformation() {
+    private fun storePersonalInformation() {
         if (user == null) return
 
-        if (!validateInformationForm()) return
+        if (!validateInformationForm()) {
+            stopProcessing()
+            return
+        }
 
         viewModelScope.launch {
             try {
@@ -176,8 +144,10 @@ class PersonalInformationViewModel @AssistedInject constructor(
                         first_name = state.names.text,
                         last_name = state.surnames.text,
                         phone = state.phone.text,
-                        email =  state.email.text,
-                        date_birth = state.birthdate
+                        email = state.email.text,
+                        date_birth = state.birthdate,
+                        departament_id = state.selectedDepartment?.id,
+                        province_id = state.selectedProvince?.id
                     )
                 )
 
@@ -188,7 +158,11 @@ class PersonalInformationViewModel @AssistedInject constructor(
                         identificationDocument = state.identityDocument.text,
                         firstName = state.names.text,
                         lastName = state.surnames.text,
-                        phone = state.phone.text
+                        phone = state.phone.text,
+                        email = state.email.text,
+                        birthDate = state.birthdate,
+                        departmentId = state.selectedDepartment?.id,
+                        provinceId = state.selectedProvince?.id
                     )
                 )
 
@@ -198,6 +172,7 @@ class PersonalInformationViewModel @AssistedInject constructor(
                     currentPage = 1,
                     isInformationStoring = false
                 )
+                Toast.makeText(App.context, "Profile Updated!", Toast.LENGTH_SHORT).show()
             } catch (e: HttpConsumerException) {
                 state = state.copy(storingInformationStatus = e.getStatus())
             }
@@ -224,7 +199,7 @@ class PersonalInformationViewModel @AssistedInject constructor(
                         App.signalReloadAuthenticatedUser()
                     }
 
-                    else -> Thread.sleep(1000)
+                    else -> Thread.sleep(100)
                 }
 
                 App.preferences
@@ -233,7 +208,8 @@ class PersonalInformationViewModel @AssistedInject constructor(
                     .putBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, true)
                     .apply()
 
-                state = state.copy(isInformationStoring = false)
+                storePersonalInformation()
+//                state = state.copy(isInformationStoring = false)
 
                 App.signalRequestAdditionalInformation(false)
             } catch (e: HttpConsumerException) {
@@ -282,6 +258,18 @@ class PersonalInformationViewModel @AssistedInject constructor(
         state = state.copy(phone = phone)
     }
 
+    fun updateEmail(email: TextFieldValue) {
+        state = state.copy(email = email)
+    }
+
+    fun updateBirthdate(birthdate: String) {
+        state = state.copy(birthdate = birthdate)
+    }
+
+    fun updateBirthdateError(birthdate: String) {
+        state = state.copy(birthdateError = birthdate)
+    }
+
     fun updateProfilePhoto(uri: Uri) {
         state = state.copy(photo = uri)
     }
@@ -294,7 +282,7 @@ class PersonalInformationViewModel @AssistedInject constructor(
         val isNamesValid = state.names.text.isNotBlank()
         val isSurnamesValid = state.surnames.text.isNotBlank()
         val isEmailValid =
-            state.email.text.isNotBlank() && !Patterns.EMAIL_ADDRESS.matcher(state.email.text)
+            state.email.text.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(state.email.text)
                 .matches()
         val isDocumentTypeValid = state.selectedDocumentType != null
         val isIdentityDocumentValid = state.identityDocument.text.isNotBlank()
@@ -302,6 +290,8 @@ class PersonalInformationViewModel @AssistedInject constructor(
         val isDepartmentValid = state.selectedDepartment != null
         val isProvinceValid = state.selectedProvince != null
         val isPhoneValid = Patterns.PHONE.matcher(state.phone.text).matches()
+        val isBirthdateValid =
+            state.birthdate.isNotEmpty() && state.birthdate != App.context.getString(R.string.birthdate)
 
         state = state.copy(
             namesError = if (isNamesValid) null else App.context.getString(R.string.names_validation_error_message),
@@ -309,13 +299,16 @@ class PersonalInformationViewModel @AssistedInject constructor(
             emailError = if (isEmailValid) null else App.context.getString(R.string.email_validation_error_message),
             identityDocumentError = if (isIdentityDocumentValid) null else App.context.getString(R.string.identity_document_validation_error_message),
             phoneError = if (isPhoneValid) null else App.context.getString(R.string.phone_validation_error_message),
+            birthdateError = if (isBirthdateValid) null else App.context.getString(R.string.bday_type_validation_error_message),
             documentTypesError = if (isDocumentTypeValid) null else App.context.getString(R.string.document_type_validation_error_message),
             countriesError = if (isCountryValid) null else App.context.getString(R.string.country_validation_error_message),
             departmentTypesError = if (isDepartmentValid) null else App.context.getString(R.string.department_validation_error_message),
-            provinceError = if (isProvinceValid) null else App.context.getString(R.string.province_validation_error_message),
-            )
+            provinceError = if (isProvinceValid) null else App.context.getString(R.string.province_validation_error_message)
+        )
 
-        return isNamesValid && isSurnamesValid && isDocumentTypeValid && isIdentityDocumentValid && isCountryValid && isPhoneValid
+        return isNamesValid && isSurnamesValid && isDocumentTypeValid && isIdentityDocumentValid &&
+                isEmailValid && isCountryValid && isPhoneValid && isBirthdateValid && isDepartmentValid &&
+                isProvinceValid
     }
 
     private fun validateProfilePhoto(): Boolean {

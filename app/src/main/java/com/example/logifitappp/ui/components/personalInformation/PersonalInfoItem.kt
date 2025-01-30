@@ -5,7 +5,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +31,7 @@ fun PersonalInfoItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (label in listOf("Names", "Surnames", "Identification Document", "Email", "Phone")) {
-                var textValue by remember { mutableStateOf(value) } // Mutable state for the text field
+                var textValue by rememberSaveable { mutableStateOf(value) }
 
                 OutlinedTextField(
                     keyboardActions = KeyboardActions(
@@ -40,10 +40,11 @@ fun PersonalInfoItem(
                         }
                     ),
                     onValueChange = {
-                      onValueChange(TextFieldValue(it.toString()))
+                        textValue = it.text // Update the state properly
+                        onValueChange(it)
                     },
                     placeholder = label,
-                    value = TextFieldValue(value),
+                    value = TextFieldValue(textValue),
                     error = "",
                 )
 

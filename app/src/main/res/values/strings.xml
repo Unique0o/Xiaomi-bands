@@ -87,6 +87,7 @@
     <string name="document_type_title">Select a document type</string>
     <string name="department_type_title">Select a department</string>
     <string name="document_type_validation_error_message">You must select a document type</string>
+    <string name="bday_type_validation_error_message">You must select a birthday</string>
     <string name="dominican_republic">Dominican Republic</string>
     <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
     <string name="downloading_training_certificate_message">Downloading training certificate...</string>
@@ -267,6 +268,7 @@
     <string name="steps_detail_title">My steps</string>
     <string name="steps_taken">Steps taken</string>
     <string name="storing_additional_information_message">Personal information is being stored, please wait...</string>
+    <string name="fetching_additional_information_message">Personal information is being fetched, please wait...</string>
     <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
     <string name="storing_roster_information_message">Roster information is being storing</string>
