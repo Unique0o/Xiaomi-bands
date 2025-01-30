@@ -612,10 +612,10 @@ class AppNotificationListenerService: NotificationListenerService() {
     }
 
     companion object {
-        const val ACTION_DISMISS = "com.info.logifit.pe.app.notification.listener.service.action.dismiss"
-        const val ACTION_DISMISS_ALL = "com.info.logifit.pe.app.notification.listener.service.action.dismiss_all"
-        const val ACTION_MUTE = "com.info.logifit.pe.app.notification.listener.service.action.mute"
-        const val ACTION_OPEN = "com.info.logifit.pe.app.notification.listener.service.action.open"
-        const val ACTION_REPLY = "com.info.logifit.pe.app.notification.listener.service.action.reply"
+        const val ACTION_DISMISS = "com.info.logifit.plus.pe.app.notification.listener.service.action.dismiss"
+        const val ACTION_DISMISS_ALL = "com.info.logifit.plus.pe.app.notification.listener.service.action.dismiss_all"
+        const val ACTION_MUTE = "com.info.logifit.plus.pe.app.notification.listener.service.action.mute"
+        const val ACTION_OPEN = "com.info.logifit.plus.pe.app.notification.listener.service.action.open"
+        const val ACTION_REPLY = "com.info.logifit.plus.pe.app.notification.listener.service.action.reply"
     }
 }

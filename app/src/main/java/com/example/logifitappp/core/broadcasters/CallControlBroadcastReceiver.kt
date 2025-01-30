@@ -72,6 +72,6 @@ class CallControlBroadcastReceiver: BroadcastReceiver() {
     }
     
     companion object {
-        const val ACTION_CALL_CONTROL = "com.info.logifit.pe.call_control"
+        const val ACTION_CALL_CONTROL = "com.info.logifit.plus.pe.call_control"
     }
 }

@@ -383,7 +383,7 @@ class WearableCommunicationService: Service(), SharedPreferences.OnSharedPrefere
                 IntentFilter().apply {
                     addAction("android.intent.action.PHONE_STATE")
                     addAction("android.intent.action.NEW_OUTGOING_CALL")
-                    addAction("com.info.logifit.pe.MUTE_CALL")
+                    addAction("com.info.logifit.plus.pe.MUTE_CALL")
                     ContextCompat.registerReceiver(this@WearableCommunicationService, phoneCallReceiver, this, ContextCompat.RECEIVER_EXPORTED)
                 }
             }

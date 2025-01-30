@@ -212,7 +212,7 @@ class Wearable(): Parcelable {
     }
 
     companion object CREATOR : Parcelable.Creator<Wearable> {
-        const val ACTION_DEVICE_CHANGED = "com.info.logifit.pe.action.device_changed"
+        const val ACTION_DEVICE_CHANGED = "com.info.logifit.plus.pe.action.device_changed"
         const val BATTERY_UNKNOWN: Short = -1
         const val EXTRA_DEVICE = "device"
         const val EXTRA_FAILED_CONNECTION_STATUS = "EXTRA_FAILED_CONNECTION_STATUS"
