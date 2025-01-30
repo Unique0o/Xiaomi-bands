@@ -89,6 +89,7 @@
     <string name="document_type_title">Elija un tipo de documento</string>
     <string name="department_type_title">Seleccione un departamento</string>
     <string name="document_type_validation_error_message">Debe seleccionar un tipo de documento</string>
+    <string name="bday_type_validation_error_message">Debes seleccionar un cumpleaños</string>
     <string name="dominican_republic">República Dominicana</string>
     <string name="downloading_evaluation_result_message">Obteniendo el resultado de la evaluación...</string>
     <string name="downloading_synchronization_report_message">Se está generando el reporte semanal. Por favor espere...</string>
@@ -278,6 +279,7 @@
     <string name="steps_detail_subtitle">%1$s pasos</string>
     <string name="steps_detail_title">Mis pasos</string>
     <string name="steps_taken">Pasos realizados</string>
+    <string name="fetching_additional_information_message">Se está obteniendo información personal, espere...</string>
     <string name="storing_additional_information_message">La información personal está siendo almacenada, espere por favor...</string>
     <string name="storing_evaluation_message">El test está siendo procesado para generar su condición de somnolencia...</string>
     <string name="storing_profile_photo_message">La foto de perfil está siendo almacenada, espere por favor...</string>

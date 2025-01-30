@@ -75,6 +75,7 @@ fun OutlinedTextField(
         ),
         enabled = enabled,
         isError = hasError,
+        maxLines = 1,
         keyboardActions = keyboardActions,
         keyboardOptions = if (asPassword) KeyboardOptions(
             keyboardType = KeyboardType.Password,

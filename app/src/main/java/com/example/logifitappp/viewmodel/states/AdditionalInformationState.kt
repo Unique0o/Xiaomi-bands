@@ -37,5 +37,6 @@ data class AdditionalInformationState(
     val surnamesError: String? = null,
     val email:TextFieldValue = TextFieldValue(""),
     val emailError:String? = null,
-    val birthdate:String? = null,
+    val birthdate:String = "",
+    val birthdateError:String? = null
 )

@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import java.lang.Error
 
 @Composable
 fun ClickableOutlinedTextWithCustomPlaceholder(
     value: String,
+    error: String? = null,
     onClick: () -> Unit
 ) {
 
@@ -29,7 +31,7 @@ fun ClickableOutlinedTextWithCustomPlaceholder(
             })
     ) {
         Text(
-            text = value,
+            text = if (error.isNullOrEmpty()) value else error,
             style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray), // Placeholder style
             modifier = Modifier
                 .align(Alignment.CenterStart)

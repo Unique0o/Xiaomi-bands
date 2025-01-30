@@ -108,6 +108,8 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_unregistered_user_error))
     }),
 
+    FETCHING_ADDITIONAL_INFORMATION(3122, R.string.fetching_additional_information_message, true, { Loader() }),
+
     UNSELECTED_SHIFT(35, R.string.unselected_shift_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_unselected_shift_error))
     }),
