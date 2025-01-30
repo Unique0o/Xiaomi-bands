@@ -32,11 +32,7 @@ fun Chip(
             .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(6.dp)
-                .background(status.color, CircleShape)
-        )
+        Box(Modifier.size(6.dp).background(status.color, CircleShape))
 
         Text(
             color = labelColor ?: status.color,

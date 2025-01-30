@@ -1,4 +1,4 @@
-package com.example.logifitappp.di
+package com.example.logifitappp.di.modules
 
 import com.example.logifitappp.domain.repository.AdminRepository
 import com.example.logifitappp.domain.repository.AudioRepository
@@ -8,6 +8,7 @@ import com.example.logifitappp.domain.repository.EvaluationRepository
 import com.example.logifitappp.domain.repository.LessonRepository
 import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.NotificationRepository
+import com.example.logifitappp.domain.repository.SynchronizationReportRepository
 import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.domain.repository.TenantRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
@@ -21,6 +22,7 @@ import com.example.logifitappp.domain.service.EvaluationService
 import com.example.logifitappp.domain.service.LessonService
 import com.example.logifitappp.domain.service.LocationService
 import com.example.logifitappp.domain.service.NotificationService
+import com.example.logifitappp.domain.service.SynchronizationReportService
 import com.example.logifitappp.domain.service.SleepService
 import com.example.logifitappp.domain.service.TenantService
 import com.example.logifitappp.domain.service.TrainingService
@@ -70,6 +72,10 @@ object ServiceModule {
     @Provides
     @Singleton
     fun provideSleepService(sleepRepository: SleepRepository) = SleepService(sleepRepository)
+
+    @Provides
+    @Singleton
+    fun provideSleepReportService(synchronizationReportRepository: SynchronizationReportRepository) = SynchronizationReportService(synchronizationReportRepository)
 
     @Provides
     @Singleton

@@ -8,8 +8,8 @@ import com.example.logifitappp.data.models.GroupModel
 
 @Dao
 abstract class GroupDao {
-    @Query("SELECT * FROM groups")
-    abstract fun all(): List<GroupModel>
+    @Query("SELECT * FROM groups where tenant_id = :tenantId")
+    abstract fun all(tenantId: Int): List<GroupModel>
 
     @Query("DELETE FROM groups WHERE tenant_id = :tenantId")
     abstract fun delete(tenantId: Int)

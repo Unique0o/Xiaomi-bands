@@ -1,6 +1,9 @@
-package com.example.logifitappp.di
+package com.example.logifitappp.di.components
 
 import com.example.logifitappp.core.wearebles.WearableManager
+import com.example.logifitappp.di.modules.NetworkModule
+import com.example.logifitappp.di.modules.RepositoryModule
+import com.example.logifitappp.di.modules.ServiceModule
 import dagger.Component
 import javax.inject.Singleton
 

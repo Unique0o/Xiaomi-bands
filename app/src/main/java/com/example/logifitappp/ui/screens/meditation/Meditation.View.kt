@@ -47,7 +47,7 @@ fun MeditationView(
     ) {
        item {
            FlowRow(Modifier.fillMaxWidth(), maxItemsInEachRow = 2) {
-               AudioFileEnum.entries.mapIndexed { index, it ->
+               AudioFileEnum.entries.forEachIndexed { index, it ->
                    Card(
                        modifier = Modifier
                            .height(180.dp)

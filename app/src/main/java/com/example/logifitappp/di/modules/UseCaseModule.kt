@@ -1,4 +1,4 @@
-package com.example.logifitappp.di
+package com.example.logifitappp.di.modules
 
 import com.example.logifitappp.domain.service.AuthService
 import com.example.logifitappp.domain.service.DocumentTypeService

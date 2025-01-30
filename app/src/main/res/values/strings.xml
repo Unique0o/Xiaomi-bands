@@ -1,6 +1,7 @@
 <resources>
     <string name="activity">Activity</string>
     <string name="administrator">Administrator</string>
+    <string name="all_of_them">All of them</string>
     <string name="and">and</string>
     <string name="app_name">Logifit Plus</string>
     <string name="argentina">Argentina</string>
@@ -35,6 +36,7 @@
     <string name="button_connect_smart_band">Connect my Smart Band</string>
     <string name="button_device_detection">Devices detection</string>
     <string name="button_download_certificate">Download certificate</string>
+    <string name="button_enable">Enable</string>
     <string name="button_erase">Erase</string>
     <string name="button_find_my_band">Encontrar mi Smart Band</string>
     <string name="button_get_into">Get into</string>
@@ -69,7 +71,6 @@
     <string name="costa_rica">Costa Rica</string>
     <string name="country_phone_code_title">Select a country phone code</string>
     <string name="country_title">Select a country</string>
-    <string name="province_title">Select a province</string>
     <string name="country_validation_error_message">You must select a country</string>
     <string name="province_validation_error_message">You must select a province</string>
     <string name="department_validation_error_message">You must select a department</string>
@@ -81,6 +82,7 @@
     <string name="device_unknown_name">(unknown)</string>
     <string name="disabled_bluetooth_message">Bluetooth is disabled</string>
     <string name="disabled_location_message">Location is disabled</string>
+    <string name="disabled_networks_message">Keep your Wifi, Bluetooth and GPS activated</string>
     <string name="disconnected">Disconnected</string>
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
@@ -90,6 +92,7 @@
     <string name="bday_type_validation_error_message">You must select a birthday</string>
     <string name="dominican_republic">Dominican Republic</string>
     <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
+    <string name="downloading_synchronization_report_message">The weekly report is being generated. Please wait...</string>
     <string name="downloading_training_certificate_message">Downloading training certificate...</string>
     <string name="drowsiness_detail_modal_message">Your sleep information must exceed **%1$s hours** to count as eligible</string>
     <string name="drowsiness_detail_modal_subtitle">You are</string>
@@ -110,6 +113,7 @@
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
+    <string name="fetching_synchronization_report">The synchronization report is being obtained. Please wait...</string>
     <string name="fetching_worker_list_message">The operators under your charge are being obtained. Please wait...</string>
     <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
     <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
@@ -125,6 +129,7 @@
     <string name="greater_than_20_minutes">Greater than 20 minutes</string>
     <string name="greater_than_6_hours">Greater than 6 hours</string>
     <string name="greeting">Welcome back</string>
+    <string name="group_title">Select group</string>
     <string name="guatemala">Guatemala</string>
     <string name="health_information_title">Health information</string>
     <string name="heart_rate">Heart rate</string>
@@ -206,23 +211,27 @@
     <string name="placeholder_detail">Detail</string>
     <string name="placeholder_document_type">Document type</string>
     <string name="placeholder_end_date">End date</string>
+    <string name="placeholder_group">Group</string>
     <string name="placeholder_identity_document">Identity document</string>
     <string name="placeholder_location">Location</string>
     <string name="placeholder_names">Names</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_phone_number">Phone number</string>
     <string name="placeholder_search">Search</string>
+    <string name="placeholder_shift">Shift</string>
     <string name="placeholder_start_date">Start date</string>
     <string name="placeholder_surnames">Surnames</string>
     <string name="placeholder_user">User</string>
     <string name="premium">Premium</string>
     <string name="pro">Pro</string>
     <string name="profile_photo_additional_information_error_message">Profile photo is required</string>
+    <string name="province_title">Select a province</string>
     <string name="puerto_rico">Puerto Rico</string>
     <string name="range_date_validation_error_message">You must select a range date</string>
     <string name="recovering_password_message">One of our managers will be notified to help you as soon as possible.</string>
     <string name="rem_sleep">REM Sleep</string>
     <string name="reminder_message">Remember to activate your Bluetooth and keep your Smart Band close to your cell phone to facilitate the connection</string>
+    <string name="require_enable_location_message">Location must be enabled in order to use Bluetooth</string>
     <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
     <string name="roster_recording_title">Create record</string>
     <string name="roster_title">Roster</string>
@@ -236,9 +245,11 @@
     <string name="select_shift">Select shift</string>
     <string name="share_evaluation_result_message">Share evaluation result</string>
     <string name="share_sleep_detail_message">Share sleep detail</string>
+    <string name="share_synchronization_report_message">Share synchronization report</string>
     <string name="share_training_certificate_message">Share training certificate</string>
     <string name="sharing_without_synchronization_to_logifit_message">Data still needs to be sent to Logifit, do you still want to share your data?</string>
     <string name="shift">Shift</string>
+    <string name="shift_title">Select shift</string>
     <string name="sleep_condition">Sleep Condition</string>
     <string name="sleep_detail_chart_subtitle">Information between %1$s - %2$s</string>
     <string name="sleep_detail_chart_title">My sleep</string>
@@ -262,6 +273,7 @@
     <string name="spo2_detail_chart_title">SpO2</string>
     <string name="spo2_detail_title">My SpO2</string>
     <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
+    <string name="statistics_title">My statistics</string>
     <string name="steps_detail_chart_chip_message">%1$s steps</string>
     <string name="steps_detail_chart_title">My steps</string>
     <string name="steps_detail_subtitle">%1$s steps</string>
@@ -290,11 +302,13 @@
     <string name="sync_without_sleep_data_alert">You do not have sleep records to send</string>
     <string name="take_photo">Take photo</string>
     <string name="total_awake_time">Total awake time</string>
+    <string name="total_label">Total</string>
     <string name="total_sleep_time">Total sleep time</string>
     <string name="training_progress_label">Progress %1$s</string>
     <string name="trainings_title">Trainings</string>
     <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
     <string name="traveled_distance">Traveled distance</string>
+    <string name="team_title">My team</string>
     <string name="unauthorized_screen_message">You are currently unable to use Logifit features. Please contact your administrator.</string>
     <string name="unauthorized_screen_title">Unauthorized user</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
@@ -310,6 +324,7 @@
     <string name="unprocessable_wearable_information_transfer_message">The data was successfully extracted but not sent to Logifit. Please check your Internet connection and try again</string>
     <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
     <string name="unselected_shift_message">Please select a work shift before extracting sleep data or making a test</string>
+    <string name="unassigned_shift_label">Unassigned</string>
     <string name="unsupported_wearable_message">There is no support for this device. Please contact the support service</string>
     <string name="upload_image">Upload image</string>
     <string name="uruguay">Uruguay</string>

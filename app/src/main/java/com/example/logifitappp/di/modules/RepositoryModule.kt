@@ -1,4 +1,4 @@
-package com.example.logifitappp.di
+package com.example.logifitappp.di.modules
 
 import com.example.logifitappp.data.remote.api.AdminApi
 import com.example.logifitappp.data.remote.api.AudioApi
@@ -9,6 +9,7 @@ import com.example.logifitappp.data.remote.api.LessonApi
 import com.example.logifitappp.data.remote.api.LocationApi
 import com.example.logifitappp.data.remote.api.NotificationApi
 import com.example.logifitappp.data.remote.api.SleepApi
+import com.example.logifitappp.data.remote.api.SynchronizationReportApi
 import com.example.logifitappp.data.remote.api.TenantApi
 import com.example.logifitappp.data.remote.api.TrainingApi
 import com.example.logifitappp.data.remote.api.UserApi
@@ -21,6 +22,7 @@ import com.example.logifitappp.data.repository.EvaluationRepositoryImpl
 import com.example.logifitappp.data.repository.LessonRepositoryImpl
 import com.example.logifitappp.data.repository.LocationRepositoryImpl
 import com.example.logifitappp.data.repository.NotificationRepositoryImpl
+import com.example.logifitappp.data.repository.SynchronizationReportRepositoryImpl
 import com.example.logifitappp.data.repository.SleepRepositoryImpl
 import com.example.logifitappp.data.repository.TenantRepositoryImpl
 import com.example.logifitappp.data.repository.TrainingRepositoryImpl
@@ -34,6 +36,7 @@ import com.example.logifitappp.domain.repository.EvaluationRepository
 import com.example.logifitappp.domain.repository.LessonRepository
 import com.example.logifitappp.domain.repository.LocationRepository
 import com.example.logifitappp.domain.repository.NotificationRepository
+import com.example.logifitappp.domain.repository.SynchronizationReportRepository
 import com.example.logifitappp.domain.repository.SleepRepository
 import com.example.logifitappp.domain.repository.TenantRepository
 import com.example.logifitappp.domain.repository.TrainingRepository
@@ -119,6 +122,14 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideSleepRepositoryImpl(sleepApi: SleepApi) = SleepRepositoryImpl(sleepApi)
+
+    @Provides
+    @Singleton
+    fun provideSynchronizationReportRepository(synchronizationReportRepositoryImpl: SynchronizationReportRepositoryImpl): SynchronizationReportRepository = synchronizationReportRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSleepReportRepositoryImpl(synchronizationReportApi: SynchronizationReportApi) = SynchronizationReportRepositoryImpl(synchronizationReportApi)
 
     @Provides
     @Singleton

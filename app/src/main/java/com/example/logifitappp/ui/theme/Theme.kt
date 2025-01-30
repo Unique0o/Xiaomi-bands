@@ -23,6 +23,7 @@ private val DarkColorScheme = darkColorScheme(
     secondaryContainer = Lime30,
     surface = Zinc940,
     surfaceContainer = Slate705,
+    surfaceContainerHigh = Stone240,
     surfaceContainerLowest = Gray605,
     surfaceTint = Stone470,
     tertiaryContainer = Amber60,
@@ -45,6 +46,7 @@ private val LightColorScheme = lightColorScheme(
     secondaryContainer = Gray605,
     surface = White,
     surfaceContainer = White,
+    surfaceContainerHigh = Slate520,
     surfaceContainerLowest = Lime30,
     surfaceTint = Stone470,
     tertiaryContainer = Amber60,
@@ -53,7 +55,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun LogifitApppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

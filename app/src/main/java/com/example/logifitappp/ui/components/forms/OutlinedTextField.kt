@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.OutlinedTextField as MaterialOutlinedTextField
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ import com.example.logifitappp.ui.components.PasswordVisibilityToggleText
 fun OutlinedTextField(
     modifier: Modifier = Modifier,
     asPassword: Boolean = false,
+    colors: TextFieldColors? = null,
     enabled: Boolean = true,
     error: String? = null,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -67,7 +69,7 @@ fun OutlinedTextField(
             focusedLabelColor = MaterialTheme.colorScheme.primary,
             focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
             unfocusedContainerColor = Color.Transparent,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            unfocusedIndicatorColor = colors?.unfocusedIndicatorColor ?: MaterialTheme.colorScheme.outline,
             unfocusedLabelColor = MaterialTheme.colorScheme.surfaceTint,
             unfocusedLeadingIconColor = MaterialTheme.colorScheme.surfaceTint
         ),
@@ -94,9 +96,7 @@ fun OutlinedTextField(
                 contentDescription = null
             )
         }) else leadingComponent,
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(modifier),
+        modifier = Modifier.fillMaxWidth().then(modifier),
         onValueChange = onValueChange,
         readOnly = readOnly,
         supportingText = {

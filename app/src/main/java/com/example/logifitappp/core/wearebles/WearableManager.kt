@@ -10,7 +10,7 @@ import com.example.logifitappp.core.App
 import com.example.logifitappp.core.utils.parcelableExtra
 import com.example.logifitappp.data.models.WearableModel
 import com.example.logifitappp.data.remote.dto.requests.AssociateWearableRequest
-import com.example.logifitappp.di.WearableComponent
+import com.example.logifitappp.di.components.WearableComponent
 import com.example.logifitappp.domain.service.WearableService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

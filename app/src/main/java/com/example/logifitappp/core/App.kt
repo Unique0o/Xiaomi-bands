@@ -20,7 +20,7 @@ import com.example.logifitappp.core.wearebles.WearableManager
 import com.example.logifitappp.core.wearebles.WearablePreferences
 import com.example.logifitappp.core.wearebles.WearableService
 import com.example.logifitappp.data.AppDatabase
-import com.example.logifitappp.di.DaggerWearableComponent
+import com.example.logifitappp.di.components.DaggerWearableComponent
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import dagger.hilt.android.HiltAndroidApp
 
