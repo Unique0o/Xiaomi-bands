@@ -1,8 +1,9 @@
-package com.example.logifitappp.viewmodel.views.HealthInfo
+package com.example.logifitappp.viewmodel.views
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
+import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HealthInfoViewModel @Inject constructor (private val HealthInfoUseCase: HealthInfoUseCase) : ViewModel() {
+class HealthInformationViewModel @Inject constructor (private val HealthInfoUseCase: HealthInfoUseCase) : ViewModel() {
     private val _healthInfo = MutableStateFlow<HealthInfoUiState>(HealthInfoUiState.Loading)
     val healthInfo: StateFlow<HealthInfoUiState> = _healthInfo.asStateFlow()
 

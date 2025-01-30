@@ -1,4 +1,4 @@
-package com.example.logifitappp.ui.screens.healthInfo
+package com.example.logifitappp.ui.screens.health_information
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,13 +17,13 @@ import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoUiState
-import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoViewModel
+import com.example.logifitappp.viewmodel.views.HealthInformationViewModel
 
 @Composable
-fun HealthInfoScreen(
+fun HealthInformationView(
     navigation: NavHostController
 ) {
-    val viewModel: HealthInfoViewModel = hiltViewModel()
+    val viewModel: HealthInformationViewModel = hiltViewModel()
     val health by viewModel.healthInfo.collectAsState()
 
     SimplePage(content = {

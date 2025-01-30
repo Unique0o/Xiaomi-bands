@@ -13,6 +13,7 @@ import com.example.logifitappp.ui.screens.SplashScreen
 import com.example.logifitappp.ui.screens.drowsiness_test_detail.DrowsinessTestDetailView
 import com.example.logifitappp.ui.screens.drowsiness_tests.DrowsinessTestsView
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
+import com.example.logifitappp.ui.screens.health_information.HealthInformationView
 import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
@@ -45,6 +46,7 @@ fun MainNavigation(
         startDestination = MainRoutes.SplashScreen
     ) {
         composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
+        composable<MainRoutes.HealthInformation> { HealthInformationView(navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.PersonalInformation> { PersonalInformationView(appViewModel, navigation) }

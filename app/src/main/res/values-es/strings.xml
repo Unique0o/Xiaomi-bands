@@ -332,6 +332,7 @@
     <string name="venezuela">Venezuela</string>
     <string name="waiting_for_device_scan">Esperando por escaneo de dispositivos</string>
     <string name="waiting_for_reconnect">Esperando por reconexión</string>
+    <string name="wearable_key_update_title">Actualización de llaves</string>
     <string name="wearable_pairing_message">Por favor, mantener cerca la Smart Band para que Logifit complete la conexión.</string>
     <string name="wearable_pairing_title">Emparejando con %1$s</string>
     <string name="wearable_profile_disconnecting_message">Tu Smart Band está desconectada del aplicativo, por favor conéctela para poder registrar su información</string>
