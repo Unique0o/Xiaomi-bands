@@ -1,6 +1,7 @@
 package com.example.logifitappp.ui.screens.synchronization_report
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -75,11 +76,13 @@ fun SynchronizationReportTeamItem(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    item.fatigue.calculateStatus().let {
-                        Chip(
-                            label = stringResource(it.label).uppercase(),
-                            status = it.chipStatus
-                        )
+                    Box(Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
+                        item.fatigue.calculateStatus().let {
+                            Chip(
+                                label = stringResource(it.label).uppercase(),
+                                status = it.chipStatus
+                            )
+                        }
                     }
 
                     Spacer(Modifier.height(4.dp))
