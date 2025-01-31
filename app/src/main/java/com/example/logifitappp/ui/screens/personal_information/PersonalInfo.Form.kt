@@ -73,8 +73,7 @@ fun PersonalInfoScreen(
             Button(
                 onClick = {
                     personalInformationViewModel.storeProfilePhoto()
-//                    personalInformationViewModel.storePersonalInformation()
-                },
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp),
