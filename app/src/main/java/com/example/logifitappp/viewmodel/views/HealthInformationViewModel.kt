@@ -1,7 +1,9 @@
 package com.example.logifitappp.viewmodel.views
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logifitappp.core.App
 import com.example.logifitappp.domain.usecase.HealthInfoUseCase
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HealthInformationViewModel @Inject constructor (private val HealthInfoUseCase: HealthInfoUseCase) : ViewModel() {
+class HealthInformationViewModel @Inject constructor (
+    private val HealthInfoUseCase: HealthInfoUseCase
+) : ViewModel() {
     private val _healthInfo = MutableStateFlow<HealthInfoUiState>(HealthInfoUiState.Loading)
     val healthInfo: StateFlow<HealthInfoUiState> = _healthInfo.asStateFlow()
 
@@ -28,7 +32,7 @@ class HealthInformationViewModel @Inject constructor (private val HealthInfoUseC
         }
     }
 
-    fun onEditClick() {
-        /* to do */
+    fun onEditClick(title:String) {
+        Toast.makeText(App.context, title, Toast.LENGTH_SHORT).show()
     }
 }

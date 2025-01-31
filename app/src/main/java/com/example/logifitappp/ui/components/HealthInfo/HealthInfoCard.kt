@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Orange390
@@ -27,62 +30,74 @@ fun HealthInfoCard(
     imageRes: Int,
     onEditClick: () -> Unit
 ) {
+
+    val weightTitles = listOf("Weight", "Peso") // English & Spanish
+    val heightTitles = listOf("Height", "Altura")
+    val bloodTypeTitles = listOf("Blood type", "Tipo de sangre")
+    val genderTitles = listOf("Gender", "Genero")
+
     Card(
-        modifier = Modifier
-            .size(180.dp)
-            .padding(8.dp),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        modifier = Modifier
+            .height(200.dp)
+            .padding(8.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF8F9FA)), // Light gray background
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Image(
                 painter = painterResource(id = imageRes),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-            Column(
+                contentDescription = "Weight Scale",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White.copy(alpha = 0.7f))
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .clip(RoundedCornerShape(16.dp))
+            )
+
+            Column(modifier = Modifier.padding(10.dp)) {
+
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column {
-                        Text(
-                            text = value,
-                            style = MaterialTheme.typography.headlineMedium,
+                    Text(
+                        text = value,
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Bold,
                             color = when (title) {
-                                "Weight" -> Green298
-                                "Height" -> Orange390
-                                "Blood type" -> Rose120
+                                in weightTitles -> Green298
+                                in heightTitles -> Orange390
+                                in bloodTypeTitles -> Rose120
+                                in genderTitles -> Violet500
                                 else -> Violet500
                             }
-                        )
-                        Text(
-                            text = unit,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.Gray
-                        )
-                    }
-                    IconButton(onClick = onEditClick) {
+                        ),
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    IconButton(onClick = { onEditClick() }) {
                         Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "Edit",
-                            tint = Color.Gray
+                            imageVector = Icons.Default.Edit, // Replace with actual icon
+                            contentDescription = "Icon",
+                            tint = Color.Gray,
+                            modifier = Modifier.size(20.dp)
                         )
                     }
                 }
+
             }
         }
     }
