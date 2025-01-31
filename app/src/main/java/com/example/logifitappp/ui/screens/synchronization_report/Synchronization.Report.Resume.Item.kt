@@ -1,6 +1,7 @@
 package com.example.logifitappp.ui.screens.synchronization_report
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,13 +28,18 @@ fun SynchronizationReportResumeItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            color = valueColor,
-            modifier = Modifier.fillMaxWidth(),
-            text = value,
-            textAlign = TextAlign.Center,
-            typography = MaterialTheme.typography.titleMedium.copy(fontSize = 20.sp, lineHeight = 28.sp)
-        )
+        Box(Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
+            Text(
+                color = valueColor,
+                modifier = Modifier.fillMaxWidth(),
+                text = value,
+                textAlign = TextAlign.Center,
+                typography = MaterialTheme.typography.titleMedium.copy(
+                    fontSize = 20.sp,
+                    lineHeight = 28.sp
+                )
+            )
+        }
 
         Spacer(Modifier.height(4.dp))
 

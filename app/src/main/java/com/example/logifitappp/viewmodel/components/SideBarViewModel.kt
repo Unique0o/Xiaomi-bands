@@ -37,14 +37,14 @@ class SideBarViewModel @AssistedInject constructor(
         options.clear()
 
         if (user?.isAdmin() == false) {
-            /*options.addAll(listOf(
-                SideBarScreenEnum.PERSONAL_INFORMATION,
-                SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
-                //SideBarScreenEnum.HEALTH_INFORMATION
-            ))*/
+            options.addAll(listOf(
+                //SideBarScreenEnum.PERSONAL_INFORMATION,
+                //SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
+                SideBarScreenEnum.HEALTH_INFORMATION
+            ))
 
             if (tenant?.shouldItShowRosterOption == true) options.add(SideBarScreenEnum.ROSTER)
-        }
+        } else options.add(SideBarScreenEnum.WEARABLE_KEY_UPDATE)
 
         options.addAll(listOf(
             SideBarScreenEnum.TRAININGS,

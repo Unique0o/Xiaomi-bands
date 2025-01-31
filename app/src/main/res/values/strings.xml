@@ -332,6 +332,7 @@
     <string name="venezuela">Venezuela</string>
     <string name="waiting_for_device_scan">Waiting for device scan</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
+    <string name="wearable_key_update_title">Key update</string>
     <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
     <string name="wearable_pairing_title">Pairing with %1$s</string>
     <string name="wearable_profile_disconnecting_message">Your Smart Band is disconnected from the application, please connect to be able to register your information</string>

@@ -116,6 +116,6 @@ class WearableManager(private val context: Context) {
     }
 
     companion object {
-        const val ACTION_DEVICES_CHANGED = "com.info.logifit.pe.action.devices_changed"
+        const val ACTION_DEVICES_CHANGED = "com.info.logifit.plus.pe.action.devices_changed"
     }
 }

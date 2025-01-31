@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Diversity1
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.DrawerState
@@ -53,5 +54,10 @@ enum class SideBarScreenEnum(
     TRAININGS({ drawerState, navigation, _ ->
         navigation.navigate(MainRoutes.Trainings)
         drawerState.close()
-    }, R.string.trainings_title, Icons.Default.School);
+    }, R.string.trainings_title, Icons.Default.School),
+
+    WEARABLE_KEY_UPDATE({ drawerState, navigation, _ ->
+        navigation.navigate(MainRoutes.WearableKeyUpdate)
+        drawerState.close()
+    }, R.string.wearable_key_update_title, Icons.Default.Key);
 }

@@ -163,7 +163,7 @@ open class WearableService(private val context: Context, private val wearable: W
     }
 
     companion object {
-        private const val PREFIX = "com.info.logifit.pe.wearables"
+        private const val PREFIX = "com.info.logifit.plus.pe.wearables"
 
         const val ACTION_CALL_STATE = "${PREFIX}.action.call_state"
         const val ACTION_CONNECT = "${PREFIX}.action.connect"
