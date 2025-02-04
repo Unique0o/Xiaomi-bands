@@ -14,69 +14,103 @@ import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.HealthInfo.HealthInfoCard
 import com.example.logifitappp.ui.components.Text
+import com.example.logifitappp.ui.components.forms.Button
 import com.example.logifitappp.ui.components.forms.SelectableBottomSheetOnly
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.pages.SimplePage
-import com.example.logifitappp.ui.theme.Green298
-import com.example.logifitappp.ui.theme.Orange390
-import com.example.logifitappp.ui.theme.Rose120
-import com.example.logifitappp.ui.theme.Violet500
+import com.example.logifitappp.utils.Constants.bloodTypeTitles
+import com.example.logifitappp.utils.Constants.genderTitles
+import com.example.logifitappp.utils.Constants.heightTitles
+import com.example.logifitappp.utils.Constants.weightTitles
+import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.HealthInfo.HealthInfoUiState
 import com.example.logifitappp.viewmodel.views.HealthInformationViewModel
-import com.example.logifitappp.viewmodel.views.PersonalInformationViewModel
 
 @Composable
 fun HealthInformationView(
+    appViewModel: AppViewModel,
     navigation: NavHostController
 ) {
-    val viewModel: HealthInformationViewModel = hiltViewModel()
+
+    val viewModel =
+        hiltViewModel<HealthInformationViewModel, HealthInformationViewModel.HealthInformationViewModelFactory> {
+            it.create(appViewModel.user)
+        }
+
     val health by viewModel.healthInfo.collectAsState()
-    val weightTitles = listOf("Weight", "Peso") // English & Spanish
-    val heightTitles = listOf("Height", "Altura")
-    val bloodTypeTitles = listOf("Blood type", "Tipo de sangre")
-    val genderTitles = listOf("Gender", "Genero")
+    var showBottomSheet by remember { mutableStateOf(false) }
+    var selectedSection by remember { mutableStateOf<String?>(null) }
+
+
+    if (showBottomSheet && selectedSection != null) {
+        when (selectedSection) {
+            "Blood Type" -> DocumentTypeSection(true, viewModel) { showBottomSheet = false }
+            "Gender" -> DocumentTypeSection(false, viewModel) { showBottomSheet = false }
+        }
+    }
 
     SimplePage(content = {
-        when (health) {
-            HealthInfoUiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-            }
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            when (health) {
+                HealthInfoUiState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+                }
 
-            is HealthInfoUiState.Success -> {
-                val info = (health as HealthInfoUiState.Success).data
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(info.size) { index ->
-                        val item = info[index]
-                        HealthInfoCard(
-                            title = item.title,
-                            value = item.value,
-                            unit = item.unit,
-                            imageRes = item.imageRes,
-                            onEditClick = {
-                                when (item.title) {
-                                    in weightTitles -> Green298
-                                    in heightTitles -> Orange390
-                                    in bloodTypeTitles -> Rose120
-                                    in genderTitles -> Violet500
-                                }
-                            }
-                        )
+                is HealthInfoUiState.Success -> {
+                    val info = (health as HealthInfoUiState.Success).data
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f) // 🔹 Takes only available space, leaving room for the button
+                    ) {
+                        items(info.size) { index ->
+                            val item = info[index]
+                            HealthInfoCard(
+                                title = item.title,
+                                initialValue = item.value,
+                                unit = item.unit,
+                                imageRes = item.imageRes,
+                                onEditClick = {
+                                    selectedSection = when (item.title) {
+                                        in weightTitles -> "Green298"
+                                        in heightTitles -> "Orange390"
+                                        in bloodTypeTitles -> "Blood Type"
+                                        in genderTitles -> "Gender"
+                                        else -> null
+                                    }
+                                    showBottomSheet = true
+                                },
+                                onSaveClick = { newValue -> println("New Value: $newValue") }
+                            )
+                        }
                     }
+                }
+
+                is HealthInfoUiState.Error -> {
+                    Text(
+                        text = (health as HealthInfoUiState.Error).message,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
 
-            is HealthInfoUiState.Error -> {
-                Text(
-                    text = (health as HealthInfoUiState.Error).message,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center
-                )
-            }
+            Spacer(modifier = Modifier.height(8.dp)) // Adds spacing before button
+
+            Button(
+                onClick = {
+                    // Handle button click
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                text = stringResource(id = R.string.save),
+            )
         }
     },
         topBar = {
@@ -89,14 +123,29 @@ fun HealthInformationView(
 }
 
 @Composable
-fun DocumentTypeSection(personalInformationViewModel: PersonalInformationViewModel) {
+fun DocumentTypeSection(
+    isBlood: Boolean,
+    healthInformationViewModel: HealthInformationViewModel,
+    onDismiss: () -> Unit
+) {
     SelectableBottomSheetOnly(
-        elements = personalInformationViewModel.state.documentTypes,
-        onChange = {
-            personalInformationViewModel.updateDocumentType(it)
+        elements = if (isBlood) healthInformationViewModel.getBloodList() else healthInformationViewModel.getGenderList(),
+        onChange = { selectedItem ->
+            healthInformationViewModel.updateSelectedValue(
+                isBlood,
+                selectedItem
+            )
+            onDismiss()
         },
-        title = stringResource(R.string.document_type_title),
-        value = personalInformationViewModel.state.selectedDocumentType
+        title = if (isBlood) {
+            stringResource(R.string.blood_type_title)
+        } else {
+            stringResource(R.string.gender_type_title)
+        },
+        value = if (isBlood) healthInformationViewModel.getBloodList()
+            .find { it.id == healthInformationViewModel.state.bloodType }
+        else healthInformationViewModel.getGenderList()
+            .find { it.id == healthInformationViewModel.state.gender }
     )
 }
 

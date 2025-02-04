@@ -26,7 +26,6 @@ import com.example.logifitappp.domain.usecase.UpdatePersonalInformationFormDataU
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import com.example.logifitappp.viewmodel.states.AdditionalInformationState
-import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoUiState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

@@ -3,19 +3,24 @@ package com.example.logifitappp.ui.components.forms
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import com.example.logifitappp.ui.components.BottomSheetSearchable
-import com.example.logifitappp.ui.components.BottomSheetSelectableItem
+import com.example.logifitappp.ui.components.BottomSheetSearchableString
 import kotlinx.coroutines.launch
+
+interface BottomSheetSelectableItem {
+    val id: String
+    val label: String
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T: BottomSheetSelectableItem> SelectableBottomSheetOnly(
+fun <T : BottomSheetSelectableItem> SelectableBottomSheetOnly(
     elements: List<T>,
     onChange: (T) -> Unit,
     title: String,
@@ -35,12 +40,18 @@ fun <T: BottomSheetSelectableItem> SelectableBottomSheetOnly(
         }
     }
 
-    BottomSheetSearchable(
+    LaunchedEffect(Unit) {
+        toggleModalBottomSheet()
+    }
+
+    BottomSheetSearchableString(
         coroutineScope = coroutineScope,
         elements = updatedElements,
         isVisible = isVisibleBottomSheetModal,
         modalBottomSheetState = modalBottomSheetState,
-        onChange = onChange,
+        onChange = {
+            onChange(it)
+        },
         onDismissRequest = { isVisibleBottomSheetModal = false },
         title = title,
         toggleModalBottomSheet = toggleModalBottomSheet,

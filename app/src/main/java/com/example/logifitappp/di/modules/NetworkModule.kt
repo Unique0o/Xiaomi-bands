@@ -2,6 +2,7 @@ package com.example.logifitappp.di.modules
 
 import android.content.Context
 import com.example.logifitappp.core.App
+import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.api.AdminApi
 import com.example.logifitappp.data.remote.api.AudioApi
 import com.example.logifitappp.data.remote.api.AuthApi
@@ -175,10 +176,10 @@ object NetworkModule {
         return HealthInfoUseCase(repository)
     }
 
-    @Provides
-    fun provideHealthInfoViewModel(getHealthUseCase: HealthInfoUseCase): HealthInformationViewModel {
-        return HealthInformationViewModel(getHealthUseCase)
-    }
+//    @Provides
+//    fun provideHealthInfoViewModel(userModel: UserModel,getHealthUseCase: HealthInfoUseCase): HealthInformationViewModel {
+//        return HealthInformationViewModel(getHealthUseCase)
+//    }
 
     @Provides
     @Singleton

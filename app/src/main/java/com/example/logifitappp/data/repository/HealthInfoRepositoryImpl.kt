@@ -13,8 +13,8 @@ class HealthInfoRepositoryImpl @Inject constructor(
         return listOf(
             HealthInfoModel(context.getString(R.string.weight), "-", "kg", R.drawable.weigth),
             HealthInfoModel(context.getString(R.string.height), "-", context.getString(R.string.meters), R.drawable.height),
-            HealthInfoModel(context.getString(R.string.blood_type), "B-", "", R.drawable.blood),
-            HealthInfoModel(context.getString(R.string.gender), context.getString(R.string.male), "", R.drawable.geneder)
+            HealthInfoModel(context.getString(R.string.blood_type), "", "", R.drawable.blood),
+            HealthInfoModel(context.getString(R.string.gender), "", "", R.drawable.geneder)
         )
     }
 }

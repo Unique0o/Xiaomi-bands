@@ -87,6 +87,8 @@
     <string name="discovery_pair_message">Selecciona Emparejar para emparejar tus dispositivos. Si esto falla, prueba de nuevo sin emparejar.</string>
     <string name="discovery_pair_title">¿Emparejar con %1$s?</string>
     <string name="document_type_title">Elija un tipo de documento</string>
+    <string name="blood_type_title">Seleccione un tipo de sangre</string>
+    <string name="gender_type_title">Seleccione un tipo de género</string>
     <string name="department_type_title">Seleccione un departamento</string>
     <string name="document_type_validation_error_message">Debe seleccionar un tipo de documento</string>
     <string name="bday_type_validation_error_message">Debes seleccionar un cumpleaños</string>

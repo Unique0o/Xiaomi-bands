@@ -9,6 +9,10 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,26 +25,28 @@ import com.example.logifitappp.ui.theme.Green298
 import com.example.logifitappp.ui.theme.Orange390
 import com.example.logifitappp.ui.theme.Rose120
 import com.example.logifitappp.ui.theme.Violet500
+import com.example.logifitappp.utils.Constants.bloodTypeTitles
+import com.example.logifitappp.utils.Constants.genderTitles
+import com.example.logifitappp.utils.Constants.heightTitles
+import com.example.logifitappp.utils.Constants.weightTitles
 
 @Composable
 fun HealthInfoCard(
     title: String,
-    value: String,
+    initialValue: String,
     unit: String,
     imageRes: Int,
-    onEditClick: () -> Unit
+    onEditClick: () -> Unit,  // Handles special cases
+    onSaveClick: (String) -> Unit  // Saves edited values for weight & height
 ) {
-
-    val weightTitles = listOf("Weight", "Peso") // English & Spanish
-    val heightTitles = listOf("Height", "Altura")
-    val bloodTypeTitles = listOf("Blood type", "Tipo de sangre")
-    val genderTitles = listOf("Gender", "Genero")
+    var isEditing by remember { mutableStateOf(false) }
+    var textValue by remember { mutableStateOf(initialValue) }
 
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         modifier = Modifier
-            .height(200.dp)
+            .wrapContentHeight()
             .padding(8.dp)
     ) {
         Column(
@@ -51,7 +57,7 @@ fun HealthInfoCard(
         ) {
             Image(
                 painter = painterResource(id = imageRes),
-                contentDescription = "Weight Scale",
+                contentDescription = title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,31 +79,73 @@ fun HealthInfoCard(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = value,
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = when (title) {
-                                in weightTitles -> Green298
-                                in heightTitles -> Orange390
-                                in bloodTypeTitles -> Rose120
-                                in genderTitles -> Violet500
-                                else -> Violet500
-                            }
-                        ),
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    IconButton(onClick = { onEditClick() }) {
-                        Icon(
-                            imageVector = Icons.Default.Edit, // Replace with actual icon
-                            contentDescription = "Icon",
-                            tint = Color.Gray,
-                            modifier = Modifier.size(20.dp)
+                    if (isEditing) {
+                        TextField(
+                            value = textValue,
+                            onValueChange = { textValue = it },
+                            singleLine = true,
+                            modifier = Modifier.weight(1f)
                         )
+                    } else {
+                        
+                        Text(
+                            text = when (title) {
+                                in weightTitles -> "$textValue $unit"
+                                in heightTitles -> "$textValue $unit"
+                                in bloodTypeTitles -> "$initialValue $unit"
+                                in genderTitles ->  "$initialValue $unit"
+                                else -> {""}
+                            },
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = when (title) {
+                                    in weightTitles -> Green298
+                                    in heightTitles -> Orange390
+                                    in bloodTypeTitles -> Rose120
+                                    in genderTitles -> Violet500
+                                    else -> Violet500
+                                }
+                            ),
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
+                    if (!isEditing) {
+                        IconButton(
+                            onClick = {
+                                if (title in bloodTypeTitles || title in genderTitles) {
+                                    onEditClick()  // Handle externally for blood type & gender
+                                } else {
+                                    isEditing = true  // Enable editing for weight & height
+                                }
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = "Edit",
+                                tint = Color.Gray,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
                     }
                 }
 
+                if (isEditing) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        TextButton(onClick = {
+                            onSaveClick(textValue)  // Save new value
+                            isEditing = false
+                        }) {
+                            Text("Ok", color = Green298)
+                        }
+                        TextButton(onClick = { isEditing = false }) {
+                            Text("Cancel", color = Color.Red)
+                        }
+                    }
+                }
             }
         }
     }
