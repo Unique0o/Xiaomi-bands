@@ -38,5 +38,13 @@ data class AdditionalInformationState(
     val email:TextFieldValue = TextFieldValue(""),
     val emailError:String? = null,
     val birthdate:String = "",
-    val birthdateError:String? = null
+    val birthdateError:String? = null,
+    val gender:String = "",
+    val genderError:String? = null,
+    val weight:Float = 0.0F,
+    val weightError:String? = null,
+    val height:Float =0.0F ,
+    val heightError:String? = null,
+    val bloodType:String = "",
+    val bloodTypeError:String? = null
 )

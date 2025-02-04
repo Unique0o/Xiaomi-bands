@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -21,7 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,17 +35,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
+import com.example.logifitappp.ui.components.forms.BottomSheetSelectableItem
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DisposableHandle
 
-open class BottomSheetSelectableItem (
-    open val id: Int
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
+fun <T : BottomSheetSelectableItem> BottomSheetSearchableString(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     elements: List<T>,
     isVisible: Boolean,
@@ -59,35 +58,21 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
     var filteredElements by remember { mutableStateOf(elements) }
 
-    LaunchedEffect(isVisible) {
-        if (isVisible) {
-            filteredElements = elements
-        }
-    }
-
     BottomSheet(
         coroutineScope = coroutineScope,
         isVisible = isVisible,
         modalBottomSheetState = modalBottomSheetState,
-        modifier = Modifier.fillMaxHeight(0.8f),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 100.dp, max = 600.dp),
         onDismissRequest = {
             onDismissRequest()
+
             searchText = TextFieldValue("")
             filteredElements = elements
         },
         title = title
     ) {
-        OutlinedTextField(
-            colors = TextFieldDefaults.colors().copy(unfocusedIndicatorColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.outline),
-            leadingIcon = Icons.Default.Search,
-            onValueChange = {
-                searchText = it
-                filteredElements = elements.filter { item -> item.toString().contains(it.text, ignoreCase = true) }
-            },
-            placeholder = stringResource(id = R.string.placeholder_search),
-            value = searchText
-        )
-
         LazyColumn {
             items(filteredElements) {
                 if (renderItem != null) {
@@ -127,7 +112,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
                                 .weight(1f)
                                 .padding(start = 8.dp, end = 16.dp),
                             overflow = TextOverflow.Ellipsis,
-                            text = it.toString(),
+                            text = it.label,
                             typography = MaterialTheme.typography.headlineLarge
                         )
 

@@ -46,7 +46,7 @@ fun MainNavigation(
         startDestination = MainRoutes.SplashScreen
     ) {
         composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
-        composable<MainRoutes.HealthInformation> { HealthInformationView(navigation) }
+        composable<MainRoutes.HealthInformation> { HealthInformationView(appViewModel,navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.PersonalInformation> { PersonalInformationView(appViewModel, navigation) }

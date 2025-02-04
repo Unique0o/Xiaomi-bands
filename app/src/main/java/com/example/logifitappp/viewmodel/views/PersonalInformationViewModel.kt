@@ -7,13 +7,11 @@ import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.R
 import com.example.logifitappp.core.App
-import com.example.logifitappp.core.App.Companion.context
 import com.example.logifitappp.core.AppPreferences
 import com.example.logifitappp.core.utils.toFile
 import com.example.logifitappp.data.models.CountryModel
@@ -24,19 +22,14 @@ import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.data.remote.dto.requests.StorePersonalInformationRequest
 import com.example.logifitappp.data.remote.dto.response.toUser
 import com.example.logifitappp.domain.service.UserService
-import com.example.logifitappp.domain.usecase.GetPersonalInfoUseCase
 import com.example.logifitappp.domain.usecase.UpdatePersonalInformationFormDataUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
 import com.example.logifitappp.viewmodel.states.AdditionalInformationState
-import com.example.logifitappp.viewmodel.views.PersonalInfo.PersonalInfoUiState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -54,8 +47,6 @@ class PersonalInformationViewModel @AssistedInject constructor(
 
     var state by mutableStateOf(AdditionalInformationState())
         private set
-
-    private val _personalInfo = MutableStateFlow<PersonalInfoUiState>(PersonalInfoUiState.Loading)
 
     init {
         fetchNecessaryData()
@@ -108,7 +99,6 @@ class PersonalInformationViewModel @AssistedInject constructor(
                     email = TextFieldValue(user?.email ?: "")
                 )
 
-//                setModelValues()
             } catch (e: Exception) {
                 state = state.copy(hasNecessaryDataFetchingFailed = true)
             } finally {

@@ -87,6 +87,8 @@
     <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
     <string name="discovery_pair_title">Pair with %1$s?</string>
     <string name="document_type_title">Select a document type</string>
+    <string name="blood_type_title">Select a blood type</string>
+    <string name="gender_type_title">Select a gender type</string>
     <string name="department_type_title">Select a department</string>
     <string name="document_type_validation_error_message">You must select a document type</string>
     <string name="bday_type_validation_error_message">You must select a birthday</string>
@@ -548,7 +550,7 @@
     <string name="health_info">Health Information</string>
     <string name="weight">Weight</string>
     <string name="height">Height</string>
-    <string name="blood_type">blood type</string>
+    <string name="blood_type">Blood type</string>
     <string name="gender">Gender</string>
     <string name="meters">Meters</string>
     <string name="male">Male</string>
