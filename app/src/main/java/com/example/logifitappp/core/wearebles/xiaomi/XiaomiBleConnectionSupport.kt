@@ -73,9 +73,9 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
 
             characteristicCommandRead = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, characteristicRead, xiaomiSupport.getAuthService())
             characteristicCommandRead?.setIsEncrypted(uuidSet.encrypted)
-            characteristicCommandRead?.setHandler(object: XiaomiChannelHandler {
-                override fun handle(payload: ByteArray) = xiaomiSupport.handleCommandBytes(payload)
-            })
+            characteristicCommandRead?.setHandler { payload ->
+                xiaomiSupport.handleCommandBytes(payload)
+            }
             characteristicCommandRead?.setMtu(expectedMtu)
 
             characteristicCommandWrite = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, characteristicWrite, xiaomiSupport.getAuthService())
@@ -83,9 +83,9 @@ class XiaomiBleConnectionSupport(private val xiaomiSupport: XiaomiSupport): Xiao
             characteristicCommandWrite?.setMtu(expectedMtu)
 
             characteristicActivityData = XiaomiCharacteristic(this@XiaomiBleConnectionSupport, mCharacteristicActivityData, xiaomiSupport.getAuthService())
-            characteristicActivityData?.setHandler(object: XiaomiChannelHandler {
-                override fun handle(payload: ByteArray) = xiaomiSupport.getHealthService().getActivityFetcher().addChunk(payload)
-            })
+            characteristicActivityData?.setHandler { payload ->
+                xiaomiSupport.getHealthService().getActivityFetcher().addChunk(payload)
+            }
             characteristicActivityData?.setIsEncrypted(uuidSet.encrypted)
             characteristicActivityData?.setMtu(expectedMtu)
 

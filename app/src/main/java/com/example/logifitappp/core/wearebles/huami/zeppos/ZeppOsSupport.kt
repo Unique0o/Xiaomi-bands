@@ -15,20 +15,22 @@ import com.example.logifitappp.core.wearebles.huami.Huami2021Service
 import com.example.logifitappp.core.wearebles.huami.HuamiBatteryInfo
 import com.example.logifitappp.core.wearebles.huami.HuamiService
 import com.example.logifitappp.core.wearebles.huami.HuamiSupport
-import com.example.logifitappp.core.wearebles.huami.zeppos.services.AbstractZeppOsService
+import com.example.logifitappp.core.wearebles.huami.zeppos.services.ZeppOsConfigService
 import com.example.logifitappp.core.wearebles.huami.zeppos.services.ZeppOsNotificationService
 import com.example.logifitappp.core.wearebles.huami.zeppos.services.ZeppOsServicesService
 import org.apache.commons.lang3.ArrayUtils
 
 class ZeppOsSupport: HuamiSupport() {
+    private val configService = ZeppOsConfigService(this)
     private val notificationService = ZeppOsNotificationService(this)
     private val servicesService = ZeppOsServicesService(this)
 
     private val supportedServices = HashSet<Short>()
     private val isEncryptedSet = HashSet<Short>()
 
-    private val serviceMap = linkedMapOf<Short, AbstractZeppOsService>(
+    private val serviceMap = linkedMapOf(
         servicesService.getEndpoint() to servicesService,
+        configService.getEndpoint() to configService,
         notificationService.getEndpoint() to notificationService
     )
 

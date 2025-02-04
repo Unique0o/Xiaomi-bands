@@ -27,8 +27,6 @@ class ZeppOsNotificationService(support: ZeppOsSupport): AbstractZeppOsService(s
     private var supportsPictures = false
     private var version = -1
 
-    override fun getEndpoint() = ENDPOINT
-
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
     private fun ackNotificationReply(notificationId: Int) {
         val buffer = ByteBuffer.allocate(9)
@@ -61,6 +59,8 @@ class ZeppOsNotificationService(support: ZeppOsSupport): AbstractZeppOsService(s
 
         write("delete notification", buffer.array())
     }
+
+    override fun getEndpoint() = ENDPOINT
 
     private fun getMaxLength() = 512
 

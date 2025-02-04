@@ -35,13 +35,13 @@ class SideBarViewModel @AssistedInject constructor(
 
     private fun refreshOptions() {
         options.clear()
+        //options.add(SideBarScreenEnum.PERSONAL_INFORMATION)
 
         if (user?.isAdmin() == false) {
-            options.addAll(listOf(
-                SideBarScreenEnum.PERSONAL_INFORMATION,
+            /*options.addAll(listOf(
                 SideBarScreenEnum.OCCUPATIONAL_INFORMATION,
-                SideBarScreenEnum.HEALTH_INFORMATION
-            ))
+                //SideBarScreenEnum.HEALTH_INFORMATION
+            ))*/
 
             if (tenant?.shouldItShowRosterOption == true) options.add(SideBarScreenEnum.ROSTER)
         } else options.add(SideBarScreenEnum.WEARABLE_KEY_UPDATE)

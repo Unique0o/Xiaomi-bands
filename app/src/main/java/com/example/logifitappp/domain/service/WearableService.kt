@@ -44,4 +44,16 @@ class WearableService @Inject constructor(private val wearableRepository: Wearab
             throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
         }
     }
+
+    suspend fun fetchXiaomiCredentials() = withContext(Dispatchers.IO) {
+        try {
+            val response = wearableRepository.fetchXiaomiCredentials()
+
+            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
 }

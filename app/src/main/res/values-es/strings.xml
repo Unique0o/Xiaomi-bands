@@ -115,6 +115,8 @@
     <string name="fatigue_detail_modal_subtitle">Usted se encuentra</string>
     <string name="fatigue_detail_modal_title">Detalle de fatiga</string>
     <string name="fatigue_label">Fatiga</string>
+    <string name="fetching_additional_information_message">Se está obteniendo información personal. Por favor espere...</string>
+    <string name="fetching_xiaomi_credentials">Se está obteniendo la lista de cuentas. Por favor espere...</string>
     <string name="fetching_synchronization_report">Se está obteniendo el reporte de sincronización. Por favor espere...</string>
     <string name="fetching_worker_list_message">Se están obteniendo los operadores bajo su cargo. Por favor espere...</string>
     <string name="finding_smart_band_message">Para que puedas localizar tu banda\nesta comenzará a vibrar</string>
@@ -281,7 +283,6 @@
     <string name="steps_detail_subtitle">%1$s pasos</string>
     <string name="steps_detail_title">Mis pasos</string>
     <string name="steps_taken">Pasos realizados</string>
-    <string name="fetching_additional_information_message">Se está obteniendo información personal, espere...</string>
     <string name="storing_additional_information_message">La información personal está siendo almacenada, espere por favor...</string>
     <string name="storing_evaluation_message">El test está siendo procesado para generar su condición de somnolencia...</string>
     <string name="storing_profile_photo_message">La foto de perfil está siendo almacenada, espere por favor...</string>

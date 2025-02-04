@@ -115,8 +115,10 @@
     <string name="fatigue_detail_modal_subtitle">You are</string>
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
-    <string name="fetching_synchronization_report">The synchronization report is being obtained. Please wait...</string>
-    <string name="fetching_worker_list_message">The operators under your charge are being obtained. Please wait...</string>
+    <string name="fetching_additional_information_message">Personal information is being fetched. Please wait...</string>
+    <string name="fetching_xiaomi_credentials">The accounts list is being fetched. Please wait...</string>
+    <string name="fetching_synchronization_report">The synchronization report is being fetched. Please wait...</string>
+    <string name="fetching_worker_list_message">The operators under your charge are being fetched. Please wait...</string>
     <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
     <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
     <string name="first_additional_information_title">Before starting</string>
@@ -282,7 +284,6 @@
     <string name="steps_detail_title">My steps</string>
     <string name="steps_taken">Steps taken</string>
     <string name="storing_additional_information_message">Personal information is being stored, please wait...</string>
-    <string name="fetching_additional_information_message">Personal information is being fetched, please wait...</string>
     <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
     <string name="storing_roster_information_message">Roster information is being storing</string>

@@ -1,6 +1,7 @@
 package com.example.logifitappp.core.utils
 
 import org.apache.commons.lang3.ArrayUtils
+import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.CharBuffer
 import java.nio.charset.StandardCharsets
@@ -34,6 +35,18 @@ object StringUtils {
         if (length < 0) return ""
 
         return s.substring(0, length)
+    }
+
+    fun untilNullTerminator(buffer: ByteBuffer): String? {
+        val baos = ByteArrayOutputStream()
+
+        while (buffer.position() < buffer.limit()) {
+            val byte = buffer.get()
+
+            if (byte == 0.toByte()) return baos.toString()
+        }
+
+        return null
     }
 
     fun untilNullTerminator(bytes: ByteArray, startOffset: Int): String? {

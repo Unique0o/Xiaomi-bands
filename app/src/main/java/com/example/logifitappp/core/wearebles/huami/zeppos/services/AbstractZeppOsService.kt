@@ -1,6 +1,7 @@
 package com.example.logifitappp.core.wearebles.huami.zeppos.services
 
 import androidx.annotation.RequiresPermission
+import com.example.logifitappp.core.Preferences
 import com.example.logifitappp.core.builders.ble.TransactionBuilder
 import com.example.logifitappp.core.events.AbstractWearableEvent
 import com.example.logifitappp.core.wearebles.huami.zeppos.ZeppOsSupport
@@ -10,9 +11,11 @@ abstract class AbstractZeppOsService(protected val support: ZeppOsSupport, priva
         support.evaluateWearableEvent(event)
     }
 
-    fun initialize(builder: TransactionBuilder) {
+    open fun initialize(builder: TransactionBuilder) {
 
     }
+
+    open fun onSendConfiguration(config: String, prefs: Preferences) = false
 
     fun setEncrypted(encrypted: Boolean) {
         if (encrypted != this.encrypted) println("Replacing encrypted flag for ${javaClass.simpleName}, ${this.encrypted} -> $encrypted")

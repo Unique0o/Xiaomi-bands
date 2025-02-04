@@ -20,13 +20,17 @@ object ColorUtils {
     }
 
     fun toColor(hex: String): Color {
-        val cleanHex = hex.removePrefix("#")
+        try {
+            val cleanHex = hex.removePrefix("#")
 
-        val red = cleanHex.substring(0, 2).toInt(16) / 255f
-        val green = cleanHex.substring(2, 4).toInt(16) / 255f
-        val blue = cleanHex.substring(4, 6).toInt(16) / 255f
+            val red = cleanHex.substring(0, 2).toInt(16) / 255f
+            val green = cleanHex.substring(2, 4).toInt(16) / 255f
+            val blue = cleanHex.substring(4, 6).toInt(16) / 255f
 
-        return Color(red, green, blue, 1f)
+            return Color(red, green, blue, 1f)
+        } catch (e: Exception) {
+            return Color.Black
+        }
     }
 
     fun toHex(color: Color): String {

@@ -48,8 +48,10 @@ enum class AppStatusCodeEnum(
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_disconnected_error))
     }),
 
+    FETCHING_ADDITIONAL_INFORMATION(320, R.string.fetching_additional_information_message, true, { Loader() }),
     FETCHING_SYNCHRONIZATION_REPORT(23, R.string.fetching_synchronization_report, true, { Loader() }),
     FETCHING_WORKER_LIST(25, R.string.fetching_worker_list_message, true, { Loader() }),
+    FETCHING_XIAOMI_CREDENTIALS(321, R.string.fetching_xiaomi_credentials, true, { Loader() }),
 
     FINDING_SMART_BAND(26, R.string.finding_smart_band_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_find_smart_band))
@@ -107,8 +109,6 @@ enum class AppStatusCodeEnum(
     UNREGISTERED_USER(104, R.string.unregistered_user_error_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_unregistered_user_error))
     }),
-
-    FETCHING_ADDITIONAL_INFORMATION(3122, R.string.fetching_additional_information_message, true, { Loader() }),
 
     UNSELECTED_SHIFT(35, R.string.unselected_shift_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_unselected_shift_error))
