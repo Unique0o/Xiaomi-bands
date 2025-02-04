@@ -63,7 +63,10 @@ class BottomTabScreenViewModel @AssistedInject constructor(
                     screens.add(BottomTabScreenEnum.GRAPHICS)
                 }
 
-                screens.add(BottomTabScreenEnum.MEDITATION)
+                screens.addAll(listOf(
+                    BottomTabScreenEnum.MEDITATION,
+                    BottomTabScreenEnum.LEADERBOARD
+                ))
             }
         }
     }

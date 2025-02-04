@@ -1,5 +1,6 @@
 package com.example.logifitappp.ui.screens
 
+import LeaderboardView
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -164,6 +165,7 @@ fun BottomTabScreen(
                 composable<BottomTabRoutes.AllInOne> { AllInOneView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Graphics> { GraphicsView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Home> { HomeView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
+                composable<BottomTabRoutes.Leaderboard> { LeaderboardView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.Meditation> { MeditationView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
                 composable<BottomTabRoutes.SynchronizationReport> { SynchronizationReportView(appViewModel, drawerState, navigation, innerPadding.avoidTop()) }
             }

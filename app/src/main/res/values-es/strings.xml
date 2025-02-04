@@ -3,6 +3,7 @@
     <string name="administrator">Administrador</string>
     <string name="all_of_them">Todos</string>
     <string name="and">y</string>
+    <string name="app_language">Lenguaje de la aplicación</string>
     <string name="app_name">Logifit Plus</string>
     <string name="argentina">Argentina</string>
     <string name="asleep_measurement_legend">Medición durante el sueño</string>
@@ -532,7 +533,6 @@
     <string name="female">Femenino</string>
 
     <!-- Side Menu -->
-    <string name="language">Idioma</string>
     <string name="terms_and_conditions">Términos y condiciones</string>
     <string name="help">Ayuda</string>
 

@@ -1,9 +1,8 @@
-package com.example.logifitappp.ui.screens.termsConditions
+package com.example.logifitappp.ui.screens.terms_and_conditions
 
 import android.webkit.WebView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,7 +21,7 @@ import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.views.termsConditions.TermsAndConditionsViewModel
 
 @Composable
-fun TermsAndConditionsScreen(
+fun TermsAndConditionsView(
     navigation: NavHostController,
 ) {
     val viewModel: TermsAndConditionsViewModel = hiltViewModel()
@@ -31,31 +30,30 @@ fun TermsAndConditionsScreen(
     val backgroundColor = MaterialTheme.colorScheme.surface.toArgb()
 
     SimplePage(
-        content = {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center)
-            {
-                AndroidView(
-                    factory = { context ->
-                        WebView(context).apply {
-                            viewModel.getWebViewSettings(this, backgroundColor)
-                            loadUrl(url ?: "")
-                        }
-                    },
-                    modifier = Modifier.fillMaxSize()
-                )
-
-                if (isLoading) {
-                    Loader()
-                }
-            }
-        },
         topBar = {
             ColumnStackHeader(
                 navigation = navigation,
                 title = stringResource(id = R.string.terms_and_conditions)
             )
         }
-    )
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center)
+        {
+            AndroidView(
+                factory = { context ->
+                    WebView(context).apply {
+                        viewModel.getWebViewSettings(this, backgroundColor)
+                        loadUrl(url ?: "")
+                    }
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+
+            if (isLoading) {
+                Loader()
+            }
+        }
+    }
 }

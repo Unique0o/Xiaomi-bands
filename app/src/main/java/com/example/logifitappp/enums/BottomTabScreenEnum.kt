@@ -1,6 +1,7 @@
 package com.example.logifitappp.enums
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.material.icons.filled.Spa
@@ -13,6 +14,7 @@ enum class BottomTabScreenEnum(val route: BottomTabRoutes, val icon: ImageVector
     ALL_IN_ONE(BottomTabRoutes.AllInOne, Icons.Default.Watch),
     GRAPHICS(BottomTabRoutes.Graphics, Icons.Filled.PieChart),
     HOME(BottomTabRoutes.Home, Icons.Filled.Home),
+    LEADERBOARD(BottomTabRoutes.Leaderboard, Icons.Default.EmojiEvents),
     MEDITATION(BottomTabRoutes.Meditation, Icons.Default.Spa),
     SYNCHRONIZATION_REPORT(BottomTabRoutes.SynchronizationReport, Icons.Default.SupervisorAccount);
 }

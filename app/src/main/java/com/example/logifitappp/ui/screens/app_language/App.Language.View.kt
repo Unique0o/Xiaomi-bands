@@ -1,6 +1,6 @@
-package com.example.logifitappp.ui.screens.appLanguage
+package com.example.logifitappp.ui.screens.app_language
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,12 +12,11 @@ import com.example.logifitappp.R
 import com.example.logifitappp.data.models.Language
 import com.example.logifitappp.ui.components.appLanguage.LanguageOption
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
-import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.ui.components.pages.ScrollablePage
 import com.example.logifitappp.viewmodel.views.appLanguage.LanguageChangeHelper
 
-
 @Composable
-fun AppLanguageScreen(
+fun AppLanguageView(
     navigation: NavHostController,
     languageChangeHelper: LanguageChangeHelper = LanguageChangeHelper()
 ) {
@@ -31,23 +30,20 @@ fun AppLanguageScreen(
         Language("es", R.string.spanish)
     )
 
-    SimplePage(
-        content = {
-            Column {
-                allLanguages.forEach { language ->
-                    LanguageOption(
-                        labelResId = language.name,
-                        isSelected = language.code == currentLanguage,
-                        onClick = { languageChangeHelper.changeLanguage(context, language.code) }
-                    )
-                }
-            }
-        },
+    ScrollablePage(
         topBar = {
             ColumnStackHeader(
                 navigation = navigation,
-                title = stringResource(id = R.string.language)
+                title = stringResource(id = R.string.app_language)
             )
         }
-    )
+    ) {
+        items(allLanguages) { language ->
+            LanguageOption(
+                labelResId = language.name,
+                isSelected = language.code == currentLanguage,
+                onClick = { languageChangeHelper.changeLanguage(context, language.code) }
+            )
+        }
+    }
 }

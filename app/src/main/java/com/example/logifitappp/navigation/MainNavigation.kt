@@ -10,11 +10,13 @@ import androidx.navigation.toRoute
 import com.example.logifitappp.data.remote.dto.response.WorkerItemResponse
 import com.example.logifitappp.navigation.routes.MainRoutes
 import com.example.logifitappp.ui.screens.SplashScreen
+import com.example.logifitappp.ui.screens.app_language.AppLanguageView
 import com.example.logifitappp.ui.screens.drowsiness_test_detail.DrowsinessTestDetailView
 import com.example.logifitappp.ui.screens.drowsiness_tests.DrowsinessTestsView
 import com.example.logifitappp.ui.screens.graphics.GraphicsView
 import com.example.logifitappp.ui.screens.health_information.HealthInformationView
 import com.example.logifitappp.ui.screens.heart_rate_detail.HeartRateDetailView
+import com.example.logifitappp.ui.screens.help.HelpView
 import com.example.logifitappp.ui.screens.lesson_detail.LessonDetailView
 import com.example.logifitappp.ui.screens.notifications.NotificationsView
 import com.example.logifitappp.ui.screens.occupational_information.OccupationalInformationView
@@ -28,6 +30,7 @@ import com.example.logifitappp.ui.screens.sleep_detail.SleepDetailView
 import com.example.logifitappp.ui.screens.spo2_detail.Spo2DetailView
 import com.example.logifitappp.ui.screens.steps_detail.StepsDetailView
 import com.example.logifitappp.ui.screens.stress_detail.StressDetailView
+import com.example.logifitappp.ui.screens.terms_and_conditions.TermsAndConditionsView
 import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
 import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
@@ -45,8 +48,10 @@ fun MainNavigation(
         navController = navigation,
         startDestination = MainRoutes.SplashScreen
     ) {
+        composable<MainRoutes.AppLanguage> { AppLanguageView(navigation) }
         composable<MainRoutes.DrowsinessTests> { DrowsinessTestsView(navigation) }
-        composable<MainRoutes.HealthInformation> { HealthInformationView(appViewModel,navigation) }
+        composable<MainRoutes.HealthInformation> { HealthInformationView(appViewModel, navigation) }
+        composable<MainRoutes.Help> { HelpView(navigation) }
         composable<MainRoutes.Notifications> { NotificationsView(navigation) }
         composable<MainRoutes.PasswordRecovery> { PasswordRecoveryView(navigation) }
         composable<MainRoutes.PersonalInformation> { PersonalInformationView(appViewModel, navigation) }
@@ -55,6 +60,7 @@ fun MainNavigation(
         composable<MainRoutes.RosterRecording> { RosterRecordingView(appViewModel, navigation) }
         composable<MainRoutes.SleepDataRecording> { SleepDataRecordingView(navigation) }
         composable<MainRoutes.SplashScreen> { SplashScreen(appViewModel, navigation) }
+        composable<MainRoutes.TermsAndConditions> { TermsAndConditionsView(navigation) }
         composable<MainRoutes.Trainings> { TrainingsView(navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(appViewModel, navigation) }
 

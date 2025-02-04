@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class MainRoutes {
     @Serializable
+    data object AppLanguage: MainRoutes()
+
+    @Serializable
     data class DrowsinessTestDetail(val drowsinessTestId: Int): MainRoutes()
 
     @Serializable
@@ -18,6 +21,9 @@ sealed class MainRoutes {
 
     @Serializable
     data class HeartRateDetail(val mac: String): MainRoutes()
+
+    @Serializable
+    data object Help: MainRoutes()
 
     @Serializable
     data class LessonDetail(val lessonId: Int, val serializedLessonIds: String): MainRoutes()
@@ -60,6 +66,9 @@ sealed class MainRoutes {
 
     @Serializable
     data class StressDetail(val mac: String): MainRoutes()
+
+    @Serializable
+    data object TermsAndConditions: MainRoutes()
 
     @Serializable
     data object Trainings: MainRoutes()

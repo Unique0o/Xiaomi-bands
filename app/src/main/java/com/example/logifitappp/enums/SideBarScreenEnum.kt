@@ -9,7 +9,10 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Diversity1
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.DrawerState
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
@@ -21,6 +24,11 @@ enum class SideBarScreenEnum(
     @StringRes val label: Int,
     val icon: ImageVector
 ) {
+    APP_LANGUAGE({ drawerState, navigation, _ ->
+        navigation.navigate(MainRoutes.AppLanguage)
+        drawerState.close()
+    }, R.string.app_language, Icons.Default.Translate),
+
     EXIT({ drawerState, _, callback ->
         callback?.let { it() }
         drawerState.close()
@@ -30,6 +38,11 @@ enum class SideBarScreenEnum(
         navigation.navigate(MainRoutes.HealthInformation)
         drawerState.close()
     }, R.string.health_information_title, Icons.Default.Diversity1),
+
+    HELP({ drawerState, navigation, _ ->
+        navigation.navigate(MainRoutes.Help)
+        drawerState.close()
+    }, R.string.help, Icons.Default.QuestionMark),
 
     LOGOUT({ drawerState, _, callback ->
         callback?.let { it() }
@@ -50,6 +63,11 @@ enum class SideBarScreenEnum(
         navigation.navigate(MainRoutes.Roster)
         drawerState.close()
     }, R.string.roster_title, Icons.Default.CalendarMonth),
+
+    TERMS_AND_CONDITIONS({ drawerState, navigation, _ ->
+        navigation.navigate(MainRoutes.TermsAndConditions)
+        drawerState.close()
+    }, R.string.terms_and_conditions, Icons.Default.Shield),
 
     TRAININGS({ drawerState, navigation, _ ->
         navigation.navigate(MainRoutes.Trainings)

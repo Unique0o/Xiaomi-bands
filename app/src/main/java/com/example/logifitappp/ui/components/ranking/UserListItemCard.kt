@@ -1,7 +1,5 @@
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,15 +29,6 @@ fun DateDisplay() {
         fontSize = 18.sp,
         color = Stone470
     )
-}
-
-@Composable
-fun UserList(users: List<User>) {
-    LazyColumn {
-        items(users) { user ->
-            UserListItemCard(user)
-        }
-    }
 }
 
 @Composable

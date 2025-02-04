@@ -3,6 +3,7 @@
     <string name="administrator">Administrator</string>
     <string name="all_of_them">All of them</string>
     <string name="and">and</string>
+    <string name="app_language">App language</string>
     <string name="app_name">Logifit Plus</string>
     <string name="argentina">Argentina</string>
     <string name="asleep_measurement_legend">Measurement during sleep</string>
@@ -514,7 +515,6 @@
     <string name="not_selected">Not selected</string>
 
     <!-- Side Menu -->
-    <string name="language">App Language</string>
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="help">Help</string>
 

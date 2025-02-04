@@ -54,7 +54,7 @@ fun SideBarContent(
 
     Column(
         modifier = Modifier
-            .width(screenWidth * 0.65f)
+            .width(screenWidth * 0.8f)
             .fillMaxHeight()
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .verticalScroll(scrollableState)
@@ -115,14 +115,14 @@ fun SideBarContent(
                         }
                     }
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                    .padding(horizontal = 10.dp, vertical = 16.dp),
                 icon = it.icon,
                 iconColor = if (it == SideBarScreenEnum.EXIT) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outlineVariant,
                 iconSize = 18.dp,
                 label = stringResource(it.label),
                 labelColor = if (it == SideBarScreenEnum.EXIT) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outlineVariant,
-                labelTypography = MaterialTheme.typography.labelLarge,
-                spaceBetween = 8.dp
+                labelTypography = MaterialTheme.typography.bodyMedium,
+                spaceBetween = 32.dp
             )
 
             if (it == SideBarScreenEnum.LOGOUT) Spacer(Modifier.weight(1f))

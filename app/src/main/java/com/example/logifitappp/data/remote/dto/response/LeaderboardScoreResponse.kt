@@ -2,17 +2,17 @@ package com.example.logifitappp.data.remote.dto.response
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class UserScoreResponse(
     @SerializedName("id") val id: Int,
     @SerializedName("full_name") val fullName: String?,
     @SerializedName("profile") val profilePhoto: String?
 )
 
-data class Score(
+data class ScoreResponse(
     @SerializedName("score_total") val points: Int,
-    @SerializedName("user") val user: User
+    val user: UserScoreResponse
 )
 
 data class LeaderboardScoreResponse(
-    @SerializedName("scores") val score: List<Score>
+    @SerializedName("scores") val score: List<ScoreResponse>
 )

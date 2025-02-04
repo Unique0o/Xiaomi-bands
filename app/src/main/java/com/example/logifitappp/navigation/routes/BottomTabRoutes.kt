@@ -14,6 +14,9 @@ sealed class BottomTabRoutes {
     data object Home: BottomTabRoutes()
 
     @Serializable
+    data object Leaderboard: BottomTabRoutes()
+
+    @Serializable
     data object Meditation: BottomTabRoutes()
 
     @Serializable

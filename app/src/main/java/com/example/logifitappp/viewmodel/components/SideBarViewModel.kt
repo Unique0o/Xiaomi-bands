@@ -48,6 +48,9 @@ class SideBarViewModel @AssistedInject constructor(
 
         options.addAll(listOf(
             SideBarScreenEnum.TRAININGS,
+            SideBarScreenEnum.APP_LANGUAGE,
+            SideBarScreenEnum.HELP,
+            SideBarScreenEnum.TERMS_AND_CONDITIONS,
             SideBarScreenEnum.LOGOUT,
             SideBarScreenEnum.EXIT
         ))
