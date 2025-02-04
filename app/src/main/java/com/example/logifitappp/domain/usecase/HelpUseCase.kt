@@ -7,7 +7,7 @@ import com.example.logifitappp.domain.service.HelpService
 import javax.inject.Inject
 
 class HelpUseCase @Inject constructor(private val helpService: HelpService) {
-    suspend operator fun invoke(contact: String?, message: String?): GeneralResponse {
-        return helpService.store(StoreHelpRequest(contact, message))
+    suspend operator fun invoke(message: String?): GeneralResponse {
+        return helpService.store(StoreHelpRequest(message))
     }
 }
