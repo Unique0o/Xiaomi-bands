@@ -1,0 +1,601 @@
+<resources>
+    <string name="activity">Activity</string>
+    <string name="administrator">Administrator</string>
+    <string name="all_of_them">All of them</string>
+    <string name="and">and</string>
+    <string name="app_name">Logifit Plus</string>
+    <string name="argentina">Argentina</string>
+    <string name="asleep_measurement_legend">Measurement during sleep</string>
+    <string name="associating_worker_message">Wait until the process finishes</string>
+    <string name="authenticating">Authenticating</string>
+    <string name="authentication_key_bottom_sheet_message">Write down or copy the authorization key you were given to perform the authentication.</string>
+    <string name="authentication_key_bottom_sheet_title">Authenticate your band</string>
+    <string name="authentication_required">Authentication required</string>
+    <string name="average_heart_rate">Average heart rate</string>
+    <string name="average_spo2">Average SpO2</string>
+    <string name="average_stress">Average stress</string>
+    <string name="awake_measurement_legend">Measurement during activity</string>
+    <string name="awaken">Awaken</string>
+    <string name="band_theft_alert">It has been detected that you are trying to synchronize your sleep report using a device already used by another user, which constitutes a serious irregularity. This violates the company\'s rules. We remind you that any attempt at fraud will be sanctioned by supervision.</string>
+    <string name="band_theft_message">The data for this band has already been registered by another user</string>
+    <string name="battery_percentage_label">Battery at %1$s</string>
+    <string name="between_40_and_100">Between 40 and 100</string>
+    <string name="biking">Biking</string>
+    <string name="bolivia">Bolivia</string>
+    <string name="brazil">Brazil</string>
+    <string name="burned_calories">Burned calories</string>
+    <string name="busy_task_fetch_activity_data">Fetching activity data</string>
+    <string name="busy_task_fetch_spo2_data">Fetching SpO2 data</string>
+    <string name="busy_task_fetch_stress_data">Fetching stress data</string>
+    <string name="button_active_bluetooth">Activate Bluetooth</string>
+    <string name="button_activity">Activity</string>
+    <string name="button_add">Add</string>
+    <string name="button_authenticate_band">Authenticate band</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_close">Close</string>
+    <string name="button_connect_smart_band">Connect my Smart Band</string>
+    <string name="button_device_detection">Devices detection</string>
+    <string name="button_download_certificate">Download certificate</string>
+    <string name="button_enable">Enable</string>
+    <string name="button_erase">Erase</string>
+    <string name="button_find_my_band">Encontrar mi Smart Band</string>
+    <string name="button_get_into">Get into</string>
+    <string name="button_mark_as_view">Mark as view</string>
+    <string name="button_ok">OK</string>
+    <string name="button_pair_operator">Link operator</string>
+    <string name="button_pair_smart_band">Pair Smart Band</string>
+    <string name="button_register">Register</string>
+    <string name="button_send">Send</string>
+    <string name="button_send_to_logifit">Send to Logifit</string>
+    <string name="button_settings">Settings</string>
+    <string name="button_share">Share</string>
+    <string name="button_start_detection">Start detection</string>
+    <string name="button_stop_detection">Stop detection</string>
+    <string name="button_sync_sleep">Sync my sleep</string>
+    <string name="button_try_again">Try again</string>
+    <string name="canada">Canada</string>
+    <string name="change_location_modal_message">Remember this is very important for your sleep analysis</string>
+    <string name="change_location_modal_subtitle">Select your location in your company</string>
+    <string name="change_location_modal_title">My location</string>
+    <string name="change_shift_modal_message">Remember this is very important for your sleep analysis</string>
+    <string name="change_shift_modal_subtitle">Select your working hours in your company</string>
+    <string name="change_shift_modal_title">My work schedule</string>
+    <string name="chile">Chile</string>
+    <string name="colombia">Colombia</string>
+    <string name="companion_pairing_request_message">Pair this device as companion?. This is recommended for some functions such as find device, and provides a better connection.</string>
+    <string name="companion_pairing_request_title">Companion device</string>
+    <string name="completed">Completed</string>
+    <string name="connected">Connected</string>
+    <string name="connecting">Connecting</string>
+    <string name="connecting_whit_wearable_message">Remember to keep your Smart Band close to facilitate the connection</string>
+    <string name="costa_rica">Costa Rica</string>
+    <string name="country_phone_code_title">Select a country phone code</string>
+    <string name="country_title">Select a country</string>
+    <string name="country_validation_error_message">You must select a country</string>
+    <string name="province_validation_error_message">You must select a province</string>
+    <string name="department_validation_error_message">You must select a department</string>
+    <string name="cuba">Cuba</string>
+    <string name="date">Date</string>
+    <string name="deep_sleep">Deep Sleep</string>
+    <string name="default_notification_channel_id">Local Push Notification</string>
+    <string name="description">Description</string>
+    <string name="device_unknown_name">(unknown)</string>
+    <string name="disabled_bluetooth_message">Bluetooth is disabled</string>
+    <string name="disabled_location_message">Location is disabled</string>
+    <string name="disabled_networks_message">Keep your Wifi, Bluetooth and GPS activated</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="discovery_pair_message">Select Pair to pair your devices. If this fails, try again without pairing.</string>
+    <string name="discovery_pair_title">Pair with %1$s?</string>
+    <string name="document_type_title">Select a document type</string>
+    <string name="department_type_title">Select a department</string>
+    <string name="document_type_validation_error_message">You must select a document type</string>
+    <string name="bday_type_validation_error_message">You must select a birthday</string>
+    <string name="dominican_republic">Dominican Republic</string>
+    <string name="downloading_evaluation_result_message">Fetching evaluation result...</string>
+    <string name="downloading_synchronization_report_message">The weekly report is being generated. Please wait...</string>
+    <string name="downloading_training_certificate_message">Downloading training certificate...</string>
+    <string name="drowsiness_detail_modal_message">Your sleep information must exceed **%1$s hours** to count as eligible</string>
+    <string name="drowsiness_detail_modal_subtitle">You are</string>
+    <string name="drowsiness_detail_modal_title">Sleep detail</string>
+    <string name="drowsiness_evaluation_date_label">Result of %1$s</string>
+    <string name="drowsiness_evaluation_message">Perform a sleepiness test to verify whether or not you are fit to perform your duties.</string>
+    <string name="drowsiness_label">Sleep</string>
+    <string name="ecuador">Ecuador</string>
+    <string name="el_salvador">El Salvador</string>
+    <string name="exit">Exit</string>
+    <string name="extracting_wearable_information_message">Activity and sleep data from your Smart Band is being shared with app</string>
+    <string name="failed_evaluation_store_message">There was a problem processing your test. Please try again.</string>
+    <string name="failed_password_recovery_message">You do not have a configured phone number, contact the person in charge of the area.</string>
+    <string name="failed_profile_photo_store_message">There was a problem storing profile photo. Please try again.</string>
+    <string name="failed_roster_information_storage_message">Record with date range already exists</string>
+    <string name="failed_wearable_pairing_message">To connect successfully, it is necessary to keep the Smart Band close to the cell phone</string>
+    <string name="fatigue">Fatigue</string>
+    <string name="fatigue_detail_modal_subtitle">You are</string>
+    <string name="fatigue_detail_modal_title">Fatigue detail</string>
+    <string name="fatigue_label">Fatigue</string>
+    <string name="fetching_synchronization_report">The synchronization report is being obtained. Please wait...</string>
+    <string name="fetching_worker_list_message">The operators under your charge are being obtained. Please wait...</string>
+    <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
+    <string name="first_additional_information_message">Validate the information corresponding to your personal data</string>
+    <string name="first_additional_information_title">Before starting</string>
+    <string name="fit">Fit</string>
+    <string name="fit_to_drive_message">You are able to drive your work vehicle.</string>
+    <string name="fit_with_observations">With obs.</string>
+    <string name="full_name">Full name</string>
+    <string name="go_back">Go back</string>
+    <string name="graphics_title">Activity</string>
+    <string name="greater_than_1_hour">Greater than 1 hour</string>
+    <string name="greater_than_15_percentage">Greater than 15%</string>
+    <string name="greater_than_20_minutes">Greater than 20 minutes</string>
+    <string name="greater_than_6_hours">Greater than 6 hours</string>
+    <string name="greeting">Welcome back</string>
+    <string name="group_title">Select group</string>
+    <string name="guatemala">Guatemala</string>
+    <string name="health_information_title">Health information</string>
+    <string name="heart_rate">Heart rate</string>
+    <string name="heart_rate_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="heart_rate_detail_chart_title">My heart rate</string>
+    <string name="heart_rate_detail_title">My heart rate</string>
+    <string name="help_already_stored_message">A help request has already been made for today</string>
+    <string name="honduras">Honduras</string>
+    <string name="identity_document_validation_error_message">You must insert an identity document</string>
+    <string name="image_source_bottom_sheet_title">Select an option</string>
+    <string name="in_progress">In progress</string>
+    <string name="inactive_tenant_message">The tenant is inactive, contact the administrator</string>
+    <string name="inactive_user_message">Your user is inactive, contact the administrator</string>
+    <string name="initialized">Initialized</string>
+    <string name="initializing">Initializing</string>
+    <string name="interrupted_synchronization_message">Interrupted synchronization. It is recommended to keep the Smart Band close to the phone until the information extraction process is finished</string>
+    <string name="invalid_wearable_authentication_key_message">It seems the security key is not correct, try again or contact the support area</string>
+    <string name="lack_of_sleep_extraction_message">Sleep data needs to be extracted</string>
+    <string name="lack_of_sleep_synchronization_with_logifit_message">Lack of sleep synchronization with Logifit</string>
+    <string name="last_extraction_data">Last extraction</string>
+    <string name="last_sending_to_logifit">Last sending to Logifit</string>
+    <string name="last_recorded_measurement">Last recorded measurement</string>
+    <string name="less_than_1_hour">Less than 1 hour</string>
+    <string name="less_than_15_percentage">Less than 15%</string>
+    <string name="less_than_20_minutes">Less than 20 minutes</string>
+    <string name="less_than_40_or_greater_than_100">Less than 40 or greater than 100</string>
+    <string name="less_than_6_hours">Less than 6 hours</string>
+    <string name="lessons">Lessons</string>
+    <string name="light_sleep">Light Sleep</string>
+    <string name="link_hide">Hide</string>
+    <string name="link_omit">Omit</string>
+    <string name="link_recover_password">Get it back here</string>
+    <string name="link_show">Show</string>
+    <string name="link_show_less">Show less</string>
+    <string name="link_show_more">Show more</string>
+    <string name="lite">Lite</string>
+    <string name="location_title">Select a location</string>
+    <string name="location_validation_error_message">You must select a location</string>
+    <string name="logging_in_message">Validating user…</string>
+    <string name="logifit_sync_message_missing">Sleep information has not yet been sent to Logifit</string>
+    <string name="logout">Logout</string>
+    <string name="main_administrator">Main administrator</string>
+    <string name="message_password_recovery">A manager will be notified to assist you</string>
+    <string name="message_recover_password">Don`t remember your password?</string>
+    <string name="mexico">Mexico</string>
+    <string name="mute">Mute</string>
+    <string name="my_drowsiness_tests">My drowsiness tests</string>
+    <string name="names_validation_error_message">You must insert your names</string>
+    <string name="naps">Naps</string>
+    <string name="nicaragua">Nicaragua</string>
+    <string name="no">No</string>
+    <string name="no_associated_user_error_message">Missing device paring</string>
+    <string name="no_data">No data</string>
+    <string name="no_internet_connection_message">Check your Internet connection</string>
+    <string name="no_internet_connection_page_message">You can consult this section with an Internet connection. Please check and try again.</string>
+    <string name="no_paired_wearables_page_message">You do not have any paired Smart Band</string>
+    <string name="no_synchronized_wearable_data_message">It seems you do not have current data, please perform the extraction and try again</string>
+    <string name="no_wearable_sleep_data_message">It looks like you do not have a sleep log to send. Try to sync again</string>
+    <string name="not_connected">Not connected</string>
+    <string name="not_worn">Device not worn</string>
+    <string name="notifications_title">My notifications</string>
+    <string name="occupational_information_title">Occupational information</string>
+    <string name="open_on_phone">Open on Android device</string>
+    <string name="operator">Operator</string>
+    <string name="pairing_worker_message">Type the name, surname and/or identity document of the operator to which the Smart Band %1$s (%2$s) be paired</string>
+    <string name="pairing_worker_title">Pair operator</string>
+    <string name="panama">Panama</string>
+    <string name="paraguay">Paraguay</string>
+    <string name="password_not_validated_error_message">The password entered is incorrect, please try again</string>
+    <string name="password_recovery_title">Recover password</string>
+    <string name="password_validation_error_message">You must insert a password</string>
+    <string name="pending">Pending</string>
+    <string name="personal_information_title">Personal information</string>
+    <string name="peru">Peru</string>
+    <string name="phone_validation_error_message">You must insert a valid mobile number</string>
+    <string name="placeholder_comment">Comment</string>
+    <string name="placeholder_country">Country</string>
+    <string name="placeholder_date">Date</string>
+    <string name="placeholder_detail">Detail</string>
+    <string name="placeholder_document_type">Document type</string>
+    <string name="placeholder_end_date">End date</string>
+    <string name="placeholder_group">Group</string>
+    <string name="placeholder_identity_document">Identity document</string>
+    <string name="placeholder_location">Location</string>
+    <string name="placeholder_names">Names</string>
+    <string name="placeholder_password">Password</string>
+    <string name="placeholder_phone_number">Phone number</string>
+    <string name="placeholder_search">Search</string>
+    <string name="placeholder_shift">Shift</string>
+    <string name="placeholder_start_date">Start date</string>
+    <string name="placeholder_surnames">Surnames</string>
+    <string name="placeholder_user">User</string>
+    <string name="premium">Premium</string>
+    <string name="pro">Pro</string>
+    <string name="profile_photo_additional_information_error_message">Profile photo is required</string>
+    <string name="province_title">Select a province</string>
+    <string name="puerto_rico">Puerto Rico</string>
+    <string name="range_date_validation_error_message">You must select a range date</string>
+    <string name="recovering_password_message">One of our managers will be notified to help you as soon as possible.</string>
+    <string name="rem_sleep">REM Sleep</string>
+    <string name="reminder_message">Remember to activate your Bluetooth and keep your Smart Band close to your cell phone to facilitate the connection</string>
+    <string name="require_enable_location_message">Location must be enabled in order to use Bluetooth</string>
+    <string name="require_subscription_upgrading_message">The project does not have a balance to send information. Please contact your administrator as soon as possible.</string>
+    <string name="roster_recording_title">Create record</string>
+    <string name="roster_title">Roster</string>
+    <string name="running">Running</string>
+    <string name="scanned">Scanned</string>
+    <string name="second_additional_information_message">You need to take a selfie or choose a photo to continue</string>
+    <string name="second_additional_information_title">We are almost done!</string>
+    <string name="select">Select</string>
+    <string name="select_date_range_title">Select date range</string>
+    <string name="select_date_title">Select date</string>
+    <string name="select_shift">Select shift</string>
+    <string name="share_evaluation_result_message">Share evaluation result</string>
+    <string name="share_sleep_detail_message">Share sleep detail</string>
+    <string name="share_synchronization_report_message">Share synchronization report</string>
+    <string name="share_training_certificate_message">Share training certificate</string>
+    <string name="sharing_without_synchronization_to_logifit_message">Data still needs to be sent to Logifit, do you still want to share your data?</string>
+    <string name="shift">Shift</string>
+    <string name="shift_title">Select shift</string>
+    <string name="sleep_condition">Sleep Condition</string>
+    <string name="sleep_detail_chart_subtitle">Information between %1$s - %2$s</string>
+    <string name="sleep_detail_chart_title">My sleep</string>
+    <string name="sleep_detail_screenshot_copyright_message">Report created in App Logifit</string>
+    <string name="sleep_detail_screenshot_drowsiness_result_title">A. Drowsiness results</string>
+    <string name="sleep_detail_screenshot_fatigue_result_title">B. Fatigue results</string>
+    <string name="sleep_detail_screenshot_result_title">My results</string>
+    <string name="sleep_detail_screenshot_title">Drowsiness and Fatigue report</string>
+    <string name="sleep_detail_summary">Information between %1$s - %2$s</string>
+    <string name="sleep_detail_title">My sleep</string>
+    <string name="sleep_extraction_label">Extraction made %1$s ago</string>
+    <string name="sleep_extraction_message">%1$s Extraction made %2$s ago</string>
+    <string name="sleep_hours_message">%1$s completed hour sleep</string>
+    <string name="sleep_information">Sleep information</string>
+    <string name="sleep_sync_message_missing">Sleep information has not yet been extracted from the Smart Band</string>
+    <string name="sleep_synchronization_label">Report made %1$s ago</string>
+    <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
+    <string name="sleep_time">Sleep Time</string>
+    <string name="spo2">SpO2</string>
+    <string name="spo2_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="spo2_detail_chart_title">SpO2</string>
+    <string name="spo2_detail_title">My SpO2</string>
+    <string name="state_to_drive_not_found_message">Apparently you have a different status, check with your administrator.</string>
+    <string name="statistics_title">My statistics</string>
+    <string name="steps_detail_chart_chip_message">%1$s steps</string>
+    <string name="steps_detail_chart_title">My steps</string>
+    <string name="steps_detail_subtitle">%1$s steps</string>
+    <string name="steps_detail_title">My steps</string>
+    <string name="steps_taken">Steps taken</string>
+    <string name="storing_additional_information_message">Personal information is being stored, please wait...</string>
+    <string name="fetching_additional_information_message">Personal information is being fetched, please wait...</string>
+    <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
+    <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
+    <string name="storing_roster_information_message">Roster information is being storing</string>
+    <string name="stress">Stress</string>
+    <string name="stress_detail_chart_subtitle">Last recorded measurement</string>
+    <string name="stress_detail_chart_title">Stress</string>
+    <string name="stress_detail_title">My stress</string>
+    <string name="subtitle_login">Type your credentials to continue</string>
+    <string name="successful_password_recovery_message">A manager has been notified so they can help you</string>
+    <string name="successful_roster_information_storage_message">The registration of the information was carried out successfully</string>
+    <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
+    <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
+    <string name="successful_worker_associated_message">Contributor updated successfully</string>
+    <string name="summary">Summary</string>
+    <string name="surnames_validation_error_message">You must insert your surnames</string>
+    <string name="email_validation_error_message">You must insert your valid email</string>
+    <string name="sync_with_logifit_required_alert">The extracted data has not been sent to the supervision. Please check if the device has a signal, mobile data or is connected to a stable Wi-Fi network. If there is no internet connection at the moment, please send the information as soon as possible once the connection is reestablished.</string>
+    <string name="sync_with_logifit_required_message">The sending to Logifit was not made</string>
+    <string name="sync_without_sleep_data_alert">You do not have sleep records to send</string>
+    <string name="take_photo">Take photo</string>
+    <string name="total_awake_time">Total awake time</string>
+    <string name="total_label">Total</string>
+    <string name="total_sleep_time">Total sleep time</string>
+    <string name="training_progress_label">Progress %1$s</string>
+    <string name="trainings_title">Trainings</string>
+    <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
+    <string name="traveled_distance">Traveled distance</string>
+    <string name="team_title">My team</string>
+    <string name="unauthorized_screen_message">You are currently unable to use Logifit features. Please contact your administrator.</string>
+    <string name="unauthorized_screen_title">Unauthorized user</string>
+    <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
+    <string name="unbind_before_pair_title">Already bound</string>
+    <string name="unfit">Unfit</string>
+    <string name="unfit_to_drive_message">You are not able to drive due to incomplete sleep regimen.</string>
+    <string name="united_states">United States</string>
+    <string name="unknown_activity">Unknown activity</string>
+    <string name="unpair_band_modal_message">Are you sure you want to unpair Smart Band that you currently use?</string>
+    <string name="unpair_band_modal_title">Unpair Smart Band</string>
+    <string name="unpair_wearable_setting_summary">The watch will be unpaired from Logifit and the stored data will be deleted</string>
+    <string name="unpair_wearable_setting_title">Unpair Smart Band</string>
+    <string name="unprocessable_wearable_information_transfer_message">The data was successfully extracted but not sent to Logifit. Please check your Internet connection and try again</string>
+    <string name="unregistered_user_error_message">Unregistered user. Please create an account to login</string>
+    <string name="unselected_shift_message">Please select a work shift before extracting sleep data or making a test</string>
+    <string name="unassigned_shift_label">Unassigned</string>
+    <string name="unsupported_wearable_message">There is no support for this device. Please contact the support service</string>
+    <string name="upload_image">Upload image</string>
+    <string name="uruguay">Uruguay</string>
+    <string name="username_validation_error_message">You must insert an user</string>
+    <string name="venezuela">Venezuela</string>
+    <string name="waiting_for_device_scan">Waiting for device scan</string>
+    <string name="waiting_for_reconnect">Waiting for reconnect</string>
+    <string name="wearable_key_update_title">Key update</string>
+    <string name="wearable_pairing_message">Please keep the Smart Band nearby for Logifit to complete the connection.</string>
+    <string name="wearable_pairing_title">Pairing with %1$s</string>
+    <string name="wearable_profile_disconnecting_message">Your Smart Band is disconnected from the application, please connect to be able to register your information</string>
+    <string name="wearable_settings_title">Settings</string>
+    <string name="without_role">Without role</string>
+    <string name="worker_list_empty_message">There are no operators under your supervision</string>
+    <string name="yes">Yes </string>
+
+    <string-array name="operator_onboarding_subtitle">
+        <item>Sync your sleep daily\nwhen you wake up from sleep.</item>
+        <item>The application will evaluate your SmartBand\'s\nsleep data and you can easily share it.</item>
+    </string-array>
+
+    <string-array name="operator_onboarding_title">
+        <item>Connect and sync your sleep\n**with a single button.**</item>
+        <item>Logifit will calculate\n**sleep and fatigue conditions.**</item>
+        <item>Turn on your Bluetooth and\n**connect with Logifit.**</item>
+    </string-array>
+
+    <plurals name="day_label">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+
+    <plurals name="hour_label">
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
+    </plurals>
+
+    <plurals name="minute_label">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
+
+    <string name="warning_title">Warning!!: You are not fit to drive under the current conditions.</string>
+    <string name="face_status">FATIGUE</string>
+    <string name="face_dream">DROWSINESS</string>
+    <string name="battery_status">Battery at 80%</string>
+    <string name="title_smart_band">My Smart Band 4</string>
+    <string name="title_tests">My Drowsiness Tests</string>
+    <string name="description_tests">Take a drowsiness test to check if you are fit to perform your tasks.</string>
+    <string name="title_test_fatiga">Fatigue self-assessment test</string>
+    <string name="status_person">FIT</string>
+    <string name="result_date">Result of: </string>
+    <string name="plan">PREMIUM</string>
+
+    <!-- Card Item -->
+    <string name="schedule">My schedule</string>
+    <string name="status">DAYTIME</string>
+    <string name="night" >NIGHT</string>
+    <string name="PGT">PGT</string>
+    <string name="my_location">My location</string>
+    <string name="my_device">My Device</string>
+    <string name="card_description">Remember to activate your Bluetooth and keep your Smartband close to your phone to facilitate the connection.</string>
+    <string name="title_my_test">My Drowsiness Tests</string>
+    <string name="card_description_message">Take a drowsiness test to check if you are fit to perform your tasks.</string>
+    <string name="title_condition_sleep">Sleep Conditions</string>
+    <string name="status_no_apto">NOT FIT</string>
+    <string name="add_content_description">Add</string>
+    <string name="profile_photo">Profile Photo</string>
+    <string name="notificacions_content_description">Notifications</string>
+    <string name="welcome">Welcome back</string>
+    <string name="title_fatige">Fatigue</string>
+
+    <!-- Graphics -->
+    <string name="wake_up">Wake Up</string>
+    <string name="content_description_alarm">Alarm</string>
+    <string name="information_sleep">Sleep Information</string>
+
+    <string name="my_heart_rate">My heart rate</string>
+    <string name="my_sleep">My sleep</string>
+    <string name="information_between">Information between:</string>
+    <string name="my_steps">My steps</string>
+
+    <!-- CardSleepSession -->
+    <string name="content_description_sleep">Sleep</string>
+    <string name="heart_rate_card_title">Heart Rate</string>
+
+    <!-- Card Step -->
+    <string name="distance_traveled">Distance traveled</string>
+    <string name="calories_burned">Calories burned</string>
+    <string name="without_data">NO DATA</string>
+    <string name="kcal">0 kcal</string>
+    <string name="graph_card_heart_rate">Last Recorded Measurement</string>
+    <string name="leaderboard_message_title">You`re on top</string>
+    <string name="leaderboard_message_summary">Discipline and consistency are with you in this process. Keep achieving the successes you`ve been striving for.</string>
+    <string name="searching_for_devices">Searching for devices</string>
+    <string name="make_your_device_detectable">Make your device detectable</string>
+    <string name="device_detection_info">Connected devices are not detectable on Android 6 or higher, so you need to enable location (GPS). Disable Privacy Guard for Logfit. If your device does not show up within two minutes, try again after restarting your phone.</string>
+    <string name="detecting_devices">Detecting devices</string>
+    <string name="add_device">Pair a Smart Band</string>
+    <string name="text_no_device">You have no band connected</string>
+    <string name="device_card_description">Select device</string>
+    <string name="close">Close</string>
+    <string name="enter_key">Enter the key</string>
+
+
+    <!-- Statistics -->
+    <string name="title_leaderboard_topbar">Leaderboard</string>
+    <string name="status_no_aptos">Not fit</string>
+    <string name="status_aptos">Fit</string>
+    <string name="updated_information">Information updated on </string>
+    <string name="my_statistics">My Statistics</string>
+    <string name="my_team">My Team </string>
+    <string name="group">Group </string>
+
+    <!-- Tests -->
+    <string name="subjective_test">Subjective Tests</string>
+    <string name="tools">Tools</string>
+    <string name="test_description">Test description</string>
+    <string name="description_fatigue_test">This self-assessment test must be completed in advance by people who are going to drive some type of vehicle. </string>
+    <string name="detail">Detail: </string>
+    <string name="finish">Finish</string>
+    <string name="result">Result</string>
+    <string name="test_question_1">"1. Have you rested 7 consecutive hours before your work day?"</string>
+    <string name="test_question_2">"2. Are you/Do you feel sleepy now?"</string>
+    <string name="test_question_3">"3. Have you taken medication during the day or hours prior to the service? If the answer is affirmative, detail which medication."</string>
+    <string name="test_question_4">"4. In the last two days have you had personal problems at home or with someone at work that make it difficult for you to concentrate or interrupt your sleep?"</string>
+    <string name="test_question_5">"5. Do you/do you feel sleepy, tired, do your eyelids tremble, do you have tremors in your legs or arms and/or have you constantly yawned during the last week?"</string>
+    <string name="test_question_6">"6. Do you have/feel another health complaint that has not received attention? Specify"</string>
+    <string name="test_question_7">"7. Have you done physical activity or physical exercises more than usual before your work shift?"</string>
+    <string name="test_question_8">"8. If you feel fatigue/drowsiness, do you know what to do? Detail"</string>
+    <string name="no_drive">"You cannot drive/do any activity."</string>
+    <string name="medical_evaluation">"Requires medical evaluation."</string>
+    <string name="user_can_perform">"The user can perform their activity."</string>
+
+    <!-- Addition Information -->
+
+    <string name="placeholder_lastname">Last Name</string>
+    <string name="placeholder_type_document">Document type</string>
+    <string name="placeholder_document_identity">Identity Document</string>
+
+    <string name="placeholder_phone">Mobile</string>
+
+    <string name="button_continue">Continue</string>
+    <string name="error_username_empty">Username cannot be empty</string>
+    <string name="error_password_empty">Password cannot be empty</string>
+
+    <!-- Authentication errors -->
+    <string name="error_unregistered_user">User not registered</string>
+    <string name="error_invalid_password">Incorrect password</string>
+    <string name="error_general">An error has occurred. Please try again.</string>
+    <string name="password_recovery_success">A recovery email has been sent to reset your password.</string>
+    <string name="server_error_message">Server error. Please try again later.</string>
+    <string name="unknown_error_message">An unknown error has occurred.</string>
+
+    <!-- Onboarding Strings -->
+    <string name="omit">Skip</string>
+    <string name="activate_bluetooth">Activate Bluetooth</string>
+
+    <!-- Administrator Onboarding -->
+    <string name="first_administrator_onboarding_top_message">Welcome to Logifit\nManage your team efficiently</string>
+    <string name="first_administrator_onboarding_bottom_message">Monitor your team\'s performance and ensure their well-being</string>
+    <string name="second_administrator_onboarding_top_message">Real-time data at your fingertips</string>
+    <string name="second_administrator_onboarding_bottom_message">Get instant insights on your team\'s activities and productivity</string>
+    <string name="third_administrator_onboarding_top_message">Connect and optimize</string>
+
+    <!-- Operator Onboarding -->
+    <string name="first_operator_onboarding_top_message">Welcome to Logifit\nYour personal work assistant</string>
+    <string name="first_operator_onboarding_bottom_message">Track your activities and improve your work-life balance</string>
+    <string name="second_operator_onboarding_top_message">Stay connected with your team</string>
+    <string name="second_operator_onboarding_bottom_message">Communicate easily and efficiently with your colleagues</string>
+    <string name="third_operator_onboarding_top_message">Optimize your performance</string>
+
+    <!-- Ocupacional Information -->
+    <string name="occupational_info">Occupational Information</string>
+    <string name="company">Company</string>
+    <string name="work_position">Work position</string>
+    <string name="function">Function</string>
+    <string name="travel_time">What is the typical travel time for operators to or from work?</string>
+    <string name="workload">Workload</string>
+    <string name="occupational_attention_type">Occupational attention type</string>
+    <string name="breaks_frequency">How often are breaks typically provided or taken?</string>
+    <string name="breaks_length">What is the typical average length of these breaks provided or taken?</string>
+    <string name="not_assigned">Not assigned</string>
+    <string name="not_selected">Not selected</string>
+
+    <!-- Side Menu -->
+    <string name="language">App Language</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="help">Help</string>
+
+
+    <!-- App language -->
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="by_default">By default</string>
+
+    <!-- Help -->
+    <string name="need_help">Need help?</string>
+    <string name="help.instructions">In order to help you solve your problem, fill out the following form and a person in charge will contact you</string>
+    <string name="no_sync">I can not sync my sleep</string>
+    <string name="non_binding">I can not bond device</string>
+    <string name="no_send_sleep">I can not send my sleep</string>
+    <string name="others">Others</string>
+    <string name="specify">Specify</string>
+    <string name="ask_help">Ask for help</string>
+
+
+    <!-- Personal information -->
+    <string name="names">Names</string>
+    <string name="surnames">Surnames</string>
+    <string name="email">Email</string>
+    <string name="document_type">Document type</string>
+    <string name="identification_documents">Identification Document</string>
+    <string name="country">Country</string>
+    <string name="department">Department</string>
+    <string name="province">Province</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="phone">Phone</string>
+
+    <!-- Health Information -->
+    <string name="health_info">Health Information</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="blood_type">blood type</string>
+    <string name="gender">Gender</string>
+    <string name="meters">Meters</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+
+    <!-- Trainings -->
+    <string name="trainings">Trainings</string>
+    <string name="training_smartband_title">Smartband Logifit</string>
+    <string name="training_smartband_description">Logifit offers a smartband...</string>
+    <string name="training_app_title">Logifit App</string>
+    <string name="training_app_description">Learn in this training...</string>
+    <string name="training_platform_title">Management Platform</string>
+    <string name="training_platform_description">In this module, you will learn...</string>
+    <string name="training_capacitation_title">Functioning Training</string>
+    <string name="training_capacitation_description">This module is designed...</string>
+    <string name="training_manual_title">Procedures Manual</string>
+    <string name="training_manual_description">This module provides a guide...</string>
+    <string name="smartband_logifit">Smartband Logifit</string>
+    <string name="smartband_description">Logifit has an intelligent smartband that accompanies you to improve your health quality. It puts the most advanced technology at your fingertips and contributes…</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="progress">Progress</string>
+    <string name="what_is_smartband">What is a Smartband?</string>
+    <string name="what_is_smartband_desc">This training module explains…</string>
+    <string name="understanding_use">Understanding the use…</string>
+    <string name="understanding_use_desc">This training module covers…</string>
+    <string name="how_to_link">How to link my s…</string>
+    <string name="how_to_link_desc">This training module shows…</string>
+
+
+    <!--add sleep data-->
+    <string name="upload_file">Upload File</string>
+    <string name="date_selected">Date Selected: </string>
+    <string name="register_your_sleep">Register Your Sleep</string>
+    <string name="when_fell_asleep">When did you fell asleep?</string>
+    <string name="when_woke_up">When did you woke up?</string>
+    <string name="remove_media">Remove Media</string>
+    <string name="save">Save</string>
+    <string name="attach">Attach</string>
+    <string name="attach_photo">Attach photo</string>
+    <string name="sleep_period">Sleep Period</string>
+    <string name="duration">Duration</string>
+    <string name="add_period">Add Sleep Period</string>
+    <string name="success">Success</string>
+    <string name="select_date_and_time">Select Date and Time</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="select_duration">Select Duration</string>
+    <string name="confirm">Confirm</string>
+</resources>

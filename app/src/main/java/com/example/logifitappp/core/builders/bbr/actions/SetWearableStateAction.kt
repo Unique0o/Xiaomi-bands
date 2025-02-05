@@ -1,0 +1,17 @@
+package com.example.logifitappp.core.builders.bbr.actions
+
+import android.bluetooth.BluetoothSocket
+import android.content.Context
+import com.example.logifitappp.core.wearebles.Wearable
+import com.example.logifitappp.enums.WearableUpdateSubjectEnum
+
+class SetWearableStateAction(private val wearable: Wearable, private val state: Wearable.State, private val context: Context): PlainAction() {
+    override fun run(socket: BluetoothSocket?): Boolean {
+        wearable.setState(state)
+        wearable.sendDeviceUpdateIntent(context, WearableUpdateSubjectEnum.DEVICE_STATE)
+
+        return true
+    }
+
+    override fun toString() = "${super.toString()} to $state"
+}

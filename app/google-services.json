@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "675937100659",
+    "project_id": "logifit-pro",
+    "storage_bucket": "logifit-pro.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675937100659:android:a236d5bd45f89679d79b06",
+        "android_client_info": {
+          "package_name": "com.info.logifit.pe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675937100659-fpqmkob4ag58c7os18q40qtnphgl7jne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2_T_CyJtjsm1d5bMnBxbTcK9fEYQR-Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675937100659-fpqmkob4ag58c7os18q40qtnphgl7jne.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "675937100659-3g58sren1f7le2llfumtoehvro8o769n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logifit.pro.pe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675937100659:android:547991dc18a38a22d79b06",
+        "android_client_info": {
+          "package_name": "com.info.logifit.plus.pe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675937100659-fpqmkob4ag58c7os18q40qtnphgl7jne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2_T_CyJtjsm1d5bMnBxbTcK9fEYQR-Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675937100659-fpqmkob4ag58c7os18q40qtnphgl7jne.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "675937100659-3g58sren1f7le2llfumtoehvro8o769n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logifit.pro.pe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675937100659:android:5643041133742970d79b06",
+        "android_client_info": {
+          "package_name": "com.logifit.pro.pe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675937100659-fpqmkob4ag58c7os18q40qtnphgl7jne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2_T_CyJtjsm1d5bMnBxbTcK9fEYQR-Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675937100659-fpqmkob4ag58c7os18q40qtnphgl7jne.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "675937100659-3g58sren1f7le2llfumtoehvro8o769n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logifit.pro.pe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
