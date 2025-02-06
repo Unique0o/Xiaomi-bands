@@ -37,6 +37,7 @@ fun SynchronizationReportView(
 
     if (synchronizationReportViewModel.state.hasFetchReportFailed) {
         NoInternetPage(
+            contentPadding = PaddingValues(10.dp) + contentPadding,
             topBar = {
                 BottomTabsHeader(
                     appViewModel = appViewModel,

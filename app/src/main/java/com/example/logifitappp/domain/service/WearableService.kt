@@ -1,6 +1,8 @@
 package com.example.logifitappp.domain.service
 
 import com.example.logifitappp.data.remote.dto.requests.AssociateWearableRequest
+import com.example.logifitappp.data.remote.dto.requests.StoreXiaomiMacRequest
+import com.example.logifitappp.data.remote.dto.response.toSelectableItem
 import com.example.logifitappp.domain.repository.WearableRepository
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
@@ -48,6 +50,38 @@ class WearableService @Inject constructor(private val wearableRepository: Wearab
     suspend fun fetchXiaomiCredentials() = withContext(Dispatchers.IO) {
         try {
             val response = wearableRepository.fetchXiaomiCredentials()
+
+            if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+
+            val body = response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+
+            return@withContext body.map { it.toSelectableItem() }
+        } catch (e: Exception) {
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun fetchXiaomiMacs(credentialId: Int, password: String, type: String?, username: String) = withContext(Dispatchers.IO) {
+        try {
+            val response = wearableRepository.fetchXiaomiMacs(credentialId, password, type, username)
+
+            if (!response.isSuccessful) {
+                when (response.code()) {
+                    401 -> throw HttpConsumerException(AppStatusCodeEnum.UNAUTHORIZED_FOR_MAC_EXTRACTION)
+                    else -> throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+                }
+            }
+
+            return@withContext response.body() ?: throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
+        }
+    }
+
+    suspend fun storeXiaomiMacs(storeXiaomiMacRequest: StoreXiaomiMacRequest) = withContext(Dispatchers.IO) {
+        try {
+            val response = wearableRepository.storeXiaomiMacs(storeXiaomiMacRequest)
 
             if (!response.isSuccessful) throw HttpConsumerException(AppStatusCodeEnum.NO_INTERNET_CONNECTION)
 

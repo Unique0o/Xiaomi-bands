@@ -46,6 +46,7 @@
     <string name="button_pair_operator">Link operator</string>
     <string name="button_pair_smart_band">Pair Smart Band</string>
     <string name="button_register">Register</string>
+    <string name="button_search">Search</string>
     <string name="button_send">Send</string>
     <string name="button_send_to_logifit">Send to Logifit</string>
     <string name="button_settings">Settings</string>
@@ -117,7 +118,7 @@
     <string name="fatigue_detail_modal_title">Fatigue detail</string>
     <string name="fatigue_label">Fatigue</string>
     <string name="fetching_additional_information_message">Personal information is being fetched. Please wait...</string>
-    <string name="fetching_xiaomi_credentials">The accounts list is being fetched. Please wait...</string>
+    <string name="fetching_xiaomi_macs_message">The mac and key list is being fetched. Please wait...</string>
     <string name="fetching_synchronization_report">The synchronization report is being fetched. Please wait...</string>
     <string name="fetching_worker_list_message">The operators under your charge are being fetched. Please wait...</string>
     <string name="finding_smart_band_message">So you can locate your smart band\nit will start to vibrate</string>
@@ -227,6 +228,8 @@
     <string name="placeholder_start_date">Start date</string>
     <string name="placeholder_surnames">Surnames</string>
     <string name="placeholder_user">User</string>
+    <string name="placeholder_xiaomi_credential">Account</string>
+    <string name="placeholder_xiaomi_credential_type">Type</string>
     <string name="premium">Premium</string>
     <string name="pro">Pro</string>
     <string name="profile_photo_additional_information_error_message">Profile photo is required</string>
@@ -273,6 +276,9 @@
     <string name="sleep_synchronization_label">Report made %1$s ago</string>
     <string name="sleep_synchronization_message">%1$s Report made %2$s ago</string>
     <string name="sleep_time">Sleep Time</string>
+    <string name="smart_band_5_6_and_7_label">Smart Band 5, 6 and 7</string>
+    <string name="smart_band_8_label">Smart Band 8</string>
+    <string name="smart_band_9_label">Smart Band 9</string>
     <string name="spo2">SpO2</string>
     <string name="spo2_detail_chart_subtitle">Last recorded measurement</string>
     <string name="spo2_detail_chart_title">SpO2</string>
@@ -288,6 +294,7 @@
     <string name="storing_evaluation_message">The test is being processed to generate your drowsiness condition...</string>
     <string name="storing_profile_photo_message">Profile photo is being stored, please wait...</string>
     <string name="storing_roster_information_message">Roster information is being storing</string>
+    <string name="storing_xiaomi_macs_message">The selected macs are being registered with their respective keys</string>
     <string name="stress">Stress</string>
     <string name="stress_detail_chart_subtitle">Last recorded measurement</string>
     <string name="stress_detail_chart_title">Stress</string>
@@ -298,6 +305,7 @@
     <string name="successful_wearable_information_synchronizing_message">All sleep information has been extracted from your Smart Band</string>
     <string name="successful_wearable_information_transferring_message">The data has been sent successfully</string>
     <string name="successful_worker_associated_message">Contributor updated successfully</string>
+    <string name="successful_xiaomi_macs_storage_message">The registration was successful</string>
     <string name="summary">Summary</string>
     <string name="surnames_validation_error_message">You must insert your surnames</string>
     <string name="email_validation_error_message">You must insert your valid email</string>
@@ -313,6 +321,7 @@
     <string name="transferring_wearable_information_message">Now the data is being sent to the Logifit platform</string>
     <string name="traveled_distance">Traveled distance</string>
     <string name="team_title">My team</string>
+    <string name="unauthorized_for_mac_extraction_message">Access to account data could not be granted due to a restricted action</string>
     <string name="unauthorized_screen_message">You are currently unable to use Logifit features. Please contact your administrator.</string>
     <string name="unauthorized_screen_title">Unauthorized user</string>
     <string name="unbind_before_pair_message">This device is already bound in Android settings, which can make pairing fail for some devices. If adding the device fails, please remove it in Android settings and try again.</string>
@@ -343,6 +352,9 @@
     <string name="wearable_settings_title">Settings</string>
     <string name="without_role">Without role</string>
     <string name="worker_list_empty_message">There are no operators under your supervision</string>
+    <string name="xiaomi_credential_title">Select account</string>
+    <string name="xiaomi_credential_type_title">Select type</string>
+    <string name="xiaomi_mac_empty_list_message">All keys have already been registered</string>
     <string name="yes">Yes </string>
 
     <string-array name="operator_onboarding_subtitle">

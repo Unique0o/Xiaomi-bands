@@ -51,7 +51,7 @@ enum class AppStatusCodeEnum(
     FETCHING_ADDITIONAL_INFORMATION(320, R.string.fetching_additional_information_message, true, { Loader() }),
     FETCHING_SYNCHRONIZATION_REPORT(23, R.string.fetching_synchronization_report, true, { Loader() }),
     FETCHING_WORKER_LIST(25, R.string.fetching_worker_list_message, true, { Loader() }),
-    FETCHING_XIAOMI_CREDENTIALS(321, R.string.fetching_xiaomi_credentials, true, { Loader() }),
+    FETCHING_XIAOMI_MACS(321, R.string.fetching_xiaomi_macs_message, true, { Loader() }),
 
     FINDING_SMART_BAND(26, R.string.finding_smart_band_message, false, {
         Image(contentDescription = null, painter = painterResource(id = R.drawable.ic_find_smart_band))
@@ -97,12 +97,15 @@ enum class AppStatusCodeEnum(
     STORING_EVALUATION(312, R.string.storing_evaluation_message, true, { Loader() }),
     STORING_PROFILE_PHOTO(316, R.string.storing_profile_photo_message, true, { Loader() }),
     STORING_ROSTER_INFORMATION(306, R.string.storing_roster_information_message, true, { Loader() }),
+    STORING_XIAOMI_MACS(324, R.string.storing_xiaomi_macs_message, true, { Loader() }),
     SUCCESSFUL_PASSWORD_RECOVERY(119, R.string.successful_password_recovery_message, false, { AnimatedSuccessSignal() }),
     SUCCESSFUL_ROSTER_INFORMATION_STORAGE(307, R.string.successful_roster_information_storage_message, false, { AnimatedSuccessSignal() }),
     SUCCESSFUL_WEARABLE_INFORMATION_SYNCHRONIZING(123, R.string.successful_wearable_information_synchronizing_message, false, { AnimatedSuccessSignal() }),
     SUCCESSFUL_WEARABLE_INFORMATION_TRANSFERRING(122, R.string.successful_wearable_information_transferring_message, false, { AnimatedSuccessSignal() }),
     SUCCESSFUL_WORKER_ASSOCIATED(124, R.string.successful_worker_associated_message, false, { AnimatedSuccessSignal() }),
+    SUCCESSFUL_XIAOMI_MACS_STORAGE(325, R.string.successful_xiaomi_macs_storage_message, false, { AnimatedSuccessSignal() }),
     TRANSFERRING_WEARABLE_INFORMATION(126, R.string.transferring_wearable_information_message, true, { AnimatedDataTransfer() }),
+    UNAUTHORIZED_FOR_MAC_EXTRACTION(322, R.string.unauthorized_for_mac_extraction_message, false, { AnimatedErrorSignal() }),
     UNKNOWN_ERROR(-1, R.string.unknown_error_message, false),
     UNPROCESSABLE_WEARABLE_INFORMATION_TRANSFER(130, R.string.unprocessable_wearable_information_transfer_message, false, { AnimatedWarningSignal() }),
 
@@ -115,7 +118,8 @@ enum class AppStatusCodeEnum(
     }),
 
     UNSUPPORTED_WEARABLE(300, R.string.unsupported_wearable_message, false, { AnimatedErrorSignal() }),
-    WORKER_LIST_EMPTY(318, R.string.worker_list_empty_message, false, { AnimatedWarningSignal() });
+    WORKER_LIST_EMPTY(318, R.string.worker_list_empty_message, false, { AnimatedWarningSignal() }),
+    XIAOMI_MAC_LIST_EMPTY(323, R.string.xiaomi_mac_empty_list_message, false, { AnimatedWarningSignal() });
 
     fun code() = code
 

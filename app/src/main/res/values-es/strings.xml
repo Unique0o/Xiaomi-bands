@@ -46,6 +46,7 @@
     <string name="button_pair_operator">Vincular operador</string>
     <string name="button_pair_smart_band">Emparejar Smart Band</string>
     <string name="button_register">Registrar</string>
+    <string name="button_search">Buscar</string>
     <string name="button_send">Enviar</string>
     <string name="button_send_to_logifit">Enviar a Logifit</string>
     <string name="button_settings">Configuraciones</string>
@@ -117,7 +118,7 @@
     <string name="fatigue_detail_modal_title">Detalle de fatiga</string>
     <string name="fatigue_label">Fatiga</string>
     <string name="fetching_additional_information_message">Se está obteniendo información personal. Por favor espere...</string>
-    <string name="fetching_xiaomi_credentials">Se está obteniendo la lista de cuentas. Por favor espere...</string>
+    <string name="fetching_xiaomi_macs_message">Se está obteniendo la lista de macs y llaves. Por favor espere...</string>
     <string name="fetching_synchronization_report">Se está obteniendo el reporte de sincronización. Por favor espere...</string>
     <string name="fetching_worker_list_message">Se están obteniendo los operadores bajo su cargo. Por favor espere...</string>
     <string name="finding_smart_band_message">Para que puedas localizar tu banda\nesta comenzará a vibrar</string>
@@ -227,6 +228,8 @@
     <string name="placeholder_start_date">Fecha de inicio</string>
     <string name="placeholder_surnames">Apellidos</string>
     <string name="placeholder_user">Usuario</string>
+    <string name="placeholder_xiaomi_credential">Cuenta</string>
+    <string name="placeholder_xiaomi_credential_type">Tipo</string>
     <string name="premium">Premium</string>
     <string name="pro">Pro</string>
     <string name="profile_photo_additional_information_error_message">La foto de perfil es requerida</string>
@@ -273,6 +276,9 @@
     <string name="sleep_synchronization_message">%1$s Reporte realizado hace %2$s</string>
     <string name="sleep_sync_message_missing">La información de su sueño aun no se ha extraido del Smart Band</string>
     <string name="sleep_time">Tiempo de sueño</string>
+    <string name="smart_band_5_6_and_7_label">Smart Band 5, 6 y 7</string>
+    <string name="smart_band_8_label">Smart Band 8</string>
+    <string name="smart_band_9_label">Smart Band 9</string>
     <string name="spo2">SpO2</string>
     <string name="spo2_detail_chart_subtitle">Últma medición registrada</string>
     <string name="spo2_detail_chart_title">SpO2</string>
@@ -288,6 +294,7 @@
     <string name="storing_evaluation_message">El test está siendo procesado para generar su condición de somnolencia...</string>
     <string name="storing_profile_photo_message">La foto de perfil está siendo almacenada, espere por favor...</string>
     <string name="storing_roster_information_message">Se está registrando la información en el Roster</string>
+    <string name="storing_xiaomi_macs_message">Se estan registrando las macs seleccionadas con sus respectivas llaves</string>
     <string name="stress">Estrés</string>
     <string name="stress_detail_chart_subtitle">Últma medición registrada</string>
     <string name="stress_detail_chart_title">Estrés</string>
@@ -298,6 +305,7 @@
     <string name="successful_wearable_information_synchronizing_message">Se extrajo toda la información de sueño de su Smart Band</string>
     <string name="successful_wearable_information_transferring_message">Los datos han sido enviados exitosamente</string>
     <string name="successful_worker_associated_message">Colaborador actualizado exitosamente</string>
+    <string name="successful_xiaomi_macs_storage_message">El registro se realizó de manera exitosa</string>
     <string name="summary">Resumen</string>
     <string name="surnames_validation_error_message">Debe ingresar sus apellidos</string>
     <string name="email_validation_error_message">Debes insertar tu email válido</string>
@@ -313,6 +321,7 @@
     <string name="transferring_wearable_information_message">Ahora se está realizando el envío de los datos a la plataforma de Logifit</string>
     <string name="traveled_distance">Distancia recorrida</string>
     <string name="team_title">Mi equipo</string>
+    <string name="unauthorized_for_mac_extraction_message">No se pudo ingresar a los datos de la cuenta por una acción restringida</string>
     <string name="unauthorized_screen_message">Actualmente no puede utilizar las funciones de Logifit. Favor de contactarse con el administrador.</string>
     <string name="unauthorized_screen_title">Usuario no authorizado</string>
     <string name="unbind_before_pair_message">Este dispositivo ya está vinculado en los ajustes de Android, lo que puede hacer que el emparejamiento falle en algunos dispositivos. Si no se puede añadir el dispositivo, elimínelo de los ajustes de Android y vuelva a intentarlo.</string>
@@ -343,6 +352,9 @@
     <string name="wearable_settings_title">Configuraciones</string>
     <string name="without_role">Sin rol</string>
     <string name="worker_list_empty_message">No hay operadores bajo su supervisión</string>
+    <string name="xiaomi_credential_title">Seleccione una cuenta</string>
+    <string name="xiaomi_credential_type_title">Seleccione un tipo</string>
+    <string name="xiaomi_mac_empty_list_message">Todas las llaves ya fueron registradas</string>
     <string name="yes">Sí</string>
 
     <string-array name="operator_onboarding_subtitle">

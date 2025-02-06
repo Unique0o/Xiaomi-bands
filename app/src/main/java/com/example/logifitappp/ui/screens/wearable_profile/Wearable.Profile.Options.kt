@@ -47,13 +47,13 @@ fun WearableProfileOptions(
         )
 
         Spacer(Modifier.height(12.dp))
+    } else {
+        InformationCard(
+            icon = Icons.Default.Settings,
+            label = stringResource(R.string.button_settings),
+            labelColor = MaterialTheme.colorScheme.onSurface,
+            labelTypography = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.clickable { wearableProfileViewModel.state.wearable?.getAddress()?.let { navigation.navigate(MainRoutes.WearableSettings(it)) } }
+        )
     }
-
-    InformationCard(
-        icon = Icons.Default.Settings,
-        label = stringResource(R.string.button_settings),
-        labelColor = MaterialTheme.colorScheme.onSurface,
-        labelTypography = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier.clickable { wearableProfileViewModel.state.wearable?.getAddress()?.let { navigation.navigate(MainRoutes.WearableSettings(it)) } }
-    )
 }

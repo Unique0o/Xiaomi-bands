@@ -2,6 +2,7 @@ package com.example.logifitappp.ui.components.pages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -23,13 +24,14 @@ fun IconMessagePage(
     action: () -> Unit,
     buttonIcon: ImageVector,
     buttonLabel: String,
+    contentPadding: PaddingValues = PaddingValues(10.dp),
     message: String,
     pageIcon: ImageVector,
     topBar: @Composable () -> Unit = {}
 ) {
     SimplePage(topBar = topBar) {
         Column(
-            Modifier.fillMaxSize().padding(horizontal = 10.dp),
+            Modifier.fillMaxSize().padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

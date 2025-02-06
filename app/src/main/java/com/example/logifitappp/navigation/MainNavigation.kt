@@ -1,6 +1,5 @@
 package com.example.logifitappp.navigation
 
-
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -34,6 +33,7 @@ import com.example.logifitappp.ui.screens.terms_and_conditions.TermsAndCondition
 import com.example.logifitappp.ui.screens.training_detail.TrainingDetailView
 import com.example.logifitappp.ui.screens.trainings.TrainingsView
 import com.example.logifitappp.ui.screens.wearable_detection.WearableDetectionView
+import com.example.logifitappp.ui.screens.wearable_key_update.WearableKeyUpdateView
 import com.example.logifitappp.ui.screens.wearable_profile.WearableProfileView
 import com.example.logifitappp.ui.screens.wearable_settings.WearableSettingsView
 import com.example.logifitappp.viewmodel.AppViewModel
@@ -63,6 +63,7 @@ fun MainNavigation(
         composable<MainRoutes.TermsAndConditions> { TermsAndConditionsView(navigation) }
         composable<MainRoutes.Trainings> { TrainingsView(navigation) }
         composable<MainRoutes.WearableDetection> { WearableDetectionView(appViewModel, navigation) }
+        composable<MainRoutes.WearableKeyUpdate> { WearableKeyUpdateView(appViewModel, navigation) }
 
         composable<MainRoutes.DrowsinessTestDetail> { navBackStackEntry ->
             val arguments = navBackStackEntry.toRoute<MainRoutes.DrowsinessTestDetail>()
