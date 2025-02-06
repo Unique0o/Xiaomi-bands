@@ -1,5 +1,6 @@
 package com.example.logifitappp.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -77,12 +78,13 @@ class AppViewModel @Inject constructor(
 
     private fun load() {
         tenant = user?.tenantId?.let { App.database.tenantDao().find(it) }
+        Log.e("database", "=> ${tenant.toString()}")
         shouldItOmitOnboarding = App.preferences.getBoolean(AppPreferences.OMIT_ONBOARDING, false)
         shouldItOmitAdditionalInformation = App.preferences.getBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, true)
     }
 
-    fun fetchUserGroup(tenantId: Int, userGroupId: Int) = App.database.groupDao().all(tenantId).find { groupModel -> groupModel.id == userGroupId }
-    fun fetchUserShift(tenantId:Int, userShiftId: Int) = App.database.shiftDao().all(tenantId).find { shiftModel -> shiftModel.id == userShiftId }
+    fun fetchUserGroup(tenantId: Int, userGroupId: Int) = App.database.groupDao().all(tenantId).firstOrNull() { groupModel -> groupModel.id == userGroupId }
+    fun fetchUserShift(tenantId:Int, userShiftId: Int) = App.database.shiftDao().all(tenantId).firstOrNull { shiftModel -> shiftModel.id == userShiftId }
 
     fun logout() {
         App.database.userDao().logout()

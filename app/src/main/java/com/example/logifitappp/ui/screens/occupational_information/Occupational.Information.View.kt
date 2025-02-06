@@ -19,51 +19,9 @@ import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoIt
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItemData
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.viewmodel.AppViewModel
+import com.example.logifitappp.viewmodel.views.OccupationItem
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoUiState
 import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
-import java.util.Locale
-
-data class OccupationItem(
-    val id: Int?,
-    val label: String?
-)
-val workLoadSuggestionsList = listOf(
-    OccupationItem(
-        0,
-        "Hardly requires attention"
-    ),
-    OccupationItem(
-        1,
-        "Some of the time"
-    ),
-    OccupationItem(
-        2,
-        "Most of the time"
-    ),
-    OccupationItem(
-        3,
-        "Completely all of the time"
-    ),
-)
-
-val occupationAttentions = listOf(
-    OccupationItem(
-        0,
-        "Extremely undemanding, plenty of room for breaks"
-    ),
-    OccupationItem(
-        1,
-        " Low work load, some space for active breaks"
-    ),
-    OccupationItem(
-        2,
-        "Moderate workload, little space for active breaks"
-    ),
-    OccupationItem(
-        3,
-        "Extremely demanding, no space for active/passive break"
-    ),
-)
 @Composable
 fun OccupationalInformationView(
     navigation: NavHostController,
@@ -71,19 +29,32 @@ fun OccupationalInformationView(
 ) {
     val viewModel: OccupationalInformationViewModel = hiltViewModel()
     val occupationalInfoState by viewModel.occupationalInfoState.collectAsState()
-    val fieldToLocalValueMap = mutableMapOf(
-        "Company" to "",
-        "Group" to "",
-        "Shift" to "",
-    )
-    LaunchedEffect(Unit) {
-        appViewModel.apply {
-            val company = tenant?.name
-            val group = fetchUserGroup(tenant?.id?:0, user?.groupId?:0)
-            val shift = fetchUserShift(tenant?.id?:0, user?.shiftId?:0)
-            fieldToLocalValueMap["Company"] = company?:""
-            fieldToLocalValueMap["Group"] = group?.name?:""
-            fieldToLocalValueMap["Shift"] = shift?.name?:""
+
+
+    val isLoading = remember { mutableStateOf(false) }
+
+    val data = remember { mutableStateListOf<OccupationalInfoItemModel>() }
+
+    LaunchedEffect(occupationalInfoState) {
+        when (occupationalInfoState) {
+            is OccupationalInfoUiState.Loading -> {
+                isLoading.value = true
+            }
+            is OccupationalInfoUiState.Success -> {
+                isLoading.value = false
+                data.addAll((occupationalInfoState as OccupationalInfoUiState.Success).data)
+                appViewModel.apply {
+                    val company = tenant?.name
+                    val group = fetchUserGroup(tenant?.id?:0, user?.groupId?:tenant?.id?:0)
+                    val shift = fetchUserShift(tenant?.id?:0, user?.shiftId?:0)
+                    data.find { it.id == "companyName" }?.let { it.value = company ?: "" }
+                    data.find { it.id == "groupName" }?.let { it.value = group?.name ?: "" }
+                    data.find { it.id == "shift" }?.let { it.value = shift?.name ?: "" }
+                }
+            }
+            is OccupationalInfoUiState.Error -> {
+                isLoading.value = false
+            }
         }
     }
 
@@ -95,57 +66,42 @@ fun OccupationalInformationView(
             )
         }
     ) {
-        when (occupationalInfoState) {
-            is OccupationalInfoUiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-            }
-            is OccupationalInfoUiState.Success -> {
-                val info = (occupationalInfoState as OccupationalInfoUiState.Success).data
-
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(horizontal = 16.dp)
-                ) {
-                    items(info.size) { index ->
-                        val item = info[index]
-                        OccupationalInfoItem(
-                            data = OccupationalInfoItemData(
-                                label = item.label,
-                                value = obtainLabelValue(fieldToLocalValueMap, item),
-                                suggestions = getRelevantSuggestions(item.label),
-                                timerField = item.label.lowercase().contains("typical travel time")
-                                ),
-                            onClick = { viewModel.onItemClick(item) }
-                        )
-                    }
+        if (isLoading.value){
+            CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+        }else{
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            ) {
+                items(data.size) { index ->
+                    val occupationItem = data[index]
+                    OccupationalInfoItem(
+                        data = OccupationalInfoItemData(
+                            label = occupationItem.label,
+                            value = occupationItem.value,
+                            suggestions = getRelevantSuggestions(occupationItem.id, viewModel),
+                            timerField = occupationItem.id == "timeTravel"
+                        ),
+                        onClick = { viewModel.onItemClick(occupationItem) }
+                    )
                 }
             }
-            is OccupationalInfoUiState.Error -> {
-                Text(
-                    text = (occupationalInfoState as OccupationalInfoUiState.Error).message,
-                    color = Color.Red,
-                    modifier = Modifier.fillMaxSize(),
-                    textAlign = TextAlign.Center
-                )
-            }
+        }
+        if(occupationalInfoState is OccupationalInfoUiState.Error) {
+            Text(
+                text = (occupationalInfoState as OccupationalInfoUiState.Error).message,
+                color = Color.Red,
+                modifier = Modifier.fillMaxSize(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
 
-fun obtainLabelValue(valueMap: MutableMap<String, String>, item: OccupationalInfoItemModel): String{
-    return if(valueMap.contains(item.label)) {
-        valueMap[item.label]?:""
-    }else{
-        item.value
-    }
-}
-
-fun getRelevantSuggestions(label: String): List<OccupationItem>?{
-    return if (label.lowercase().contains("work position")){
-        workLoadSuggestionsList
-    }else if(label.lowercase().contains("occupational attention type")){
-        occupationAttentions
-    }else{
-        null
+fun getRelevantSuggestions(id: String?, viewModel: OccupationalInformationViewModel): List<OccupationItem>?{
+    return when(id){
+        "workload" -> viewModel.workLoadSuggestionsList
+        "occupationalAttentionType" -> viewModel.occupationAttentions
+        else -> null
     }
 }

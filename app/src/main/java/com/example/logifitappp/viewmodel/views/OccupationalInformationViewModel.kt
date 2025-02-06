@@ -13,10 +13,51 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+data class OccupationItem(
+    val id: Int?,
+    val label: String?
+)
 @HiltViewModel
 class OccupationalInformationViewModel @Inject constructor(
     private val getOccupationalInfoUseCase: GetOccupationalInfoUseCase
 ) : ViewModel() {
+    val workLoadSuggestionsList = listOf(
+        OccupationItem(
+            0,
+            "Hardly requires attention"
+        ),
+        OccupationItem(
+            1,
+            "Some of the time"
+        ),
+        OccupationItem(
+            2,
+            "Most of the time"
+        ),
+        OccupationItem(
+            3,
+            "Completely all of the time"
+        ),
+    )
+
+    val occupationAttentions = listOf(
+        OccupationItem(
+            0,
+            "Extremely undemanding, plenty of room for breaks"
+        ),
+        OccupationItem(
+            1,
+            " Low work load, some space for active breaks"
+        ),
+        OccupationItem(
+            2,
+            "Moderate workload, little space for active breaks"
+        ),
+        OccupationItem(
+            3,
+            "Extremely demanding, no space for active/passive break"
+        ),
+    )
 
     private val _occupationalInfoState = MutableStateFlow<OccupationalInfoUiState>(
         OccupationalInfoUiState.Loading
@@ -44,7 +85,7 @@ class OccupationalInformationViewModel @Inject constructor(
 
     }
 
-    fun onItemClick(item: OccupationalInfoItemModel) {
+    fun onItemClick(item: OccupationalInfoItemModel?) {
     }
 }
 

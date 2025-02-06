@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.ui.components.TimePickerDialogComponent
-import com.example.logifitappp.ui.screens.occupational_information.OccupationItem
 import com.example.logifitappp.ui.theme.Rose120
+import com.example.logifitappp.viewmodel.views.OccupationItem
 
 data class OccupationalInfoItemData(
     val label: String?,
@@ -67,10 +67,11 @@ fun OccupationalInfoItem(
                 }
                 Spacer(modifier = Modifier.width(16.dp))
 
+                val text = selectedWorkLoad?.label ?: (textFieldValue ?: "")
                 Text(
                     text = selectedWorkLoad?.label ?: (textFieldValue ?: ""),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = when (data.value) {
+                    color = when (text) {
                         "Not selected", "Not assigned" -> Rose120
                         else -> Color.Black
                     },
