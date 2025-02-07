@@ -12,4 +12,20 @@ object TimeAndDateUtils {
             if (remainingSeconds > 0 && hours == 0) append("$remainingSeconds second${if (remainingSeconds > 1) "s" else ""}")
         }.trim()
     }
+
+    fun convertSecondsToReadableTime(seconds: Int): String {
+        val hours = seconds / 3600
+        val minutes = (seconds % 3600) / 60
+
+        return buildString {
+            if (hours > 0) append("$hours hour${if (hours > 1) "s" else ""} ")
+            if (minutes > 0) append("$minutes minute${if (minutes > 1) "s" else ""}")
+        }.trim()
+    }
+
+    fun convertSecondsToHoursMinutes(seconds: Int): Pair<Int, Int> {
+        val hours = seconds / 3600
+        val minutes = (seconds % 3600) / 60
+        return Pair(hours, minutes)
+    }
 }

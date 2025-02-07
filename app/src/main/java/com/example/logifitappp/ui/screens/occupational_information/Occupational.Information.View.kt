@@ -214,12 +214,17 @@ fun OccupationalInformationView(
         }
 
         val isTimerDialogVisible = actionPopup.isTimerDialog() && actionPopup.isVisible
+        val seconds = timerFieldIdMap[actionPopup.selectedItem?.id]?.toInt()
+        val time = TimeAndDateUtils.convertSecondsToHoursMinutes(seconds?:0)
         if (isTimerDialogVisible){
             TimePickerDialogComponent(
+                initialHours = time.first,
+                initialMinutes = time.second,
                 onDismiss = { actionPopup = actionPopup.copy(isVisible = false, selectedItem = null) },
-                onConfirm = { formattedTime ->
+                onConfirm = { totalSeconds ->
                     actionPopup.selectedItem?.id?.apply {
-                        timerFieldIdMap[this] = formattedTime
+                        val formattedTime = TimeAndDateUtils.convertSecondsToReadableTime(totalSeconds)
+                        timerFieldIdMap[this] = totalSeconds.toString()
                         val index = data.indexOfFirst { item -> item.id == this }
                         if (index != -1) {
                             data[index] = data[index].copy(value = formattedTime)

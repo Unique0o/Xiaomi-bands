@@ -1,9 +1,6 @@
 package com.example.logifitappp.ui.components
 
 import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.compose.foundation.background
@@ -12,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,7 +20,7 @@ fun TimePickerDialogComponent(
     initialHours: Int = 0,
     initialMinutes: Int = 0,
     onDismiss: () -> Unit,
-    onConfirm: (formattedTime: String) -> Unit
+    onConfirm: (totalSeconds: Int) -> Unit
 ) {
     var selectedHours by remember { mutableIntStateOf(initialHours) }
     var selectedMinutes by remember { mutableIntStateOf(initialMinutes) }
@@ -135,8 +131,8 @@ fun TimePickerDialogComponent(
                             color = MaterialTheme.colorScheme.primary)
                     }
                     TextButton(onClick = {
-                        val formattedTime = formatTime(selectedHours, selectedMinutes)
-                        onConfirm(formattedTime)
+                        val totalSeconds = convertHoursMinutesToSeconds(selectedHours, selectedMinutes)
+                        onConfirm(totalSeconds)
                     }) {
                         Text(text = "OK",
                             typography = MaterialTheme.typography.titleMedium,
@@ -160,6 +156,10 @@ fun formatTime(hours: Int, minutes: Int): String {
         }
         if (isEmpty()) append("0 minutes") // Default if both are 0
     }
+}
+
+fun convertHoursMinutesToSeconds(hours: Int, minutes: Int): Int {
+    return (hours * 3600) + (minutes * 60)
 }
 
 @Preview(showBackground = true)
