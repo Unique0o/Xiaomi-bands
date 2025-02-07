@@ -65,6 +65,11 @@ fun OccupationalInformationView(
         mutableStateMapOf<String, OccupationItem?>(
             selectableFields[0] to null,
             selectableFields[1] to null,
+        )
+    }
+
+    val timerFieldIdMap = remember {
+        mutableStateMapOf<String, String?>(
             selectableFields[2] to null,
             selectableFields[3] to null,
             selectableFields[4] to null,
@@ -195,7 +200,6 @@ fun OccupationalInformationView(
                     actionPopup = actionPopup.copy(isVisible = false, null)
                 }
             ) { selectedDataItem ->
-                actionPopup = actionPopup.copy(isVisible = false)
                 actionPopup.selectedItem?.id?.apply {
                     if (selectedFieldIdMap[this]?.id != selectedDataItem.id) {
                         selectedFieldIdMap[this] = selectedDataItem
@@ -205,15 +209,23 @@ fun OccupationalInformationView(
                         }
                     }
                 }
+                actionPopup = actionPopup.copy(isVisible = false, null)
             }
         }
 
         val isTimerDialogVisible = actionPopup.isTimerDialog() && actionPopup.isVisible
         if (isTimerDialogVisible){
             TimePickerDialogComponent(
-                onDismiss = { actionPopup = actionPopup.copy(false, null) },
+                onDismiss = { actionPopup = actionPopup.copy(isVisible = false, selectedItem = null) },
                 onConfirm = { formattedTime ->
-
+                    actionPopup.selectedItem?.id?.apply {
+                        timerFieldIdMap[this] = formattedTime
+                        val index = data.indexOfFirst { item -> item.id == this }
+                        if (index != -1) {
+                            data[index] = data[index].copy(value = formattedTime)
+                        }
+                    }
+                    actionPopup = actionPopup.copy(isVisible = false, selectedItem = null)
                 }
             )
         }
