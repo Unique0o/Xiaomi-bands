@@ -36,15 +36,6 @@ fun OccupationalInfoItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        /*data.suggestions?.let {
-                            expanded = true
-                            return@clickable
-                        }
-                        if(data.timerField){
-                            showTimerDialog = true
-                            return@clickable
-                        }*/
-//                        onClick(data)
                         onClick()
                     }
                     .padding(vertical = 16.dp),
@@ -59,10 +50,8 @@ fun OccupationalInfoItem(
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
-
-//                val text = selectedWorkLoad?.label ?: (textFieldValue ?: "")
                 Text(
-                    text = data.value/*selectedWorkLoad?.label ?: (textFieldValue ?: "")*/,
+                    text = data.value,
                     style = MaterialTheme.typography.bodyLarge,
                     color = when (data.value) {
                         "Not selected", "Not assigned" -> Rose120
@@ -82,38 +71,7 @@ fun OccupationalInfoItem(
                 modifier = Modifier.wrapContentSize()
             ) {
                 HorizontalDivider(color = Color.LightGray, thickness = 0.5.dp)
-                /*selectedWorkLoad?.let {
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        data.suggestions?.forEach { suggestion ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedWorkLoad = suggestion
-                                    expanded = false
-                                },
-                                text = {
-                                    com.example.logifitappp.ui.components.Text(
-                                        text = suggestion.label ?: "",
-                                        typography = MaterialTheme.typography.bodyMedium
-                                    )
-                                }
-                            )
-                        }
-                    }
-                }*/
             }
         }
-
-        /*if (data.timerField && showTimerDialog){
-            TimePickerDialogComponent(
-                onDismiss = { showTimerDialog = false },
-                onConfirm = { formattedTime ->
-                    textFieldValue = formattedTime
-                    showTimerDialog = false
-                }
-            )
-        }*/
     }
 }
