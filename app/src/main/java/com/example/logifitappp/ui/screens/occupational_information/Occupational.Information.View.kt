@@ -18,6 +18,7 @@ import com.example.logifitappp.R
 import com.example.logifitappp.data.models.OccupationalInfoItemModel
 import com.example.logifitappp.ui.components.BottomSheetSearchable
 import com.example.logifitappp.ui.components.Text
+import com.example.logifitappp.ui.components.TimePickerDialogComponent
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItem
 import com.example.logifitappp.ui.components.pages.SimplePage
@@ -28,10 +29,19 @@ import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfo
 import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
 import kotlinx.coroutines.launch
 
-data class BottomSheetState(
+data class DataState(
     val isVisible: Boolean,
-    val selectedItem: OccupationalInfoItemModel?
-)
+    val selectedItem: OccupationalInfoItemModel?,
+    val actionType: ActionState?
+){
+    fun isBottomSheet() = actionType == ActionState.BOTTOM_SHEET
+    fun isTimerDialog() = actionType == ActionState.TIMER_DIALOG
+}
+
+enum class ActionState{
+    BOTTOM_SHEET,
+    TIMER_DIALOG
+}
 
 @Composable
 fun OccupationalInformationView(
@@ -44,23 +54,28 @@ fun OccupationalInformationView(
     val selectableFields by lazy {
         listOf(
             "workload",
-            "occupationalAttentionType"
+            "occupationalAttentionType",
+            "timeTravel",
+            "breaksFrequency",
+            "breaksLength",
         )
     }
 
     val selectedFieldIdMap = remember {
         mutableStateMapOf<String, OccupationItem?>(
-            "workLoad" to null,
-            "occupationalAttentionType" to null
+            selectableFields[0] to null,
+            selectableFields[1] to null,
+            selectableFields[2] to null,
+            selectableFields[3] to null,
+            selectableFields[4] to null,
         )
     }
 //    val selectedSuggestion = remember { mutableStateOf<OccupationItem?>(null) }
 
     val isLoading = remember { mutableStateOf(false) }
-
     val data = remember { mutableStateListOf<OccupationalInfoItemModel>() }
 
-    var selectableSheetState by remember { mutableStateOf(BottomSheetState(false, null)) }
+    var actionPopup by remember { mutableStateOf(DataState(false, null, null)) }
 
     LaunchedEffect(occupationalInfoState) {
         when (occupationalInfoState) {
@@ -136,20 +151,22 @@ fun OccupationalInformationView(
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
                 items(data.size) { index ->
-                    val occupationItem = data[index]/*if (data[index].id in selectableFields) data[index].copy(
-                        value = selectedFieldIdMap[data[index].id]?.label
-                            ?: stringResource(R.string.not_selected)
-                    ) else data[index]*/
+                    val occupationItem = data[index]
                     OccupationalInfoItem(
                         data = occupationItem,
                         onClick = {
                             if (occupationItem.id in selectableFields) {
-                                if (selectableSheetState.selectedItem?.id != occupationItem.id) {
-                                    selectableSheetState =
-                                        BottomSheetState(true, occupationItem)
+                                if (actionPopup.selectedItem?.id != occupationItem.id) {
+                                    val stateActionType = if (occupationItem.id in listOf("workload", "occupationalAttentionType")) {
+                                        ActionState.BOTTOM_SHEET
+                                    }else{
+                                        ActionState.TIMER_DIALOG
+                                    }
+                                    actionPopup =
+                                        DataState(true, occupationItem, stateActionType)
                                 } else {
-                                    selectableSheetState =
-                                        selectableSheetState.copy(isVisible = true)
+                                    actionPopup =
+                                        actionPopup.copy(isVisible = true)
                                 }
 
                             }
@@ -167,19 +184,19 @@ fun OccupationalInformationView(
             )
         }
 
-        val isBottomSheetVisible = selectableSheetState.isVisible
+        val isBottomSheetVisible = actionPopup.isBottomSheet() && actionPopup.isVisible
         if (isBottomSheetVisible) {
-            val clickOccupationItem = selectableSheetState.selectedItem
+            val clickOccupationItem = actionPopup.selectedItem
             OptionBottomSheet(
                 data = clickOccupationItem,
                 suggestions = getRelevantSuggestions(clickOccupationItem?.id, viewModel),
                 selectedItemId = selectedFieldIdMap[clickOccupationItem?.id]?.id,
                 onDismiss = {
-                    selectableSheetState = selectableSheetState.copy(isVisible = false, null)
+                    actionPopup = actionPopup.copy(isVisible = false, null)
                 }
             ) { selectedDataItem ->
-                selectableSheetState = selectableSheetState.copy(isVisible = false)
-                selectableSheetState.selectedItem?.id?.apply {
+                actionPopup = actionPopup.copy(isVisible = false)
+                actionPopup.selectedItem?.id?.apply {
                     if (selectedFieldIdMap[this]?.id != selectedDataItem.id) {
                         selectedFieldIdMap[this] = selectedDataItem
                         val index = data.indexOfFirst { item -> item.id == this }
@@ -189,6 +206,16 @@ fun OccupationalInformationView(
                     }
                 }
             }
+        }
+
+        val isTimerDialogVisible = actionPopup.isTimerDialog() && actionPopup.isVisible
+        if (isTimerDialogVisible){
+            TimePickerDialogComponent(
+                onDismiss = { actionPopup = actionPopup.copy(false, null) },
+                onConfirm = { formattedTime ->
+
+                }
+            )
         }
     }
 }
