@@ -108,8 +108,8 @@ fun OccupationalInformationView(
                     user?.apply {
                         updateField("workPosition", workPosition)
                         updateField("function", functionName)
-                        updateField("workload", workloadValue?.toString())
-                        updateField("occupationalAttentionType", attentionValue?.toString())
+                        updateField("workload", viewModel.workLoadSuggestionsList[workloadValue?:0].label)
+                        updateField("occupationalAttentionType", viewModel.occupationAttentions[attentionValue?:0].label)
 
                         commutingSeconds?.let {
                             updateField(
@@ -208,6 +208,7 @@ fun OccupationalInformationView(
                             data[index] = data[index].copy(value = selectedDataItem.label ?: "")
                         }
                     }
+                    appViewModel.updateUserForSelectorFields(this, selectedDataItem)
                 }
                 actionPopup = actionPopup.copy(isVisible = false, null)
             }
@@ -229,6 +230,7 @@ fun OccupationalInformationView(
                         if (index != -1) {
                             data[index] = data[index].copy(value = formattedTime)
                         }
+                        appViewModel.updateUserForTimerFields(this, totalSeconds)
                     }
                     actionPopup = actionPopup.copy(isVisible = false, selectedItem = null)
                 }

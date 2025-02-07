@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.core.App
 import com.example.logifitappp.core.AppPreferences
+import com.example.logifitappp.data.models.OccupationalInfoItemModel
 import com.example.logifitappp.data.models.TenantModel
 import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.LoadAppWhenAnUserIsAuthenticatedUseCase
 import com.example.logifitappp.enums.AppStatusCodeEnum
 import com.example.logifitappp.exceptions.HttpConsumerException
+import com.example.logifitappp.viewmodel.views.OccupationItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
@@ -81,6 +83,23 @@ class AppViewModel @Inject constructor(
         Log.e("database", "=> ${tenant.toString()}")
         shouldItOmitOnboarding = App.preferences.getBoolean(AppPreferences.OMIT_ONBOARDING, false)
         shouldItOmitAdditionalInformation = App.preferences.getBoolean(AppPreferences.OMIT_ADDITIONAL_INFORMATION, true)
+    }
+
+    fun updateUserForSelectorFields(id: String, item: OccupationItem){
+        when(id){
+            "workload" -> { user = user?.copy(workloadValue = item.id) }
+            "occupationalAttentionType" -> { user = user?.copy(attentionValue = item.id) }
+        }
+        user?.let { App.database.userDao().store(it) }
+    }
+
+    fun updateUserForTimerFields(id: String, totalSeconds: Int){
+        when(id){
+            "timeTravel" -> { user = user?.copy(commutingSeconds = totalSeconds) }
+            "breaksFrequency" -> { user = user?.copy(breakFrequencySeconds = totalSeconds) }
+            "breaksLength" -> { user = user?.copy(breakAverageSeconds = totalSeconds) }
+        }
+        user?.let { App.database.userDao().store(it) }
     }
 
     fun fetchUserGroup(tenantId: Int, userGroupId: Int) = App.database.groupDao().all(tenantId).firstOrNull() { groupModel -> groupModel.id == userGroupId }

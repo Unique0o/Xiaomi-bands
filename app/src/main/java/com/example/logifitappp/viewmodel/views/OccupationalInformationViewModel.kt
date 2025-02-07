@@ -2,9 +2,9 @@ package com.example.logifitappp.viewmodel.views
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.logifitappp.data.User
+import com.example.logifitappp.core.App
+import com.example.logifitappp.data.models.UserModel
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
-import com.example.logifitappp.data.models.OccupationalInfoItemModel
 import com.example.logifitappp.ui.components.BottomSheetSelectableItem
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -80,13 +80,6 @@ class OccupationalInformationViewModel @Inject constructor(
                     OccupationalInfoUiState.Error("Failed to load occupational info")
             }
         }
-    }
-
-    private fun persistOccupationalInfo(user: User, occupationInfoList: List<OccupationalInfoItemModel>){
-
-    }
-
-    fun onItemClick(item: OccupationalInfoItemModel?) {
     }
 }
 
