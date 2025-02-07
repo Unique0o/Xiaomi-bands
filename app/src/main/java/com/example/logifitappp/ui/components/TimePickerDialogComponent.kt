@@ -1,12 +1,19 @@
 package com.example.logifitappp.ui.components
 
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.widget.NumberPicker
+import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -28,16 +35,21 @@ fun TimePickerDialogComponent(
             modifier = Modifier
                 .wrapContentWidth()
                 .wrapContentHeight()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Select Time", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "Select Time", typography = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Minutes Picker
+                val fontColor = MaterialTheme.colorScheme.secondary
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -46,20 +58,38 @@ fun TimePickerDialogComponent(
                     AndroidView(
                         modifier = Modifier.weight(1f),
                         factory = { context ->
+                            val numberPicker = NumberPicker(context)
                             NumberPicker(context).apply {
                                 minValue = 0
                                 maxValue = 23
                                 value = selectedHours
+                                textColor = fontColor.toArgb()
                                 setOnValueChangedListener { _, _, newVal ->
                                     selectedHours = newVal
                                 }
+
+                                fun setNumberPickerTextColor(picker: NumberPicker, color: Int) {
+                                    for (i in 0 until picker.childCount) {
+                                        val child = picker.getChildAt(i)
+                                        if (child is TextView) {
+                                            child.setTextColor(color)
+                                            child.typeface = Typeface.DEFAULT_BOLD
+                                            child.textSize = 20f
+                                        }
+                                    }
+                                }
+
+                                post { setNumberPickerTextColor(this, fontColor.toArgb()) }
                             }
                         }
                     )
 
-                    Text(text = "h", modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(
+                        text = "h", modifier = Modifier.padding(horizontal = 8.dp),
+                        typography = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
 
-                    // Minutes Picker
                     AndroidView(
                         modifier = Modifier.weight(1f),
                         factory = { context ->
@@ -67,14 +97,30 @@ fun TimePickerDialogComponent(
                                 minValue = 0
                                 maxValue = 59
                                 value = selectedMinutes
+                                textColor = fontColor.toArgb()
                                 setOnValueChangedListener { _, _, newVal ->
                                     selectedMinutes = newVal
                                 }
+
+                                fun setNumberPickerTextColor(picker: NumberPicker, color: Int) {
+                                    for (i in 0 until picker.childCount) {
+                                        val child = picker.getChildAt(i)
+                                        if (child is TextView) {
+                                            child.setTextColor(color)
+                                            child.typeface = Typeface.DEFAULT_BOLD
+                                            child.textSize = 20f
+                                        }
+                                    }
+                                }
+
+                                post { setNumberPickerTextColor(this, fontColor.toArgb()) }
                             }
                         }
                     )
 
-                    Text(text = "m", modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(text = "m", modifier = Modifier.padding(horizontal = 8.dp),
+                        typography = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -84,13 +130,17 @@ fun TimePickerDialogComponent(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel")
+                        Text(text = "Cancel",
+                            typography = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary)
                     }
                     TextButton(onClick = {
                         val formattedTime = formatTime(selectedHours, selectedMinutes)
                         onConfirm(formattedTime)
                     }) {
-                        Text("OK")
+                        Text(text = "OK",
+                            typography = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -115,7 +165,7 @@ fun formatTime(hours: Int, minutes: Int): String {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomTimePickerDialog() {
-    TimePickerDialogComponent (
+    TimePickerDialogComponent(
         initialHours = 2,
         initialMinutes = 30,
         onDismiss = {},
