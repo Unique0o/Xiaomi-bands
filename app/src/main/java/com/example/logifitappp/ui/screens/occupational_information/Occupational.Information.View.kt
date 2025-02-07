@@ -17,7 +17,6 @@ import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.data.models.OccupationalInfoItemModel
 import com.example.logifitappp.ui.components.BottomSheetSearchable
-import com.example.logifitappp.ui.components.BottomSheetSelectableItem
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItem
@@ -28,6 +27,11 @@ import com.example.logifitappp.viewmodel.views.OccupationItem
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoUiState
 import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
 import kotlinx.coroutines.launch
+
+data class BottomSheetState(
+    val isVisible: Boolean,
+    val selectedItem: OccupationalInfoItemModel?
+)
 
 @Composable
 fun OccupationalInformationView(
@@ -50,13 +54,13 @@ fun OccupationalInformationView(
             "occupationalAttentionType" to null
         )
     }
-    val selectedSuggestion = remember { mutableStateOf<OccupationalInfoItemModel?>(null) }
+//    val selectedSuggestion = remember { mutableStateOf<OccupationItem?>(null) }
 
     val isLoading = remember { mutableStateOf(false) }
 
     val data = remember { mutableStateListOf<OccupationalInfoItemModel>() }
 
-    val showSelectableBottomSheet = remember { mutableStateOf(false) }
+    var selectableSheetState by remember { mutableStateOf(BottomSheetState(false, null)) }
 
     LaunchedEffect(occupationalInfoState) {
         when (occupationalInfoState) {
@@ -132,13 +136,22 @@ fun OccupationalInformationView(
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
                 items(data.size) { index ->
-                    val occupationItem = data[index]
+                    val occupationItem = data[index]/*if (data[index].id in selectableFields) data[index].copy(
+                        value = selectedFieldIdMap[data[index].id]?.label
+                            ?: stringResource(R.string.not_selected)
+                    ) else data[index]*/
                     OccupationalInfoItem(
                         data = occupationItem,
                         onClick = {
                             if (occupationItem.id in selectableFields) {
-                                selectedSuggestion.value = occupationItem
-                                showSelectableBottomSheet.value = true
+                                if (selectableSheetState.selectedItem?.id != occupationItem.id) {
+                                    selectableSheetState =
+                                        BottomSheetState(true, occupationItem)
+                                } else {
+                                    selectableSheetState =
+                                        selectableSheetState.copy(isVisible = true)
+                                }
+
                             }
                         }
                     )
@@ -154,17 +167,27 @@ fun OccupationalInformationView(
             )
         }
 
-        if (showSelectableBottomSheet.value) {
+        val isBottomSheetVisible = selectableSheetState.isVisible
+        if (isBottomSheetVisible) {
+            val clickOccupationItem = selectableSheetState.selectedItem
             OptionBottomSheet(
-                data = selectedSuggestion.value,
-                suggestions = getRelevantSuggestions(selectedSuggestion.value?.id, viewModel),
-                selectedItemId = selectedFieldIdMap[selectedSuggestion.value?.id]?.id,
+                data = clickOccupationItem,
+                suggestions = getRelevantSuggestions(clickOccupationItem?.id, viewModel),
+                selectedItemId = selectedFieldIdMap[clickOccupationItem?.id]?.id,
                 onDismiss = {
-                    showSelectableBottomSheet.value = false
+                    selectableSheetState = selectableSheetState.copy(isVisible = false, null)
                 }
             ) { selectedDataItem ->
-                showSelectableBottomSheet.value = false
-                selectedFieldIdMap[selectedSuggestion.value?.id ?: ""] = selectedDataItem
+                selectableSheetState = selectableSheetState.copy(isVisible = false)
+                selectableSheetState.selectedItem?.id?.apply {
+                    if (selectedFieldIdMap[this]?.id != selectedDataItem.id) {
+                        selectedFieldIdMap[this] = selectedDataItem
+                        val index = data.indexOfFirst { item -> item.id == this }
+                        if (index != -1) {
+                            data[index] = data[index].copy(value = selectedDataItem.label ?: "")
+                        }
+                    }
+                }
             }
         }
     }
