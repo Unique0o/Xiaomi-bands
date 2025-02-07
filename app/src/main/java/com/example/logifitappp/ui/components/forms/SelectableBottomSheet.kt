@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,7 +58,7 @@ fun <T: BottomSheetSelectableItem> SelectableBottomSheet(
         onDismissRequest = { isVisibleBottomSheetModal = false },
         title = title,
         toggleModalBottomSheet = toggleModalBottomSheet,
-        value = value
+        value = value,
     )
 
     Box(modifier = modifier.clickable { toggleModalBottomSheet() }) {

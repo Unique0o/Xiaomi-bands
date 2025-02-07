@@ -34,11 +34,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.R
 import com.example.logifitappp.ui.components.forms.OutlinedTextField
+import com.example.logifitappp.viewmodel.views.OccupationItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DisposableHandle
 
 open class BottomSheetSelectableItem (
-    open val id: Int
+    open val id: Int,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +54,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
     renderItem: @Composable ((T) -> Unit)? = null,
     title: String,
     toggleModalBottomSheet: () -> DisposableHandle,
+    onTitle: (T)? = null,
     value: T? = null
 ) {
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
@@ -121,7 +123,7 @@ fun <T: BottomSheetSelectableItem> BottomSheetSearchable(
                                 .weight(1f)
                                 .padding(start = 8.dp, end = 16.dp),
                             overflow = TextOverflow.Ellipsis,
-                            text = it.toString(),
+                            text = (if (it is OccupationItem) it.label else it.toString())?:"",
                             typography = MaterialTheme.typography.headlineLarge
                         )
 

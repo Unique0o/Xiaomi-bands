@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.logifitappp.data.User
 import com.example.logifitappp.domain.usecase.GetOccupationalInfoUseCase
 import com.example.logifitappp.data.models.OccupationalInfoItemModel
+import com.example.logifitappp.ui.components.BottomSheetSelectableItem
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,9 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class OccupationItem(
-    val id: Int?,
+    override val id: Int,
     val label: String?
-)
+): BottomSheetSelectableItem(id)
 @HiltViewModel
 class OccupationalInformationViewModel @Inject constructor(
     private val getOccupationalInfoUseCase: GetOccupationalInfoUseCase

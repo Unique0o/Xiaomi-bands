@@ -71,6 +71,7 @@
     <string name="costa_rica">Costa Rica</string>
     <string name="country_phone_code_title">Select a country phone code</string>
     <string name="country_title">Select a country</string>
+    <string name="choose_an_option">Choose an option</string>
     <string name="country_validation_error_message">You must select a country</string>
     <string name="province_validation_error_message">You must select a province</string>
     <string name="department_validation_error_message">You must select a department</string>

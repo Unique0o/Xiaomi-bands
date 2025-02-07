@@ -3,6 +3,8 @@ package com.example.logifitappp.ui.screens.occupational_information
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -10,19 +12,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavHostController
 import com.example.logifitappp.R
 import com.example.logifitappp.data.models.OccupationalInfoItemModel
+import com.example.logifitappp.ui.components.BottomSheetSearchable
+import com.example.logifitappp.ui.components.BottomSheetSelectableItem
 import com.example.logifitappp.ui.components.Text
 import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItem
-import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItemData
 import com.example.logifitappp.ui.components.pages.SimplePage
 import com.example.logifitappp.utils.TimeAndDateUtils
 import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.OccupationItem
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoUiState
 import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun OccupationalInformationView(
@@ -32,10 +37,26 @@ fun OccupationalInformationView(
     val viewModel: OccupationalInformationViewModel = hiltViewModel()
     val occupationalInfoState by viewModel.occupationalInfoState.collectAsState()
 
+    val selectableFields by lazy {
+        listOf(
+            "workload",
+            "occupationalAttentionType"
+        )
+    }
+
+    val selectedFieldIdMap = remember {
+        mutableStateMapOf<String, OccupationItem?>(
+            "workLoad" to null,
+            "occupationalAttentionType" to null
+        )
+    }
+    val selectedSuggestion = remember { mutableStateOf<OccupationalInfoItemModel?>(null) }
 
     val isLoading = remember { mutableStateOf(false) }
 
     val data = remember { mutableStateListOf<OccupationalInfoItemModel>() }
+
+    val showSelectableBottomSheet = remember { mutableStateOf(false) }
 
     LaunchedEffect(occupationalInfoState) {
         when (occupationalInfoState) {
@@ -66,9 +87,24 @@ fun OccupationalInformationView(
                         updateField("workload", workloadValue?.toString())
                         updateField("occupationalAttentionType", attentionValue?.toString())
 
-                        commutingSeconds?.let { updateField("timeTravel", TimeAndDateUtils.formatSecondsToTime(it)) }
-                        breakFrequencySeconds?.let { updateField("breaksFrequency", TimeAndDateUtils.formatSecondsToTime(it)) }
-                        breakAverageSeconds?.let { updateField("breaksLength", TimeAndDateUtils.formatSecondsToTime(it)) }
+                        commutingSeconds?.let {
+                            updateField(
+                                "timeTravel",
+                                TimeAndDateUtils.formatSecondsToTime(it)
+                            )
+                        }
+                        breakFrequencySeconds?.let {
+                            updateField(
+                                "breaksFrequency",
+                                TimeAndDateUtils.formatSecondsToTime(it)
+                            )
+                        }
+                        breakAverageSeconds?.let {
+                            updateField(
+                                "breaksLength",
+                                TimeAndDateUtils.formatSecondsToTime(it)
+                            )
+                        }
                     }
 
                 }
@@ -99,7 +135,12 @@ fun OccupationalInformationView(
                     val occupationItem = data[index]
                     OccupationalInfoItem(
                         data = occupationItem,
-                        onClick = { viewModel.onItemClick(occupationItem) }
+                        onClick = {
+                            if (occupationItem.id in selectableFields) {
+                                selectedSuggestion.value = occupationItem
+                                showSelectableBottomSheet.value = true
+                            }
+                        }
                     )
                 }
             }
@@ -112,7 +153,71 @@ fun OccupationalInformationView(
                 textAlign = TextAlign.Center
             )
         }
+
+        if (showSelectableBottomSheet.value) {
+            OptionBottomSheet(
+                data = selectedSuggestion.value,
+                suggestions = getRelevantSuggestions(selectedSuggestion.value?.id, viewModel),
+                selectedItemId = selectedFieldIdMap[selectedSuggestion.value?.id]?.id,
+                onDismiss = {
+                    showSelectableBottomSheet.value = false
+                }
+            ) { selectedDataItem ->
+                showSelectableBottomSheet.value = false
+                selectedFieldIdMap[selectedSuggestion.value?.id ?: ""] = selectedDataItem
+            }
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun OptionBottomSheet(
+    modifier: Modifier = Modifier,
+    data: OccupationalInfoItemModel?,
+    suggestions: List<OccupationItem>?,
+    selectedItemId: Int?,
+    onDismiss: () -> Unit,
+    onChangeValue: (OccupationItem) -> Unit
+) {
+    var isVisibleBottomSheetModal by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val updatedElements by rememberUpdatedState(suggestions)
+    val selectedItem by remember {
+        mutableStateOf(
+            suggestions?.firstOrNull { item -> item.id == selectedItemId }
+        )
+    }
+
+    val toggleModalBottomSheet = {
+        coroutineScope.launch {
+            if (isVisibleBottomSheetModal) modalBottomSheetState.hide()
+            else modalBottomSheetState.show()
+        }.invokeOnCompletion {
+            isVisibleBottomSheetModal = !isVisibleBottomSheetModal
+        }
+    }
+
+    LifecycleResumeEffect(Unit) {
+        toggleModalBottomSheet()
+        onPauseOrDispose { }
+    }
+
+    BottomSheetSearchable(
+        coroutineScope = coroutineScope,
+        elements = updatedElements ?: emptyList(),
+        isVisible = isVisibleBottomSheetModal,
+        modalBottomSheetState = modalBottomSheetState,
+        onChange = onChangeValue,
+        onDismissRequest = {
+            isVisibleBottomSheetModal = false
+            onDismiss()
+        },
+        title = data?.label ?: "",
+        toggleModalBottomSheet = toggleModalBottomSheet,
+        value = selectedItem,
+    )
 }
 
 fun getRelevantSuggestions(

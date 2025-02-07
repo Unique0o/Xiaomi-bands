@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,27 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.logifitappp.data.models.OccupationalInfoItemModel
+import com.example.logifitappp.ui.components.BottomSheetSearchable
 import com.example.logifitappp.ui.components.TimePickerDialogComponent
 import com.example.logifitappp.ui.theme.Rose120
 import com.example.logifitappp.viewmodel.views.OccupationItem
-
-data class OccupationalInfoItemData(
-    val label: String?,
-    val value: String?,
-    val suggestions: List<OccupationItem>? = null,
-    val timerField: Boolean = false,
-)
+import kotlinx.coroutines.launch
 @Composable
 fun OccupationalInfoItem(
     data: OccupationalInfoItemModel,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
-
-    /*var selectedWorkLoad by remember { mutableStateOf(data.suggestions?.let { it[0] }) }
-    var textFieldValue by remember { mutableStateOf(data.value) }
-    var showTimerDialog by remember { mutableStateOf(false) }
-    selectedWorkLoad?.apply { textFieldValue = label}*/
     Box(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -54,6 +45,7 @@ fun OccupationalInfoItem(
                             return@clickable
                         }*/
 //                        onClick(data)
+                        onClick()
                     }
                     .padding(vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
