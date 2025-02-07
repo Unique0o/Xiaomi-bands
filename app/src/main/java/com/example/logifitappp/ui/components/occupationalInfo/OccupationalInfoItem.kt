@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.logifitappp.data.models.OccupationalInfoItemModel
 import com.example.logifitappp.ui.components.TimePickerDialogComponent
 import com.example.logifitappp.ui.theme.Rose120
 import com.example.logifitappp.viewmodel.views.OccupationItem
@@ -27,15 +28,15 @@ data class OccupationalInfoItemData(
 )
 @Composable
 fun OccupationalInfoItem(
-    data: OccupationalInfoItemData,
+    data: OccupationalInfoItemModel,
     onClick: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    var selectedWorkLoad by remember { mutableStateOf(data.suggestions?.let { it[0] }) }
+    /*var selectedWorkLoad by remember { mutableStateOf(data.suggestions?.let { it[0] }) }
     var textFieldValue by remember { mutableStateOf(data.value) }
     var showTimerDialog by remember { mutableStateOf(false) }
-    selectedWorkLoad?.apply { textFieldValue = label}
+    selectedWorkLoad?.apply { textFieldValue = label}*/
     Box(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -44,15 +45,15 @@ fun OccupationalInfoItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        data.suggestions?.let {
+                        /*data.suggestions?.let {
                             expanded = true
                             return@clickable
                         }
                         if(data.timerField){
                             showTimerDialog = true
                             return@clickable
-                        }
-                        onClick()
+                        }*/
+//                        onClick(data)
                     }
                     .padding(vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -67,11 +68,11 @@ fun OccupationalInfoItem(
                 }
                 Spacer(modifier = Modifier.width(16.dp))
 
-                val text = selectedWorkLoad?.label ?: (textFieldValue ?: "")
+//                val text = selectedWorkLoad?.label ?: (textFieldValue ?: "")
                 Text(
-                    text = selectedWorkLoad?.label ?: (textFieldValue ?: ""),
+                    text = data.value/*selectedWorkLoad?.label ?: (textFieldValue ?: "")*/,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = when (text) {
+                    color = when (data.value) {
                         "Not selected", "Not assigned" -> Rose120
                         else -> Color.Black
                     },
@@ -89,7 +90,7 @@ fun OccupationalInfoItem(
                 modifier = Modifier.wrapContentSize()
             ) {
                 HorizontalDivider(color = Color.LightGray, thickness = 0.5.dp)
-                selectedWorkLoad?.let {
+                /*selectedWorkLoad?.let {
                     DropdownMenu(
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
@@ -109,11 +110,11 @@ fun OccupationalInfoItem(
                             )
                         }
                     }
-                }
+                }*/
             }
         }
 
-        if (data.timerField && showTimerDialog){
+        /*if (data.timerField && showTimerDialog){
             TimePickerDialogComponent(
                 onDismiss = { showTimerDialog = false },
                 onConfirm = { formattedTime ->
@@ -121,6 +122,6 @@ fun OccupationalInfoItem(
                     showTimerDialog = false
                 }
             )
-        }
+        }*/
     }
 }

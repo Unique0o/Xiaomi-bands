@@ -18,10 +18,12 @@ import com.example.logifitappp.ui.components.headers.ColumnStackHeader
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItem
 import com.example.logifitappp.ui.components.occupationalInfo.OccupationalInfoItemData
 import com.example.logifitappp.ui.components.pages.SimplePage
+import com.example.logifitappp.utils.TimeAndDateUtils
 import com.example.logifitappp.viewmodel.AppViewModel
 import com.example.logifitappp.viewmodel.views.OccupationItem
 import com.example.logifitappp.viewmodel.views.OccupationalInfo.OccupationalInfoUiState
 import com.example.logifitappp.viewmodel.views.OccupationalInformationViewModel
+
 @Composable
 fun OccupationalInformationView(
     navigation: NavHostController,
@@ -40,18 +42,38 @@ fun OccupationalInformationView(
             is OccupationalInfoUiState.Loading -> {
                 isLoading.value = true
             }
+
             is OccupationalInfoUiState.Success -> {
                 isLoading.value = false
                 data.addAll((occupationalInfoState as OccupationalInfoUiState.Success).data)
                 appViewModel.apply {
-                    val company = tenant?.name
-                    val group = fetchUserGroup(tenant?.id?:0, user?.groupId?:tenant?.id?:0)
-                    val shift = fetchUserShift(tenant?.id?:0, user?.shiftId?:0)
-                    data.find { it.id == "companyName" }?.let { it.value = company ?: "" }
-                    data.find { it.id == "groupName" }?.let { it.value = group?.name ?: "" }
-                    data.find { it.id == "shift" }?.let { it.value = shift?.name ?: "" }
+                    val group = fetchUserGroup(tenant?.id ?: 0, user?.groupId ?: tenant?.id ?: 0)
+                    val shift = fetchUserShift(tenant?.id ?: 0, user?.shiftId ?: 0)
+
+                    fun updateField(id: String, value: String?) {
+                        value?.takeIf { it.isNotBlank() }?.let { nonEmptyValue ->
+                            data.find { it.id == id }?.value = nonEmptyValue
+                        }
+                    }
+
+                    tenant?.let { updateField("companyName", it.name) }
+                    group?.let { updateField("groupName", it.name) }
+                    shift?.let { updateField("shift", it.name) }
+
+                    user?.apply {
+                        updateField("workPosition", workPosition)
+                        updateField("function", functionName)
+                        updateField("workload", workloadValue?.toString())
+                        updateField("occupationalAttentionType", attentionValue?.toString())
+
+                        commutingSeconds?.let { updateField("timeTravel", TimeAndDateUtils.formatSecondsToTime(it)) }
+                        breakFrequencySeconds?.let { updateField("breaksFrequency", TimeAndDateUtils.formatSecondsToTime(it)) }
+                        breakAverageSeconds?.let { updateField("breaksLength", TimeAndDateUtils.formatSecondsToTime(it)) }
+                    }
+
                 }
             }
+
             is OccupationalInfoUiState.Error -> {
                 isLoading.value = false
             }
@@ -66,9 +88,9 @@ fun OccupationalInformationView(
             )
         }
     ) {
-        if (isLoading.value){
+        if (isLoading.value) {
             CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-        }else{
+        } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(horizontal = 16.dp)
@@ -76,18 +98,13 @@ fun OccupationalInformationView(
                 items(data.size) { index ->
                     val occupationItem = data[index]
                     OccupationalInfoItem(
-                        data = OccupationalInfoItemData(
-                            label = occupationItem.label,
-                            value = occupationItem.value,
-                            suggestions = getRelevantSuggestions(occupationItem.id, viewModel),
-                            timerField = occupationItem.id == "timeTravel"
-                        ),
+                        data = occupationItem,
                         onClick = { viewModel.onItemClick(occupationItem) }
                     )
                 }
             }
         }
-        if(occupationalInfoState is OccupationalInfoUiState.Error) {
+        if (occupationalInfoState is OccupationalInfoUiState.Error) {
             Text(
                 text = (occupationalInfoState as OccupationalInfoUiState.Error).message,
                 color = Color.Red,
@@ -98,8 +115,11 @@ fun OccupationalInformationView(
     }
 }
 
-fun getRelevantSuggestions(id: String?, viewModel: OccupationalInformationViewModel): List<OccupationItem>?{
-    return when(id){
+fun getRelevantSuggestions(
+    id: String?,
+    viewModel: OccupationalInformationViewModel
+): List<OccupationItem>? {
+    return when (id) {
         "workload" -> viewModel.workLoadSuggestionsList
         "occupationalAttentionType" -> viewModel.occupationAttentions
         else -> null
