@@ -102,6 +102,18 @@ class AppViewModel @Inject constructor(
         user?.let { App.database.userDao().store(it) }
     }
 
+    fun getLocalUserTimerFieldsData(id: String): Int?{
+        return App.database.userDao().getLoggedIn()?.let { user ->
+            when(id){
+                "timeTravel" ->  user.commutingSeconds
+                "breaksFrequency" ->  user.breakFrequencySeconds
+                "breaksLength" ->  user.breakAverageSeconds
+                else -> {null}
+            }
+        }
+    }
+
+
     fun fetchUserGroup(tenantId: Int, userGroupId: Int) = App.database.groupDao().all(tenantId).firstOrNull() { groupModel -> groupModel.id == userGroupId }
     fun fetchUserShift(tenantId:Int, userShiftId: Int) = App.database.shiftDao().all(tenantId).firstOrNull { shiftModel -> shiftModel.id == userShiftId }
 

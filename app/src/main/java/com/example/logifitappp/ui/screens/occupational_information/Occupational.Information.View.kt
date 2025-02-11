@@ -69,7 +69,7 @@ fun OccupationalInformationView(
     }
 
     val timerFieldIdMap = remember {
-        mutableStateMapOf<String, String?>(
+        mutableStateMapOf<String, Int?>(
             selectableFields[2] to null,
             selectableFields[3] to null,
             selectableFields[4] to null,
@@ -81,6 +81,14 @@ fun OccupationalInformationView(
     val data = remember { mutableStateListOf<OccupationalInfoItemModel>() }
 
     var actionPopup by remember { mutableStateOf(DataState(false, null, null)) }
+
+    LaunchedEffect(Unit) {
+        appViewModel.user?.apply {
+            timerFieldIdMap[selectableFields[2]] = appViewModel.getLocalUserTimerFieldsData(selectableFields[2])
+            timerFieldIdMap[selectableFields[3]] = appViewModel.getLocalUserTimerFieldsData(selectableFields[3])
+            timerFieldIdMap[selectableFields[4]] = appViewModel.getLocalUserTimerFieldsData(selectableFields[4])
+        }
+    }
 
     LaunchedEffect(occupationalInfoState) {
         when (occupationalInfoState) {
@@ -215,7 +223,7 @@ fun OccupationalInformationView(
         }
 
         val isTimerDialogVisible = actionPopup.isTimerDialog() && actionPopup.isVisible
-        val seconds = timerFieldIdMap[actionPopup.selectedItem?.id]?.toInt()
+        val seconds = timerFieldIdMap[actionPopup.selectedItem?.id]
         val time = TimeAndDateUtils.convertSecondsToHoursMinutes(seconds?:0)
         if (isTimerDialogVisible){
             TimePickerDialogComponent(
@@ -225,7 +233,7 @@ fun OccupationalInformationView(
                 onConfirm = { totalSeconds ->
                     actionPopup.selectedItem?.id?.apply {
                         val formattedTime = TimeAndDateUtils.convertSecondsToReadableTime(totalSeconds)
-                        timerFieldIdMap[this] = totalSeconds.toString()
+                        timerFieldIdMap[this] = totalSeconds
                         val index = data.indexOfFirst { item -> item.id == this }
                         if (index != -1) {
                             data[index] = data[index].copy(value = formattedTime)
